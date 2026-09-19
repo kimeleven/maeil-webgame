@@ -1,24 +1,133 @@
-import{cleanNickname,ensureGuest,getSql,isAnonId,isGameId,parseScore}from"../lib/db.js";import{queryOf,readBody,send}from"../lib/http.js";export default async function handler(e,n){const o=getSql();if(o)try{if("GET"===e.method)return void await getScores(o,e,n);if("POST"===e.method)return void await postScore(o,e,n);send(n,405,{error:"GET 또는 POST만 지원합니다."})}catch(e){console.error("/api/scores",e),send(n,500,{error:"점수를 처리하지 못했습니다.",fallback:!0})}else send(n,503,{error:"DATABASE_URL이 없습니다.",fallback:!0})}async function getScores(e,n,o){const r=queryOf(n),i=r.game_id,a=r.anon_id,s=Math.min(20,Math.max(1,Number(r.limit)||10));if(i&&!isGameId(i))return void send(o,400,{error:"game_id가 올바르지 않습니다."});if(a&&!isAnonId(a))return void send(o,400,{error:"anon_id가 올바르지 않습니다."});if(!i&&a){const n=await(e`
+import {
+  cleanNickname,
+  ensureGuest,
+  getSql,
+  isAnonId,
+  isGameId,
+  parseScore,
+} from "../lib/db.js";
+import { queryOf, readBody, send } from "../lib/http.js";
+
+export default async function handler(req, res) {
+  const sql = getSql();
+  if (!sql) {
+    send(res, 503, { error: "DATABASE_URL이 없습니다.", fallback: true });
+    return;
+  }
+
+  try {
+    if (req.method === "GET") {
+      await getScores(sql, req, res);
+      return;
+    }
+    if (req.method === "POST") {
+      await postScore(sql, req, res);
+      return;
+    }
+    send(res, 405, { error: "GET 또는 POST만 지원합니다." });
+  } catch (error) {
+    console.error("/api/scores", error);
+    send(res, 500, { error: "점수를 처리하지 못했습니다.", fallback: true });
+  }
+}
+
+async function getScores(sql, req, res) {
+  const query = queryOf(req);
+  const gameId = query.game_id;
+  const anonId = query.anon_id;
+  const limit = Math.min(20, Math.max(1, Number(query.limit) || 10));
+
+  if (gameId && !isGameId(gameId)) {
+    send(res, 400, { error: "game_id가 올바르지 않습니다." });
+    return;
+  }
+  if (anonId && !isAnonId(anonId)) {
+    send(res, 400, { error: "anon_id가 올바르지 않습니다." });
+    return;
+  }
+
+  if (!gameId && anonId) {
+    const rows = await sql`
       SELECT game_id, score
       FROM high_scores
-      WHERE anon_id = ${a}
-    `);return void send(o,200,{source:"neon",scores:n.map(e=>({gameId:e.game_id,highScore:e.score}))})}if(!i)return void send(o,400,{error:"game_id 또는 anon_id가 필요합니다."});const c=await(e`
+      WHERE anon_id = ${anonId}
+    `;
+    send(res, 200, {
+      source: "neon",
+      scores: rows.map((row) => ({ gameId: row.game_id, highScore: row.score })),
+    });
+    return;
+  }
+
+  if (!gameId) {
+    send(res, 400, { error: "game_id 또는 anon_id가 필요합니다." });
+    return;
+  }
+
+  const top = await sql`
     SELECT anon_id, nickname, score
     FROM high_scores
-    WHERE game_id = ${i}
+    WHERE game_id = ${gameId}
     ORDER BY score DESC, created_at ASC
-    LIMIT ${s}
-  `);let d=null;if(a){const n=await(e`
+    LIMIT ${limit}
+  `;
+
+  let mine = null;
+  if (anonId) {
+    const own = await sql`
       SELECT score FROM high_scores
-      WHERE game_id = ${i} AND anon_id = ${a}
-    `);d=n[0]?.score??null}send(o,200,{source:"neon",gameId:i,mine:d,top:c.map((e,n)=>({rank:n+1,score:e.score,nickname:e.nickname||"게스트",mine:Boolean(a&&e.anon_id===a)}))})}async function postScore(e,n,o){const r=await readBody(n),i=r.anon_id,a=r.game_id,s=parseScore(r.score),c=cleanNickname(r.nickname);if(!isAnonId(i)||!isGameId(a)||null===s)return void send(o,400,{error:"anon_id, game_id, score가 필요합니다."});await ensureGuest(e,i,c);const d=await(e`
+      WHERE game_id = ${gameId} AND anon_id = ${anonId}
+    `;
+    mine = own[0]?.score ?? null;
+  }
+
+  send(res, 200, {
+    source: "neon",
+    gameId,
+    mine,
+    top: top.map((row, index) => ({
+      rank: index + 1,
+      score: row.score,
+      nickname: row.nickname || "게스트",
+      mine: Boolean(anonId && row.anon_id === anonId),
+    })),
+  });
+}
+
+async function postScore(sql, req, res) {
+  const body = await readBody(req);
+  const anonId = body.anon_id;
+  const gameId = body.game_id;
+  const score = parseScore(body.score);
+  const nickname = cleanNickname(body.nickname);
+
+  if (!isAnonId(anonId) || !isGameId(gameId) || score === null) {
+    send(res, 400, { error: "anon_id, game_id, score가 필요합니다." });
+    return;
+  }
+
+  await ensureGuest(sql, anonId, nickname);
+
+  const prev = await sql`
     SELECT score FROM high_scores
-    WHERE game_id = ${a} AND anon_id = ${i}
-  `),t=d[0]?.score??0,m=await(e`
+    WHERE game_id = ${gameId} AND anon_id = ${anonId}
+  `;
+  const prevScore = prev[0]?.score ?? 0;
+
+  const saved = await sql`
     INSERT INTO high_scores (game_id, anon_id, nickname, score)
-    VALUES (${a}, ${i}, ${c}, ${s})
+    VALUES (${gameId}, ${anonId}, ${nickname}, ${score})
     ON CONFLICT (game_id, anon_id) DO UPDATE
       SET score = GREATEST(high_scores.score, EXCLUDED.score),
           nickname = COALESCE(EXCLUDED.nickname, high_scores.nickname)
     RETURNING score
-  `);send(o,200,{source:"neon",gameId:a,lastScore:s,highScore:m[0].score,isNewHigh:s>t})}
+  `;
+
+  send(res, 200, {
+    source: "neon",
+    gameId,
+    lastScore: score,
+    highScore: saved[0].score,
+    isNewHigh: score > prevScore,
+  });
+}

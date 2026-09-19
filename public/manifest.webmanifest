@@ -1,0 +1,17 @@
+{
+  "name": "매일웹겜",
+  "short_name": "매일웹겜",
+  "description": "하루 한 판 모바일 웹게임. 회원가입 없이 게스트로 바로 플레이하는 매일웹겜.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#141311",
+  "theme_color": "#141311",
+  "lang": "ko-KR",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
