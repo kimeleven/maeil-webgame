@@ -1,0 +1,44 @@
+# dependencies
+node_modules/
+
+# env & secrets
+.env
+.env.*
+!.env.example
+*.secret
+*.pem
+*credentials*
+*token*
+
+# Vercel
+.vercel/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# logs & caches
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.cache/
+
+# local deploy / MCP payloads (never commit)
+*.deploy*.json
+.deploy*
+.mcp-*
+FOR_MCP*.json
+CALLMCP*.json
+DEPLOY_*.json
+!REPO_READY.json
+
+# media we do not ship in this repo
+*.mp3
+*.mp4
+*.mov
+*.webm
+narration/
+promo/
