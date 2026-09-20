@@ -1,10 +1,15 @@
 !function(w){
   var BASE="https://www.playtoday.cloud";
+  var FONT="system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif";
   function buildText(o){
     var title=String(o&&o.title||"매일웹겜").trim();
     var score=0|Number(o&&o.score||0);
     var gameId=String(o&&o.gameId||"").trim();
-    return "매일웹겜 · "+title+" "+score+"점! 한 판 어때요?\n"+BASE+"/games/"+gameId+"/";
+    var nick=String(o&&o.nickname||"").trim();
+    var head=nick
+      ?("나를 이겨봐! "+nick+" "+score+"점 · "+title)
+      :("나를 이겨봐! "+score+"점이야 · "+title);
+    return head+"\n한 판만 해봐 🔥\n"+BASE+"/games/"+gameId+"/";
   }
   function copyText(t){
     if(w.navigator.clipboard&&navigator.clipboard.writeText)
@@ -24,17 +29,96 @@
     try{w.open(url,"_blank","noopener,noreferrer")}catch(e){}
     return copyText(t);
   }
-  function share(o){
-    o=o||{};
-    var text=buildText(o);
-    var title=String(o.title||"매일웹겜").trim();
-    var url=BASE+"/games/"+String(o.gameId||"").trim()+"/";
+  function downloadFile(file){
+    try{
+      var url=URL.createObjectURL(file);
+      var a=document.createElement("a");
+      a.href=url;a.download=file.name||"maeil-score.png";
+      document.body.appendChild(a);a.click();a.remove();
+      setTimeout(function(){try{URL.revokeObjectURL(url)}catch(e){}},2500);
+    }catch(e){}
+  }
+  function makeCard(o){
+    return new Promise(function(resolve,reject){
+      try{
+        var title=String(o&&o.title||"매일웹겜").trim();
+        var score=0|Number(o&&o.score||0);
+        var nick=String(o&&o.nickname||"").trim();
+        var W=1080,H=1350;
+        var c=document.createElement("canvas");
+        c.width=W;c.height=H;
+        var ctx=c.getContext("2d");
+        if(!ctx)return reject(new Error("no-ctx"));
+        ctx.fillStyle="#0b0f14";
+        ctx.fillRect(0,0,W,H);
+        var g=ctx.createRadialGradient(W/2,180,40,W/2,280,520);
+        g.addColorStop(0,"rgba(232,200,122,0.22)");
+        g.addColorStop(1,"rgba(11,15,20,0)");
+        ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+        ctx.strokeStyle="rgba(239,230,212,0.14)";
+        ctx.lineWidth=4;
+        ctx.strokeRect(48,48,W-96,H-96);
+        ctx.textAlign="center";ctx.textBaseline="middle";
+        ctx.fillStyle="#e8c87a";
+        ctx.font="700 34px "+FONT;
+        ctx.letterSpacing="0.28em";
+        ctx.fillText("매일웹겜",W/2,170);
+        ctx.letterSpacing="0";
+        ctx.fillStyle="#efe6d4";
+        ctx.font="700 56px "+FONT;
+        ctx.fillText(title.slice(0,18),W/2,300);
+        ctx.fillStyle="#e8c87a";
+        ctx.font="800 160px "+FONT;
+        ctx.fillText(String(score),W/2,520);
+        ctx.fillStyle="#c9bda6";
+        ctx.font="600 42px "+FONT;
+        ctx.fillText("점",W/2,640);
+        ctx.fillStyle="#efe6d4";
+        ctx.font="800 64px "+FONT;
+        ctx.fillText("나를 이겨봐!",W/2,780);
+        if(nick){
+          ctx.fillStyle="#7fe0c0";
+          ctx.font="600 40px "+FONT;
+          ctx.fillText(nick.slice(0,20),W/2,880);
+        }
+        ctx.fillStyle="#9aa3b2";
+        ctx.font="500 32px "+FONT;
+        ctx.fillText("playtoday.cloud",W/2,H-140);
+        if(!c.toBlob)return reject(new Error("no-blob"));
+        c.toBlob(function(blob){
+          if(!blob)return reject(new Error("empty-blob"));
+          resolve(new File([blob],"maeil-score.png",{type:"image/png"}));
+        },"image/png");
+      }catch(e){reject(e)}
+    });
+  }
+  function shareTextOnly(o,text,title,url){
     if(w.navigator.share){
       return navigator.share({title:title,text:text,url:url}).catch(function(){
         return tweetFallback(text);
       });
     }
     return tweetFallback(text);
+  }
+  function share(o){
+    o=o||{};
+    var text=buildText(o);
+    var title=String(o.title||"매일웹겜").trim();
+    var url=BASE+"/games/"+String(o.gameId||"").trim()+"/";
+    return makeCard(o).then(function(file){
+      var canFiles=w.navigator.canShare&&w.navigator.share;
+      try{canFiles=canFiles&&navigator.canShare({files:[file]})}catch(e){canFiles=!1}
+      if(canFiles){
+        return navigator.share({title:title,text:text,files:[file]}).catch(function(){
+          downloadFile(file);
+          return tweetFallback(text);
+        });
+      }
+      downloadFile(file);
+      return tweetFallback(text);
+    }).catch(function(){
+      return shareTextOnly(o,text,title,url);
+    });
   }
   function readScore(){
     var el=document.querySelector("#result-score,#final-score,#final");
@@ -76,11 +160,12 @@
   }
   function autoBind(){
     document.querySelectorAll("[data-maeil-share]").forEach(function(btn){
+      if((btn.textContent||"").trim()==="자랑하기") btn.textContent="자랑하기 · 나를 이겨봐";
       bind(btn,defaultOpts);
       watchShare(btn);
     });
   }
-  w.MaeilShare={share:share,bind:bind,copyText:copyText,buildText:buildText};
+  w.MaeilShare={share:share,bind:bind,copyText:copyText,buildText:buildText,makeCard:makeCard};
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",autoBind);
   else autoBind();
 }("undefined"!=typeof window?window:globalThis);
