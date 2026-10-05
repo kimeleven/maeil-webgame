@@ -6,6 +6,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.playtoday.cloud/games/015-snake/</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.playtoday.cloud/games/014-minesweeper/</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
