@@ -205,16 +205,24 @@
 
   function drawSnake(t) {
     const n = body.length;
-    const pts = [];
-    for (let i = 0; i < n; i++) pts.push(segPos(i, ended ? 1 : t));
+    const tt = ended ? 1 : t;
+    const C = (p) => ({ x: (p.x + 0.5) * cell, y: (p.y + 0.5) * cell });
+    // exact grid path (no corner cutting): moving head, fixed joints, retracting tail
+    const pts = [segPos(0, tt)];
+    for (let i = 1; i < n; i++) pts.push(C(body[i]));
+    if (prev.length >= n && n > 1) {
+      const a = body[n - 1], b = prev[n - 1];
+      pts.push({ x: (lerp(a.x, b.x, 1 - tt) + 0.5) * cell, y: (lerp(a.y, b.y, 1 - tt) + 0.5) * cell });
+    }
+    const m = pts.length;
     const w = cell * 0.78;
     ctx.lineCap = "round"; ctx.lineJoin = "round";
     // soft shadow
     ctx.strokeStyle = "rgba(0,0,0,0.38)"; ctx.lineWidth = w;
     ctx.beginPath(); pts.forEach((p, i) => (i ? ctx.lineTo(p.x + 2, p.y + 4) : ctx.moveTo(p.x + 2, p.y + 4))); ctx.stroke();
     // body gradient (tail -> head)
-    for (let i = n - 1; i > 0; i--) {
-      const k = i / Math.max(1, n - 1);
+    for (let i = m - 1; i > 0; i--) {
+      const k = i / Math.max(1, m - 1);
       const col = k < 0.35 ? mix(HEAD, MID, k / 0.35) : mix(MID, TAIL, (k - 0.35) / 0.65);
       ctx.strokeStyle = col;
       ctx.lineWidth = w * (1 - k * 0.28);
@@ -254,12 +262,16 @@
 
   function drawOrb(x, y, r, core, glow, pulse) {
     const R = r * (1 + 0.08 * Math.sin(pulse));
-    const halo = ctx.createRadialGradient(x, y, R * 0.2, x, y, R * 2.6);
-    halo.addColorStop(0, glow); halo.addColorStop(1, "rgba(0,0,0,0)");
-    ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(x, y, R * 2.6, 0, 7); ctx.fill();
+    const HR = R * (3.4 + 0.4 * Math.sin(pulse * 0.5));
+    const halo = ctx.createRadialGradient(x, y, R * 0.3, x, y, HR);
+    halo.addColorStop(0, glow); halo.addColorStop(0.45, "rgba(255,122,92,0.18)"); halo.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.save(); ctx.globalCompositeOperation = "lighter";
+    ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(x, y, HR, 0, 7); ctx.fill(); ctx.restore();
+    ctx.shadowColor = "rgba(255,140,100,0.9)"; ctx.shadowBlur = R * 1.6;
     const g = ctx.createRadialGradient(x - R * 0.35, y - R * 0.4, R * 0.1, x, y, R);
     g.addColorStop(0, "#fff4e6"); g.addColorStop(0.4, core); g.addColorStop(1, "rgba(120,40,20,0.95)");
     ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, R, 0, 7); ctx.fill();
+    ctx.shadowBlur = 0;
     ctx.fillStyle = "rgba(255,255,255,0.75)"; ctx.beginPath(); ctx.arc(x - R * 0.35, y - R * 0.38, R * 0.2, 0, 7); ctx.fill();
   }
 
@@ -281,7 +293,7 @@
     const sx = shake ? rnd(-shake, shake) : 0, sy = shake ? rnd(-shake, shake) : 0;
     ctx.setTransform(dpr, 0, 0, dpr, sx * dpr, sy * dpr);
     ctx.drawImage(bgCache, 0, 0, S, S);
-    if (food) drawOrb((food.x + 0.5) * cell, (food.y + 0.5) * cell, cell * 0.34, CORAL, "rgba(255,122,92,0.55)", clock * 6);
+    if (food) drawOrb((food.x + 0.5) * cell, (food.y + 0.5) * cell, cell * 0.36, CORAL, "rgba(255,140,100,0.7)", clock * 6);
     if (bonus) {
       const left = bonus.until - clock;
       if (left > 1.5 || ((clock * 8) | 0) % 2 === 0) drawStar((bonus.x + 0.5) * cell, (bonus.y + 0.5) * cell, cell * 0.44, clock * 1.6);
