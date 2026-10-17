@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "model": "Gemini 3.8 Flash TTS (gemini-3.8-flash-tts)",
+  "voice": "Autonoe (Bright)",
+  "download_filename": "Generated Audio October 01, 2026 - 10_17AM.wav",
+  "final_path": "/workspace/maeil-webgame-promo/014-minesweeper/day3/narration_gemini.wav",
+  "size_bytes": 562604,
+  "audio": {
+    "format": "WAV",
+    "channels": 1,
+    "sample_rate_hz": 24000,
+    "duration_seconds": 11.72
+  },
+  "style": "밝고 경쾌하고 신나는 20대 여성 목소리로, 게임 광고처럼 빠르고 생기 있게 읽어 줘."
+}

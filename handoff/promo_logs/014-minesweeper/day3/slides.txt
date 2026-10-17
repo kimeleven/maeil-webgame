@@ -1,0 +1,6 @@
+scene1: 깃발 실수는 / 점수 깎여요
+scene2: 확신할 때만 / 깃발 꽂기
+scene3: 애매하면 / 숫자부터 다시
+scene4: 오깃발은 / 감점이에요
+scene5: playtoday / 지금 플레이
+Day3 · 오깃발 감점 주의 · Noto Sans CJK Bold

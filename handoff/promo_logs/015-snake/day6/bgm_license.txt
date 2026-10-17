@@ -1,0 +1,5 @@
+파일: bgm.wav (8.0s, 22.05kHz mono, md5 prefix 3cd4a149) — mux 시 -stream_loop로 반복
+출처: 기존 박스 BGM 자산 재사용 — 015-snake/day6/bgm.wav ← day5/bgm.wav ← day4/bgm.wav ← day3/bgm.wav ← day2/bgm.wav ← day1/bgm.wav (원본 013-nova-tap/day1/bgm.wav, 006~015 프로모에서 동일 파일 사용)
+라이선스: 매일웹겜 프로모용 자체 제작 신스 루프(기존 기록상 "원본 신스/루프 계열 프로모 BGM, 상업용 무료 의도"). 제3자 음원·샘플 사용 기록 없음 → 상업용 사용 가능(자체 자산)으로 간주.
+주의: 원본 생성 경위 상세 기록은 박스에 없음(기존 bgm_license.txt 문구 승계).
+믹스: 나레이션 1.0 + BGM 0.12, 끝 1.2초 페이드아웃

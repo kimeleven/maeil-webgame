@@ -1,0 +1,213 @@
+{
+ "game_id": "016-omok",
+ "title": "오목",
+ "promo_week_start": "2026-10-12",
+ "week": "W03",
+ "days": [
+  {
+   "day": 0,
+   "date": "2026-10-12",
+   "angle": "intro_classic_howto",
+   "hook": "이번 주 게임은 오목!",
+   "assets": "/workspace/maeil-webgame-promo/016-omok/day0/",
+   "channels": {
+    "telegram": {
+     "ok": true,
+     "message_id": 2429,
+     "chat_id": 5799051013
+    },
+    "x": {
+     "ok": false,
+     "post_url": null,
+     "status": "blocked",
+     "reason": "@kimeleven2 not in X account switcher (only @COMBIZSAFETY, @chocogjbi); not posted"
+    },
+    "shorts": {
+     "ok": true,
+     "url": "https://youtube.com/shorts/VsucM240fF0",
+     "video_id": "VsucM240fF0",
+     "visibility": "Public",
+     "channel": "매일웹겜",
+     "format": "gemini_tts_narration_bgm",
+     "voice": "gemini:Autonoe",
+     "angle": "intro_classic_howto"
+    }
+   },
+   "note": "Day0 done by morning 매주웹겜 한 판 (~08:28 KST). Daily 10:11 routine skipped re-post (동일본 금지)."
+  },
+  {
+   "day": 1,
+   "date": "2026-10-13",
+   "angle": "opening_tips",
+   "hook": "첫수는 가운데 근처가 유리해",
+   "assets": "/workspace/maeil-webgame-promo/016-omok/day1/",
+   "channels": {
+    "telegram": {
+     "ok": true,
+     "message_id": 2477,
+     "chat_id": 5799051013
+    },
+    "x": {
+     "ok": false,
+     "post_url": null,
+     "status": "blocked",
+     "reason": "@kimeleven2 not in X account switcher (only @COMBIZSAFETY, @chocogjbi); not posted"
+    },
+    "shorts": {
+     "ok": true,
+     "url": "https://youtube.com/shorts/18MMAz1jXac",
+     "video_id": "18MMAz1jXac",
+     "visibility": "Public",
+     "channel": "매일웹겜",
+     "format": "gemini_tts_narration_bgm",
+     "voice": "gemini:Autonoe",
+     "angle": "opening_tips"
+    }
+   },
+   "note": "W03 Day1 opening tips. X still blocked pending @kimeleven2 login."
+  },
+  {
+   "day": 2,
+   "date": "2026-10-14",
+   "angle": "block_four",
+   "hook": "네 줄 보이면 무조건 막아!",
+   "assets": "/workspace/maeil-webgame-promo/016-omok/day2/",
+   "channels": {
+    "telegram": {
+     "ok": true,
+     "message_id": 2522,
+     "chat_id": 5799051013
+    },
+    "x": {
+     "ok": false,
+     "post_url": null,
+     "status": "blocked",
+     "reason": "@kimeleven2 not in X account switcher (only @COMBIZSAFETY, @chocogjbi); not posted"
+    },
+    "shorts": {
+     "ok": true,
+     "url": "https://youtube.com/shorts/qCKyFY3YSqk",
+     "video_id": "qCKyFY3YSqk",
+     "visibility": "Public",
+     "channel": "매일웹겜",
+     "format": "gemini_tts_narration_bgm",
+     "voice": "gemini:Autonoe",
+     "angle": "block_four"
+    }
+   },
+   "note": "W03 Day2 block challenge; new layout (board-top, 3-step stage bar, procedural boards). X still blocked."
+  },
+  {
+   "day": 3,
+   "date": "2026-10-15",
+   "angle": "double_threat",
+   "hook": "한 수로 두 곳 위협하면 이겨",
+   "assets": "/workspace/maeil-webgame-promo/016-omok/day3/",
+   "channels": {
+    "telegram": {
+     "ok": true,
+     "message_id": 2526,
+     "chat_id": 5799051013
+    },
+    "x": {
+     "ok": false,
+     "post_url": null,
+     "status": "blocked",
+     "reason": "@kimeleven2 not in X account switcher (only @COMBIZSAFETY, @chocogjbi); not posted"
+    },
+    "shorts": {
+     "ok": true,
+     "url": "https://youtube.com/shorts/r5Di02vYNEs",
+     "video_id": "r5Di02vYNEs",
+     "visibility": "Public",
+     "channel": "매일웹겜",
+     "format": "gemini_tts_narration_bgm",
+     "voice": "gemini:Autonoe",
+     "angle": "double_threat"
+    }
+   },
+   "note": "W03 Day3 double threat; layout before/after fork + A|B split + dual threat chips. X still blocked."
+  },
+  {
+   "day": 4,
+   "date": "2026-10-16",
+   "angle": "speed_score",
+   "hook": "빨리 이길수록 점수가 쑥쑥",
+   "assets": "/workspace/maeil-webgame-promo/016-omok/day4/",
+   "channels": {
+    "telegram": {
+     "ok": true,
+     "message_id": 2534,
+     "chat_id": 5799051013
+    },
+    "x": {
+     "ok": false,
+     "post_url": null,
+     "status": "blocked",
+     "reason": "@kimeleven2 not in X account switcher (only @COMBIZSAFETY, @chocogjbi); not posted"
+    },
+    "shorts": {
+     "ok": true,
+     "url": "https://youtube.com/shorts/4f9jagDWHjk",
+     "video_id": "4f9jagDWHjk",
+     "visibility": "Public",
+     "channel": "매일웹겜",
+     "format": "gemini_tts_narration_bgm",
+     "voice": "gemini:Autonoe",
+     "angle": "speed_score"
+    }
+   },
+   "note": "W03 Day4 speed clear; timer HUD + score pop + move-count strip. X still blocked."
+  },
+  {
+   "day": 5,
+   "date": "2026-10-17",
+   "angle": "rank_beat_me",
+   "hook": "친구 기록, 이길 수 있어?",
+   "assets": "/workspace/maeil-webgame-promo/016-omok/day5/",
+   "channels": {
+    "telegram": {
+     "ok": true,
+     "message_id": 2558,
+     "chat_id": 5799051013
+    },
+    "x": {
+     "ok": false,
+     "post_url": null,
+     "status": "blocked",
+     "reason": "@kimeleven2 not in X account switcher (only @COMBIZSAFETY, @chocogjbi); not posted"
+    },
+    "shorts": {
+     "ok": true,
+     "url": "https://youtube.com/shorts/BPiaBOsio2E",
+     "video_id": "BPiaBOsio2E",
+     "visibility": "Public",
+     "channel": "매일웹겜",
+     "format": "gemini_tts_narration_bgm",
+     "voice": "gemini:Autonoe",
+     "angle": "rank_beat_me"
+    }
+   },
+   "note": "W03 Day5 ranking; leaderboard rows + 최고 기록 card + 자랑하기 chat bubbles + VS split. X still blocked."
+  }
+ ],
+ "history": [
+  {
+   "week": "W02",
+   "game_id": "015-snake",
+   "title": "스네이크",
+   "promo_week_start": "2026-10-05",
+   "days_logged": 7,
+   "archive": "/workspace/maeil-webgame-promo/promo_week_log_W02_015-snake.json"
+  },
+  {
+   "week": "W01",
+   "game_id": "014-minesweeper",
+   "title": "지뢰찾기",
+   "promo_week_start": "2026-09-28",
+   "days_logged": 7,
+   "archive": "/workspace/maeil-webgame-promo/promo_week_log_W01_014-minesweeper.json"
+  }
+ ],
+ "updated_at": "2026-10-17T10:18+09:00"
+}

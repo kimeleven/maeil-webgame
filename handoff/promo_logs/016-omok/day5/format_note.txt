@@ -1,0 +1,4 @@
+Day5 angle=rank_beat_me hook=친구 기록, 이길 수 있어?
+layout: leaderboard rows + medals + 최고 기록 score card + 자랑하기 chat bubbles + VS split (distinct from Day0–4 stage bar/dual chips/timer HUD)
+slides 5 + card + 6 captions (Noto Sans CJK Bold, white+black stroke)
+shorts = slides + centered captions + narration + BGM 0.12

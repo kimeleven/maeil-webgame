@@ -1,0 +1,292 @@
+{
+  "ts": "2026-10-12T08:30:00+09:00",
+  "pass": true,
+  "checks": [
+    {
+      "name": "lobby_200",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "api_games_200",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "api_includes_016",
+      "ok": true,
+      "detail": "source=neon ids_head=['016-omok', '015-snake', '014-minesweeper'] count=16"
+    },
+    {
+      "name": "api_source_neon",
+      "ok": true,
+      "detail": "source=neon"
+    },
+    {
+      "name": "catalog_count_ge_16",
+      "ok": true,
+      "detail": "count=16"
+    },
+    {
+      "name": "016-omok_html",
+      "ok": true,
+      "detail": "status=200 size=2842"
+    },
+    {
+      "name": "016-omok_js",
+      "ok": true,
+      "detail": "status=200 size=17165 hash=3107bff762f1"
+    },
+    {
+      "name": "016-omok_css",
+      "ok": true,
+      "detail": "status=200 size=2660"
+    },
+    {
+      "name": "015-snake_html",
+      "ok": true,
+      "detail": "status=200 size=3361"
+    },
+    {
+      "name": "015-snake_js",
+      "ok": true,
+      "detail": "status=200 size=18416 hash=635b8153db00"
+    },
+    {
+      "name": "015-snake_css",
+      "ok": true,
+      "detail": "status=200 size=3813"
+    },
+    {
+      "name": "014-minesweeper_html",
+      "ok": true,
+      "detail": "status=200 size=2053"
+    },
+    {
+      "name": "014-minesweeper_js",
+      "ok": true,
+      "detail": "status=200 size=12888 hash=0925a4c0b2dd"
+    },
+    {
+      "name": "014-minesweeper_css",
+      "ok": true,
+      "detail": "status=200 size=4658"
+    },
+    {
+      "name": "013-nova-tap_html",
+      "ok": true,
+      "detail": "status=200 size=1606"
+    },
+    {
+      "name": "013-nova-tap_js",
+      "ok": true,
+      "detail": "status=200 size=12293 hash=d0becb2ddc89"
+    },
+    {
+      "name": "013-nova-tap_css",
+      "ok": true,
+      "detail": "status=200 size=2142"
+    },
+    {
+      "name": "012-snap-ring_html",
+      "ok": true,
+      "detail": "status=200 size=1625"
+    },
+    {
+      "name": "012-snap-ring_js",
+      "ok": true,
+      "detail": "status=200 size=12086 hash=7ba9872e5fc1"
+    },
+    {
+      "name": "012-snap-ring_css",
+      "ok": true,
+      "detail": "status=200 size=2142"
+    },
+    {
+      "name": "011-orb-link_html",
+      "ok": true,
+      "detail": "status=200 size=1590"
+    },
+    {
+      "name": "011-orb-link_js",
+      "ok": true,
+      "detail": "status=200 size=11578 hash=1ec12f7a9d09"
+    },
+    {
+      "name": "011-orb-link_css",
+      "ok": true,
+      "detail": "status=200 size=2141"
+    },
+    {
+      "name": "010-petal-catch_html",
+      "ok": true,
+      "detail": "status=200 size=1610"
+    },
+    {
+      "name": "010-petal-catch_js",
+      "ok": true,
+      "detail": "status=200 size=11342 hash=b3b1047e2461"
+    },
+    {
+      "name": "010-petal-catch_css",
+      "ok": true,
+      "detail": "status=200 size=2141"
+    },
+    {
+      "name": "009-ripple-pop_html",
+      "ok": true,
+      "detail": "status=200 size=1597"
+    },
+    {
+      "name": "009-ripple-pop_js",
+      "ok": true,
+      "detail": "status=200 size=8894 hash=d74774dc4278"
+    },
+    {
+      "name": "009-ripple-pop_css",
+      "ok": true,
+      "detail": "status=200 size=2141"
+    },
+    {
+      "name": "008-seq-glow_html",
+      "ok": true,
+      "detail": "status=200 size=1591"
+    },
+    {
+      "name": "008-seq-glow_js",
+      "ok": true,
+      "detail": "status=200 size=3319 hash=be0496dd90a9"
+    },
+    {
+      "name": "008-seq-glow_css",
+      "ok": true,
+      "detail": "status=200 size=2124"
+    },
+    {
+      "name": "007-lane-rush_html",
+      "ok": true,
+      "detail": "status=200 size=814"
+    },
+    {
+      "name": "007-lane-rush_js",
+      "ok": true,
+      "detail": "status=200 size=1837 hash=7206ba505b99"
+    },
+    {
+      "name": "007-lane-rush_css",
+      "ok": true,
+      "detail": "status=200 size=930"
+    },
+    {
+      "name": "006-flash-tap_html",
+      "ok": true,
+      "detail": "status=200 size=866"
+    },
+    {
+      "name": "006-flash-tap_js",
+      "ok": true,
+      "detail": "status=200 size=1666 hash=c317aebdedf8"
+    },
+    {
+      "name": "006-flash-tap_css",
+      "ok": true,
+      "detail": "status=200 size=946"
+    },
+    {
+      "name": "005-beat-tap_html",
+      "ok": true,
+      "detail": "status=200 size=862"
+    },
+    {
+      "name": "005-beat-tap_js",
+      "ok": true,
+      "detail": "status=200 size=1396 hash=59e06533283f"
+    },
+    {
+      "name": "005-beat-tap_css",
+      "ok": true,
+      "detail": "status=200 size=964"
+    },
+    {
+      "name": "004-gem-match_html",
+      "ok": true,
+      "detail": "status=200 size=862"
+    },
+    {
+      "name": "004-gem-match_js",
+      "ok": true,
+      "detail": "status=200 size=1898 hash=af7722c48595"
+    },
+    {
+      "name": "004-gem-match_css",
+      "ok": true,
+      "detail": "status=200 size=964"
+    },
+    {
+      "name": "003-star-catch_html",
+      "ok": true,
+      "detail": "status=200 size=862"
+    },
+    {
+      "name": "003-star-catch_js",
+      "ok": true,
+      "detail": "status=200 size=1499 hash=fded3fa2ce0b"
+    },
+    {
+      "name": "003-star-catch_css",
+      "ok": true,
+      "detail": "status=200 size=964"
+    },
+    {
+      "name": "002-pair-flip_html",
+      "ok": true,
+      "detail": "status=200 size=854"
+    },
+    {
+      "name": "002-pair-flip_js",
+      "ok": true,
+      "detail": "status=200 size=1600 hash=69a5d3bdaeb6"
+    },
+    {
+      "name": "002-pair-flip_css",
+      "ok": true,
+      "detail": "status=200 size=1047"
+    },
+    {
+      "name": "001-tap-dodge_html",
+      "ok": true,
+      "detail": "status=200 size=875"
+    },
+    {
+      "name": "001-tap-dodge_js",
+      "ok": true,
+      "detail": "status=200 size=2206 hash=7ecbb759e26b"
+    },
+    {
+      "name": "001-tap-dodge_css",
+      "ok": true,
+      "detail": "status=200 size=964"
+    },
+    {
+      "name": "api_scores_015",
+      "ok": true,
+      "detail": "status=200 keys=['source', 'gameId', 'mine', 'top'] source=neon"
+    },
+    {
+      "name": "asset_/js/guest.js",
+      "ok": true,
+      "detail": "status=200 size=6041"
+    },
+    {
+      "name": "asset_/js/share.js",
+      "ok": true,
+      "detail": "status=200 size=6768"
+    },
+    {
+      "name": "omok_title",
+      "ok": true,
+      "detail": "status=200"
+    }
+  ],
+  "fail_reasons": []
+}

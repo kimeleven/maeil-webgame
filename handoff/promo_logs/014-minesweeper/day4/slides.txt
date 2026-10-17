@@ -1,0 +1,6 @@
+scene1: 길게 누르면 / 바로 깃발
+scene2: 모바일에서 / 칸을 길게
+scene3: 탭은 열기 / 길게는 깃발
+scene4: 한 손으로도 / 편하게
+scene5: playtoday / 지금 플레이
+Day4 · 모바일 길게 누르기 · Noto Sans CJK Bold

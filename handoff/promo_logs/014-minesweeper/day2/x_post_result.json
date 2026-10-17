@@ -1,0 +1,13 @@
+{
+  "ok": false,
+  "account_used": null,
+  "active_account_seen": "@COMBIZSAFETY",
+  "post_url": null,
+  "switcher_accounts": [
+    "@COMBIZSAFETY",
+    "@chocogjbi"
+  ],
+  "tried_at": "2026-09-30T10:17:31+09:00",
+  "method": "playwright_cdp_fork17",
+  "reason": "@kimeleven2 was not in the account switcher. Did not post and did not switch accounts."
+}

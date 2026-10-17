@@ -1,0 +1,13 @@
+{
+  "ok": false,
+  "reason": "YouTube Studio upload repeatedly blocked after file inject: (1) renderer/CDP freeze on details dialog; (2) Chrome 'Reload site?' beforeunload dialog intercepts automation; (3) Escape/Cancel to dismiss lost the in-progress upload form. Title/description were filled once (노바 탭 Day3) and upload completed server-side briefly, but publish wizard (kids→Next→Public→Publish) could not be finished. shorts.mp4 ready for manual Public Shorts upload on 매일웹겜 (UCTPHVn57f9b2RKMKUkwQNgA). Do not force CDP setFileInputFiles without setInterceptFileChooserDialog; even with intercept, page freeze recurred.",
+  "assets_ready": {
+    "shorts_mp4": "/workspace/maeil-webgame-promo/013-nova-tap/day3/shorts.mp4",
+    "narration_mp3": "/workspace/maeil-webgame-promo/013-nova-tap/day3/narration.mp3",
+    "yt_title": "/workspace/maeil-webgame-promo/013-nova-tap/day3/yt-title.txt",
+    "yt_description": "/workspace/maeil-webgame-promo/013-nova-tap/day3/yt-description.txt"
+  },
+  "channel": "매일웹겜",
+  "channel_id": "UCTPHVn57f9b2RKMKUkwQNgA",
+  "tried_at": "2026-09-27T10:58+09:00"
+}

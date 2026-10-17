@@ -1,0 +1,4 @@
+형식: 나레이션 + BGM 0.12 + 화면 중앙 큰 자막(Noto Sans CJK Bold, 흰 글자·검정 외곽선, ≤12자/줄, ≤2줄)
+각도: Day6 주간 마무리 · 다음 주 오목 예고(week_wrap_next_omok) — 주간 캘린더/체크리스트, 하이라이트 칩(속도·콤보·황금별·랭킹), 한 판 더 CTA, 오목 5목 보드 실루엣 예고. Day0~5(소개·조작·속도·콤보·황금별·랭킹/트로피)과 카피·슬라이드 구성 다름(트로피·순위 배지 중심 레이아웃 금지)
+근거: CLASSIC_WEEKLY_CALENDAR.md W02 스네이크 → W03(2026-10-13) 오목; play URL /games/015-snake/
+재렌더: python3 render_day6.py ; 재합성: ./mux.sh

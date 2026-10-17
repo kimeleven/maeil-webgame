@@ -1,0 +1,12 @@
+{
+  "ok": false,
+  "account_used": null,
+  "active_account_seen": "@COMBIZSAFETY",
+  "post_url": null,
+  "reason": "@kimeleven2 was not present in the X account switcher; posting was blocked per account safety rule.",
+  "switcher_accounts": [
+    "@COMBIZSAFETY",
+    "@chocogjbi"
+  ],
+  "tried_at": "2026-10-04 KST"
+}

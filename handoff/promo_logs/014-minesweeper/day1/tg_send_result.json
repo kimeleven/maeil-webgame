@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "result": {
+    "message_id": 2184,
+    "chat": {
+      "id": 5799051013,
+      "type": "private"
+    },
+    "caption_file": "telegram_caption.txt",
+    "photo": "card.png"
+  },
+  "chat_id": 5799051013,
+  "completed_at": "2026-09-29T10:20+09:00"
+}

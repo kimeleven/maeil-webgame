@@ -1,0 +1,12 @@
+{
+ "ok": false,
+ "account_used": null,
+ "active_account_seen": "@COMBIZSAFETY",
+ "post_url": null,
+ "reason": "@kimeleven2 not in X account switcher; did not post from other accounts",
+ "switcher_accounts": [
+  "@COMBIZSAFETY",
+  "@chocogjbi"
+ ],
+ "tried_at": "2026-10-06 KST"
+}

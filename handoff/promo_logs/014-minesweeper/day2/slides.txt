@@ -1,0 +1,6 @@
+scene1: 60초 안에 / 가능할까? (≈4s)
+scene2: 빈 칸부터 / 빠르게 열기 (≈4s)
+scene3: 확정된 지뢰에만 / 깃발! (≈4s)
+scene4: 실수는 금지 / 스피드 챌린지 (≈4s)
+scene5: playtoday / 지금 도전! (≈4s)
+total≈나레이션 길이 · edge-tts(ko-KR-SunHiNeural +8%) · Noto Sans CJK Bold · Day2 challenge angle

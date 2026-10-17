@@ -1,0 +1,17 @@
+{
+  "ok": false,
+  "fallback": true,
+  "voice": "edge-tts:ko-KR-SunHiNeural+8%",
+  "reason": "executor subagent lacks Task/computerUse MCP (cursor server unavailable); cannot drive AI Studio browser. Used edge-tts per policy.",
+  "model_attempted": "Gemini 3.8 Flash TTS (gemini-3.8-flash-tts) / Autonoe",
+  "final_path": "/workspace/maeil-webgame-promo/014-minesweeper/day5/narration_edge.mp3",
+  "wav_path": "/workspace/maeil-webgame-promo/014-minesweeper/day5/narration.wav",
+  "size_bytes": 68256,
+  "audio": {
+    "format": "MP3",
+    "duration_seconds": 11.38
+  },
+  "style": "밝고 경쾌하고 신나는 20대 여성 목소리로, 게임 광고처럼 빠르고 생기 있게 읽어 줘.",
+  "via": "edge-tts_fallback",
+  "created_at": "2026-10-03T10:20+09:00"
+}

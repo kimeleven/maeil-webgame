@@ -1,0 +1,236 @@
+{
+  "game_id": "015-snake",
+  "title": "스네이크",
+  "promo_week_start": "2026-10-05",
+  "week": "W02",
+  "days": [
+    {
+      "day": 0,
+      "date": "2026-10-05",
+      "angle": "intro_classic_howto",
+      "hook": "이번 주 게임은 스네이크!",
+      "assets": "/workspace/maeil-webgame-promo/015-snake/day0/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2221,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "post_url": null,
+          "status": "pending",
+          "reason": "@kimeleven2 not logged in in Chrome; not attempted"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/-Z6lc1CcHB0",
+          "video_id": "-Z6lc1CcHB0",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "intro"
+        }
+      },
+      "note": "Launch day (routine rerun after morning failure)."
+    },
+    {
+      "day": 1,
+      "date": "2026-10-06",
+      "angle": "controls_tips",
+      "hook": "손가락 한 번이면 방향 전환",
+      "assets": "/workspace/maeil-webgame-promo/015-snake/day1/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2223,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "post_url": null,
+          "status": "blocked",
+          "reason": "@kimeleven2 not in switcher (@COMBIZSAFETY, @chocogjbi only); not posted"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/EM0ho3tMEQg",
+          "video_id": "EM0ho3tMEQg",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "controls_tips"
+        }
+      },
+      "note": "Leftover private draft 'shorts' (0:14) in Studio from interrupted first upload; user to delete."
+    },
+    {
+      "day": 2,
+      "date": "2026-10-07",
+      "angle": "speed_challenge",
+      "hook": "먹을수록 빨라지는데 버틸 수 있어?",
+      "assets": "/workspace/maeil-webgame-promo/015-snake/day2/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2235,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "post_url": null,
+          "status": "blocked",
+          "reason": "@kimeleven2 unavailable (active @COMBIZSAFETY); not posted"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/VdEym11rLnw",
+          "video_id": "VdEym11rLnw",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "speed_challenge"
+        }
+      },
+      "note": "Speed gauge/food-count/collision layout. Two leftover private 'shorts' drafts (0:14) still in Studio."
+    },
+    {
+      "day": 3,
+      "date": "2026-10-08",
+      "angle": "combo_strategy",
+      "hook": "3초 안에 연달아 먹으면 콤보!",
+      "assets": "/workspace/maeil-webgame-promo/015-snake/day3/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2239,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "post_url": null,
+          "status": "blocked",
+          "reason": "@kimeleven2 not in switcher (@COMBIZSAFETY active, @chocogjbi); not posted"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/l-UoRSxI120",
+          "video_id": "l-UoRSxI120",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "combo_strategy"
+        }
+      },
+      "note": "Combo chain / score staircase / 3.2s ring / length bonus layout."
+    },
+    {
+      "day": 4,
+      "date": "2026-10-09",
+      "angle": "golden_star_bonus",
+      "hook": "황금 별 보이면 무조건 먹어요",
+      "assets": "/workspace/maeil-webgame-promo/015-snake/day4/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2310,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "post_url": null,
+          "status": "blocked",
+          "reason": "@kimeleven2 not available in X account switcher (only @COMBIZSAFETY logged in); nothing posted"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/3DVZWNrhvjE",
+          "video_id": "3DVZWNrhvjE",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "golden_star_bonus"
+        }
+      },
+      "note": "X blocked: @kimeleven2 not in switcher (only @COMBIZSAFETY). Possible extra private Studio draft from interrupted first upload attempt."
+    },
+    {
+      "day": 5,
+      "date": "2026-10-10",
+      "angle": "rank_beat_me",
+      "hook": "친구 기록, 이길 수 있어?",
+      "assets": "/workspace/maeil-webgame-promo/015-snake/day5/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2389,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "post_url": null,
+          "status": "blocked",
+          "reason": "@kimeleven2 not in X account switcher (only @COMBIZSAFETY, @chocogjbi); not posted"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/rYVX4KfBpuM",
+          "video_id": "rYVX4KfBpuM",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "rank_beat_me"
+        }
+      },
+      "note": "X blocked: @kimeleven2 not in switcher (only @COMBIZSAFETY/@chocogjbi). Telegram+Shorts ok."
+    },
+    {
+      "day": 6,
+      "date": "2026-10-11",
+      "angle": "week_wrap_next_omok",
+      "hook": "이번 주 스네이크 마지막 날",
+      "assets": "/workspace/maeil-webgame-promo/015-snake/day6/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2427,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "post_url": null,
+          "status": "blocked",
+          "reason": "@kimeleven2 not in X account switcher (only @COMBIZSAFETY, @chocogjbi); not posted"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/vieUVehnlGw",
+          "video_id": "vieUVehnlGw",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "week_wrap_next_omok"
+        }
+      },
+      "note": "W02 final day. X blocked same as Day1–5. Telegram+Shorts ok. Next week W03 오목."
+    }
+  ],
+  "history": [
+    {
+      "week": "W01",
+      "game_id": "014-minesweeper",
+      "title": "지뢰찾기",
+      "promo_week_start": "2026-09-28",
+      "days_logged": 7,
+      "archive": "/workspace/maeil-webgame-promo/promo_week_log_W01_014-minesweeper.json"
+    }
+  ],
+  "updated_at": "2026-10-11T10:22+09:00"
+}

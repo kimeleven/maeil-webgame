@@ -1,0 +1,6 @@
+scene1: 어제 기록 / 이겨보세요
+scene2: 오늘 목표 / 최고점 갱신
+scene3: 닉네임 남기고 / 순위에 도전
+scene4: 한 판 더 / 기록 깨기
+scene5: playtoday / 지금 플레이
+Day5 · 최고점 갱신 독려 · Noto Sans CJK Bold

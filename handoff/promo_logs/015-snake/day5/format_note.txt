@@ -1,0 +1,4 @@
+형식: 나레이션 + BGM 0.12 + 화면 중앙 큰 자막(Noto Sans CJK Bold, 흰 글자·검정 외곽선, ≤12자/줄, ≤2줄)
+각도: Day5 랭킹 · 나를 이겨봐 친구 도전장(rank_beat_me) — 종료 화면 점수+현재 순위 N위·최고 M점(MaeilGuest.postScore), 「자랑하기」(share.js SNS 도전장), 닉네임 순위 등록. Day0~4(소개·조작·속도·콤보·황금별)과 카피·슬라이드 구성(순위 배지·닉네임→순위·자랑하기·점수 대결·CTA) 다름
+근거: game.js end screen rank via MaeilGuest.postScore; share.js 「자랑하기」/나를 이겨봐 도전장
+재렌더: python3 render_day5.py ; 재합성: ./mux.sh

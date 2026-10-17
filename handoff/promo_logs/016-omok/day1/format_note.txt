@@ -1,0 +1,4 @@
+Day1 angle=opening_tips hook=첫수는 가운데 근처가 유리해
+slides 5 + card + captions (Noto Sans CJK Bold, white+black stroke)
+shorts = slides + centered captions + narration + BGM 0.12
+voice preferred: gemini-3.8-flash-tts Autonoe; fallback edge-tts ko-KR-SunHiNeural

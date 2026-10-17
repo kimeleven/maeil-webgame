@@ -1,0 +1,4 @@
+형식: 나레이션(Gemini 3.8 Flash TTS · Autonoe, AI Studio 브라우저) + BGM 0.12 + 화면 중앙 큰 자막(Noto Sans CJK Bold, 흰 글자·검정 외곽선, ≤12자/줄, ≤2줄)
+각도: Day2 속도 UP 챌린지(먹이 4개마다 레벨업, Lv.9 최대 약 2.4배, 벽·꼬리 회피) — Day0 소개·Day1 조작팁과 카피·슬라이드 구성(속도계 게이지·먹이 카운트·충돌 경고) 전부 다름
+근거: game.js START_STEP 150ms, MIN_STEP 62ms, eaten%4==0 → level++, stepMs = 150-(level-1)*11 → Lv.9에서 62ms
+재렌더: python3 render_day2.py ; 재합성: ./mux.sh

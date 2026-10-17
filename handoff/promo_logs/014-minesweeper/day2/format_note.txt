@@ -1,0 +1,5 @@
+edge-tts 나레이션판 · Typecast 10/14까지 금지
+음성: ko-KR-SunHiNeural, rate +8%
+형식: 나레이션 + BGM(작게) + 중앙 자막 슬라이드
+자막: 한 줄 12자 안팎·2줄 이내·흰 글씨+검은 외곽선(Noto Sans CJK Bold)
+Day2: 빠르게 클리어 챌린지 / 훅 «60초 안에 가능할까»

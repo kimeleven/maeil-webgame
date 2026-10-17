@@ -1,0 +1,6 @@
+scene1: 이번 주 마지막 / 지뢰찾기
+scene2: 오늘이 기회 / 클리어 도전
+scene3: 다음 주는 / 스네이크
+scene4: 지금 한 판 더 / playtoday
+scene5: 설치 없이 / 바로 플레이
+Day6 · 주간 마무리 · 다음 주 예고 · Noto Sans CJK Bold

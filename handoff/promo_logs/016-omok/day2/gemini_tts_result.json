@@ -1,0 +1,9 @@
+{
+ "ok": true,
+ "model": "gemini-3.8-flash-tts",
+ "voice": "Autonoe",
+ "src": "/home/box/Downloads/Generated Audio October 14, 2026 - 10_20AM.wav",
+ "dest": "/workspace/maeil-webgame-promo/016-omok/day2/narration_gemini.wav",
+ "error": null,
+ "duration_s": 9.2
+}

@@ -1,0 +1,7 @@
+제미나이 TTS 나레이션판 (기본) — 본 executor는 edge-tts 대체
+음성 기본: Gemini 3.8 Flash TTS · Autonoe (부모가 AI Studio 시도)
+대체: edge-tts ko-KR-SunHiNeural +8%
+스타일: 밝고 경쾌하고 신나는 20대 여성, 게임 광고처럼 빠르고 생기 있게
+형식: 나레이션 + BGM(작게) + 중앙 자막 슬라이드
+자막: 한 줄 12자 안팎·2줄 이내·흰 글씨+검은 외곽선(Noto Sans CJK Bold)
+Day6: 주간 마무리 · 다음 주 예고 / 훅 «이번 주 지뢰찾기 마지막 날»

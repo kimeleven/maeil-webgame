@@ -1,0 +1,17 @@
+🎮 매일웹겜 주간 클래식 W03 · 10/14(수) Day2
+오목 · 막기 챌린지 (AI 네 줄 차단)
+
+네 줄 보이면 무조건 막아!
+① 발견: AI 네 줄의 양 끝 빈칸 찾기
+② 막기: 끝을 바로 막기 (한 수 늦으면 패배)
+③ 끊기: 열린 셋도 미리 한쪽 끊어 두기
+공격보다 수비가 먼저, 다 막으면 기회가 와요.
+
+▶️ https://www.playtoday.cloud/games/016-omok/
+로비 https://www.playtoday.cloud/
+
+——— X(@kimeleven2) 초안 ———
+오목 막기 챌린지 🛡️
+AI가 네 줄 만들면 바로 끝을 막아! 열린 셋도 미리 끊기
+다 막을 수 있어? 👉 https://www.playtoday.cloud/games/016-omok/
+#매일웹겜 #오목 #웹게임

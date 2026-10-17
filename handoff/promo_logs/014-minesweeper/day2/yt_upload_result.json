@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "url": "https://youtube.com/shorts/fxPx-krFIhE",
+  "video_id": "fxPx-krFIhE",
+  "visibility": "공개",
+  "channel": "매일웹겜",
+  "channel_id": "UCTPHVn57f9b2RKMKUkwQNgA",
+  "format": "edge_tts_narration_bgm",
+  "voice": "edge-tts:ko-KR-SunHiNeural+8%",
+  "title": "매일웹겜 지뢰찾기 — 60초 안에 가능할까 #쇼츠",
+  "completed_at": "2026-09-30T10:28:34+09:00",
+  "published_flag": true,
+  "method": "playwright_cdp_fork17_udvid",
+  "row": {
+    "id": "fxPx-krFIhE",
+    "href": "https://studio.youtube.com/video/fxPx-krFIhE/edit",
+    "lines": [
+      "0:14",
+      "매일웹겜 지뢰찾기 — 60초 안에 가능할까 #쇼츠",
+      "매일웹겜 주간 클래식 W01 Day2 · 지뢰찾기 60초 클리어 챌린지! 빈 칸부터 빠르게, 확정만 깃발. ▶️ https://www.playtoday.cloud/games/014-minesweeper/ #매일웹겜 #지뢰찾기 #웹게임 #shorts",
+      "—",
+      "공개",
+      "2026. 9. 30.",
+      "게시일",
+      "0",
+      "0"
+    ],
+    "vis": "공개"
+  }
+}

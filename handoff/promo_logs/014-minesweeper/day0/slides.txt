@@ -1,0 +1,6 @@
+scene1: 오늘부터 지뢰찾기 (3.2s)
+scene2: 칸을 탭해서 열기 (3.2s)
+scene3: 숫자로 지뢰 추론 (3.2s)
+scene4: 길게 누르면 깃발 (3.2s)
+scene5: playtoday.cloud (3.2s)
+total≈16s · silent_bgm_captions · Noto Sans CJK Bold

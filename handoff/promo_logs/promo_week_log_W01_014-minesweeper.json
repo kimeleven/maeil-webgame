@@ -1,0 +1,271 @@
+{
+  "game_id": "014-minesweeper",
+  "title": "지뢰찾기",
+  "promo_week_start": "2026-09-28",
+  "week": "W01",
+  "days": [
+    {
+      "day": 0,
+      "date": "2026-09-28",
+      "angle": "intro_classic_howto",
+      "hook": "오늘부터 지뢰찾기 한 주",
+      "assets": "/workspace/maeil-webgame-promo/014-minesweeper/day0/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2180,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "account_used": null,
+          "active_account_seen": "@COMBIZSAFETY",
+          "post_url": null,
+          "reason": "@kimeleven2 was not in the account switcher. Did not post and did not switch accounts.",
+          "switcher_accounts": [
+            "@COMBIZSAFETY",
+            "@chocogjbi"
+          ],
+          "tried_at": "2026-09-28T10:25+09:00"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/yth82l257SM",
+          "video_id": "yth82l257SM",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "silent_bgm_captions",
+          "voice": null,
+          "angle": "intro_classic_howto"
+        }
+      },
+      "completed_at": "2026-09-28T10:27+09:00",
+      "note": "무음성 자막판 (Typecast 소진). Telegram+Shorts OK; X blocked (@kimeleven2 missing)."
+    },
+    {
+      "day": 1,
+      "date": "2026-09-29",
+      "angle": "number_hint_tips",
+      "hook": "숫자만 보면 지뢰가 보여요",
+      "assets": "/workspace/maeil-webgame-promo/014-minesweeper/day1/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2184,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "account_used": null,
+          "active_account_seen": "@COMBIZSAFETY",
+          "post_url": null,
+          "reason": "@kimeleven2 was not in the account switcher. Did not post and did not switch accounts.",
+          "switcher_accounts": [
+            "@COMBIZSAFETY",
+            "@chocogjbi"
+          ],
+          "tried_at": "2026-09-29T10:34:23+09:00"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/bn6_e8F-lNU",
+          "video_id": "bn6_e8F-lNU",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "silent_bgm_captions",
+          "voice": null,
+          "angle": "number_hint_tips"
+        }
+      },
+      "completed_at": "2026-09-29T10:34+09:00",
+      "note": "무음성 자막판 (Typecast 소진). Telegram+Shorts OK; X blocked (@kimeleven2 missing)."
+    },
+    {
+      "day": 2,
+      "date": "2026-09-30",
+      "angle": "fast_clear_challenge",
+      "hook": "60초 안에 가능할까",
+      "assets": "/workspace/maeil-webgame-promo/014-minesweeper/day2/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2189,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "account_used": null,
+          "active_account_seen": "@COMBIZSAFETY",
+          "post_url": null,
+          "reason": "@kimeleven2 was not in the account switcher. Did not post and did not switch accounts.",
+          "switcher_accounts": [
+            "@COMBIZSAFETY",
+            "@chocogjbi"
+          ],
+          "tried_at": "2026-09-30T10:17:31+09:00"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/fxPx-krFIhE",
+          "video_id": "fxPx-krFIhE",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "edge_tts_narration_bgm",
+          "voice": "edge-tts:ko-KR-SunHiNeural+8%",
+          "angle": "fast_clear_challenge"
+        }
+      },
+      "completed_at": "2026-09-30T10:28+09:00",
+      "note": "edge-tts 나레이션+BGM. Telegram+Shorts OK; X blocked (@kimeleven2 missing)."
+    },
+    {
+      "day": 3,
+      "date": "2026-10-01",
+      "angle": "false_flag_penalty",
+      "hook": "깃발 실수는 점수 깎여요",
+      "assets": "/workspace/maeil-webgame-promo/014-minesweeper/day3/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2201,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "account_used": null,
+          "active_account_seen": "@COMBIZSAFETY",
+          "post_url": null,
+          "reason": "@kimeleven2 was not in the account switcher. Did not post and did not switch accounts.",
+          "switcher_accounts": [
+            "@COMBIZSAFETY",
+            "@chocogjbi"
+          ],
+          "tried_at": "2026-10-01T10:21+09:00"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/3zWDvWHT58s",
+          "video_id": "3zWDvWHT58s",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "false_flag_penalty"
+        }
+      },
+      "completed_at": "2026-10-01T10:21+09:00",
+      "note": "제미나이 TTS(Autonoe)+BGM. Telegram+Shorts OK; X blocked (@kimeleven2 missing)."
+    },
+    {
+      "day": 4,
+      "date": "2026-10-02",
+      "angle": "long_press_flag",
+      "hook": "길게 누르면 바로 깃발",
+      "assets": "/workspace/maeil-webgame-promo/014-minesweeper/day4/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2203,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "account_used": null,
+          "post_url": null,
+          "reason": "Day4 routine incomplete/failed; no x_post_result.json. Historical pattern: @kimeleven2 missing from switcher.",
+          "backfill": true
+        },
+        "shorts": {
+          "ok": false,
+          "url": null,
+          "video_id": null,
+          "visibility": null,
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "reason": "shorts.mp4 built; YT Studio probe showed permission/login error (yt_upload_probe.png). No confirmed upload. No republish.",
+          "backfill": true
+        }
+      },
+      "completed_at": "2026-10-02T10:26+09:00",
+      "note": "백필: 자산·제미나이 TTS·텔레그램(msg 2203) OK. YT/X 미확인(루틴 failed). 재게시 금지."
+    },
+    {
+      "day": 5,
+      "date": "2026-10-03",
+      "angle": "beat_yesterday_highscore",
+      "hook": "어제 기록 이겨보세요",
+      "assets": "/workspace/maeil-webgame-promo/014-minesweeper/day5/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2206,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "account_used": null,
+          "active_account_seen": "@COMBIZSAFETY",
+          "post_url": null,
+          "reason": "@kimeleven2 was not in the account switcher. Did not post and did not switch accounts.",
+          "switcher_accounts": [
+            "@COMBIZSAFETY",
+            "@chocogjbi"
+          ],
+          "tried_at": "2026-10-03T10:25+09:00"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/HGcRi2AjqJY",
+          "video_id": "HGcRi2AjqJY",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "edge_tts_narration_bgm",
+          "voice": "edge-tts:ko-KR-SunHiNeural+8%",
+          "angle": "highscore_beat_yesterday"
+        }
+      },
+      "completed_at": "2026-10-03T10:25+09:00",
+      "note": "edge-tts 나레이션+BGM. Telegram+Shorts OK; X blocked (@kimeleven2 missing)."
+    },
+    {
+      "day": 6,
+      "date": "2026-10-04",
+      "angle": "week_finale_next_snake",
+      "hook": "이번 주 지뢰찾기 마지막 날",
+      "assets": "/workspace/maeil-webgame-promo/014-minesweeper/day6/",
+      "channels": {
+        "telegram": {
+          "ok": true,
+          "message_id": 2209,
+          "chat_id": 5799051013
+        },
+        "x": {
+          "ok": false,
+          "account_used": null,
+          "active_account_seen": "@COMBIZSAFETY",
+          "post_url": null,
+          "reason": "@kimeleven2 was not in the account switcher. Did not post and did not switch accounts.",
+          "switcher_accounts": [
+            "@COMBIZSAFETY",
+            "@chocogjbi"
+          ],
+          "tried_at": "2026-10-04T10:27+09:00"
+        },
+        "shorts": {
+          "ok": true,
+          "url": "https://youtube.com/shorts/5zxn7d30_Mw",
+          "video_id": "5zxn7d30_Mw",
+          "visibility": "Public",
+          "channel": "매일웹겜",
+          "format": "gemini_tts_narration_bgm",
+          "voice": "gemini:Autonoe",
+          "angle": "week_finale_next_snake"
+        }
+      },
+      "completed_at": "2026-10-04T10:27+09:00",
+      "note": "제미나이 TTS(Autonoe)+BGM. Telegram+Shorts OK; X blocked (@kimeleven2 missing). W01 Day6 주간 마무리·다음주 스네이크 예고."
+    }
+  ],
+  "updated_at": "2026-10-04T10:27+09:00"
+}

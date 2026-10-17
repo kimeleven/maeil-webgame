@@ -1,0 +1,3 @@
+형식: 나레이션(Gemini 3.8 Flash TTS · Autonoe, AI Studio 브라우저) + BGM 0.12 + 화면 중앙 큰 자막(Noto Sans CJK Bold, 흰 글자·검정 외곽선, ≤12자/줄, ≤2줄)
+각도: Day1 조작 3종 팁(스와이프/방향패드/키보드) — Day0 소개와 슬라이드 구성·카피 전부 다름
+재렌더: python3 render_day1.py ; 재합성: ./mux.sh

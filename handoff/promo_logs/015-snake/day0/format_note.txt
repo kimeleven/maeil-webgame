@@ -1,0 +1,4 @@
+형식: 나레이션(edge-tts ko-KR-SunHiNeural +8%) + BGM + 화면 중앙 큰 자막 (Noto Sans CJK Bold, 흰 글자·검정 외곽선, ≤12자/줄, ≤2줄)
+슬라이드: 실제 게임 화면 캡처(로컬 빌드, 봇 플레이) + Noto Sans CJK 텍스트, 1080x1920 x5
+Gemini TTS 교체: narration_gemini.wav 로 저장 후 ./mux.sh  (또는 ./mux.sh /path/x.wav)
+재렌더: python3 render_day0.py (슬라이드/카드/자막 PNG)

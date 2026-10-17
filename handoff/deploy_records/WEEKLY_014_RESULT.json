@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "week": "W01",
+  "promo_week_start": "2026-09-28",
+  "game": {
+    "id": "014-minesweeper",
+    "title": "지뢰찾기",
+    "url": "https://www.playtoday.cloud/games/014-minesweeper/",
+    "genre": "클래식/보드",
+    "path": "/workspace/maeil-webgame/public/games/014-minesweeper/",
+    "js_bytes": 12888,
+    "css_bytes": 4658
+  },
+  "neon": {
+    "ok": true,
+    "project_id": "restless-frost-72571297",
+    "published_on": "2026-09-28"
+  },
+  "catalog": {
+    "ok": true,
+    "games_json": true,
+    "games_fallback": true,
+    "sitemap": true
+  },
+  "deploy": {
+    "ok": true,
+    "method": "vercel CLI --prod --yes (no teamId)",
+    "dir": "/workspace/_deploy_014",
+    "deployment_url": "https://maeil-webgame-rmurcrchp-sanghunkims-projects.vercel.app",
+    "alias": "https://www.playtoday.cloud",
+    "deployment_id": "dpl_3AWgAvDL4wGhsgeujZvrkLxbtdTB"
+  },
+  "smoke": {
+    "ok": true,
+    "result_path": "/workspace/SMOKE_014_RESULT.json",
+    "api_games_source": "neon",
+    "has014": true
+  },
+  "promo": {
+    "ok": true,
+    "dir": "/workspace/maeil-webgame-promo/014-minesweeper/",
+    "current_week_game": "/workspace/maeil-webgame-promo/CURRENT_WEEK_GAME.json",
+    "assets": [
+      "card.png",
+      "slide1.png",
+      "slide2.png",
+      "slide3.png",
+      "slide4.png",
+      "narration.txt",
+      "telegram_caption.txt"
+    ]
+  },
+  "telegram": {
+    "ok": true,
+    "chat_id": "5799051013",
+    "photo_message_id": 2177,
+    "narration_text_sent": true
+  },
+  "git": {
+    "ok": true,
+    "author": "kimeleven <kimeleven@gmail.com>",
+    "commit": "ad963a5",
+    "remote": "https://github.com/kimeleven/maeil-webgame",
+    "pushed": true
+  },
+  "shorts": {
+    "ok": false,
+    "status": "skipped",
+    "reason": "Typecast paid Download paywall; sent narration text+slides to Telegram only. No long auth loop."
+  },
+  "x": {
+    "ok": false,
+    "status": "skipped_best_effort",
+    "draft": "/workspace/maeil-webgame-promo/014-minesweeper/x_caption.txt",
+    "account": "@kimeleven2",
+    "reason": "No non-interactive X post path in this run; caption drafted for manual/follow-up."
+  },
+  "finished_at_kst": "2026-09-28 08:17:43 KST"
+}

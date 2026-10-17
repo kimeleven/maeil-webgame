@@ -1,0 +1,4 @@
+형식: 나레이션 + BGM 0.12 + 화면 중앙 큰 자막(Noto Sans CJK Bold, 흰 글자·검정 외곽선, ≤12자/줄, ≤2줄)
+각도: Day4 황금 별 보너스(golden_star_bonus) — 먹이 5개마다(eaten%5==0) 황금 별 ~5초 스폰, 먹으면 점수 50+Lv×5 · timeLeft+3 · grow+2. Day0~3(소개·조작·속도·콤보)과 카피·슬라이드 구성(스폰 규칙·보상 카드·5초 링·별 보드) 다름
+근거: game.js bonus spawn every 5 foods; visible ~5s; gain=50+level*5; timeLeft+=3; grow+=2; float "+gain · +3초"
+재렌더: python3 render_day4.py ; 재합성: ./mux.sh

@@ -1,0 +1,19 @@
+{
+  "game_id": "016-omok",
+  "title": "오목",
+  "url": "https://www.playtoday.cloud/games/016-omok/",
+  "genre": "클래식/보드",
+  "launch_date": "2026-10-12",
+  "promo_week_start": "2026-10-12",
+  "week": "W03",
+  "promo_days": [
+    {"day":0,"date":"2026-10-12","angle":"클래식 원작 소개 · 오목 기본","hook":"이번 주 게임은 오목!","angle_key":"intro_classic_howto"},
+    {"day":1,"date":"2026-10-13","angle":"한수 팁 · 중앙·삼삼 감각","hook":"첫수는 가운데 근처가 유리해","angle_key":"opening_tips"},
+    {"day":2,"date":"2026-10-14","angle":"막기 챌린지 · AI 네 줄 차단","hook":"네 줄 보이면 무조건 막아!","angle_key":"block_four"},
+    {"day":3,"date":"2026-10-15","angle":"양날 공격 · 두 방향 위협","hook":"한 수로 두 곳 위협하면 이겨","angle_key":"double_threat"},
+    {"day":4,"date":"2026-10-16","angle":"스피드 클리어 · 빠른 승리 점수","hook":"빨리 이길수록 점수가 쑥쑥","angle_key":"speed_score"},
+    {"day":5,"date":"2026-10-17","angle":"랭킹 · 나를 이겨봐","hook":"친구 기록, 이길 수 있어?","angle_key":"rank_beat_me"},
+    {"day":6,"date":"2026-10-18","angle":"주간 마무리 · 다음 주 2048 예고","hook":"이번 주 오목 마지막 날","angle_key":"week_wrap_next_2048"}
+  ],
+  "note": "W03 오목. 런칭/홍보 시작 2026-10-12(월). 일일 광고는 날마다 변형. 다음 주 W04 2048."
+}

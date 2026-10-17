@@ -1,0 +1,3 @@
+출처: day0/bgm.wav 재사용 (원본 013-nova-tap/day1/bgm.wav)
+상업용 상태: 원본 신스/루프 계열 프로모 BGM 재사용, 상업용 무료 의도
+형식: WAV → Shorts mux (BGM only, no narration)

@@ -1,0 +1,54 @@
+{
+ "ok": true,
+ "week": "W02",
+ "promo_week_start": "2026-10-05",
+ "game": {
+  "id": "015-snake",
+  "title": "스네이크",
+  "url": "https://www.playtoday.cloud/games/015-snake/",
+  "genre": "클래식/아케이드",
+  "path": "/workspace/maeil-webgame/public/games/015-snake/"
+ },
+ "neon": {
+  "ok": true,
+  "project_id": "restless-frost-72571297",
+  "published_on": "2026-10-05",
+  "seeded": false,
+  "seed_note": "010-014 were not seeded; followed latest pattern"
+ },
+ "catalog": {
+  "games_json": true,
+  "games_fallback": true,
+  "sitemap": true
+ },
+ "deploy": {
+  "ok": true,
+  "method": "vercel CLI --prod --yes (no teamId)",
+  "dir": "/workspace/_deploy_015",
+  "deployment_url": "https://maeil-webgame-m1zc5ppp8-sanghunkims-projects.vercel.app",
+  "deployment_id": "dpl_9L7Wes7GWDxAL9Z86aAnVv6t98zy",
+  "previous_same_run": "dpl_GqiwjMvaKcd3oMZ9P4dCTMgfdiDR (pjo3x9idu, first 015 deploy, superseded by polish)",
+  "rollback_target_last_good": "dpl_8oG3pxa6vWG7DVckKJdzmEFdFBFn (maeil-webgame-n558g6m7x, 014)",
+  "alias": "https://www.playtoday.cloud"
+ },
+ "smoke": {
+  "ok": true,
+  "result_path": "/workspace/SMOKE_015_RESULT.json",
+  "script": "/workspace/smoke_015.py"
+ },
+ "git": {
+  "author": "kimeleven <kimeleven@gmail.com>",
+  "commits": [
+   "57bff42",
+   "31c5d8b"
+  ],
+  "pushed": true
+ },
+ "telegram": {
+  "ok": true,
+  "chat_id": 5799051013,
+  "message_id": 2221
+ },
+ "promo_day0": "/workspace/maeil-webgame-promo/015-snake/day0/",
+ "finished_at_kst": "2026-10-05 10:40 KST"
+}

@@ -1,0 +1,158 @@
+{
+  "cadence": "weekly",
+  "promo": "daily_variations_7d",
+  "no_repeat_days": 30,
+  "start_monday": "2026-09-29",
+  "games": [
+    {
+      "week_start": "2026-09-29",
+      "week": 1,
+      "title": "지뢰찾기"
+    },
+    {
+      "week_start": "2026-10-06",
+      "week": 2,
+      "title": "스네이크"
+    },
+    {
+      "week_start": "2026-10-13",
+      "week": 3,
+      "title": "오목"
+    },
+    {
+      "week_start": "2026-10-20",
+      "week": 4,
+      "title": "2048"
+    },
+    {
+      "week_start": "2026-10-27",
+      "week": 5,
+      "title": "벽돌깨기"
+    },
+    {
+      "week_start": "2026-11-03",
+      "week": 6,
+      "title": "커넥트4"
+    },
+    {
+      "week_start": "2026-11-10",
+      "week": 7,
+      "title": "플래피 라이트"
+    },
+    {
+      "week_start": "2026-11-17",
+      "week": 8,
+      "title": "테트리스 라이트"
+    },
+    {
+      "week_start": "2026-11-24",
+      "week": 9,
+      "title": "슬라이딩 15"
+    },
+    {
+      "week_start": "2026-12-01",
+      "week": 10,
+      "title": "미로 탈출"
+    },
+    {
+      "week_start": "2026-12-08",
+      "week": 11,
+      "title": "틱택토 3판"
+    },
+    {
+      "week_start": "2026-12-15",
+      "week": 12,
+      "title": "솔리테어"
+    },
+    {
+      "week_start": "2026-12-22",
+      "week": 13,
+      "title": "바둑돌 따먹기"
+    },
+    {
+      "week_start": "2026-12-29",
+      "week": 14,
+      "title": "배틀십"
+    },
+    {
+      "week_start": "2027-01-05",
+      "week": 15,
+      "title": "퐁"
+    },
+    {
+      "week_start": "2027-01-12",
+      "week": 16,
+      "title": "스도쿠 미니"
+    },
+    {
+      "week_start": "2027-01-19",
+      "week": 17,
+      "title": "마작 솔리테어"
+    },
+    {
+      "week_start": "2027-01-26",
+      "week": 18,
+      "title": "핀볼"
+    },
+    {
+      "week_start": "2027-02-02",
+      "week": 19,
+      "title": "리버시"
+    },
+    {
+      "week_start": "2027-02-09",
+      "week": 20,
+      "title": "라이트 아웃"
+    },
+    {
+      "week_start": "2027-02-16",
+      "week": 21,
+      "title": "논그램 미니"
+    },
+    {
+      "week_start": "2027-02-23",
+      "week": 22,
+      "title": "슈팅 갤러리"
+    },
+    {
+      "week_start": "2027-03-02",
+      "week": 23,
+      "title": "에어하키"
+    },
+    {
+      "week_start": "2027-03-09",
+      "week": 24,
+      "title": "플로우 라인"
+    },
+    {
+      "week_start": "2027-03-16",
+      "week": 25,
+      "title": "인베이더 라이트"
+    },
+    {
+      "week_start": "2027-03-23",
+      "week": 26,
+      "title": "워드리스"
+    },
+    {
+      "week_start": "2027-03-30",
+      "week": 27,
+      "title": "횡스크롤 러너"
+    },
+    {
+      "week_start": "2027-04-06",
+      "week": 28,
+      "title": "체커 미니"
+    },
+    {
+      "week_start": "2027-04-13",
+      "week": 29,
+      "title": "힐클라임"
+    },
+    {
+      "week_start": "2027-04-20",
+      "week": 30,
+      "title": "페그 솔리테어"
+    }
+  ]
+}

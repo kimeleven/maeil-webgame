@@ -1,0 +1,4 @@
+Day2 angle=block_four hook=네 줄 보이면 무조건 막아!
+layout: board-top/text-bottom challenge + 3-step stage bar (발견/막기/끊기); procedural boards + real screenshot CTA
+slides 5 + card + 6 captions (Noto Sans CJK Bold, white+black stroke)
+shorts = slides + centered captions + narration + BGM 0.12

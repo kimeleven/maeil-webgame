@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "message_id": 2206,
+  "chat_id": 5799051013,
+  "photo": "/workspace/maeil-webgame-promo/014-minesweeper/day5/card_tg.jpg",
+  "caption_file": "/workspace/maeil-webgame-promo/014-minesweeper/day5/telegram_caption.txt",
+  "tried_at": "2026-10-03T10:22+09:00",
+  "note": "send_photo.py printed ok + message_id 2206"
+}

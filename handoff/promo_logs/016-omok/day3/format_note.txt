@@ -1,0 +1,4 @@
+Day3 angle=double_threat hook=한 수로 두 곳 위협하면 이겨
+layout: dual threat arrows + Before/After fork + A|B split panels (AI blocks only one); dual chips (위협 A·넷 / 위협 B·열린 셋); procedural boards + real screenshot CTA
+slides 5 + card + 6 captions (Noto Sans CJK Bold, white+black stroke)
+shorts = slides + centered captions + narration + BGM 0.12
