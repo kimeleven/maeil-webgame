@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="SIH">
+<defs><radialGradient id="g" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".35" stop-color="#FF5FA2"/><stop offset="1" stop-color="#FF5FA2" stop-opacity=".75"/></radialGradient>
+<filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<circle cx="160" cy="150" r="30" fill="#FF5FA2"/><circle cx="352" cy="150" r="30" fill="#FF5FA2"/>
+    
+  <ellipse cx="256" cy="452" rx="150" ry="22" fill="#000" opacity=".35"/>
+  <path d="M256 120 C380 120 410 230 404 320 C398 410 330 446 256 446 C182 446 114 410 108 320 C102 230 132 120 256 120Z" fill="url(#g)" stroke="#FF5FA2" stroke-width="6" filter="url(#glow)"/>
+  <ellipse cx="256" cy="360" rx="92" ry="70" fill="#fff" opacity=".16"/><path d="M400 380 Q470 360 462 270" stroke="#FF5FA2" stroke-width="30" fill="none" stroke-linecap="round"/>
+    <g stroke-width="7" stroke-linecap="round"><line x1="462" y1="250" x2="462" y2="200" stroke="#ffe066"/><line x1="462" y1="250" x2="500" y2="218" stroke="#7ff"/><line x1="462" y1="250" x2="424" y2="214" stroke="#fff"/><line x1="462" y1="250" x2="505" y2="262" stroke="#ff9ad0"/></g>
+    <ellipse cx="256" cy="326" rx="24" ry="14" fill="#5a2338"/>
+    <g stroke="#fff" stroke-width="4" opacity=".7"><line x1="200" y1="332" x2="150" y2="322"/><line x1="312" y1="332" x2="362" y2="322"/></g>
+  <ellipse cx="212" cy="270" rx="26" ry="30" fill="#fff"/><ellipse cx="300" cy="270" rx="26" ry="30" fill="#fff"/>
+  <circle cx="218" cy="274" r="15" fill="#141826"/><circle cx="294" cy="274" r="15" fill="#141826"/>
+  <circle cx="224" cy="266" r="5" fill="#fff"/><circle cx="300" cy="266" r="5" fill="#fff"/>
+  <path d="M232 316 Q256 336 280 316" stroke="#141826" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <ellipse cx="176" cy="310" rx="18" ry="10" fill="#ff7aa8" opacity=".45"/><ellipse cx="336" cy="310" rx="18" ry="10" fill="#ff7aa8" opacity=".45"/>
+</svg>

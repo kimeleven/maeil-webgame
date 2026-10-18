@@ -1,11 +1,28 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
+  "buildCommand": "node scripts/build-i18n.mjs",
   "outputDirectory": "public",
   "regions": ["sin1"],
   "functions": {
     "api/*.js": {
-      "includeFiles": "public/data/games.json"
+      "includeFiles": "{public/data/games.json,public/js/logic.js}"
     }
-  }
+  },
+  "redirects": [
+    { "source": "/games", "destination": "/ko/", "statusCode": 301 },
+    { "source": "/games/:path*", "destination": "/ko/", "statusCode": 301 }
+  ],
+  "rewrites": [
+    { "source": "/api/share/:id", "destination": "/api/share?id=:id" },
+    { "source": "/api/invite/:token/join", "destination": "/api/invite?token=:token&op=join" },
+    { "source": "/api/invite/:token/member", "destination": "/api/invite?token=:token&op=member" },
+    { "source": "/api/invite/:token", "destination": "/api/invite?token=:token" },
+    { "source": "/:lang(ko|en|ja|zh-hans|es|pt-br)/:kind(r|c|i)/:id", "destination": "/:lang/:kind/index.html" },
+    { "source": "/:lang(ko|en|ja|zh-hans|es|pt-br)/:kind(r|c|i)/:id/", "destination": "/:lang/:kind/index.html" }
+  ],
+  "headers": [
+    { "source": "/:lang/:kind(r|i|c)/:path*", "headers": [{ "key": "Referrer-Policy", "value": "no-referrer" }, { "key": "X-Robots-Tag", "value": "noindex" }] },
+    { "source": "/(.*)", "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }] }
+  ]
 }

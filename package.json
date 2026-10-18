@@ -7,11 +7,18 @@
   },
   "scripts": {
     "dev": "node scripts/dev.mjs",
-    "build": "node -e \"console.log('no client build; public/ + api/')\"",
+    "build": "node scripts/build-i18n.mjs",
     "start": "node scripts/dev.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "sim": "node scripts/rush-sim.mjs",
+    "e2e": "node scripts/e2e.mjs",
+    "build:assets": "node scripts/build-chars.mjs && node scripts/build-i18n.mjs && node scripts/e2e.mjs --assets"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "playwright": "^1.64.1"
   }
 }

@@ -1,2 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /*/r/
+Disallow: /*/i/
+Disallow: /*/c/
+
+Sitemap: https://www.playtoday.cloud/sitemap.xml

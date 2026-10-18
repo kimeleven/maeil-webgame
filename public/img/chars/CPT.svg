@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="CPT">
+<defs><radialGradient id="g" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".35" stop-color="#A58BFF"/><stop offset="1" stop-color="#A58BFF" stop-opacity=".75"/></radialGradient>
+<filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<path d="M118 260 Q40 200 30 300 Q70 290 90 330 Q100 300 120 320Z" fill="#A58BFF"/><path d="M394 260 Q472 200 482 300 Q442 290 422 330 Q412 300 392 320Z" fill="#A58BFF"/>
+    <path d="M170 140 L160 70 L220 124Z" fill="#A58BFF"/><path d="M342 140 L352 70 L292 124Z" fill="#A58BFF"/>
+    
+  <ellipse cx="256" cy="452" rx="150" ry="22" fill="#000" opacity=".35"/>
+  <path d="M256 120 C380 120 410 230 404 320 C398 410 330 446 256 446 C182 446 114 410 108 320 C102 230 132 120 256 120Z" fill="url(#g)" stroke="#A58BFF" stroke-width="6" filter="url(#glow)"/>
+  <ellipse cx="256" cy="360" rx="92" ry="70" fill="#fff" opacity=".16"/><path d="M380 80 A40 40 0 1 1 420 140 A30 30 0 1 0 380 80Z" fill="#fff6c7"/>
+    <circle cx="330" cy="380" r="40" fill="#bdf4ff" opacity=".35" stroke="#fff" stroke-width="8"/><line x1="300" y1="410" x2="262" y2="448" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+  <ellipse cx="212" cy="270" rx="26" ry="30" fill="#fff"/><ellipse cx="300" cy="270" rx="26" ry="30" fill="#fff"/>
+  <circle cx="218" cy="274" r="15" fill="#141826"/><circle cx="294" cy="274" r="15" fill="#141826"/>
+  <circle cx="224" cy="266" r="5" fill="#fff"/><circle cx="300" cy="266" r="5" fill="#fff"/>
+  <path d="M232 316 Q256 336 280 316" stroke="#141826" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <ellipse cx="176" cy="310" rx="18" ry="10" fill="#ff7aa8" opacity=".45"/><ellipse cx="336" cy="310" rx="18" ry="10" fill="#ff7aa8" opacity=".45"/>
+</svg>

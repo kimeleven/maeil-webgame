@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="CIH">
+<defs><radialGradient id="g" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".35" stop-color="#FFD166"/><stop offset="1" stop-color="#FFD166" stop-opacity=".75"/></radialGradient>
+<filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<g fill="#e9eefc" opacity=".9"><circle cx="110" cy="440" r="50"/><circle cx="190" cy="460" r="56"/><circle cx="300" cy="462" r="58"/><circle cx="400" cy="440" r="50"/></g>
+    
+  <ellipse cx="256" cy="452" rx="150" ry="22" fill="#000" opacity=".35"/>
+  <path d="M256 120 C380 120 410 230 404 320 C398 410 330 446 256 446 C182 446 114 410 108 320 C102 230 132 120 256 120Z" fill="url(#g)" stroke="#FFD166" stroke-width="6" filter="url(#glow)"/>
+  <ellipse cx="256" cy="360" rx="92" ry="70" fill="#fff" opacity=".16"/><g fill="#fff" opacity=".85"><circle cx="190" cy="140" r="34"/><circle cx="256" cy="122" r="38"/><circle cx="322" cy="140" r="34"/></g>
+    <ellipse cx="128" cy="250" rx="34" ry="16" fill="#FFD166" transform="rotate(-25 128 250)"/><ellipse cx="384" cy="250" rx="34" ry="16" fill="#FFD166" transform="rotate(25 384 250)"/>
+    <text x="380" y="110" font-family="sans-serif" font-weight="900" font-size="44" fill="#fff" opacity=".8">z</text><text x="420" y="74" font-family="sans-serif" font-weight="900" font-size="30" fill="#fff" opacity=".6">z</text>
+  <ellipse cx="212" cy="270" rx="26" ry="30" fill="#fff"/><ellipse cx="300" cy="270" rx="26" ry="30" fill="#fff"/>
+  <circle cx="218" cy="274" r="15" fill="#141826"/><circle cx="294" cy="274" r="15" fill="#141826"/>
+  <circle cx="224" cy="266" r="5" fill="#fff"/><circle cx="300" cy="266" r="5" fill="#fff"/>
+  <path d="M232 316 Q256 336 280 316" stroke="#141826" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <ellipse cx="176" cy="310" rx="18" ry="10" fill="#ff7aa8" opacity=".45"/><ellipse cx="336" cy="310" rx="18" ry="10" fill="#ff7aa8" opacity=".45"/>
+</svg>

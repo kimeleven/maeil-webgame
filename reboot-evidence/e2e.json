@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "pages_6x7_no_raw_keys": true,
+    "game_running_fps": true,
+    "game_stage_resolves": true,
+    "game_end_modal": true,
+    "game_same_seed_same_course": true,
+    "card_rush": true,
+    "quiz_no_network": true,
+    "quiz_result": true,
+    "chem_invite_link": true,
+    "chem_invitee_sees_nick_not_type": true,
+    "chem_result_shown": true,
+    "chem_owner_sees_member": true,
+    "no_console_errors": true
+  },
+  "errors": []
+}
