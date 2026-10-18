@@ -11,7 +11,7 @@
   },
   "redirects": [
     { "source": "/games", "destination": "/ko/", "statusCode": 301 },
-    { "source": "/games/:path*", "destination": "/ko/", "statusCode": 301 }
+    { "source": "/games/(.*)", "destination": "/ko/", "statusCode": 301 }
   ],
   "rewrites": [
     { "source": "/api/share/:id", "destination": "/api/share?id=:id" },
