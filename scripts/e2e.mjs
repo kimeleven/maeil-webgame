@@ -104,6 +104,7 @@ try {
       const D = JSON.parse(await (await fetch(`${U}/${l}/`)).text().then((h) => h.match(/<script id="i18n" type="application\/json">([\s\S]*?)<\/script>/)[1]));
       await ap.evaluate((d) => (window.__D = d), D);
       writeFileSync(ROOT + `public/og/site-${l}.png`, await dataURL(ap, async () => (await (await import('/js/card.js')).ogSite(window.__D)).toDataURL()));
+      writeFileSync(ROOT + `public/img/endcard-${l}.png`, await dataURL(ap, async () => (await (await import('/js/card.js')).endcard(window.__D)).toDataURL()));
       for (const c of CODES) writeFileSync(ROOT + `public/og/type-${c}-${l}.png`, await dataURL(ap, async (code) => (await (await import('/js/card.js')).ogType(window.__D, code)).toDataURL(), c));
     }
     // game screenshots (language-free capture mode) → page shots + OG
@@ -114,7 +115,7 @@ try {
     await cp.evaluate(() => window.__gameTest.step(14)); await cp.waitForTimeout(2200);
     await cp.screenshot({ path: ROOT + 'public/img/shots/rush-2.png' });
     writeFileSync(ROOT + 'public/og/game.png', await dataURL(cp, async (b64) => { const m = await import('/js/card.js'); const im = await new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + b64; }); return m.ogGame(im).toDataURL(); }, shot));
-    console.log('assets: og site×6, type×48, game×1, shots×2');
+    console.log('assets: og site×6, type×48, endcard×6, game×1, shots×2');
   }
 } catch (e) { out.errors.push('FATAL ' + e.stack); console.error(e); }
 ok('no_console_errors', out.errors.length === 0, out.errors.slice(0, 8).join('\n'));

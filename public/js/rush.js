@@ -47,10 +47,14 @@ export function mountRush(root, { D, lang, seed, challenge, capture }) {
     save.assist = assist; store(save);
   };
 
+  // B11 adaptive quality: slow devices (<50fps over 2s) drop glow (shadowBlur) and render at dpr 1.
+  let lowFx = false;
+  const blurDesc = Object.getOwnPropertyDescriptor(CanvasRenderingContext2D.prototype, 'shadowBlur');
+  Object.defineProperty(ctx, 'shadowBlur', { get() { return blurDesc.get.call(this); }, set(v) { blurDesc.set.call(this, lowFx ? 0 : v); } });
   function resize() {
     if (capture) { W = 1080; H = 1920; dpr = 1; cv.width = W; cv.height = H; return; }
     const b = cv.getBoundingClientRect(); W = b.width || 360; H = b.height || 640;
-    dpr = Math.min(devicePixelRatio || 1, 2); cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dpr = Math.min(devicePixelRatio || 1, lowFx ? 1 : 2); cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   addEventListener('resize', resize); resize();
   const S = () => (capture ? 2.6 : Math.min(W / 400, 1.4)); // ui scale
@@ -271,8 +275,8 @@ export function mountRush(root, { D, lang, seed, challenge, capture }) {
   }
   let wasRunning = false, endTimer = 0, fpsN = 0, fpsT = 0;
   function frame(now) {
-    let dt = Math.min((now - last) / 1000 || 0, 0.04); last = now;
-    fpsN++; fpsT += dt; if (fpsT > 2) { window.__gameFps = fpsN / fpsT; fpsN = 0; fpsT = 0; }
+    const rawDt = (now - last) / 1000 || 0; let dt = Math.min(rawDt, 0.04); last = now;
+    fpsN++; fpsT += rawDt; if (fpsT > 2) { window.__gameFps = fpsN / fpsT; if (!lowFx && !capture && window.__gameFps < 50) { lowFx = true; window.__gameLowFx = true; resize(); } fpsN = 0; fpsT = 0; }
     let gdt = dt * (run.assist ? 0.8 : 1);
     if (slow > 0) { slow -= dt; gdt *= 0.35; }
     if (run.state === 'running' && !paused) {

@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-18T11:33:22.151Z",
+  "mode": "headless",
+  "throttle": "4x CPU",
+  "viewport": "390x844@3x",
+  "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+  "frames": 129,
+  "avgFps": 25.43113724866884,
+  "p95FrameMs": 66.69999999999982,
+  "gameFps": 23.606944376137307,
+  "lowFx": true,
+  "pass": false
+}

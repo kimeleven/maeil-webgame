@@ -73,6 +73,13 @@ npx vercel dev
 
 `package.json`의 `dev`/`test` 스크립트는 확장 소스용이며, 이 최소 트리에는 `scripts/`·`tests/`가 없을 수 있습니다.
 
+## 에셋·성능 확인
+
+- `npm run build:assets`: OG(site×6, type×48, game×1), 엔드카드 `public/img/endcard-{ko,en,ja,zh-hans,es,pt-br}.png`(1080×1920, 스펙 §10 G3), 게임 스크린샷을 다시 만든다.
+- `node scripts/fps.mjs --headed`: B11 측정. 모바일 에뮬(390×844@3x, 터치) + CDP 4x CPU throttle, rAF 평균 5초, 기준 ≥50. 시스템 Chrome(GPU) 창을 띄운다. 결과는 `reboot-evidence/fps-headed.json`.
+  - 헤드리스(`node scripts/fps.mjs`)는 메인 스레드가 87% 유휴인데도 1x에서 21fps로 묶인다(헤드리스 래스터 한계). 판정에 쓰지 않는다. `npm run e2e`의 game_running_fps도 동작 여부(>20)만 본다.
+- 적응 품질: 실행 중 2초 평균이 50fps 미만이면 glow(shadowBlur)를 끄고 dpr 1로 그린다(`window.__gameLowFx`).
+
 ## 라이선스 / 비고
 
 비공개(`private: true`) 프로젝트입니다. 시크릿·봇 토큰·나레이션 오디오·대형 프로모 영상은 커밋하지 마세요.
