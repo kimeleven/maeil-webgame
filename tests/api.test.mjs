@@ -82,3 +82,14 @@ test('static: rewrites for r/c/i shells, sitemap, robots', async () => {
   const sm = await (await fetch(U + '/sitemap.xml')).text();
   assert.equal((sm.match(/<url>/g) || []).length, 85);
 });
+
+test('stats: token required, aggregates only', async () => {
+  process.env.STATS_TOKEN = 'test-stats-token';
+  assert.equal((await j('/api/stats')).status, 401);
+  assert.equal((await j('/api/stats', { headers: { 'x-stats-token': 'wrong' } })).status, 401);
+  const r = await j('/api/stats', { headers: { 'x-stats-token': 'test-stats-token' } });
+  assert.equal(r.status, 200);
+  assert.ok(r.body.shares.total >= 2); assert.ok(Array.isArray(r.body.shares.byKindLang));
+  assert.ok(!JSON.stringify(r.body).includes('payload'));
+  delete process.env.STATS_TOKEN;
+});
