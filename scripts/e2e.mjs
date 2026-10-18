@@ -92,6 +92,60 @@ try {
   await ownRoom.screenshot({ path: ROOT + 'reboot-evidence/shots/chem-owner-ko.png', fullPage: true });
   await ctx2.close();
 
+  // ---- cycle 1019-07: funnel tracking, native challenge share, challenge OG ----
+  {
+    const sctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    await sctx.addInitScript(() => { window.__shared = []; navigator.share = async (d) => { window.__shared.push(d); }; });
+    // track.js loaded on all 6 langs
+    let trackLoaded = 0, badTrack = [];
+    for (const l of LANGS) { const h = await (await fetch(`${U}/${l}/`)).text(); if (h.includes('/js/track.js')) trackLoaded++; else badTrack.push(l); }
+    ok('track_js_on_6_langs', trackLoaded === 6, badTrack.join(','));
+    const tg = await page(sctx, '/ko/play/gate-rush/?seed=trk');
+    await tg.click('.gmodal .btn'); await tg.waitForTimeout(300);
+    await tg.evaluate(() => window.__gameTest.step(40)); await tg.waitForTimeout(3000);
+    const names = () => tg.evaluate(() => window.__trackLog || []);
+    ok('track_play_start_end', (await names()).includes('play_start') && (await names()).includes('play_end'), (await names()).join(','));
+    const lost = await tg.evaluate(() => window.__gameTest.state.state);
+    if (lost === 'lost') {
+      const btns = await tg.$$('.gmodal .btn');
+      for (const b of btns) if ((await b.textContent()).includes('도전')) { await b.click(); break; }
+      await tg.waitForTimeout(600);
+      const sh = await tg.evaluate(() => window.__shared);
+      ok('challenge_native_share', sh.length === 1 && /https?:\/\/.+\/ko\/c\//.test(sh[0].text) && sh[0].text.includes('→'), JSON.stringify(sh).slice(0, 140));
+      ok('track_challenge_copy', (await names()).includes('challenge_copy'));
+      const sb = (await tg.$$('.gmodal .btn'));
+      for (const b of sb) { const tx = await b.textContent(); if (tx.includes('공유') || tx.includes('Share')) { await b.click(); break; } }
+      await tg.waitForTimeout(800);
+      ok('track_share_click', (await names()).includes('share_click'));
+    } else { ok('challenge_native_share', true, 'stage cleared (skipped, state ' + lost + ')'); }
+    const cp2 = await page(sctx, '/en/c/trk-1');
+    ok('track_challenge_land', (await cp2.evaluate(() => window.__trackLog || [])).includes('challenge_land'));
+    ok('challenge_start_button_focused', await cp2.evaluate(() => document.activeElement && document.activeElement.classList.contains('btn') && document.querySelectorAll('.gmodal .btn').length === 1));
+    // no personal data sent: only whitelisted event names, nothing in cookies
+    ok('track_no_cookies', (await sctx.cookies()).length === 0);
+    const q2 = await page(sctx, '/en/me/play-character/'); await q2.click('[data-start]');
+    for (let i = 0; i < 10; i++) await q2.click('[data-a="a"]');
+    await q2.waitForSelector('.result');
+    const qn = await q2.evaluate(() => window.__trackLog);
+    ok('track_quiz', qn.includes('quiz_start') && qn.includes('quiz_done'), qn.join(','));
+    const iv = await page(sctx, '/en/i/AAAAAAAAAAAAAAAAAAAAAA/');
+    ok('track_invite_land', (await iv.evaluate(() => window.__trackLog || [])).includes('invite_land'));
+    // chem_done via invitee join flow (uses owner link from earlier)
+    const jc = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const jp = await page(jc, new URL(link).pathname);
+    await jp.click('[data-go]'); for (let i = 0; i < 10; i++) await jp.click('[data-a="b"]');
+    await jp.fill('[data-nick]', 'T'); await jp.click('[data-join]'); await jp.waitForSelector('.pair');
+    ok('track_chem_done', (await jp.evaluate(() => window.__trackLog)).includes('chem_done'));
+    await jc.close();
+    // /c/ OG image + noindex per lang, no leakage of score in OG
+    let ogOk = 0;
+    for (const l of LANGS) { const h = await (await fetch(`${U}/${l}/c/abc-1`)).text(); const r = await fetch(`${U}/og/challenge-${l}.png`); if (h.includes(`/og/challenge-${l}.png`) && h.includes('noindex') && r.status === 200 && (await r.arrayBuffer()).byteLength > 5000) ogOk++; }
+    ok('c_og_challenge_6_langs', ogOk === 6, ogOk + '/6');
+    const nonKo = []; for (const l of LANGS.filter((x) => x !== 'ko')) { const h = await (await fetch(`${U}/${l}/play/gate-rush/`)).text(); const d = JSON.parse(h.match(/<script id="i18n" type="application\/json">([\s\S]*?)<\/script>/)[1]); if (/[가-힣]/.test(JSON.stringify(d.game.challengeShareText) + JSON.stringify(d.privacy.analytics ?? d.privacy.body.at(-1)))) nonKo.push(l); }
+    ok('no_hangul_in_new_strings', nonKo.length === 0, nonKo.join(','));
+    await sctx.close();
+  }
+
   // desktop lobby screenshot
   const dctx = await browser.newContext({ viewport: { width: 1280, height: 860 } });
   for (const l of ['ko', 'en']) { const p = await page(dctx, `/${l}/`); await p.screenshot({ path: ROOT + `reboot-evidence/shots/lobby-${l}-desktop.png` }); await p.close(); }
@@ -104,6 +158,7 @@ try {
       const D = JSON.parse(await (await fetch(`${U}/${l}/`)).text().then((h) => h.match(/<script id="i18n" type="application\/json">([\s\S]*?)<\/script>/)[1]));
       await ap.evaluate((d) => (window.__D = d), D);
       writeFileSync(ROOT + `public/og/site-${l}.png`, await dataURL(ap, async () => (await (await import('/js/card.js')).ogSite(window.__D)).toDataURL()));
+      writeFileSync(ROOT + `public/og/challenge-${l}.png`, await dataURL(ap, async () => (await (await import('/js/card.js')).ogChallenge(window.__D)).toDataURL()));
       for (const c of CODES) writeFileSync(ROOT + `public/og/type-${c}-${l}.png`, await dataURL(ap, async (code) => (await (await import('/js/card.js')).ogType(window.__D, code)).toDataURL(), c));
     }
     // game screenshots (language-free capture mode) → page shots + OG
@@ -114,7 +169,7 @@ try {
     await cp.evaluate(() => window.__gameTest.step(14)); await cp.waitForTimeout(2200);
     await cp.screenshot({ path: ROOT + 'public/img/shots/rush-2.png' });
     writeFileSync(ROOT + 'public/og/game.png', await dataURL(cp, async (b64) => { const m = await import('/js/card.js'); const im = await new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + b64; }); return m.ogGame(im).toDataURL(); }, shot));
-    console.log('assets: og site×6, type×48, game×1, shots×2');
+    console.log('assets: og site×6, challenge×6, type×48, game×1, shots×2');
   }
 } catch (e) { out.errors.push('FATAL ' + e.stack); console.error(e); }
 ok('no_console_errors', out.errors.length === 0, out.errors.slice(0, 8).join('\n'));

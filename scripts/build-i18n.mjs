@@ -66,6 +66,7 @@ function shell(l, page, suf, main, opts = {}) {
 <main class="wrap">${main}</main>
 <footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
+<script type="module" src="/js/track.js"></script>
 <script type="module" src="/js/app.js"></script>
 </body></html>`;
 }
@@ -156,10 +157,10 @@ export function build() {
     }
     const D = dict[l];
     for (const [key, suf] of SHELLS) {
-      const title = key === 'i' ? D.seo.chem.title : key === 'c' ? D.seo.game.title : D.brand;
+      const title = key === 'i' ? D.seo.chem.title : key === 'c' ? `${D.game.challengeTitle} | ${D.brand}` : D.brand;
       const desc = key === 'i' ? D.seo.chem.desc : key === 'c' ? D.seo.game.desc : D.seo.lobby.desc;
       const main = key === 'c' ? `<section class="gamecol" id="game"></section>` : key === 'i' ? `<section id="chem" class="card"><p>${esc(D.common.loading)}</p></section><p class="disc" data-disclaimer>${esc(D.quiz.disclaimer)}</p>` : `<section id="share" class="card"><p>${esc(D.common.loading)}</p></section>`;
-      write(`${l}/${suf}index.html`, shell(l, key, suf, main, { title, desc, noindex: true, dyn: true, og: key === 'c' ? '/og/game.png' : `/og/site-${l}.png` }));
+      write(`${l}/${suf}index.html`, shell(l, key, suf, main, { title, desc, noindex: true, dyn: true, og: key === 'c' ? `/og/challenge-${l}.png` : `/og/site-${l}.png` }));
     }
   }
   // root: language picker, English body, x-default

@@ -3,6 +3,7 @@ import { chemistry, roleLines } from './logic.js';
 import { runQuiz, showResult } from './quiz.js';
 import { chemCard, saveCanvas, shareOrCopy, copyText } from './card.js';
 import { api } from './net.js';
+import { track } from './track.js';
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const fmt = (s, v) => String(s).replace(/\{(\w+)\}/g, (_, k) => (k in v ? v[k] : ''));
@@ -95,6 +96,7 @@ export async function mountInvite(el, D, token) {
       try {
         const r = await api(`/api/invite/${encodeURIComponent(token)}/join`, { method: 'POST', body: { nick, code } });
         ls.set(`chem-member-${token}`, r.memberKey); ls.set(`chem-member-code-${token}`, code); ls.set(`chem-member-nick-${token}`, nick);
+        track('chem_done');
         renderJoined(el, D, token, r.chemistry, r.ownerNick, nick, r.memberKey, pct);
       } catch (err) { el.querySelector('.status').textContent = err.status === 409 ? C.full : D.common.error; e.target.disabled = false; }
     };

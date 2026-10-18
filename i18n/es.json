@@ -179,7 +179,7 @@
   "challenge": "Jugar esta misma partida",
   "ambush": "¡Emboscada!",
   "close": "¡Por poco!",
-  "shareText": "Superé el sector {stage} en Gate Rush. Misma partida, ¿me ganas? → {url}",
+  "challengeShareText": "Gate Rush: sector {stage}, {score} pts. Supérame en la misma partida → {url}", "shareText": "Superé el sector {stage} en Gate Rush. Misma partida, ¿me ganas? → {url}",
   "cardCta": "Misma partida, ¿me ganas?",
   "rTitle": "Récord de Gate Rush: sector {stage}"
  },
@@ -405,7 +405,7 @@
    "Qué no guardamos: nombre, contacto, fecha de nacimiento, email, cuenta, tus respuestas originales ni tu IP real. (Para evitar abusos, contamos la IP como hash durante solo 1 hora.)",
    "Tiempo de conservación: los resultados compartidos 90 días; las invitaciones dejan de ser públicas a los 7 días. Quien las crea y quienes participan pueden borrarlas cuando quieran.",
    "Los enlaces compartidos y las imágenes de vista previa no incluyen apodos ni respuestas. Las páginas de invitación y resultado no aparecen en buscadores.",
-   "Compartir siempre es opcional. Puedes ver todos tus resultados sin compartir. No usamos cookies de seguimiento publicitario."
+   "Compartir siempre es opcional. Puedes ver todos tus resultados sin compartir. No usamos cookies de seguimiento publicitario.", "Contamos visitas y clics en botones de forma anónima y sin cookies. No se envían nombres, resultados ni identificadores personales."
   ]
  }
 }

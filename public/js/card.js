@@ -149,6 +149,16 @@ export async function ogSite(D) {
   text(ctx, 'playtoday.cloud', W / 2, 585, 30, { weight: 600, color: '#8b9cff' });
   return c;
 }
+// challenge-link OG (no score/seed in the image)
+export async function ogChallenge(D) {
+  const W = 1200, H = 630, c = canvas(W, H), ctx = c.getContext('2d');
+  bg(ctx, W, H, '#22d3ee');
+  const im = await loadImg('/img/gate-rush.svg'); ctx.drawImage(im, 70, 150, 330, 330);
+  text(ctx, D.game.name.toUpperCase(), 800, 190, 44, { weight: 800, color: '#22d3ee', max: 640 });
+  wrap(ctx, D.game.challengeTitle, 800, 330, 76, 620, 90, { weight: 900, maxLines: 2 });
+  text(ctx, 'playtoday.cloud', 800, 560, 32, { weight: 600, color: '#8b9cff' });
+  return c;
+}
 // language-free game OG / endcard drawn by the game renderer snapshot (passed in as image)
 export function ogGame(shot) {
   const W = 1200, H = 630, c = canvas(W, H), ctx = c.getContext('2d');

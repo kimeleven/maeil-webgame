@@ -1,4 +1,5 @@
 // Page bootstrap. Each static page embeds its dictionary in <script id="i18n">.
+import { track } from './track.js';
 const D = JSON.parse(document.getElementById('i18n').textContent);
 const page = document.body.dataset.page, lang = D.lang;
 const seg = location.pathname.split('/').filter(Boolean); // [lang, kind, id]
@@ -19,15 +20,16 @@ async function main() {
       seed = m ? m[1] : null;
       if (q.get('vs')) { try { const r = await (await fetch(`/api/share/${encodeURIComponent(q.get('vs'))}`)).json(); if (r && r.kind === 'rush' && !r.payload.assist) challenge = { stage: r.payload.stage, score: r.payload.score }; } catch {} }
     }
+    if (page === 'c') track('challenge_land');
     const capture = q.get('capture') === '1';
     if (capture) document.documentElement.classList.add('capture');
-    mountRush(document.getElementById('game'), { D, lang, seed: q.get('seed') || seed, challenge, capture });
+    mountRush(document.getElementById('game'), { D, lang, seed: q.get('seed') || seed, challenge, capture, landing: page === 'c' });
   } else if (page === 'quiz') {
     const { mountQuiz } = await import('./quiz.js'); mountQuiz(document.getElementById('quiz'), D);
   } else if (page === 'chem') {
     const { mountChem } = await import('./chem.js'); mountChem(document.getElementById('chem'), D);
   } else if (page === 'i') {
-    const { mountInvite } = await import('./chem.js'); mountInvite(document.getElementById('chem'), D, seg[2] || '');
+    const { mountInvite } = await import('./chem.js'); track('invite_land'); mountInvite(document.getElementById('chem'), D, seg[2] || '');
   } else if (page === 'r') {
     const el = document.getElementById('share');
     try {

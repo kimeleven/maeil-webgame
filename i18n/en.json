@@ -179,7 +179,7 @@
   "challenge": "Play this exact run",
   "ambush": "AMBUSH!",
   "close": "CLOSE!",
-  "shareText": "I cleared sector {stage} in Gate Rush. Same run, can you beat me? → {url}",
+  "challengeShareText": "Gate Rush: sector {stage}, {score} pts. Beat me on the same run → {url}", "shareText": "I cleared sector {stage} in Gate Rush. Same run, can you beat me? → {url}",
   "cardCta": "Beat me on the same run",
   "rTitle": "Gate Rush: sector {stage} record"
  },
@@ -405,7 +405,7 @@
    "What we don't store: names, contact info, birth dates, emails, accounts, your raw quiz answers or raw IP addresses. (To prevent abuse, IPs are counted as a hash for 1 hour only.)",
    "How long: shared results for 90 days; invites go private after 7 days. Creators and participants can delete their data themselves at any time.",
    "Share links and preview images never include nicknames or answers. Invite and result pages are not shown in search results.",
-   "Sharing is always optional. You can see your full result without sharing. We don't use cookie-based ad tracking."
+   "Sharing is always optional. You can see your full result without sharing. We don't use cookie-based ad tracking.", "We count anonymous visits and button clicks without cookies. No names, result details or personal identifiers are sent."
   ]
  }
 }

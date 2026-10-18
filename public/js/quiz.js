@@ -2,6 +2,7 @@
 import { scoreQuiz, bestBuddy, COLORS } from './logic.js';
 import { quizCard, saveCanvas, shareOrCopy } from './card.js';
 import { api } from './net.js';
+import { track } from './track.js';
 
 const fmt = (s, v) => String(s).replace(/\{(\w+)\}/g, (_, k) => (k in v ? v[k] : ''));
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -32,7 +33,7 @@ export function resultHtml(D, code, pct) {
 }
 
 export function mountQuiz(el, D) {
-  const start = () => runQuiz(el, D).then(({ code, pct }) => showResult(el, D, code, pct, start));
+  const start = () => { track('quiz_start'); return runQuiz(el, D).then(({ code, pct }) => { track('quiz_done'); showResult(el, D, code, pct, start); }); };
   el.querySelector('[data-start]')?.addEventListener('click', start);
 }
 
@@ -42,6 +43,7 @@ export function showResult(el, D, code, pct, retry) {
   const st = el.querySelector('.status');
   el.querySelector('[data-save]').onclick = async () => saveCanvas(await quizCard(D, code, pct), `play-character-${code}.png`);
   el.querySelector('[data-share]').onclick = async () => {
+    track('share_click', { from: 'quiz' });
     let url = `${location.origin}/${D.lang}/me/play-character/`;
     try { const r = await api('/api/share', { method: 'POST', body: { kind: 'quiz', lang: D.lang, payload: { code } } }); url = `${location.origin}/${D.lang}/r/${r.id}`; } catch {}
     const r = await shareOrCopy({ title: D.quiz.title, text: fmt(D.quiz.shareText, { name: D.types[code].name, url }), canvas: await quizCard(D, code, pct), name: 'play-character.png' });

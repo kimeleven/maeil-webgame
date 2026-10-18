@@ -2,6 +2,7 @@
 import * as G from './rush-core.js';
 import { rushCard, saveCanvas, shareOrCopy, copyText } from './card.js';
 import { api } from './net.js';
+import { track, stageBucket } from './track.js';
 
 const KEY = 'gate-rush-v3';
 const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
@@ -19,7 +20,7 @@ function loadSave() {
 }
 const store = (s) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {} };
 
-export function mountRush(root, { D, lang, seed, challenge, capture }) {
+export function mountRush(root, { D, lang, seed, challenge, capture, landing }) {
   const g = D.game;
   const save = loadSave();
   let assist = !capture && !!save.assist;
@@ -66,6 +67,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture }) {
     const tgt = challenge ? `<p class="tag">${fmt(g.target, challenge)}</p>` : '';
     show(`${challenge ? `<h2>${g.challengeTitle}</h2>` : ''}${tgt}<h2>${fmt(g.readyTitle, { stage: run.stage })}</h2><p>${fmt(g.readyDesc, { boss: G.boss(run) })}</p><p class="muted">${g.zones[G.zoneOf(run.stage) - 1]} · ${g.seedLabel} ${run.seed}</p>`,
       [btn(g.start, '', start)]);
+    if (challenge || landing) modal.querySelector('.btn')?.focus({ preventScroll: true });
   }
   function screenUpgrade() {
     const next = run.stage + 1, P0 = G.patternsFor(run.stage), P1 = G.patternsFor(next);
@@ -92,17 +94,29 @@ export function mountRush(root, { D, lang, seed, challenge, capture }) {
     const buttons = [
       btn(D.cta.save, '', async () => saveCanvas(await rushCard(D, rec), `gate-rush-${rec.stage}.png`)),
       btn(D.cta.share, 'ghost', async () => {
+        track('share_click', { from: 'rush' });
         const url = await shareUrl();
         const r = await shareOrCopy({ title: g.name, text: fmt(g.shareText, { stage: rec.cleared, url }), canvas: await rushCard(D, rec), name: 'gate-rush.png' });
         status.textContent = r === 'copied' ? D.common.copied : r === 'failed' ? D.common.error : '';
       }),
     ];
-    if (!rec.assist) buttons.push(btn(g.challenge, 'ghost', async () => { const url = await shareUrl(); status.textContent = (await copyText(url)) ? `${D.common.copied}: ${url}` : url; }));
+    if (!rec.assist) buttons.push(btn(g.challenge, 'ghost', async () => {
+      const url = await shareUrl();
+      // native share sheet first (1 tap on mobile); fall back to copying the link
+      if (navigator.share) {
+        try {
+          track('challenge_copy', { method: 'native' });
+          await navigator.share({ title: g.challengeTitle, text: fmt(g.challengeShareText, { stage: rec.cleared, score: rec.score.toLocaleString(), url }) });
+          status.textContent = ''; return;
+        } catch (e) { if (e.name === 'AbortError') return; }
+      } else track('challenge_copy', { method: 'copy' });
+      status.textContent = (await copyText(url)) ? `${D.common.copied}: ${url}` : url;
+    }));
     buttons.push(btn(g.newRun, 'ghost', () => { run = G.createRun({ seed: run.seed }); run.assist = assist; persist(); screenReady(); }));
     show(`<span class="tag">${rec.assist ? 'ASSIST' : 'GAME OVER'}</span><h2>${g.lostTitle}</h2><p style="font-size:30px;font-weight:800;margin:6px 0">${g.sector} ${rec.stage}</p><p>${fmt(g.lostDesc, { stage: rec.cleared, score: rec.score.toLocaleString() })}</p>${beat ? `<p class="tag">${g.beat}</p>` : ''}<p class="muted">${g.best}: ${save.bestStage} · ${save.best.toLocaleString()}</p>`, buttons);
     modal.append(status);
   }
-  function start() { G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
+  function start() { if (run.stage === 1) track('play_start', { mode: challenge ? 'challenge' : 'daily' }); G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
 
   // ---------- input ----------
   const keys = {};
@@ -285,7 +299,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture }) {
     if (wasRunning && run.state !== 'running' && run.state !== 'ready') { wasRunning = false; endTimer = 1.1; }
     if (run.state !== 'running' && endTimer > 0) {
       endTimer -= dt; handleEvents();
-      if (endTimer <= 0) { persist(); run.state === 'upgrade' ? screenUpgrade() : screenLost(); }
+      if (endTimer <= 0) { persist(); track('play_end', { stage: stageBucket(run.stage), result: run.state === 'upgrade' ? 'clear' : 'lost' }); run.state === 'upgrade' ? screenUpgrade() : screenLost(); }
     }
     const t = run.t || 0;
     ctx.save();
