@@ -34,9 +34,10 @@ async function main() {
     const el = document.getElementById('share');
     try {
       const r = await fetch(`/api/share/${encodeURIComponent(seg[2] || '')}`); if (!r.ok) throw 0; const s = await r.json();
+      track('result_land', { kind: s.kind === 'quiz' ? 'quiz' : 'rush' });
       if (s.kind === 'quiz') {
         const T = D.types[s.payload.code];
-        el.innerHTML = `<div class="result"><img class="char" src="/img/chars/${s.payload.code}.svg" width="240" height="240" alt="${esc(T.name)}"><div><span class="tag">${esc(D.quiz.title)}</span><h1>${esc(T.name)}</h1><p><b>${esc(T.one)}</b></p><p>${esc(T.desc)}</p><div class="row"><a class="btn" href="/${lang}/me/play-character/">${esc(D.quiz.takeQuiz)}</a><a class="btn ghost" href="/${lang}/friends/chemistry/">${esc(D.cta.chem)}</a></div></div></div><p class="disc">${esc(D.quiz.disclaimer)}</p>`;
+        el.innerHTML = `<div class="result"><img class="char" src="/img/chars/${s.payload.code}.svg" width="240" height="240" alt="${esc(T.name)}"><div><span class="tag">${esc(D.quiz.title)}</span><h1>${esc(T.name)}</h1><p><b>${esc(T.one)}</b></p><p>${esc(T.desc)}</p><div class="row"><a class="btn" href="/${lang}/me/play-character/">${esc(D.quiz.takeQuiz)}</a><a class=\"sublink\" href=\"/${lang}/friends/chemistry/\">${esc(D.cta.chem)}</a></div></div></div><p class=\"disc">${esc(D.quiz.disclaimer)}</p>`;
         document.title = `${T.name} | ${D.brand}`;
       } else {
         const p = s.payload;
