@@ -1,0 +1,17 @@
+import { chromium } from 'playwright';
+import { writeFileSync } from 'node:fs';
+import { startServer } from './dev.mjs';
+const { server, url: U } = await startServer(0);
+const b = await chromium.launch(); const errs=[];
+const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
+const shot = async (path, out, vp) => { const p = await ctx.newPage(); if (vp) await p.setViewportSize(vp); p.on('pageerror', e=>errs.push(path+' '+e.message)); await p.goto(U+path,{waitUntil:'networkidle'}); await p.screenshot({path:'hw-evidence/'+out}); const c = await p.evaluate(()=>document.documentElement.className); await p.close(); return c; };
+console.log('lobby', await shot('/ko/', 'lobby-ko.png'));
+console.log('game', await shot('/ko/play/gate-rush/', 'game-ko.png'));
+console.log('off', await shot('/ko/?theme=off', 'lobby-ko-off.png'));
+console.log('en', await shot('/en/', 'lobby-en-desktop.png', {width:1280,height:860}));
+const p = await ctx.newPage(); await p.goto(U+'/ko/',{waitUntil:'networkidle'});
+const D = await p.evaluate(()=>JSON.parse(document.getElementById('i18n').textContent));
+const d = await p.evaluate(async (D)=>{const m=await import('/js/card.js'); return (await m.quizCard(D,'SPH',[70,40,60])).toDataURL();}, D);
+writeFileSync('hw-evidence/result-card-ko.png', Buffer.from(d.split(',')[1],'base64'));
+console.log('errors', errs);
+await b.close(); server.close();

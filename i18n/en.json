@@ -407,5 +407,6 @@
    "Share links and preview images never include nicknames or answers. Invite and result pages are not shown in search results.",
    "Sharing is always optional. You can see your full result without sharing. We don't use cookie-based ad tracking.", "We count anonymous visits and button clicks without cookies. No names, result details or personal identifiers are sent."
   ]
- }
+ },
+ "halloween": {"banner": "🎃 Halloween limited theme", "sub": "Until Oct 31 — result cards get a Halloween frame.", "frame": "HAPPY HALLOWEEN"}
 }

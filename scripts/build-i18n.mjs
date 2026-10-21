@@ -2,6 +2,7 @@
 // i18n/{lang}.json + templates below → public/{lang}/…/index.html, sitemap.xml, robots.txt.
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { CODES, COLORS, bestBuddy } from '../public/js/logic.js';
+import { HEAD_SNIPPET } from '../public/js/theme.js';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 export const SITE = 'https://www.playtoday.cloud';
@@ -50,7 +51,7 @@ function langMenu(l, suf, dyn) {
 function head({ l, title, desc, suf, og, noindex, jsonld, extra = '' }) {
   const D = dict[l];
   const alt = noindex ? '' : LANGS.map((x) => `<link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, suf)}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/">`;
-  return `<!doctype html><html lang="${D.htmlLang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+  return `<!doctype html><html lang="${D.htmlLang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">${HEAD_SNIPPET}
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}">
 ${noindex ? '<meta name="robots" content="noindex,follow"><meta name="referrer" content="no-referrer">' : `<link rel="canonical" href="${url(l, suf)}">${alt}`}
 <meta property="og:type" content="website"><meta property="og:site_name" content="${esc(D.brand)}"><meta property="og:title" content="${esc(title)}" data-og-title><meta property="og:description" content="${esc(desc)}"><meta property="og:image" content="${SITE}${og}" data-og-image><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="${url(l, suf)}"><meta property="og:locale" content="${D.ogLocale}">
@@ -71,6 +72,7 @@ function shell(l, page, suf, main, opts = {}) {
 </body></html>`;
 }
 
+const hwBanner = (D) => `<aside class="hw-banner" aria-label="Halloween"><b>${esc(D.halloween.banner)}</b><span>${esc(D.halloween.sub)}</span></aside>`;
 const charImg = (c, size = 96, alt = '') => `<img src="/img/chars/${c}.svg" width="${size}" height="${size}" alt="${esc(alt)}" loading="lazy">`;
 
 function pageBody(l, key) {
@@ -78,7 +80,7 @@ function pageBody(l, key) {
   const disc = `<p class="disc" data-disclaimer>${esc(q.disclaimer)}</p>`;
   if (key === 'lobby') {
     const c = D.lobby.cards;
-    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}</p></section>
+    return `${hwBanner(D)}<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}</p></section>
 <nav class="grid3" aria-label="${esc(D.brand)}">
 <a class="card cat hl" href="/${l}/play/gate-rush/"><span class="tag">${esc(D.nav.play)}</span><img src="/img/gate-rush.svg" width="150" height="150" alt=""><h3>${esc(c.play.t)}</h3><p>${esc(c.play.d)}</p><span class="btn go">${esc(c.play.cta)}</span></a>
 <a class="card cat" href="/${l}/me/play-character/"><span class="tag">${esc(D.nav.me)}</span>${charImg('SPH', 150)}<h3>${esc(c.me.t)}</h3><p>${esc(c.me.d)}</p><span class="btn ghost go">${esc(c.me.cta)}</span></a>
@@ -87,7 +89,7 @@ function pageBody(l, key) {
 <section class="card row" style="justify-content:space-between"><div><h3>${esc(D.lobby.daily)}</h3><p class="muted" style="margin:0">${esc(D.lobby.dailyDesc)}</p></div><a class="btn ghost" href="/${l}/play/gate-rush/" data-daily>${esc(D.lobby.daily)} →</a></section>`;
   }
   if (key === 'game') {
-    return `<div class="layout-game"><section class="intro"><span class="tag">${esc(D.nav.play)} · 30s</span><h1>${esc(g.name)} — ${esc(g.h1)}</h1><p>${esc(g.intro)}</p>
+    return `${hwBanner(D)}<div class="layout-game"><section class="intro"><span class="tag">${esc(D.nav.play)} · 30s</span><h1>${esc(g.name)} — ${esc(g.h1)}</h1><p>${esc(g.intro)}</p>
 <h2>${esc(g.controlsTitle)}</h2><ul class="prose">${g.controls.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
 <h2>${esc(g.tipsTitle)}</h2><ol class="prose">${g.tips.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
 <h2>${esc(g.patternsTitle)}</h2><ul class="prose">${Object.values(g.patterns).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>

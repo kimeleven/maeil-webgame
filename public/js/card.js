@@ -49,6 +49,24 @@ function footer(ctx, W, H, cta) {
   text(ctx, cta, W / 2, H - 150, 40, { weight: 700, max: W - 160 });
   text(ctx, 'playtoday.cloud', W / 2, H - 92, 32, { weight: 600, color: '#8b9cff' });
 }
+// Halloween frame on saved result cards (and build-time OG when hw=true)
+export const hwOn = () => typeof document !== 'undefined' && document.documentElement.classList.contains('halloween');
+export function hwFrame(ctx, W, H, label = 'HAPPY HALLOWEEN', corner = false) {
+  ctx.save();
+  const g = ctx.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#7c3aed'); g.addColorStop(1, '#ea580c');
+  ctx.strokeStyle = g; ctx.lineWidth = Math.round(W / 60); ctx.beginPath(); ctx.roundRect(ctx.lineWidth / 2 + 10, ctx.lineWidth / 2 + 10, W - ctx.lineWidth - 20, H - ctx.lineWidth - 20, 36); ctx.stroke();
+  const r = ctx.createRadialGradient(0, H, 10, 0, H, W * 0.6); r.addColorStop(0, 'rgba(234,88,12,.35)'); r.addColorStop(1, 'rgba(234,88,12,0)');
+  ctx.fillStyle = r; ctx.fillRect(0, 0, W, H);
+  const s = Math.round(W / 22);
+  ctx.font = `${s}px ${FONT}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (const [x, y, e] of [[s * 1.3, s * 1.3, '🎃'], [W - s * 1.3, s * 1.3, '🦇'], [s * 1.3, H - s * 1.3, '🦇'], [W - s * 1.3, H - s * 1.3, '🎃']]) ctx.fillText(e, x, y);
+  ctx.font = `800 ${Math.round(s * 0.62)}px ${FONT}`; const tw = ctx.measureText(label).width + s;
+  const cx = corner ? W - s * 2.6 - tw / 2 : W / 2; // corner: next to the top-right bat (wide OG, keeps the title clear)
+  ctx.fillStyle = 'rgba(234,88,12,.92)'; ctx.beginPath(); ctx.roundRect(cx - tw / 2, 18, tw, s * 1.1, s * 0.55); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.fillText(label, cx, 18 + s * 0.57);
+  ctx.restore();
+}
+const hw = (ctx, W, H, D, force) => { if (force || hwOn()) hwFrame(ctx, W, H, (D && D.halloween && D.halloween.frame) || 'HAPPY HALLOWEEN'); };
 function canvas(W, H) { const c = document.createElement('canvas'); c.width = W; c.height = H; return c; }
 
 // --- game card ---
@@ -82,7 +100,7 @@ export async function rushCard(D, rec) {
     text(ctx, `${D.game.upg[k].n} ×${n}`, x, 1003, 30, { weight: 700 });
   });
   if (rec.assist) { glass(ctx, W - 300, 200, 200, 56, 28); text(ctx, 'ASSIST', W - 200, 238, 28, { weight: 800, color: '#facc15' }); }
-  footer(ctx, W, H, D.game.cardCta);
+  footer(ctx, W, H, D.game.cardCta); hw(ctx, W, H, D);
   return c;
 }
 
@@ -105,7 +123,7 @@ export async function quizCard(D, code, pct) {
   const b = bestBuddyOf(code);
   const bi = await loadImg(charSrc(b)); ctx.drawImage(bi, 300, 1060, 90, 90);
   text(ctx, `${D.quiz.best}: ${D.types[b].name}`, 400, 1118, 30, { weight: 600, align: 'left', max: 560 });
-  footer(ctx, W, H, D.quiz.cardCta);
+  footer(ctx, W, H, D.quiz.cardCta); hw(ctx, W, H, D);
   return c;
 }
 function bestBuddyOf(code) { const L = [['S', 'C'], ['P', 'I'], ['H', 'T']]; return code.split('').map((ch, i) => (L[i][0] === ch ? L[i][1] : L[i][0])).join(''); }
@@ -123,12 +141,12 @@ export async function chemCard(D, chem, nickA, nickB, roleLines) {
   let y = 820;
   for (const l of roleLines) y = wrap(ctx, l, W / 2, y, 32, W - 260, 44, { color: 'rgba(232,234,240,.88)', maxLines: 2 }) + 6;
   text(ctx, `${D.chem.playTitle}: ${D.chem.plays[chem.play]}`, W / 2, Math.max(y + 30, 1060), 34, { weight: 700, color: '#22d3ee', max: W - 220 });
-  footer(ctx, W, H, D.chem.cardCta);
+  footer(ctx, W, H, D.chem.cardCta); hw(ctx, W, H, D);
   return c;
 }
 
 // --- OG 1200×630 (build-time) ---
-export async function ogType(D, code) {
+export async function ogType(D, code, hwForce = false) {
   const W = 1200, H = 630, c = canvas(W, H), ctx = c.getContext('2d'), T = D.types[code];
   bg(ctx, W, H, COLORS[code]);
   const img = await loadImg(charSrc(code)); ctx.drawImage(img, 80, 75, 480, 480);
@@ -137,9 +155,10 @@ export async function ogType(D, code) {
   text(ctx, T.name, 620, 320, 60, { weight: 800, align: 'left', max: 520 });
   wrap(ctx, T.one, 620, 390, 32, 520, 44, { align: 'left', color: 'rgba(232,234,240,.88)', maxLines: 3 });
   text(ctx, 'playtoday.cloud', 620, 560, 28, { weight: 600, align: 'left', color: '#8b9cff' });
+  if (hwForce) hwFrame(ctx, W, H, 'HAPPY HALLOWEEN', true);
   return c;
 }
-export async function ogSite(D) {
+export async function ogSite(D, hwForce = false) {
   const W = 1200, H = 630, c = canvas(W, H), ctx = c.getContext('2d');
   bg(ctx, W, H, '#6366f1');
   const codes = ['SPH', 'SIT', 'CPT'];
@@ -147,20 +166,22 @@ export async function ogSite(D) {
   text(ctx, D.brand, W / 2, 120, 72, { weight: 800 });
   text(ctx, `${D.game.name} · ${D.quiz.title} · ${D.chem.title}`, W / 2, 185, 34, { weight: 600, color: 'rgba(232,234,240,.88)', max: W - 120 });
   text(ctx, 'playtoday.cloud', W / 2, 585, 30, { weight: 600, color: '#8b9cff' });
+  if (hwForce) hwFrame(ctx, W, H, 'HAPPY HALLOWEEN', true);
   return c;
 }
 // challenge-link OG (no score/seed in the image)
-export async function ogChallenge(D) {
+export async function ogChallenge(D, hwForce = false) {
   const W = 1200, H = 630, c = canvas(W, H), ctx = c.getContext('2d');
   bg(ctx, W, H, '#22d3ee');
   const im = await loadImg('/img/gate-rush.svg'); ctx.drawImage(im, 70, 150, 330, 330);
   text(ctx, D.game.name.toUpperCase(), 800, 190, 44, { weight: 800, color: '#22d3ee', max: 640 });
   wrap(ctx, D.game.challengeTitle, 800, 330, 76, 620, 90, { weight: 900, maxLines: 2 });
   text(ctx, 'playtoday.cloud', 800, 560, 32, { weight: 600, color: '#8b9cff' });
+  if (hwForce) hwFrame(ctx, W, H, 'HAPPY HALLOWEEN', true);
   return c;
 }
 // language-free game OG / endcard drawn by the game renderer snapshot (passed in as image)
-export function ogGame(shot) {
+export function ogGame(shot, hwForce = false) {
   const W = 1200, H = 630, c = canvas(W, H), ctx = c.getContext('2d');
   bg(ctx, W, H, '#22d3ee');
   const sw = shot.width * (H / shot.height); ctx.drawImage(shot, 0, 0, shot.width, shot.height, W - sw - 120, 0, sw, H);
@@ -168,6 +189,7 @@ export function ogGame(shot) {
   text(ctx, 'GATE RUSH', 320, 260, 84, { weight: 900 });
   text(ctx, '+  ×  ⚡', 320, 360, 64, { weight: 800, color: '#22d3ee' });
   text(ctx, 'playtoday.cloud', 320, 520, 34, { weight: 600, color: '#8b9cff' });
+  if (hwForce) hwFrame(ctx, W, H, 'HAPPY HALLOWEEN', true);
   return c;
 }
 export async function endcard(D) {

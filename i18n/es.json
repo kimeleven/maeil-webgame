@@ -407,5 +407,6 @@
    "Los enlaces compartidos y las imágenes de vista previa no incluyen apodos ni respuestas. Las páginas de invitación y resultado no aparecen en buscadores.",
    "Compartir siempre es opcional. Puedes ver todos tus resultados sin compartir. No usamos cookies de seguimiento publicitario.", "Contamos visitas y clics en botones de forma anónima y sin cookies. No se envían nombres, resultados ni identificadores personales."
   ]
- }
+ },
+ "halloween": {"banner": "🎃 Tema limitado de Halloween", "sub": "Hasta el 31 de octubre, las tarjetas de resultado llevan marco de Halloween.", "frame": "HAPPY HALLOWEEN"}
 }
