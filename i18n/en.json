@@ -408,5 +408,6 @@
    "Sharing is always optional. You can see your full result without sharing. We don't use cookie-based ad tracking.", "We count anonymous visits and button clicks without cookies. No names, result details or personal identifiers are sent."
   ]
  },
- "halloween": {"banner": "🎃 Halloween limited theme", "sub": "Until Oct 31 — result cards get a Halloween frame.", "frame": "HAPPY HALLOWEEN"}
+ "halloween": {"banner": "🎃 Halloween limited theme", "sub": "Until Oct 31 — result cards get a Halloween frame.", "frame": "HAPPY HALLOWEEN"},
+ "quickbreak": {"title": "30-Second Browser Game for a Quick Break — No Sign-up", "desc": "Got 30 seconds? Play a free browser game with no install or sign-up, then try the 10-question character quiz or a friend chemistry check.", "h1": "Bored? Play a 30-second game", "p1": "You don't need to install an app for a short break. A round of Gate Rush lasts 30 seconds, so it's over before your coffee cools, and it starts right in your browser with no sign-up.", "p2": "If you still have a minute, take the 10-question character quiz to find your play character, or send a link to a friend to check your chemistry. All of it is free.", "link": "30-second game for a quick break"}
 }
