@@ -1,0 +1,222 @@
+{
+ "O2": {
+  "seeds": 100,
+  "bad": 0,
+  "sample": {
+   "s": "2026-10-23",
+   "firstRingT": 2.94,
+   "oneTapGot": true,
+   "block": true,
+   "door": true,
+   "ring30": true
+  }
+ },
+ "O3": {
+  "obstacles": 5115,
+  "minMarginSec": 0.02,
+  "bad": 0
+ },
+ "O4": {
+  "same": true,
+  "differs": true
+ },
+ "O5": {
+  "seeds": 100,
+  "requiredSwitches": 2832,
+  "minWindowSec": 0.2829,
+  "minSlackSec": 0.2829,
+  "safeBotClearNoHit": 100,
+  "notClear": [],
+  "obstacleTypes": {
+   "block": 2584,
+   "door": 972,
+   "double": 1360,
+   "bar": 199
+  }
+ },
+ "O11": {
+  "destLaneMidSwitch": {
+   "hit": true,
+   "r": 0.39666666666666,
+   "inTransition": true
+  },
+  "originLaneJustLeaving": {
+   "hit": true,
+   "r": 0.29944444444444335,
+   "inTransition": true
+  },
+  "control": {
+   "sittingOnBlockedLaneHit": true,
+   "leftEarlySafe": true
+  },
+  "cooldown": {
+   "first": true,
+   "at0_1s": false,
+   "at0_25s": true,
+   "ignoredLog": [
+    {
+     "t": 1.0999999999999974,
+     "kind": "tap",
+     "why": "cooldown"
+    }
+   ]
+  }
+ },
+ "O12": {
+  "rows": [
+   {
+    "seed": "p0",
+    "idle": 11.01,
+    "fixed": 15.2,
+    "mash": 11.01,
+    "safe": 90
+   },
+   {
+    "seed": "p1",
+    "idle": 8.78,
+    "fixed": 16.72,
+    "mash": 8.94,
+    "safe": 90
+   },
+   {
+    "seed": "p2",
+    "idle": 11.07,
+    "fixed": 12.69,
+    "mash": 11.07,
+    "safe": 90
+   },
+   {
+    "seed": "p3",
+    "idle": 10.86,
+    "fixed": 12.35,
+    "mash": 9.19,
+    "safe": 90
+   },
+   {
+    "seed": "p4",
+    "idle": 10.95,
+    "fixed": 13.93,
+    "mash": 8.8,
+    "safe": 90
+   },
+   {
+    "seed": "p5",
+    "idle": 8.69,
+    "fixed": 12.12,
+    "mash": 10.72,
+    "safe": 90
+   },
+   {
+    "seed": "p6",
+    "idle": 13.77,
+    "fixed": 8.78,
+    "mash": 8.78,
+    "safe": 90
+   },
+   {
+    "seed": "p7",
+    "idle": 8.73,
+    "fixed": 13.83,
+    "mash": 8.94,
+    "safe": 90
+   },
+   {
+    "seed": "p8",
+    "idle": 8.74,
+    "fixed": 15.29,
+    "mash": 8.94,
+    "safe": 90
+   },
+   {
+    "seed": "p9",
+    "idle": 12.15,
+    "fixed": 8.54,
+    "mash": 8.68,
+    "safe": 90
+   },
+   {
+    "seed": "p10",
+    "idle": 10.79,
+    "fixed": 16.97,
+    "mash": 8.63,
+    "safe": 90
+   },
+   {
+    "seed": "p11",
+    "idle": 10.85,
+    "fixed": 12.27,
+    "mash": 8.94,
+    "safe": 90
+   },
+   {
+    "seed": "p12",
+    "idle": 12.27,
+    "fixed": 10.82,
+    "mash": 8.94,
+    "safe": 90
+   },
+   {
+    "seed": "p13",
+    "idle": 13.47,
+    "fixed": 8.57,
+    "mash": 8.68,
+    "safe": 90
+   },
+   {
+    "seed": "p14",
+    "idle": 15.14,
+    "fixed": 8.79,
+    "mash": 8.79,
+    "safe": 90
+   },
+   {
+    "seed": "p15",
+    "idle": 15.32,
+    "fixed": 8.75,
+    "mash": 8.75,
+    "safe": 90
+   },
+   {
+    "seed": "p16",
+    "idle": 10.8,
+    "fixed": 12.18,
+    "mash": 8.68,
+    "safe": 90
+   },
+   {
+    "seed": "p17",
+    "idle": 13.94,
+    "fixed": 10.77,
+    "mash": 8.94,
+    "safe": 90
+   },
+   {
+    "seed": "p18",
+    "idle": 10.68,
+    "fixed": 12.12,
+    "mash": 8.64,
+    "safe": 90
+   },
+   {
+    "seed": "p19",
+    "idle": 8.68,
+    "fixed": 12.23,
+    "mash": 8.94,
+    "safe": 90
+   }
+  ],
+  "avg": {
+   "idle": 11.33,
+   "fixed": 12.15,
+   "mash": 9.15,
+   "safe": 90
+  },
+  "max": {
+   "idle": 15.32,
+   "fixed": 16.97,
+   "mash": 11.07
+  },
+  "seedsViolating": 0,
+  "mashClears": 0
+ }
+}

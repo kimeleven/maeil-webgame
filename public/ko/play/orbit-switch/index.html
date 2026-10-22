@@ -1,0 +1,506 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+<title>궤도 스위치 (프리뷰)</title><meta name="description" content="탭 한 번으로 안쪽·바깥 궤도를 바꿔 90초 버티기."><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><link rel="icon" href="data:,">
+<style>:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--accent2:#22d3ee;--glass:rgba(10,11,18,.72);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+body{display:flex;flex-direction:column;align-items:center;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;gap:8px}
+.logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px var(--accent2)}
+.tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:#facc15}
+.langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--accent2)}
+.stage{position:relative;width:100%;max-width:min(100vw,calc((100dvh - 64px)*9/16));aspect-ratio:9/16;max-height:calc(100dvh - 64px);display:flex;flex-direction:column;padding:0 16px 12px}
+.hud{display:flex;justify-content:space-between;gap:8px;padding:8px 4px;font-variant-numeric:tabular-nums}.hud div{display:flex;flex-direction:column;align-items:center;flex:1;background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:6px 4px;backdrop-filter:blur(18px)}
+.hud span{font-size:11px;color:var(--muted)}.hud b{font-size:20px}
+canvas{width:100%;aspect-ratio:1;display:block;margin:auto 0;touch-action:none}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:6px}.hint{color:var(--muted);font-size:13px}
+.ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1 inherit;cursor:pointer;padding:0 12px}
+.ic.off,.tg.off{opacity:.55;text-decoration:line-through}
+.sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.45)}.sheet[hidden]{display:none}
+.panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.panel h2{margin:0;font-size:22px}.cmp{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}.cmp span{color:var(--muted)}
+.big{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}.big b{font-size:34px;color:var(--accent2)}.big i{font-style:normal;font-size:20px;color:var(--fg)}
+.near{color:#facc15;font-weight:700;min-height:0}.new{color:#4ade80;font-weight:800}
+.btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 16px/1.2 inherit;color:var(--fg);cursor:pointer;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.btn.main{min-height:64px;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1}
+.seed{color:var(--muted);font-size:12px;text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}</style></head>
+<body data-page="orbit-switch" data-lang="ko">
+<header class="top" data-ui><a class="logo" href="/ko/"><i></i>매일웹겜</a><span class="tag">프리뷰</span><details class="langs"><summary aria-label="Language">ko ▾</summary><nav><a href="/ko/play/orbit-switch/" hreflang="ko" aria-current="true">ko</a><a href="/en/play/orbit-switch/" hreflang="en">en</a><a href="/ja/play/orbit-switch/" hreflang="ja">ja</a><a href="/zh-hans/play/orbit-switch/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/orbit-switch/" hreflang="es">es</a><a href="/pt-br/play/orbit-switch/" hreflang="pt-BR">pt-br</a></nav></details></header>
+<main class="stage" id="stage">
+<div class="hud" aria-live="off"><div><span>남은</span><b id="h-time">90</b></div><div><span>연속 회피</span><b id="h-streak">0</b></div><div><span>배수</span><b id="h-mult">×1</b></div><div><span>◆</span><b id="h-shield">◆</b></div></div>
+<canvas id="oc" role="img" aria-label="궤도 스위치"></canvas>
+<div class="bar"><span class="hint">Space / Click</span><button class="ic" type="button" data-ui data-set="sound" aria-label="소리" aria-pressed="true">🔊</button></div>
+<div class="sheet" id="ov" hidden><div class="panel"><h2>멈춤 · 탭하면 계속</h2><div class="tgs" data-ui><button class="tg" type="button" data-set="haptic" aria-pressed="true">진동</button><button class="tg" type="button" data-set="motion" aria-pressed="true">움직임 효과</button></div></div></div>
+<div class="sheet" id="res" hidden data-ui><div class="panel" role="dialog" aria-labelledby="r-title">
+<h2 id="r-title"></h2><div class="new" id="r-new" hidden>최고 기록!</div>
+<div class="big"><b id="r-dt"></b><i id="r-ds"></i></div><div class="near" id="r-near"></div>
+<div class="cmp"><span>이번</span><b id="r-now"></b><span>내 최고</span><b id="r-best"></b></div>
+<button class="btn main" id="b-again" type="button">다시</button>
+<div class="row"><button class="btn" id="b-share" type="button">공유</button><button class="btn" id="b-link" type="button">도전 링크 복사</button><button class="btn" id="b-png" type="button">이미지 저장</button></div>
+<div class="tgs"><button class="tg" type="button" data-set="sound" aria-pressed="true">소리</button><button class="tg" type="button" data-set="haptic" aria-pressed="true">진동</button><button class="tg" type="button" data-set="motion" aria-pressed="true">움직임 효과</button></div><div class="seed">seed <span id="seed"></span></div>
+</div></div>
+</main><div class="toast" id="toast" role="status"></div>
+<script id="ot" type="application/json">{"name":"궤도 스위치","title":"궤도 스위치 (프리뷰)","desc":"탭 한 번으로 안쪽·바깥 궤도를 바꿔 90초 버티기.","preview":"프리뷰","time":"남은","streak":"연속 회피","mult":"배수","hint":"Space / Click","close":"CLOSE!","sec":"초","clear":"90초 생존!","over":"끝!","now":"이번","best":"내 최고","first":"첫 기록","newBest":"최고 기록!","toBest":"최고까지 {n}초","again":"다시","share":"공유","link":"도전 링크 복사","png":"이미지 저장","copied":"복사했어요","sound":"소리","haptic":"진동","motion":"움직임 효과","paused":"멈춤 · 탭하면 계속","back":"매일웹겜","shareText":"궤도 스위치 연속 회피 {streak}번! 같은 궤도에서 나를 이겨 봐 → {url}"}</script>
+<script>(()=>{// Orbit Switch core (prototype, t_34f9c354). Pure logic, no DOM: same file runs in node (sim/tests)
+// and is inlined into the preview page by scripts/build-orbit.mjs. All tuning numbers live in OC.
+// GDD: workspace/maeil-arcade-local/games/orbit-switch/GDD.md (values are [추정] initial values).
+const OC = {
+  R: [0.28, 0.42], // lane radius (inner 0, outer 1), unit = short side of the play square
+  TRANS: 0.12, // lane switch duration (s); collision uses the interpolated radius during it
+  COOLDOWN: 0.25, // inputs within this time after a switch start are ignored (not buffered)
+  BUFFER: 0.08, // a queued input older than this is dropped
+  DUR: 90,
+  HIT_R: 0.045, // radial half band of an obstacle around its lane
+  RING_R: 0.05,
+  DOT_PAD: 0.045, // angular padding (rad) for the dot's own size
+  RING_HALF: 0.13, // ring pickup half angle (rad)
+  SEG: [
+    { t0: 0, period: 3.0, gap: 2.0, warn: 0.8 },
+    { t0: 10, period: 2.6, gap: 1.5, warn: 0.8 },
+    { t0: 30, period: 2.2, gap: 1.1, warn: 0.7 },
+    { t0: 60, period: 1.8, gap: 0.8, warn: 0.6 },
+  ],
+  REV: [70, 75], // reverse rotation window
+  FIRST_WARN: 6.0, // first obstacle warning starts here
+  DOOR_FROM: 20,
+  CLOSE_DEG: 6,
+  INVULN: 1,
+  DT: 1 / 240,
+  MULTS: [1, 2, 3, 5],
+  MIN_WINDOW: 0.25, // every required switch gets at least this much time (prev danger end → latest start)
+};
+const TAU = Math.PI * 2;
+const D2R = Math.PI / 180;
+const wrap = (a) => { a = (a + Math.PI) % TAU; if (a < 0) a += TAU; return a - Math.PI; };
+function hash(s) { let h = 2166136261 >>> 0; for (const c of String(s)) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const segIdx = (t) => (t >= 60 ? 3 : t >= 30 ? 2 : t >= 10 ? 1 : 0);
+const seg = (t) => OC.SEG[segIdx(t)];
+const BREAKS = [0, 10, 30, 60, 70, 75, 1e9];
+const dirAt = (t) => (t >= OC.REV[0] && t < OC.REV[1] ? -1 : 1);
+const omega = (t) => (dirAt(t) * TAU) / seg(t).period;
+// dot angle (rad, clockwise from top) as a pure function of time — independent of input
+function theta(t) {
+  let a = 0;
+  for (let i = 0; i < BREAKS.length - 1 && t > BREAKS[i]; i++) a += omega(BREAKS[i]) * (Math.min(t, BREAKS[i + 1]) - BREAKS[i]);
+  return a;
+}
+// obstacle center angle at time t (bars rotate against the dot)
+const obCenter = (o, t) => (o.vb ? o.c0 + o.vb * (t - o.T) : o.c0);
+const angHit = (o, t) => Math.abs(wrap(theta(t) - obCenter(o, t))) <= o.hw + OC.DOT_PAD;
+function intervals(o, from, to, step = 1 / 960) {
+  const out = []; let s = null;
+  for (let t = from; t <= to; t += step) { const h = angHit(o, t); if (h && s === null) s = t; if (!h && s !== null) { out.push([s, t]); s = null; } }
+  if (s !== null) out.push([s, to]);
+  return out;
+}
+
+// ---- level generation (deterministic per seed, rng(hash(seed)+segment)) ----
+function generate(seed) {
+  const h = hash(seed);
+  const R = OC.SEG.map((_, i) => rng((h + i * 0x9e3779b9) >>> 0));
+  const obs = [], rings = [];
+  let id = 0, doorDone = false, prevBlocked = null, prevExit = -1, lastSwitch = -9;
+  const make = (type, lane, T, r) => {
+    const o = { id: id++, type, lane, T, c0: theta(T), hw: 0, vb: 0 };
+    if (type === 'block') o.hw = (20 + r() * 20) * D2R / 2;
+    else if (type === 'door') o.hw = 14 * D2R / 2;
+    else if (type === 'bar') { o.hw = 10 * D2R / 2; o.vb = -omega(T) * 0.6; }
+    const warn = seg(T).warn;
+    const iv = intervals(o, T - warn - 1.2, T + 1.0);
+    if (iv.length !== 1) return null; // revisits (reverse window) → reject, keeps patterns readable
+    o.enter = iv[0][0]; o.exit = iv[0][1]; o.warn = seg(o.enter).warn; o.warnStart = o.enter - o.warn - 0.02;
+    return o;
+  };
+  // can the player go from the previous safe lane to this obstacle's safe lane in time?
+  const fits = (o) => {
+    if (o.enter <= prevExit + 0.05) return false;
+    if (prevBlocked === null || o.lane === prevBlocked) return true; // first or same blocked lane → no switch needed... (prev safe = new safe)
+    const window = o.enter - OC.TRANS - prevExit;
+    const st = Math.max(prevExit, lastSwitch + OC.COOLDOWN);
+    return window >= OC.MIN_WINDOW && st + OC.TRANS <= o.enter - 0.02;
+  };
+  const accept = (o) => {
+    if (prevBlocked !== null && o.lane !== prevBlocked) lastSwitch = Math.max(prevExit, lastSwitch + OC.COOLDOWN);
+    prevBlocked = o.lane; prevExit = o.exit; obs.push(o);
+  };
+  // NOTE on lanes: o.lane is the BLOCKED lane; safe lane = 1 - o.lane. A switch is needed when the blocked lane changes.
+  let T = OC.FIRST_WARN + 0.8 + 0.1;
+  let guard = 0;
+  while (T < OC.DUR - 0.6 && guard++ < 2000) {
+    const si = segIdx(T), S = OC.SEG[si], r = R[si];
+    let type = 'block';
+    if (T >= OC.DOOR_FROM && !doorDone) type = 'door';
+    else if (T >= 60) type = ['block', 'door', 'double', 'bar', 'bar'][Math.floor(r() * 5)];
+    else if (T >= 30) type = ['block', 'block', 'door', 'double'][Math.floor(r() * 4)];
+    else if (T >= 10 && T >= OC.DOOR_FROM) type = ['block', 'block', 'door'][Math.floor(r() * 3)];
+    let lane = r() < 0.5 ? 0 : 1;
+    if (type === 'double') {
+      let a = make('block', lane, T, r);
+      if (a && !fits(a)) { a = make('block', prevBlocked, T, r); }
+      if (!a || !fits(a)) { T += 0.05; continue; }
+      // second block on the other lane; push it out until its switch window is ≥ MIN_WINDOW (+ a little random slack)
+      const want = OC.MIN_WINDOW + 0.03 + r() * 0.08;
+      let b = null;
+      for (let d = 0.3; d < 1.5; d += 0.01) { const c = make('block', 1 - a.lane, a.T + d, r); if (c && c.enter - OC.TRANS - a.exit >= want) { b = c; break; } }
+      accept(a);
+      if (b && fits(b)) { b.pair = a.id; a.pair = b.id; accept(b); T = b.T + S.gap; } else T = a.T + S.gap;
+      if (lane >= 0) addRing(a, b);
+      continue;
+    }
+    let o = make(type, lane, T, r);
+    if (o && !fits(o)) o = make(type, prevBlocked ?? lane, T, r);
+    if (!o || !fits(o)) { T += 0.05; continue; }
+    if (type === 'door') doorDone = true;
+    accept(o);
+    addRing(o, null);
+    T += S.gap * (0.9 + r() * 0.2);
+  }
+  function addRing(o, pairB) {
+    // rings sit between obstacles; filled in a second pass once the next obstacle is known
+    o._ring = true; if (pairB) pairB._ring = false;
+  }
+  // intro rings: outer at 3.0 s, inner at 4.6 s — '탭=전환' before the first obstacle
+  rings.push({ id: 0, kind: 'ring', lane: 1, t: 3.0 }, { id: 1, kind: 'ring', lane: 0, t: 4.6 });
+  let shield30 = false, shield60 = false;
+  for (let i = 0; i < obs.length - 1; i++) {
+    const a = obs[i], n = obs[i + 1];
+    if (!a._ring) continue;
+    const rr = R[segIdx(a.T)];
+    if (rr() > 0.75) continue;
+    const t = a.exit + (n.enter - a.exit) * (0.55 + rr() * 0.2);
+    const lane = 1 - n.lane; // safe lane of the next obstacle → on the player's way
+    let kind = 'ring';
+    if (!shield30 && t >= 30) { kind = 'shield'; shield30 = true; } else if (!shield60 && t >= 60) { kind = 'shield'; shield60 = true; }
+    rings.push({ id: rings.length, kind, lane, t });
+  }
+  for (const o of obs) delete o._ring;
+  for (const g of rings) { g.c0 = theta(g.t); g.show = g.t - 1.2; }
+  return { seed: String(seed), obs, rings };
+}
+
+// switch windows (for O5): for every required switch, time between the previous danger end and the latest start
+function switchWindows(level) {
+  const out = []; let prev = null, lastSt = -9;
+  for (const o of level.obs) {
+    if (prev && o.lane !== prev.lane) {
+      const latest = o.enter - OC.TRANS, earliest = Math.max(prev.exit, lastSt + OC.COOLDOWN);
+      out.push({ at: o.enter, window: latest - prev.exit, slack: latest - earliest });
+      lastSt = earliest;
+    }
+    prev = o;
+  }
+  return out;
+}
+
+// forced placement for tests (O11): one obstacle whose angular overlap with the dot is centred on time T
+function placeOb(lane, T, hwDeg = 24, type = 'block') {
+  const o = { id: 0, type, lane, T, c0: theta(T), hw: (hwDeg * D2R) / 2, vb: 0 };
+  const iv = intervals(o, T - 2, T + 1); o.enter = iv[0][0]; o.exit = iv[0][1]; o.warn = seg(o.enter).warn; o.warnStart = o.enter - o.warn - 0.02;
+  return o;
+}
+
+// ---- runtime ----
+function createGame(level, opts = {}) {
+  return {
+    level, t: 0, lane: 0, trans: null, lastSwitch: -9, queued: null,
+    shields: 1, invulnUntil: -1, streak: 0, bestStreak: 0, multI: 0, score: 0,
+    over: false, clear: false, events: [], obState: level.obs.map(() => ({ hit: false, passed: false, sw: false, close: false })),
+    ringState: level.rings.map(() => ({ got: false, missed: false })),
+    log: { switches: [], ignored: [], hits: [], rings: [], warnSeen: [] }, opts,
+  };
+}
+const radius = (g, t = g.t) => {
+  if (!g.trans) return OC.R[g.lane];
+  const k = Math.min(1, Math.max(0, (t - g.trans.start) / OC.TRANS));
+  return OC.R[g.trans.from] + (OC.R[g.trans.to] - OC.R[g.trans.from]) * k;
+};
+// input(): returns true when it started a switch. kind is for the log (tap/space/click/bot)
+function input(g, kind = 'tap') {
+  if (g.over) return false;
+  if (g.t - g.lastSwitch < OC.COOLDOWN - 1e-9) { g.log.ignored.push({ t: g.t, kind, why: 'cooldown' }); return false; }
+  const from = g.trans ? g.trans.to : g.lane; // (cooldown > TRANS, so never mid-transit here)
+  g.trans = { from, to: 1 - from, start: g.t };
+  g.lane = 1 - from; g.lastSwitch = g.t;
+  g.log.switches.push({ t: g.t, kind, to: g.lane });
+  g.events.push({ e: 'switch', t: g.t });
+  return true;
+}
+function queue(g, kind) { g.queued = { t: g.t, kind }; }
+
+function step(g, dt = OC.DT) {
+  if (g.over) return;
+  if (g.queued) { if (g.t - g.queued.t <= OC.BUFFER) input(g, g.queued.kind); g.queued = null; }
+  g.t += dt;
+  const t = g.t;
+  if (g.trans && t - g.trans.start >= OC.TRANS) g.trans = null;
+  const r = radius(g);
+  const L = g.level;
+  for (let i = 0; i < L.obs.length; i++) {
+    const o = L.obs[i], s = g.obState[i];
+    if (s.passed || t < o.warnStart) continue;
+    if (!s.warned) { s.warned = true; g.log.warnSeen.push({ id: o.id, type: o.type, warnStart: o.warnStart, enter: o.enter, lead: o.enter - o.warnStart, need: o.warn }); }
+    if (t > o.exit + 0.02) {
+      s.passed = true;
+      if (!s.hit && s.sw) { g.streak++; g.bestStreak = Math.max(g.bestStreak, g.streak); g.events.push({ e: s.close ? 'close' : 'dodge', t }); }
+      continue;
+    }
+    if (g.lastSwitch >= o.warnStart - 0.3) s.sw = true;
+    const radial = Math.abs(r - OC.R[o.lane]);
+    const ah = angHit(o, t);
+    if (!s.hit && ah && radial < OC.HIT_R) {
+      s.hit = true;
+      if (t < g.invulnUntil) continue;
+      g.streak = 0;
+      g.log.hits.push({ t, id: o.id, type: o.type, r, trans: !!g.trans });
+      if (g.shields > 0) { g.shields--; g.invulnUntil = t + OC.INVULN; g.events.push({ e: 'shield', t }); }
+      else { g.over = true; g.events.push({ e: 'lose', t }); return; }
+    } else if (!s.close && g.trans && !ah && radial >= OC.HIT_R) {
+      // just left the obstacle's lane band: CLOSE if the arc edge is within 6°
+      const gap = Math.abs(wrap(theta(t) - obCenter(o, t))) - o.hw - OC.DOT_PAD;
+      const was = Math.abs(OC.R[g.trans.from] - OC.R[o.lane]) < 1e-9;
+      if (was && gap >= 0 && gap < OC.CLOSE_DEG * D2R) s.close = true;
+    }
+  }
+  for (let i = 0; i < L.rings.length; i++) {
+    const g2 = L.rings[i], s = g.ringState[i];
+    if (s.got || s.missed || t < g2.show) continue;
+    if (Math.abs(wrap(theta(t) - g2.c0)) <= OC.RING_HALF && Math.abs(r - OC.R[g2.lane]) < OC.RING_R) {
+      s.got = true; g.log.rings.push({ t, id: g2.id, kind: g2.kind });
+      if (g2.kind === 'shield') { g.shields = Math.min(1, g.shields + 1); g.events.push({ e: 'shieldUp', t }); }
+      else { const m = OC.MULTS[g.multI]; g.score += 10 * m; g.events.push({ e: 'ring', t, m, i: g.multI }); g.multI = Math.min(OC.MULTS.length - 1, g.multI + 1); }
+    } else if (t > g2.t + 0.25) { s.missed = true; if (g2.kind === 'ring') g.multI = 0; }
+  }
+  if (t >= OC.DUR) { g.t = OC.DUR; g.over = true; g.clear = true; g.events.push({ e: 'win', t }); }
+}
+
+// record compare: survival → best streak → score
+const better = (a, b) => !b || a.time > b.time + 1e-9 || (Math.abs(a.time - b.time) < 1e-9 && (a.streak > b.streak || (a.streak === b.streak && a.score > b.score)));
+const record = (g) => ({ time: Math.round(g.t * 100) / 100, streak: g.bestStreak, score: g.score, clear: g.clear });
+
+// ---- bot policies (O12 / sims) ----
+const POLICIES = {
+  idle: () => () => false,
+  fixed: () => (g) => g.lane === 0 && !g.trans, // tap once to outer lane, then hold it
+  mash: () => (g) => g.t - g.lastSwitch >= OC.COOLDOWN, // fastest legal mashing (every 0.25 s)
+  safe: () => (g) => {
+    // react only to warned obstacles: head for the safe lane of the next one when the move is clear
+    const L = g.level; let next = null;
+    for (let i = 0; i < L.obs.length; i++) { const o = L.obs[i]; if (!g.obState[i].passed && g.t >= o.warnStart && o.exit > g.t) { next = o; break; } }
+    if (!next) return false;
+    const want = 1 - next.lane;
+    if (g.lane === want) return false;
+    for (const o of L.obs) if (o.lane === want && o.exit > g.t && o.enter < g.t + OC.TRANS + 0.03 && g.t >= o.warnStart - 1) return false;
+    return true;
+  },
+};
+function simulate(level, policy, maxT = OC.DUR) {
+  const g = createGame(level); const p = typeof policy === 'function' ? policy : POLICIES[policy]();
+  while (!g.over && g.t < maxT) { if (p(g)) input(g, 'bot'); step(g); }
+  return g;
+}
+
+// Orbit Switch UI (prototype, t_34f9c354). Inlined after orbit-core.js by scripts/build-orbit.mjs
+// (one HTML request, no other network). Uses core names (OC, generate, createGame, step, input, ...) from scope.
+/* global OC, generate, createGame, step, input, queue, theta, obCenter, radius, record, better, wrap */
+(() => {
+  const T = JSON.parse(document.getElementById('ot').textContent);
+  const $ = (s) => document.querySelector(s);
+  const LS_SET = 'orbit-switch-settings', LS_BEST = 'orbit-switch-best';
+  const load = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k) || 'null') || {}); } catch { return d; } };
+  const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  const set = load(LS_SET, { sound: true, haptic: true, motion: true });
+  const mq = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = () => mq.matches || !set.motion;
+  const q = new URLSearchParams(location.search);
+  const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  const seed = (q.get('seed') || today()).slice(0, 64);
+  const level = generate(seed);
+
+  // ---- audio (WebAudio synth, created only after the first user input) ----
+  let ac = null;
+  const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended') ac.resume(); };
+  const tone = (f, d, type = 'sine', v = 0.12, f2) => {
+    if (!ac || !set.sound) return; const t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d);
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d); o.connect(g).connect(ac.destination); o.start(t); o.stop(t + d + 0.02);
+    window.__orbit && window.__orbit.sfx++;
+  };
+  const NOTES = [523.25, 659.25, 783.99, 1046.5];
+  const sfx = { switch: () => tone(880, 0.05), ring: (i) => tone(NOTES[i] || 1046.5, 0.12, 'triangle', 0.14), close: () => tone(1600, 0.16, 'sawtooth', 0.05, 300), hit: () => tone(110, 0.3, 'square', 0.12, 55), win: () => { tone(523, 0.15, 'triangle'); setTimeout(() => tone(1046, 0.25, 'triangle'), 120); } };
+  const buzz = (ms) => { if (set.haptic && navigator.vibrate) try { navigator.vibrate(ms); window.__orbit.vib++; } catch {} };
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { if (ac) ac.suspend(); pause(); } });
+
+  // ---- DOM ----
+  const cv = $('#oc'), ctx = cv.getContext('2d');
+  const hud = { time: $('#h-time'), streak: $('#h-streak'), mult: $('#h-mult'), shield: $('#h-shield') };
+  const ov = $('#ov'), res = $('#res'), toast = $('#toast');
+  let S = 300, dpr = 1;
+  const fit = () => { dpr = Math.min(2, devicePixelRatio || 1); S = cv.clientWidth; cv.width = cv.height = Math.round(S * dpr); };
+  addEventListener('resize', fit); fit();
+  const syncToggles = () => {
+    for (const b of document.querySelectorAll('[data-set]')) { const k = b.dataset.set; b.setAttribute('aria-pressed', String(!!set[k])); b.classList.toggle('off', !set[k]); }
+  };
+  for (const b of document.querySelectorAll('[data-set]')) b.addEventListener('click', () => { const k = b.dataset.set; set[k] = !set[k]; save(LS_SET, set); if (k === 'sound' && !set.sound && ac) ac.suspend(); if (k === 'sound' && set.sound) unlock(); syncToggles(); });
+  syncToggles();
+  const say = (m) => { toast.textContent = m; toast.classList.add('show'); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove('show'), 1600); };
+
+  // ---- game loop ----
+  let g, acc = 0, last = 0, running = false, paused = false, trail = [], shakeUntil = 0, slowUntil = 0, fx = [];
+  const W = window.__orbit = { seed, level, sfx: 0, vib: 0, frames: 0, ready: false, get g() { return g; }, starts: [], dbg: () => ({ trail: trail.length, reduced: reduced(), shake: shakeUntil > performance.now(), slow: slowUntil > performance.now() }) };
+  function start() {
+    g = createGame(level); acc = 0; last = performance.now(); running = true; paused = false; trail = []; fx = [];
+    res.hidden = true; ov.hidden = true; W.starts.push(performance.now()); W.ready = true;
+  }
+  function pause() { if (running && !g.over) { paused = true; ov.hidden = false; } }
+  function resume() { paused = false; ov.hidden = true; last = performance.now(); }
+  const isUi = (el) => el && el.closest && el.closest('[data-ui]');
+  function press(kind) {
+    unlock();
+    if (paused) { resume(); return; }
+    if (!running || g.over) return;
+    queue(g, kind);
+  }
+  document.addEventListener('pointerdown', (e) => { if (isUi(e.target) || e.button > 0) return; e.preventDefault(); press(e.pointerType === 'mouse' ? 'click' : 'tap'); }, { passive: false });
+  document.addEventListener('keydown', (e) => {
+    if (e.code !== 'Space' && e.key !== ' ') { if ((e.key === 'r' || e.key === 'R') && g && g.over) start(); return; }
+    e.preventDefault(); if (e.repeat) { if (g) g.log.ignored.push({ t: g.t, kind: 'space', why: 'repeat' }); return; }
+    if (isUi(document.activeElement) && g && g.over) return; // Space on a focused result button = that button
+    press('space');
+  });
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!running) return;
+    W.frames++;
+    let dt = Math.min(0.1, (now - last) / 1000); last = now;
+    if (!paused && !g.over) {
+      const scale = !reduced() && now < slowUntil ? 0.4 : 1; // slow-mo is presentation only: sim time stays consistent
+      acc += dt * scale;
+      while (acc >= OC.DT && !g.over) { step(g); acc -= OC.DT; }
+      for (const ev of g.events.splice(0)) onEvent(ev, now);
+      if (g.over) finish();
+    }
+    draw(now);
+  }
+  function onEvent(ev, now) {
+    if (ev.e === 'switch') { sfx.switch(); buzz(10); }
+    else if (ev.e === 'ring') { sfx.ring(ev.i); fx.push({ k: 'ring', at: now }); }
+    else if (ev.e === 'close') { sfx.close(); buzz(20); fx.push({ k: 'close', at: now }); }
+    else if (ev.e === 'shield' || ev.e === 'lose') { sfx.hit(); buzz(40); if (!reduced()) { shakeUntil = now + 300; if (ev.e === 'shield') slowUntil = now + 350; } }
+    else if (ev.e === 'shieldUp') sfx.ring(3);
+    else if (ev.e === 'win') sfx.win();
+  }
+
+  // ---- drawing ----
+  const RED = '#ff4d5e', CYAN = '#22d3ee';
+  let hatch = null;
+  const hatchPat = () => {
+    if (hatch) return hatch; const c = document.createElement('canvas'); c.width = c.height = 12; const x = c.getContext('2d');
+    x.fillStyle = RED; x.fillRect(0, 0, 12, 12); x.strokeStyle = 'rgba(40,0,8,.75)'; x.lineWidth = 3; x.beginPath(); x.moveTo(-3, 15); x.lineTo(15, -3); x.moveTo(-3, 3); x.lineTo(3, -3); x.moveTo(9, 15); x.lineTo(15, 9); x.stroke();
+    return (hatch = ctx.createPattern(c, 'repeat'));
+  };
+  let bg = null, bgKey = '';
+  const bgLayer = (rm) => {
+    const k = `${S}|${dpr}|${rm}`; if (bg && bgKey === k) return bg; bgKey = k;
+    bg = document.createElement('canvas'); bg.width = bg.height = Math.round(S * dpr); const x = bg.getContext('2d'); x.scale(dpr, dpr);
+    x.lineWidth = 2; for (const R of OC.R) { x.strokeStyle = 'rgba(99,102,241,.5)'; x.shadowColor = '#6366f1'; x.shadowBlur = rm ? 0 : 10; x.beginPath(); x.arc(S / 2, S / 2, R * S, 0, Math.PI * 2); x.stroke(); }
+    x.shadowBlur = 0; x.fillStyle = '#fde68a'; x.beginPath(); x.arc(S / 2, S / 2, S * 0.05, 0, Math.PI * 2); x.fill();
+    return bg;
+  };
+  const P = (a, r) => [S / 2 + Math.sin(a) * r * S, S / 2 - Math.cos(a) * r * S];
+  const arc = (c, hw, r) => { ctx.beginPath(); ctx.arc(S / 2, S / 2, r * S, c - hw - Math.PI / 2, c + hw - Math.PI / 2); };
+  function draw(now) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, S, S);
+    if (now < shakeUntil) ctx.translate((Math.random() - 0.5) * 8, (Math.random() - 0.5) * 8);
+    const t = g.t, rm = reduced();
+    if (!rm) { ctx.fillStyle = 'rgba(255,255,255,.35)'; for (let i = 0; i < 24; i++) { const a = i * 2.4 + t * 0.05 * (1 + (i % 3)), d = 0.08 + ((i * 37) % 40) / 100; const [x, y] = P(a, d); ctx.fillRect(x, y, 1.5, 1.5); } }
+    ctx.drawImage(bgLayer(rm), 0, 0, S, S); // orbits + star, cached (shadowBlur is costly per frame)
+    // obstacles
+    const L = level;
+    for (let i = 0; i < L.obs.length; i++) {
+      const o = L.obs[i], s = g.obState[i];
+      if (t < o.warnStart || t > o.exit + 0.35) continue;
+      const c = obCenter(o, t), R = OC.R[o.lane];
+      if (t < o.enter - 0.2) { ctx.setLineDash([6, 6]); ctx.strokeStyle = RED; ctx.lineWidth = 3; arc(c, o.hw + 0.02, R); ctx.stroke(); ctx.setLineDash([]); if (o.type === 'door') doorFrame(c, o); continue; }
+      ctx.globalAlpha = t > o.exit ? Math.max(0, 1 - (t - o.exit) / 0.35) : 1;
+      ctx.strokeStyle = s.hit ? '#888' : hatchPat(); ctx.lineWidth = OC.HIT_R * 2 * S * 0.8; ctx.lineCap = 'butt'; arc(c, o.hw, R); ctx.stroke();
+      if (o.type === 'door') doorFrame(c, o);
+      if (o.type === 'bar') { ctx.strokeStyle = '#fb923c'; ctx.lineWidth = 2; arc(c, o.hw, R + OC.HIT_R); ctx.stroke(); }
+      ctx.globalAlpha = 1;
+    }
+    for (let i = 0; i < L.rings.length; i++) {
+      const r = L.rings[i], s = g.ringState[i]; if (s.got || s.missed || t < r.show || t > r.t + 0.3) continue;
+      const [x, y] = P(r.c0, OC.R[r.lane]);
+      if (r.kind === 'shield') { ctx.fillStyle = '#4ade80'; ctx.beginPath(); ctx.moveTo(x, y - 10); ctx.lineTo(x + 9, y - 6); ctx.lineTo(x + 7, y + 5); ctx.lineTo(x, y + 11); ctx.lineTo(x - 7, y + 5); ctx.lineTo(x - 9, y - 6); ctx.closePath(); ctx.fill(); }
+      else { ctx.strokeStyle = CYAN; ctx.shadowColor = CYAN; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2); ctx.stroke(); }
+    }
+    // dot + trail
+    const a = theta(t), r = radius(g), [dx, dy] = P(a, r);
+    if (!rm) { trail.push([dx, dy]); if (trail.length > 14) trail.shift(); trail.forEach(([x, y], k) => { ctx.fillStyle = `rgba(34,211,238,${(k / trail.length) * 0.45})`; ctx.beginPath(); ctx.arc(x, y, 3 + k * 0.35, 0, Math.PI * 2); ctx.fill(); }); } else trail.length = 0;
+    const inv = t < g.invulnUntil && Math.floor(t * 12) % 2;
+    ctx.fillStyle = inv ? 'rgba(255,255,255,.35)' : '#fff'; ctx.beginPath(); ctx.arc(dx, dy, S * 0.022, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+    if (g.shields > 0) { ctx.strokeStyle = 'rgba(74,222,128,.8)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(dx, dy, S * 0.034, 0, Math.PI * 2); ctx.stroke(); }
+    // guide (0–3 s): tap circle + radial double arrow, no text
+    if (t < 3) {
+      const k = (t % 1), [gx, gy] = P(a, 0.35);
+      ctx.strokeStyle = `rgba(255,255,255,${0.9 - k * 0.6})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(S / 2, S / 2 + S * 0.15, 10 + k * 14, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(S / 2, S / 2 + S * 0.15, 6, 0, Math.PI * 2); ctx.fill();
+      const [ix, iy] = P(a, 0.3), [ox, oy] = P(a, 0.4); ctx.strokeStyle = '#fff'; ctx.beginPath(); ctx.moveTo(ix, iy); ctx.lineTo(ox, oy); ctx.stroke();
+      for (const [x, y] of [[ix, iy], [ox, oy]]) { ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill(); } void gx; void gy;
+    }
+    for (const f of fx) { const k = (now - f.at) / 600; if (k > 1) continue; if (f.k === 'close') { ctx.fillStyle = `rgba(250,204,21,${1 - k})`; ctx.font = `800 ${S * 0.07}px system-ui`; ctx.textAlign = 'center'; ctx.fillText(T.close, S / 2, S / 2 - S * 0.12 - k * 20); } }
+    fx = fx.filter((f) => now - f.at < 600);
+    hudUpdate();
+  }
+  function doorFrame(c, o) { const w = o.hw + 0.06; ctx.strokeStyle = 'rgba(255,77,94,.7)'; ctx.lineWidth = 2; for (const e of [c - w, c + w]) { const [x1, y1] = P(e, OC.R[0] - 0.05), [x2, y2] = P(e, OC.R[1] + 0.05); ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); } }
+  let hudPrev = '';
+  function hudUpdate() {
+    const s = `${Math.ceil(OC.DUR - g.t)}|${g.streak}|${OC.MULTS[g.multI]}|${g.shields}`; if (s === hudPrev) return; hudPrev = s;
+    hud.time.textContent = Math.ceil(OC.DUR - g.t); hud.streak.textContent = g.streak; hud.mult.textContent = '×' + OC.MULTS[g.multI]; hud.shield.textContent = g.shields ? '◆' : '◇';
+  }
+
+  // ---- results ----
+  let lastRec = null;
+  const fmtT = (x) => x.toFixed(1);
+  function finish() {
+    const rec = record(g), prev = load(LS_BEST, { v: null }).v; lastRec = rec;
+    const isBest = better(rec, prev); if (isBest) save(LS_BEST, { v: rec });
+    const best = isBest ? rec : prev;
+    $('#r-title').textContent = rec.clear ? T.clear : T.over;
+    $('#r-now').textContent = `${fmtT(rec.time)}${T.sec} · ${T.streak} ${rec.streak} · ${rec.score}`;
+    $('#r-best').textContent = `${fmtT(best.time)}${T.sec} · ${T.streak} ${best.streak} · ${best.score}`;
+    const dT = prev ? rec.time - prev.time : 0, dS = prev ? rec.streak - prev.streak : 0;
+    $('#r-dt').textContent = prev ? `${dT >= 0 ? '+' : '−'}${fmtT(Math.abs(dT))}${T.sec}` : T.first;
+    $('#r-ds').textContent = prev ? `${T.streak} ${dS >= 0 ? '+' : '−'}${Math.abs(dS)}` : '';
+    $('#r-near').textContent = prev && !isBest && prev.time - rec.time > 0.05 && prev.time - rec.time <= 10 ? T.toBest.replace('{n}', fmtT(prev.time - rec.time)) : '';
+    $('#r-new').hidden = !(isBest && prev);
+    res.hidden = false; W.result = { rec, best, prev };
+    setTimeout(() => $('#b-again').focus({ preventScroll: true }), 30);
+  }
+  const shareUrl = () => { const u = new URL(location.href); u.search = ''; u.searchParams.set('seed', seed); return u.toString(); };
+  $('#b-again').addEventListener('click', () => { unlock(); start(); });
+  $('#b-share').addEventListener('click', async () => {
+    const text = T.shareText.replace('{streak}', lastRec ? lastRec.streak : 0).replace('{url}', shareUrl());
+    if (navigator.share) { try { await navigator.share({ text }); return; } catch {} }
+    try { await navigator.clipboard.writeText(text); say(T.copied); } catch { say(text); }
+  });
+  $('#b-link').addEventListener('click', async () => { try { await navigator.clipboard.writeText(shareUrl()); say(T.copied); } catch { say(shareUrl()); } });
+  $('#b-png').addEventListener('click', () => {
+    const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d'), r = lastRec || record(g);
+    const gr = x.createLinearGradient(0, 0, 1080, 1350); gr.addColorStop(0, '#0b0d1a'); gr.addColorStop(1, '#07080c'); x.fillStyle = gr; x.fillRect(0, 0, 1080, 1350);
+    x.strokeStyle = 'rgba(99,102,241,.7)'; x.lineWidth = 6; for (const R of OC.R) { x.beginPath(); x.arc(540, 520, R * 900, 0, Math.PI * 2); x.stroke(); }
+    x.fillStyle = '#fde68a'; x.beginPath(); x.arc(540, 520, 44, 0, Math.PI * 2); x.fill();
+    x.fillStyle = '#fff'; x.beginPath(); x.arc(540 + 0.42 * 900 * Math.sin(1), 520 - 0.42 * 900 * Math.cos(1), 20, 0, Math.PI * 2); x.fill();
+    x.textAlign = 'center'; x.fillStyle = '#e8eaf0'; x.font = '700 56px system-ui,sans-serif'; x.fillText(T.name, 540, 110);
+    x.font = '800 120px system-ui,sans-serif'; x.fillStyle = '#22d3ee'; x.fillText(`${T.streak} ${r.streak}`, 540, 1060);
+    x.font = '600 52px system-ui,sans-serif'; x.fillStyle = '#e8eaf0'; x.fillText(`${fmtT(r.time)}${T.sec} · ${r.score}`, 540, 1150);
+    x.font = '500 34px system-ui,sans-serif'; x.fillStyle = 'rgba(214,219,232,.72)'; x.fillText(`seed ${seed} · playtoday.cloud`, 540, 1290);
+    c.toBlob((b) => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `orbit-switch-${seed}.png`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); W.png = b.size; }, 'image/png');
+  });
+  $('#seed').textContent = seed;
+  requestAnimationFrame(frame);
+  start();
+})();
+})()</script>
+</body></html>
