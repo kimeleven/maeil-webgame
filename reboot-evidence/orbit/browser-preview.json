@@ -1,0 +1,152 @@
+{
+ "base": "https://maeil-webgame-m635g6sw3-sanghunkims-projects.vercel.app",
+ "at": "2026-10-22T22:58:24.626Z",
+ "O1_412": {
+  "tap": 1,
+  "doubleTapWithin40ms": 1,
+  "muteButtonTap": 0,
+  "sfxBeforeInput": 0,
+  "sfxAfter": 2
+ },
+ "O9_412_play": {
+  "sw": 412,
+  "w": 412
+ },
+ "O1_1440": {
+  "space": 1,
+  "click": 1,
+  "repeatEvent": 0,
+  "holdSpace700ms": 1
+ },
+ "O9_1440_play": {
+  "sw": 1440,
+  "w": 1440
+ },
+ "O6_412": {
+  "vp": "412",
+  "first": {
+   "title": "끝!",
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "첫 기록"
+  },
+  "second": {
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "+0.0초",
+   "ds": "연속 회피 +0",
+   "near": ""
+  },
+  "restartMs": 69,
+  "sw": 412,
+  "w": 412,
+  "small": [],
+  "againBigger": true,
+  "png": {
+   "name": "orbit-switch-res.png",
+   "bytes": 739889,
+   "sig": "PNG",
+   "w": 1080,
+   "h": 1350
+  },
+  "link": "https://maeil-webgame-m635g6sw3-sanghunkims-projects.vercel.app/ko/play/orbit-switch/?seed=res",
+  "apiReqs": [],
+  "reqs": [
+   "/ko/play/orbit-switch/",
+   "/_next-live/feedback/feedback.js",
+   "/_next-live/feedback/feedback.html",
+   "/.well-known/vercel/jwe",
+   "/login/validate"
+  ]
+ },
+ "O6_360": {
+  "vp": "360",
+  "first": {
+   "title": "끝!",
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "첫 기록"
+  },
+  "second": {
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "+0.0초",
+   "ds": "연속 회피 +0",
+   "near": ""
+  },
+  "restartMs": 80,
+  "sw": 360,
+  "w": 360,
+  "small": [],
+  "againBigger": true
+ },
+ "O6_1440": {
+  "vp": "1440",
+  "first": {
+   "title": "끝!",
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "첫 기록"
+  },
+  "second": {
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "+0.0초",
+   "ds": "연속 회피 +0",
+   "near": ""
+  },
+  "restartMs": 73,
+  "sw": 1440,
+  "w": 1440,
+  "small": [],
+  "againBigger": true
+ },
+ "O7_motion": {
+  "reduced": {
+   "trail": 0,
+   "reduced": true,
+   "shake": false,
+   "slow": false
+  },
+  "normal": {
+   "trail": 14,
+   "reduced": false,
+   "shake": false,
+   "slow": false
+  }
+ },
+ "O7_persist": {
+  "vibrateCallsWhileOn": 1,
+  "afterReload": {
+   "ls": "{\"sound\":false,\"haptic\":false,\"motion\":true}",
+   "mute": "false",
+   "haptic": "false"
+  },
+  "vib": 0,
+  "sfx": 0,
+  "sw": 2
+ },
+ "O8": {
+  "tapReadyWallMs": 896,
+  "tapReadyPerfNowMs": 888,
+  "transferBytes": 38660,
+  "requests": [
+   "/ko/play/orbit-switch/",
+   "/_next-live/feedback/feedback.js",
+   "/_next-live/feedback/feedback.html",
+   "/.well-known/vercel/jwe",
+   "/ko/play/orbit-switch/"
+  ],
+  "htmlGzipBytes": 13678,
+  "htmlRawBytes": 37785,
+  "fps8s": 72,
+  "note": "local dev server sends uncompressed; Vercel serves gzip/br"
+ },
+ "O10": {
+  "lobbyCats": {
+   "n": 3,
+   "orbitLinks": 0
+  },
+  "filesReferencingOrbit": []
+ }
+}
