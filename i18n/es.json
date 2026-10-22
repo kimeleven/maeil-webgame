@@ -408,5 +408,6 @@
    "Compartir siempre es opcional. Puedes ver todos tus resultados sin compartir. No usamos cookies de seguimiento publicitario.", "Contamos visitas y clics en botones de forma anónima y sin cookies. No se envían nombres, resultados ni identificadores personales."
   ]
  },
- "halloween": {"banner": "🎃 Tema limitado de Halloween", "sub": "Hasta el 31 de octubre, las tarjetas de resultado llevan marco de Halloween.", "frame": "HAPPY HALLOWEEN"}
+ "halloween": {"banner": "🎃 Tema limitado de Halloween", "sub": "Hasta el 31 de octubre, las tarjetas de resultado llevan marco de Halloween.", "frame": "HAPPY HALLOWEEN"},
+ "quickbreak": {"title": "Juego de navegador de 30 segundos — sin registro", "desc": "¿Tienes 30 segundos? Juega gratis en el navegador sin instalar ni registrarte, y prueba el test de personaje o la química con amigos.", "h1": "¿Aburrido? Una partida de 30 segundos", "p1": "Para un descanso corto no hace falta instalar nada. Una partida de Gate Rush dura 30 segundos, así que termina antes de que se enfríe el café, y empieza en el navegador sin registro.", "p2": "Si te sobra un minuto, haz el test de personaje de 10 preguntas para encontrar tu personaje de juego, o envía un enlace a un amigo para ver vuestra química. Todo es gratis.", "link": "Juego de 30 segundos para un descanso"}
 }
