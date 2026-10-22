@@ -153,7 +153,7 @@
   },
   "start": "¡Adelante!",
   "resume": "Seguir corriendo",
-  "newRun": "Nueva expedición",
+  "newRun": "Nueva expedición", "retry": "Reintentar misma semilla (R)", "sound": "Sonido", "haptic": "Vibración",
   "restart": "Empezar de cero",
   "slow": "Lento (0.8×)",
   "assistNote": "Los récords en modo lento llevan la insignia ASSIST y no generan enlaces de reto.",

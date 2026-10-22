@@ -1,0 +1,73 @@
+{
+  "ready_ms_412": 34,
+  "ctx_before_input_412": "none",
+  "ctx_after_start_412": "running",
+  "after_run_412": {
+    "s": "lost",
+    "sfx": {
+      "played": 4,
+      "buzzed": 2,
+      "unlocked": true,
+      "ctx": "running",
+      "sound": true,
+      "haptic": true
+    },
+    "buzz": 2
+  },
+  "retry_1tap_412": {
+    "s": "running",
+    "seed": "feel",
+    "stage": 1,
+    "ov": true,
+    "ms": 821
+  },
+  "mute_persist_412": {
+    "checked": false,
+    "ls": "{\"sound\":false,\"haptic\":true}"
+  },
+  "errors_412": [],
+  "ready_ms_1440": 110,
+  "ctx_before_input_1440": "none",
+  "ctx_after_start_1440": "running",
+  "after_run_1440": {
+    "s": "lost",
+    "sfx": {
+      "played": 4,
+      "buzzed": 2,
+      "unlocked": true,
+      "ctx": "running",
+      "sound": true,
+      "haptic": true
+    },
+    "buzz": 2
+  },
+  "retry_1tap_1440": {
+    "s": "running",
+    "seed": "feel",
+    "stage": 1,
+    "ov": true,
+    "ms": 902
+  },
+  "mute_persist_1440": {
+    "checked": false,
+    "ls": "{\"sound\":false,\"haptic\":true}"
+  },
+  "errors_1440": [],
+  "reduced_noaudio": {
+    "buzz": 0,
+    "sfx": {
+      "played": 0,
+      "buzzed": 0,
+      "unlocked": false,
+      "ctx": "none",
+      "sound": true,
+      "haptic": true
+    },
+    "supported": {
+      "audio": false,
+      "vibrate": true
+    },
+    "state": "lost",
+    "errs": []
+  }
+}

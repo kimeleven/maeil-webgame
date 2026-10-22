@@ -153,7 +153,7 @@
   },
   "start": "出击",
   "resume": "继续跑",
-  "newRun": "新的远征",
+  "newRun": "新的远征", "retry": "同一种子再来 (R)", "sound": "声音", "haptic": "振动",
   "restart": "从头再来",
   "slow": "慢速（0.8×）",
   "assistNote": "慢速模式的记录会带ASSIST标记，且不能生成挑战链接。",

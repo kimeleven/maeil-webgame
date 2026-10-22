@@ -153,7 +153,7 @@
   },
   "start": "Launch",
   "resume": "Keep running",
-  "newRun": "New run",
+  "newRun": "New run", "retry": "Retry same seed (R)", "sound": "Sound", "haptic": "Vibration",
   "restart": "Start over",
   "slow": "Slow (0.8×)",
   "assistNote": "Slow mode records get an ASSIST badge and can't create challenge links.",

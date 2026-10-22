@@ -153,7 +153,7 @@
   },
   "start": "Partiu!",
   "resume": "Continuar correndo",
-  "newRun": "Nova expedição",
+  "newRun": "Nova expedição", "retry": "Tentar de novo, mesma semente (R)", "sound": "Som", "haptic": "Vibração",
   "restart": "Recomeçar do zero",
   "slow": "Devagar (0.8×)",
   "assistNote": "Recordes no modo devagar ganham o selo ASSIST e não geram link de desafio.",

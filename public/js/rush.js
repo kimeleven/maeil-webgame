@@ -3,6 +3,7 @@ import * as G from './rush-core.js';
 import { rushCard, saveCanvas, shareOrCopy, copyText } from './card.js';
 import { api } from './net.js';
 import { track, stageBucket } from './track.js';
+import { createSfx } from './sfx.js';
 
 const KEY = 'gate-rush-v3';
 const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
@@ -35,10 +36,11 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
   } else run = G.createRun({ seed });
   run.assist = run.assist || assist;
 
+  const sfx = createSfx({ enabled: !capture });
   root.innerHTML = `<div class="gamebox" tabindex="0" aria-label="${g.name}"><canvas aria-label="${g.controls[0]}"></canvas>
   <div class="ghud"><span>${g.troops}<b data-h="power">20</b></span><span>${g.sector}<b data-h="stage">1</b></span><span>${g.score}<b data-h="score">0</b></span></div>
   <div class="gover" data-ov><div class="gmodal" role="dialog" aria-live="polite"></div></div></div>
-  ${capture ? '' : `<label class="gtoggle"><input type="checkbox" data-assist ${assist ? 'checked' : ''}> ${g.slow}</label><p class="muted" style="text-align:center">${g.assistNote}</p>`}`;
+  ${capture ? '' : `<div class="gtoggles"><label class="gtoggle"><input type="checkbox" data-sfx="sound" ${sfx.prefs.sound ? 'checked' : ''}> ${g.sound}</label><label class="gtoggle"><input type="checkbox" data-sfx="haptic" ${sfx.prefs.haptic ? 'checked' : ''}> ${g.haptic}</label></div><label class="gtoggle"><input type="checkbox" data-assist ${assist ? 'checked' : ''}> ${g.slow}</label><p class="muted" style="text-align:center">${g.assistNote}</p>`}`;
   const box = root.querySelector('.gamebox'), cv = box.querySelector('canvas'), ctx = cv.getContext('2d');
   const ov = box.querySelector('[data-ov]'), modal = ov.firstElementChild;
   const hud = Object.fromEntries([...box.querySelectorAll('[data-h]')].map((e) => [e.dataset.h, e]));
@@ -112,20 +114,22 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
       } else track('challenge_copy', { method: 'copy' });
       status.textContent = (await copyText(url)) ? `${D.common.copied}: ${url}` : url;
     }));
-    buttons.push(btn(g.newRun, 'ghost', () => { run = G.createRun({ seed: run.seed }); run.assist = assist; persist(); screenReady(); }));
+    // 1-tap retry: same seed, straight into sector 1 (assist flag follows the toggle, as before)
+    buttons.push(btn(g.retry, '', () => { track('retry', { from: 'lost' }); run = G.createRun({ seed: run.seed }); run.assist = assist; persist(); start(); }));
     show(`<span class="tag">${rec.assist ? 'ASSIST' : 'GAME OVER'}</span><h2>${g.lostTitle}</h2><p style="font-size:30px;font-weight:800;margin:6px 0">${g.sector} ${rec.stage}</p><p>${fmt(g.lostDesc, { stage: rec.cleared, score: rec.score.toLocaleString() })}</p>${beat ? `<p class="tag">${g.beat}</p>` : ''}<p class="muted">${g.best}: ${save.bestStage} · ${save.best.toLocaleString()}</p>`, buttons);
     modal.append(status);
+    sfx.play('lose');
   }
-  function start() { if (run.stage === 1) track('play_start', { mode: challenge ? 'challenge' : 'daily' }); G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
+  function start() { sfx.unlock(); if (run.stage === 1) track('play_start', { mode: challenge ? 'challenge' : 'daily' }); G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
 
   // ---------- input ----------
   const keys = {};
-  box.addEventListener('keydown', (e) => { if (['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault(); keys[e.key.toLowerCase()] = true; });
+  box.addEventListener('keydown', (e) => { if (['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault(); keys[e.key.toLowerCase()] = true; sfx.unlock(); if ((e.key === 'r' || e.key === 'R') && run.state === 'lost' && !ov.hidden) modal.querySelector('.stack .btn:last-child')?.click(); });
   addEventListener('keydown', (e) => { if (document.activeElement === document.body && ['ArrowLeft', 'ArrowRight'].includes(e.key) && run.state === 'running') { e.preventDefault(); keys[e.key.toLowerCase()] = true; } });
   addEventListener('keyup', (e) => { keys[e.key.toLowerCase()] = false; });
   let drag = false;
   const ptr = (e) => { const b = cv.getBoundingClientRect(); run.target = Math.max(-0.92, Math.min(0.92, (e.clientX - b.left - b.width / 2) / (b.width * 0.39))); };
-  cv.addEventListener('pointerdown', (e) => { drag = true; cv.setPointerCapture(e.pointerId); ptr(e); });
+  cv.addEventListener('pointerdown', (e) => { sfx.unlock(); drag = true; cv.setPointerCapture(e.pointerId); ptr(e); });
   cv.addEventListener('pointermove', (e) => { if (drag) ptr(e); });
   cv.addEventListener('pointerup', () => (drag = false)); cv.addEventListener('pointercancel', () => (drag = false));
   document.addEventListener('visibilitychange', () => {
@@ -135,6 +139,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     }
   });
   root.querySelector('[data-assist]')?.addEventListener('change', (e) => { assist = e.target.checked; if (run.state !== 'running') run.assist = assist || run.assist && run.state !== 'ready'; if (run.state === 'ready' && run.stage === 1) run.assist = assist; persist(); });
+  root.querySelectorAll('[data-sfx]').forEach((el) => el.addEventListener('change', (e) => sfx.set(el.dataset.sfx, e.target.checked)));
 
   // ---------- drawing ----------
   const proj = (lane, z) => { const d = Math.max(0, Math.min(1, z)), s = 0.1 + 0.9 * d * d; return { x: W / 2 + lane * W * 0.43 * s, y: H * 0.23 + H * 0.65 * d * d, s }; };
@@ -257,11 +262,11 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
   function handleEvents() {
     for (const ev of run.events.splice(0)) {
       const cx = crowdX();
-      if (ev.kind === 'gate') { const up = ev.after >= ev.before; fx.push({ text: `${ev.before} → ${ev.after}`, x: cx, y: H * 0.66, color: up ? '#5cf2ff' : '#ff7a90', size: 34, life: 0.9, max: 0.9 }); burst(up ? '#22d3ee' : '#ff527a', up ? Math.min(60, 10 + (ev.after - ev.before) / 2) : 20); }
-      else if (ev.kind === 'hit') { run.flash = 0.5; fx.push({ text: '−' + ev.loss, x: cx, y: H * 0.68, color: '#ff7a90', size: 40, life: 0.9, max: 0.9 }); burst('#ff527a', 30); }
-      else if (ev.kind === 'dodge') { fx.push({ text: (ev.add ? '+' + ev.add : '') + (ev.close ? '  ' + (capture ? '!' : g.close) : ''), x: cx, y: H * 0.68, color: '#4ade80', size: ev.close ? 44 : 30, life: 0.8, max: 0.8 }); burst('#4ade80', 18); if (ev.close && !reduced()) slow = 0.3; }
-      else if (ev.kind === 'warn' && ev.type === 'D') { if (!reduced()) shake = 0.4; }
-      else if (ev.kind === 'win' || ev.kind === 'lose') { const d = ev.power - ev.boss; fx.push({ text: (d >= 0 ? '+' : '−') + Math.abs(d), x: W / 2, y: H * 0.45, color: d >= 0 ? '#4ade80' : '#ff7a90', size: 72, life: 1.2, max: 1.2 }); }
+      if (ev.kind === 'gate') { const up = ev.after >= ev.before; fx.push({ text: `${ev.before} → ${ev.after}`, x: cx, y: H * 0.66, color: up ? '#5cf2ff' : '#ff7a90', size: 34, life: 0.9, max: 0.9 }); burst(up ? '#22d3ee' : '#ff527a', up ? Math.min(60, 10 + (ev.after - ev.before) / 2) : 20); sfx.play(up ? 'gateUp' : 'gateDown'); }
+      else if (ev.kind === 'hit') { run.flash = 0.5; fx.push({ text: '−' + ev.loss, x: cx, y: H * 0.68, color: '#ff7a90', size: 40, life: 0.9, max: 0.9 }); burst('#ff527a', 30); sfx.play('hit'); }
+      else if (ev.kind === 'dodge') { fx.push({ text: (ev.add ? '+' + ev.add : '') + (ev.close ? '  ' + (capture ? '!' : g.close) : ''), x: cx, y: H * 0.68, color: '#4ade80', size: ev.close ? 44 : 30, life: 0.8, max: 0.8 }); burst('#4ade80', 18); sfx.play(ev.close ? 'close' : 'dodge'); if (ev.close && !reduced()) slow = 0.3; }
+      else if (ev.kind === 'warn') { sfx.play('warn'); if (ev.type === 'D' && !reduced()) shake = 0.4; }
+      else if (ev.kind === 'win' || ev.kind === 'lose') { const d = ev.power - ev.boss; fx.push({ text: (d >= 0 ? '+' : '−') + Math.abs(d), x: W / 2, y: H * 0.45, color: d >= 0 ? '#4ade80' : '#ff7a90', size: 72, life: 1.2, max: 1.2 }); if (d >= 0) sfx.play('clear'); }
     }
   }
   function sync() {
@@ -330,7 +335,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     steer: (v) => (run.target = v), move: (v) => { run.target = run.x = v; },
     course: (s = run.stage) => G.makeCourse(run.seed, s, run.mods), choices: (s = run.stage) => G.upgradeChoices(run.seed, s, run.mods),
     choose: (k) => { const ok = G.chooseUpgrade(run, k); if (ok) { run.state = 'ready'; persist(); screenReady(); } return ok; },
-    speedAt: G.speedAt, bossDefense: G.bossDefense, core: G,
+    speedAt: G.speedAt, bossDefense: G.bossDefense, core: G, sfx,
   };
   return { run: () => run };
 }
