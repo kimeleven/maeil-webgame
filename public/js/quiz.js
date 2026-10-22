@@ -39,7 +39,7 @@ export function mountQuiz(el, D) {
 
 export function showResult(el, D, code, pct, retry) {
   try { localStorage.setItem('play-character', JSON.stringify({ code, pct, at: Date.now() })); } catch {}
-  el.innerHTML = resultHtml(D, code, pct) + `<div class="row" style="margin-top:16px"><button class="btn" data-save>${esc(D.cta.save)}</button><button class="btn ghost" data-share>${esc(D.cta.share)}</button><a class="btn ghost" href="/${D.lang}/friends/chemistry/">${esc(D.cta.chem)}</a><button class="btn ghost" data-retry>${esc(D.cta.retry)}</button></div><p class="status" role="status"></p>`;
+  el.innerHTML = resultHtml(D, code, pct) + `<div class="row" style="margin-top:16px"><button class="btn" data-share>${esc(D.cta.share)}</button><button class="btn ghost" data-save>${esc(D.cta.save)}</button><a class="btn ghost" href="/${D.lang}/friends/chemistry/">${esc(D.cta.chem)}</a><button class="btn ghost" data-retry>${esc(D.cta.retry)}</button></div><p class="status" role="status"></p>`;
   const st = el.querySelector('.status');
   el.querySelector('[data-save]').onclick = async () => saveCanvas(await quizCard(D, code, pct), `play-character-${code}.png`);
   el.querySelector('[data-share]').onclick = async () => {
