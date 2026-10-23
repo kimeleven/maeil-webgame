@@ -1,0 +1,348 @@
+
+> test
+> node --test tests/*.test.mjs
+
+✔ schema: only CREATE TABLE IF NOT EXISTS, no answer/ip columns (D5) (3.093958ms)
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+✖ share: create + read + validation (18.360667ms)
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+✖ invite: full flow, privacy, 9th join 409, delete (3.135ms)
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+✖ invite: default nick per lang, expiry → 404 (1.468709ms)
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+✖ rate limit: 11th create in a minute → 429 (16.30075ms)
+✔ static: rewrites for r/c/i shells, sitemap, robots (9.563041ms)
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+✖ stats: token required, aggregates only (1.953584ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /Users/shkim/AIAgents/workspace/maeil-fair/lib/db.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:784:25)
+    at moduleResolve (node:internal/modules/esm/resolve:873:18)
+    at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+    at #resolve (node:internal/modules/esm/loader:690:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:277:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v26.7.0
+✖ tests/events.test.mjs (50.23175ms)
+# R7a fallback rounds used: 8/1000
+# R11 fixed-horizontal mean score r3-10 over 20 seeds: 7.6 (target ≤ 50 [estimate]); per seed 3,0,1,0,17,0,9,17,8,8,2,11,0,15,7,19,15,0,7,15
+✔ R4 area: square x=50 → 50.0, x=49 → 49.0 (e 1.0, 80 pts); miss outside; rounding to tenths (1.118666ms)
+✔ R4 concave L: one side made of two pieces sums correctly (hand calc) (0.196833ms)
+✔ R4 grade/score boundaries (0.133459ms)
+✔ R5 no input: 10 timeouts, score 0, result at 116 s; boundary deadline−1 accepted, deadline = timeout (5.479542ms)
+✔ R6 short drag (< 24) is cancelled without consuming the round; 24 counts (1.102459ms)
+✔ R7a seed 100 × 10 rounds pass realValidate ①~⑦; same seed same shapes (37.230375ms)
+✔ R7b injected always-false validate: exactly 8 calls per round then fallback tag (not a correctness check) (0.291875ms)
+✔ R7c fallback constants pass realValidate directly (no injection) (0.099833ms)
+✔ R2 auto player (bisection half line) → all 10 rounds perfect, seed 50 (19.066083ms)
+✔ R3 replay: same seed + same log → same per-round % and score; coordinates normalised to 0.1 (0.978ms)
+✔ R1 keyboard: → ×10 = 10°, Shift+↑ = normal −10; angle cycles 0..179; offset clamp ±708; same judge (0.3535ms)
+✔ R11 (measurement, not a guarantee): horizontal line through bbox centre, rounds 3-10, seed 20 (2.114833ms)
+✔ cutoff is 2026-11-01 00:00 KST and the same in both places (0.317875ms)
+✔ theme on before cutoff, off after, query overrides (0.195042ms)
+✔ og rewrite only for known OG names, only before cutoff (0.255292ms)
+✔ quiz: all-a → SPH, all-b → CIT, tie broken by last question of axis (1.217042ms)
+✔ quiz: every code reachable (1024 combos) (1.507875ms)
+✔ chemistry: 8 patterns, symmetric pattern, best buddy opposite (0.227917ms)
+✔ rush: deterministic course & attacks; no attack impact within 0.7s of gates (5.906625ms)
+✔ rush: sim evidence passes spec targets (0.31025ms)
+✔ i18n: 6 languages share ko key structure; MBTI only in disclaimer (1.172083ms)
+✔ core has no DOM / Math.random (0.210167ms)
+✔ magnet M5: idle after start → auto drop 360 ticks after ready, result < 30 s, 0 ships (13.867833ms)
+✔ magnet M3: replay of the input log is identical (21.233333ms)
+✔ magnet M11a: one column / stay-tap policies never ship (1.857834ms)
+✔ magnet snap: column from ship-relative x, err ≥0.5 → sea (0.070458ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 28
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 912.042541
+
+✖ failing tests:
+
+test at tests/api.test.mjs:18:1
+✖ share: create + read + validation (18.360667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 201
+  
+      at TestContext.<anonymous> (file:///Users/shkim/AIAgents/workspace/maeil-fair/tests/api.test.mjs:21:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 201,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api.test.mjs:32:1
+✖ invite: full flow, privacy, 9th join 409, delete (3.135ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 201
+  
+      at TestContext.<anonymous> (file:///Users/shkim/AIAgents/workspace/maeil-fair/tests/api.test.mjs:35:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 201,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api.test.mjs:60:1
+✖ invite: default nick per lang, expiry → 404 (1.468709ms)
+  TypeError: Cannot read properties of null (reading 'token')
+      at TestContext.<anonymous> (file:///Users/shkim/AIAgents/workspace/maeil-fair/tests/api.test.mjs:63:49)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+
+test at tests/api.test.mjs:68:1
+✖ rate limit: 11th create in a minute → 429 (16.30075ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 429
+  
+      at TestContext.<anonymous> (file:///Users/shkim/AIAgents/workspace/maeil-fair/tests/api.test.mjs:72:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 429,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/api.test.mjs:86:1
+✖ stats: token required, aggregates only (1.953584ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 401
+  
+      at TestContext.<anonymous> (file:///Users/shkim/AIAgents/workspace/maeil-fair/tests/api.test.mjs:88:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 401,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/events.test.mjs:1:1
+✖ tests/events.test.mjs (50.23175ms)
+  'test failed'

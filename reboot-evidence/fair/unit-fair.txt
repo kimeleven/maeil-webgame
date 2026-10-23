@@ -1,0 +1,22 @@
+# R7a fallback rounds used: 8/1000
+# R11 fixed-horizontal mean score r3-10 over 20 seeds: 7.6 (target ≤ 50 [estimate]); per seed 3,0,1,0,17,0,9,17,8,8,2,11,0,15,7,19,15,0,7,15
+✔ R4 area: square x=50 → 50.0, x=49 → 49.0 (e 1.0, 80 pts); miss outside; rounding to tenths (0.50225ms)
+✔ R4 concave L: one side made of two pieces sums correctly (hand calc) (0.086834ms)
+✔ R4 grade/score boundaries (0.05775ms)
+✔ R5 no input: 10 timeouts, score 0, result at 116 s; boundary deadline−1 accepted, deadline = timeout (2.430792ms)
+✔ R6 short drag (< 24) is cancelled without consuming the round; 24 counts (0.696666ms)
+✔ R7a seed 100 × 10 rounds pass realValidate ①~⑦; same seed same shapes (27.430541ms)
+✔ R7b injected always-false validate: exactly 8 calls per round then fallback tag (not a correctness check) (0.334625ms)
+✔ R7c fallback constants pass realValidate directly (no injection) (0.091291ms)
+✔ R2 auto player (bisection half line) → all 10 rounds perfect, seed 50 (16.281375ms)
+✔ R3 replay: same seed + same log → same per-round % and score; coordinates normalised to 0.1 (0.81175ms)
+✔ R1 keyboard: → ×10 = 10°, Shift+↑ = normal −10; angle cycles 0..179; offset clamp ±708; same judge (0.279417ms)
+✔ R11 (measurement, not a guarantee): horizontal line through bbox centre, rounds 3-10, seed 20 (1.876292ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 84.673792

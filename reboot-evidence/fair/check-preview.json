@@ -1,0 +1,141 @@
+{
+  "base": "https://maeil-webgame-iysswb0h1-sanghunkims-projects.vercel.app",
+  "at": "2026-10-23T17:26:00.017Z",
+  "R0 ready: 10 s wait + screen tap + Space → still ready, timer 10.0, no shape": {
+    "pass": true,
+    "detail": "{\"phase\":\"ready\",\"r\":0,\"rounds\":0,\"score\":0,\"paused\":false,\"drag\":false,\"kb\":null,\"last\":null,\"hud0\":\"10.0\"}"
+  },
+  "R9 ?seed= shapes equal node genShapes(seed)": {
+    "pass": true,
+    "detail": ""
+  },
+  "R1 412 touch drag → exactly one cut": {
+    "pass": true,
+    "detail": "{\"e10\":0,\"grade\":\"perfect\",\"at\":1349}"
+  },
+  "R2 first cut ≥ good within 5 s of [start] (real touch drag down the middle)": {
+    "pass": true,
+    "detail": "e=0 grade perfect, 1644 ms wall"
+  },
+  "R6 short drag / pointercancel / second pointer / pause: no cut, round 2 still open": {
+    "pass": true,
+    "detail": "cancels pointercancel,second-pointer,pause ; short→[\"ok\",\"short\"]"
+  },
+  "R10 no % anywhere while dragging (DOM + canvas text draws)": {
+    "pass": true,
+    "detail": "dom [], canvas text during drag 0"
+  },
+  "R10 hidden tab → paused, timer frozen, drag cancelled, blurred sheet": {
+    "pass": true,
+    "detail": "hud 8.4→8.4 {\"shown\":true,\"blur\":\"blur(18px)\"}"
+  },
+  "R10 UI button tap (pause) is not a cut": {
+    "pass": true,
+    "detail": "{\"phase\":\"aim\",\"r\":2,\"rounds\":1,\"score\":120,\"paused\":true,\"drag\":false,\"kb\":null,\"last\":{\"e10\":0,\"grade\":\"perfect\",\"at\":1349}}"
+  },
+  "R1c drag starting inside the shape is a normal cut": {
+    "pass": true,
+    "detail": "{\"e10\":0,\"grade\":\"perfect\",\"at\":5412}"
+  },
+  "no page errors (412 run)": {
+    "pass": true,
+    "detail": ""
+  },
+  "R1b ready: Enter held 2 s (repeat) = start only, no round-1 cut": {
+    "pass": true,
+    "detail": "{\"phase\":\"aim\",\"r\":1,\"rounds\":0,\"score\":0,\"paused\":false,\"drag\":false,\"kb\":{\"th\":0,\"d\":0,\"shown\":false},\"last\":null} repeats ignored 40"
+  },
+  "R1b aim: Enter before any arrow is ignored": {
+    "pass": true,
+    "detail": "[{\"k\":\"enter-ignored\",\"phase\":\"aim\",\"drag\":false,\"kb\":false}]"
+  },
+  "R1 keyboard: → ×10 = 10°, Shift+↑ = normal −10": {
+    "pass": true,
+    "detail": "{\"th\":10,\"d\":0,\"shown\":true} → {\"th\":10,\"d\":-10,\"shown\":true}"
+  },
+  "R1 1440 keyboard Enter → exactly one cut (same judge)": {
+    "pass": true,
+    "detail": "{\"e10\":20,\"grade\":\"good\",\"at\":3027}"
+  },
+  "R1 1440 mouse drag → exactly one cut": {
+    "pass": true,
+    "detail": "{\"e10\":51,\"grade\":\"meh\",\"at\":5202}"
+  },
+  "R2 browser auto (real mouse drags on exact half lines) rounds 3-10 all perfect (e ≤ 0.5)": {
+    "pass": true,
+    "detail": "[[3,0,\"perfect\"],[4,0,\"perfect\"],[5,0,\"perfect\"],[6,0,\"perfect\"],[7,0,\"perfect\"],[8,0,\"perfect\"],[9,0,\"perfect\"],[10,0,\"perfect\"]]"
+  },
+  "R8 result: score, best/diff, 10 per-round error bars, visible without sharing": {
+    "pass": true,
+    "detail": "{\"score\":\"1020\",\"best\":\"—\",\"diff\":\"—\",\"bars\":10,\"first\":true,\"near\":\"가장 아까운 라운드: 1번, 오차 2.0\"}"
+  },
+  "R1b result: Enter → ready only (not started)": {
+    "pass": true,
+    "detail": "{\"phase\":\"ready\",\"r\":0,\"rounds\":0,\"score\":0,\"paused\":false,\"drag\":false,\"kb\":null,\"last\":null}"
+  },
+  "no page errors (1440 run)": {
+    "pass": true,
+    "detail": ""
+  },
+  "R3 replay identical: node = chromium 360/412(reduced)/1440 = webkit 412/1440": {
+    "pass": true,
+    "detail": "[[\"chromium\",360,true],[\"chromium\",412,true],[\"chromium\",1440,true],[\"webkit\",412,true],[\"webkit\",1440,true]] score 1020 err 7.1"
+  },
+  "R3 WebKit real mouse drag → one cut, round 1 good+": {
+    "pass": true,
+    "detail": "{\"e10\":0,\"grade\":\"perfect\",\"at\":486}"
+  },
+  "R8 [again] 1 tap → ready ≤ 0.5 s": {
+    "pass": true,
+    "detail": "29 ms (wall, incl. automation)"
+  },
+  "R8 PNG saved locally 1080×1350 (no upload)": {
+    "pass": true,
+    "detail": "fair-slice-r8.png"
+  },
+  "R10 sound setting persists after reload": {
+    "pass": true,
+    "detail": "sound=false"
+  },
+  "R9 network: no /api, no external requests": {
+    "pass": true,
+    "detail": "requests 2, api 0, external "
+  },
+  "no page errors (result run)": {
+    "pass": true,
+    "detail": ""
+  },
+  "R12 [start] actionable ≤ 2 s (4× CPU + Fast 3G emulation, headless Chromium)": {
+    "pass": true,
+    "detail": "522 ms"
+  },
+  "R12 gzip ≤ 35 KB, 0 images/fonts/audio files": {
+    "pass": true,
+    "detail": "17828 B gzip (48948 B raw)"
+  },
+  "R12 frame rate while dragging ≥ 55 (uncapped headless, 4× CPU; render headroom, not a device fps)": {
+    "pass": true,
+    "detail": "4× 1599 fps, 1× 5619 fps"
+  },
+  "fps": {
+    "cpu4": 1599,
+    "cpu1": 5619
+  },
+  "R12 6 langs × 360/412/1440 (ready + result): no horizontal overflow, targets ≥ 44px, meta noindex": {
+    "pass": true,
+    "detail": "36 screens"
+  },
+  "R9 diff: no api/db/lib/middleware/vercel.json/manifest/sw/sitemap/robots//c//lobby changes": {
+    "pass": true,
+    "detail": "14 paths"
+  },
+  "R9 sitemap has no fair-slice (109 urls as main)": {
+    "pass": true,
+    "detail": "109 urls"
+  },
+  "R5 no input after [start] → 10 timeouts, score 0, result < 120 s (real time)": {
+    "pass": true,
+    "detail": "115902 ms, {\"phase\":\"result\",\"r\":10,\"rounds\":10,\"score\":0,\"paused\":false,\"drag\":false,\"kb\":{\"th\":0,\"d\":0,\"shown\":false},\"last\":{\"e10\":500,\"grade\":\"meh\",\"at\":114800}}"
+  },
+  "fails": []
+}
