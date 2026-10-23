@@ -1,0 +1,121 @@
+{
+ "base": "https://maeil-webgame-docaes8zu-sanghunkims-projects.vercel.app",
+ "browser": "webkit",
+ "at": "2026-10-23T23:48:29.435Z",
+ "R0 ready: 10 s + screen/rail tap → still ready, clock 90, no parcel": {
+  "pass": true,
+  "detail": "{\"phase\":\"ready\",\"k\":0,\"correct\":0,\"judged\":0,\"score\":0,\"log\":0,\"hud\":\"90\",\"paused\":false,\"G\":0,\"s\":null,\"ans\":null,\"pend\":false,\"notice\":false}"
+ },
+ "R1b ready Enter (+ held repeat) → start only, no choice": {
+  "pass": true,
+  "detail": "{\"phase\":\"wait\",\"k\":1,\"correct\":0,\"judged\":0,\"score\":0,\"log\":0,\"hud\":\"90\",\"paused\":false,\"G\":257,\"s\":0,\"ans\":1,\"pend\":false,\"notice\":false}"
+ },
+ "R1b wait Enter → nothing": {
+  "pass": true,
+  "detail": "{\"phase\":\"wait\",\"k\":1,\"correct\":0,\"judged\":0,\"score\":0,\"log\":0,\"hud\":\"90\",\"paused\":false,\"G\":259,\"s\":0,\"ans\":1,\"pend\":false,\"notice\":false}"
+ },
+ "R2 real tap ↓ (center) → parcel 1 correct < 5 s after start": {
+  "pass": true,
+  "detail": "t0=520 tapAt≈487"
+ },
+ "R6b feedback commit after receive deadline (commitAt = max(t0+W+G, arrival)), one sound per commit": {
+  "pass": true,
+  "detail": "{\"inE\":{\"k\":\"in\",\"at\":521,\"src\":\"ptr0\",\"t\":520},\"cE\":{\"k\":\"commit\",\"at\":10821,\"ca\":586}}"
+ },
+ "R1b hold ↓ 3 s → only first keydown used (parcel 2 C), repeats ignored, next not fed": {
+  "pass": true,
+  "detail": "{\"L2\":[[2,\"bad\",1]],\"reps\":66}"
+ },
+ "errors412": [],
+ "R1 1440 click ↓ + keys ← → → C,L,R choices via the same input()": {
+  "pass": true,
+  "detail": "{\"L\":[[\"ok\",1],[\"ok\",0],[\"ok\",2]],\"src\":[\"pp\",\"kp\",\"kp\"]}"
+ },
+ "R6 two inputs within 16 ms → both void, same parcel waiting, no commit": {
+  "pass": true,
+  "detail": "{\"k\":4,\"voids\":2,\"log\":3,\"tags\":[\"pending\",\"void\"]}"
+ },
+ "R6/R10 pause during W: clock frozen, symbol hidden, paused input dropped, resume → t0 committed": {
+  "pass": true,
+  "detail": "{\"pr\":{\"t0\":1472,\"G\":1472,\"n\":4},\"mid\":{\"G\":1472,\"n\":4,\"paused\":true,\"drop\":{\"k\":\"in-dropped\",\"why\":\"paused\",\"src\":\"key\"},\"hid\":\"hidden\"},\"after\":[\"ok\",1472]}"
+ },
+ "R4b notice before parcel 25 exactly once, game clock frozen at s, input during notice dropped, ~1.5 s": {
+  "pass": true,
+  "detail": "{\"n0\":{\"G\":7019,\"s\":7019,\"hud\":\"83\",\"k\":25},\"n1\":{\"G\":7019,\"notice\":true,\"pend\":false},\"n2\":{\"notices\":1,\"ends\":[7993,9496],\"rb\":true,\"bangBefore\":24},\"dur\":1503}"
+ },
+ "R4b no \"!\" parcel before 25 (blocks in this game)": {
+  "pass": true,
+  "detail": ""
+ },
+ "R9/R3 ?seed=check parcels == node generate (same order)": {
+  "pass": true,
+  "detail": ""
+ },
+ "R9 no /api or external request": {
+  "pass": true,
+  "detail": ""
+ },
+ "R10 hidden → pause (clock stops), blur → pause, resume continues": {
+  "pass": true,
+  "detail": "{\"h\":{\"paused\":true,\"why\":\"hidden\",\"G\":7249},\"h2\":7249,\"bl\":{\"paused\":true,\"why\":\"blur\"}}"
+ },
+ "R8 [처음부터] → ready, best not written": {
+  "pass": true,
+  "detail": "{\"phase\":\"ready\",\"best\":null}"
+ },
+ "R10 mute persists after reload": {
+  "pass": true,
+  "detail": "{\"sound\":false,\"btn\":\"🔇\"}"
+ },
+ "R10 grayscale: wrong answer shows ✕ on chosen + ✓ on correct rail (glyphs), rail symbols as text": {
+  "pass": true,
+  "detail": "{\"rails\":[\"●\",\"★\",\"▲\"],\"okMark\":\"\\\"✓\\\"\",\"badMark\":\"\\\"✕\\\"\"}"
+ },
+ "errors1440": [],
+ "no page errors (412/1440 flows)": {
+  "pass": true,
+  "detail": ""
+ },
+ "R10 reduced motion: no slide-in animation": {
+  "pass": true,
+  "detail": "{\"rm\":true,\"anim\":false}"
+ },
+ "R5 idle: result at logical 90 s + G, 0 correct 0 pts (display lag recorded)": {
+  "pass": true,
+  "detail": "{\"end\":{\"at\":90050,\"score\":0,\"correct\":0,\"judged\":33,\"discarded\":true},\"lag\":17,\"notice\":1502,\"wall\":91636}"
+ },
+ "R12 360 result: no horizontal overflow, targets ≥ 44 px (6 languages)": {
+  "pass": true,
+  "detail": "[{\"sw\":360,\"w\":360,\"small\":[]},{\"sw\":360,\"w\":360,\"small\":[]},{\"sw\":360,\"w\":360,\"small\":[]},{\"sw\":360,\"w\":360,\"small\":[]},{\"sw\":360,\"w\":360,\"small\":[]},{\"sw\":360,\"w\":360,\"small\":[]}]"
+ },
+ "R8 result visible without sharing; PNG local download; [다시] → ready < 0.5 s": {
+  "pass": true,
+  "detail": "{\"file\":\"sort-rail-idle.png\",\"t\":{\"ms\":8,\"phase\":\"ready\",\"ready\":true}}"
+ },
+ "R9 idle pages: no /api request (6 langs)": {
+  "pass": true,
+  "detail": ""
+ },
+ "no page errors (6 lang idle)": {
+  "pass": true,
+  "detail": "     "
+ },
+ "R12 360/412/1440 × 6 langs: no horizontal overflow (incl. header items), rails ≥ 64 px tall & ≥ 44 px wide": {
+  "pass": true,
+  "detail": "[{\"l\":\"ko\",\"w\":360,\"ready\":true,\"play\":true,\"rails\":[[108,64],[108,64],[108,64]]}]"
+ },
+ "R12 page gzip ≤ 30 KB (single HTML, 0 images/fonts/audio files)": {
+  "pass": true,
+  "detail": "16646 B gzip, 48240 B raw"
+ },
+ "R3/R5/R6b same admitted log in browser (20/60 fps frame lists) == node replay": {
+  "pass": true,
+  "detail": "score 1801 correct 104/138 late 0"
+ },
+ "R3 live 20 fps page log == node replay of its admitted inputs (first 12 parcels)": {
+  "pass": true,
+  "detail": "avg frame 55.6 ms"
+ },
+ "fails": [],
+ "total": 28
+}

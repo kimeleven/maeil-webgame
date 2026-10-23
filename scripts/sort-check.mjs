@@ -19,6 +19,7 @@ const site = (reqs) => reqs.filter((u) => !/vercel\.live|\/\.well-known\/vercel|
 async function open(vp, { touch = false, path = PATH(), motion } = {}) {
   const ctx = await B.newContext({ viewport: vp, hasTouch: touch, isMobile: touch && !WK, acceptDownloads: true, reducedMotion: motion || 'no-preference' });
   const p = await ctx.newPage(); p.errs = []; p.reqs = []; p.ctx = ctx;
+  await ctx.route(/vercel\.live/, (r) => r.abort()); // Vercel preview-only feedback toolbar: not the game, absent in production (its WebKit keydown handler throws on window targets)
   p.on('pageerror', (e) => p.errs.push(e.message)); p.on('console', (m) => m.type() === 'error' && p.errs.push(m.text()));
   p.on('request', (r) => p.reqs.push(r.url()));
   await p.goto(U + path); await p.waitForFunction(() => window.__sr && __sr.ready);
@@ -159,12 +160,12 @@ async function answer(p, wrong = false) { await waitShown(p); const a = await p.
     const HB = await chromium.launch({ headless: false, args: ['--window-position=0,0'] }); const p0 = await HB.newContext({ viewport: { width: 412, height: 915 } }); const p = await p0.newPage(); const c = await p0.newCDPSession(p);
     await c.send('Network.enable'); await c.send('Network.setCacheDisabled', { cacheDisabled: true });
     await c.send('Network.emulateNetworkConditions', { offline: false, latency: 562.5, downloadThroughput: (1.6 * 1024 * 1024) / 8 * 0.9, uploadThroughput: (750 * 1024) / 8 * 0.9 });
-    await c.send('Emulation.setCPUThrottlingRate', { rate: 4 }); const reqs = []; p.on('request', (r) => reqs.push(r.url()));
+    await c.send('Emulation.setCPUThrottlingRate', { rate: 4 }); await p.route(/vercel\.live|\/\.well-known\/vercel/, (r) => r.abort()); /* Vercel preview-only feedback toolbar (not part of the game, absent in production) */ const reqs = []; p.on('request', (r) => reqs.push(r.url()));
     const t0 = Date.now(); await p.goto(U + PATH('ko', 'load')); await p.waitForFunction(() => window.__sr && __sr.ready); const tReady = Date.now() - t0;
     await p.click('#b-start'); await p.waitForFunction(() => __sr.g.phase === 'wait' && !document.getElementById('parcel').hidden); const tStart = Date.now() - t0;
     const f0 = await p.evaluate(() => __sr.W.frames); await sleep(3000); const f1 = await p.evaluate(() => __sr.W.frames);
     const fps = (f1 - f0) / 3; const gen = await p.evaluate(() => Math.max(...__sr.g.genMs));
-    ok('R12 Fast 3G + 4× CPU: [시작] response ≤ 2 s from navigation, requests = 1 document', tStart <= 2000 && site(reqs).length === 1, JSON.stringify({ tReady, tStart, reqs: site(reqs).length }));
+    ok('R12 Fast 3G + 4× CPU: [시작] response ≤ 2 s from navigation, requests = 1 document (Vercel preview toolbar blocked)', tStart <= 2000 && site(reqs).length === 1, JSON.stringify({ tReady, tStart, reqs: site(reqs).length, urls: reqs.map((u) => u.slice(0, 90)) }));
     ok('R12 avg fps ≥ 55 (4× CPU emulation, HEADED Chromium; headless rAF is throttled ~11 fps)', fps >= 55, `fps ${fps.toFixed(1)} · worst block gen ${gen.toFixed(3)} ms`);
     out.load = { tReady, tStart, fps, gen, gz }; await p0.close(); await HB.close();
   }

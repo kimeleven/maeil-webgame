@@ -1,32 +1,32 @@
 ✔ R0 ready: 10 s + screen/rail tap → still ready, clock 90, no parcel — {"phase":"ready","k":0,"correct":0,"judged":0,"score":0,"log":0,"hud":"90","paused":false,"G":0,"s":null,"ans":null,"pend":false,"notice":false}
-✔ R1b ready Enter (+ held repeat) → start only, no choice — {"phase":"wait","k":1,"correct":0,"judged":0,"score":0,"log":0,"hud":"90","paused":false,"G":392.39999997615814,"s":0,"ans":1,"pend":false,"notice":false}
-✔ R1b wait Enter → nothing — {"phase":"wait","k":1,"correct":0,"judged":0,"score":0,"log":0,"hud":"90","paused":false,"G":398.89999997615814,"s":0,"ans":1,"pend":false,"notice":false}
-✔ R2 real tap ↓ (center) → parcel 1 correct < 5 s after start — t0=894 tapAt≈845
-✔ R6b feedback commit after receive deadline (commitAt = max(t0+W+G, arrival)), one sound per commit — {"inE":{"k":"in","at":970.2000000476837,"src":"ptr4","t":893.7000000476837},"cE":{"k":"commit","at":12098.5,"ca":970.2000000476837}}
+✔ R1b ready Enter (+ held repeat) → start only, no choice — {"phase":"wait","k":1,"correct":0,"judged":0,"score":0,"log":0,"hud":"90","paused":false,"G":264.5,"s":0,"ans":1,"pend":false,"notice":false}
+✔ R1b wait Enter → nothing — {"phase":"wait","k":1,"correct":0,"judged":0,"score":0,"log":0,"hud":"90","paused":false,"G":270.89999997615814,"s":0,"ans":1,"pend":false,"notice":false}
+✔ R2 real tap ↓ (center) → parcel 1 correct < 5 s after start — t0=738 tapAt≈599
+✔ R6b feedback commit after receive deadline (commitAt = max(t0+W+G, arrival)), one sound per commit — {"inE":{"k":"in","at":781.6999999284744,"src":"ptr4","t":738.1000000238419},"cE":{"k":"commit","at":11453.1,"ca":804.1000000238419}}
 ✔ R1b hold ↓ 3 s → only first keydown used (parcel 2 C), repeats ignored, next not fed — {"L2":[[2,"bad",1]],"reps":66}
 ✔ R1 1440 click ↓ + keys ← → → C,L,R choices via the same input() — {"L":[["ok",1],["ok",0],["ok",2]],"src":["pp","kp","kp"]}
 ✔ R6 two inputs within 16 ms → both void, same parcel waiting, no commit — {"k":4,"voids":2,"log":3,"tags":["pending","void"]}
-✔ R6/R10 pause during W: clock frozen, symbol hidden, paused input dropped, resume → t0 committed — {"pr":{"t0":1834.2000000476837,"G":1834.7999999523163,"n":4},"mid":{"G":1834.7999999523163,"n":4,"paused":true,"drop":{"k":"in-dropped","why":"paused","src":"key"},"hid":"hidden"},"after":["ok",1834.2000000476837]}
-✔ R4b notice before parcel 25 exactly once, game clock frozen at s, input during notice dropped, ~1.5 s — {"n0":{"G":7938.299999952316,"s":7938.299999952316,"hud":"83","k":25},"n1":{"G":7938.299999952316,"notice":true,"pend":false},"n2":{"notices":1,"ends":[8941,10457.5],"rb":true,"bangBefore":24},"dur":1516.5}
+✔ R6/R10 pause during W: clock frozen, symbol hidden, paused input dropped, resume → t0 committed — {"pr":{"t0":1758,"G":1758.1999999284744,"n":4},"mid":{"G":1758.1999999284744,"n":4,"paused":true,"drop":{"k":"in-dropped","why":"paused","src":"key"},"hid":"hidden"},"after":["ok",1758]}
+✔ R4b notice before parcel 25 exactly once, game clock frozen at s, input during notice dropped, ~1.5 s — {"n0":{"G":7987.499999880791,"s":7987.499999880791,"hud":"83","k":25},"n1":{"G":7987.499999880791,"notice":true,"pend":false},"n2":{"notices":1,"ends":[9036.7,10553.3],"rb":true,"bangBefore":24},"dur":1516.5999999999985}
 ✔ R4b no "!" parcel before 25 (blocks in this game)
 ✔ R9/R3 ?seed=check parcels == node generate (same order)
 ✔ R9 no /api or external request
-✔ R10 hidden → pause (clock stops), blur → pause, resume continues — {"h":{"paused":true,"why":"hidden","G":8328.399999976158},"h2":8328.399999976158,"bl":{"paused":true,"why":"blur"}}
+✔ R10 hidden → pause (clock stops), blur → pause, resume continues — {"h":{"paused":true,"why":"hidden","G":8379.099999976159},"h2":8379.099999976159,"bl":{"paused":true,"why":"blur"}}
 ✔ R8 [처음부터] → ready, best not written — {"phase":"ready","best":null}
 ✔ R10 mute persists after reload — {"sound":false,"btn":"🔇"}
 ✔ R10 grayscale: wrong answer shows ✕ on chosen + ✓ on correct rail (glyphs), rail symbols as text — {"rails":["●","★","▲"],"okMark":"\"✓\"","badMark":"\"✕\""}
 ✔ no page errors (412/1440 flows)
 ✔ R10 reduced motion: no slide-in animation — {"rm":true,"anim":false}
-✔ R5 idle: result at logical 90 s + G, 0 correct 0 pts (display lag recorded) — {"end":{"at":90050,"score":0,"correct":0,"judged":33,"discarded":true},"lag":31.6,"notice":1500,"wall":91713}
+✔ R5 idle: result at logical 90 s + G, 0 correct 0 pts (display lag recorded) — {"end":{"at":90050,"score":0,"correct":0,"judged":33,"discarded":true},"lag":36,"notice":1516.7,"wall":91670}
 ✔ R12 360 result: no horizontal overflow, targets ≥ 44 px (6 languages) — [{"sw":360,"w":360,"small":[]},{"sw":360,"w":360,"small":[]},{"sw":360,"w":360,"small":[]},{"sw":360,"w":360,"small":[]},{"sw":360,"w":360,"small":[]},{"sw":360,"w":360,"small":[]}]
-✔ R8 result visible without sharing; PNG local download; [다시] → ready < 0.5 s — {"file":"sort-rail-idle.png","t":{"ms":27.600000023841858,"phase":"ready","ready":true}}
+✔ R8 result visible without sharing; PNG local download; [다시] → ready < 0.5 s — {"file":"sort-rail-idle.png","t":{"ms":41.200000047683716,"phase":"ready","ready":true}}
 ✔ R9 idle pages: no /api request (6 langs)
 ✔ no page errors (6 lang idle) —      
 ✔ R12 360/412/1440 × 6 langs: no horizontal overflow (incl. header items), rails ≥ 64 px tall & ≥ 44 px wide — [{"l":"ko","w":360,"ready":true,"play":true,"rails":[[108,64],[108,64],[108,64]]}]
 ✔ R12 page gzip ≤ 30 KB (single HTML, 0 images/fonts/audio files) — 16646 B gzip, 48240 B raw
-✔ R12 Fast 3G + 4× CPU: [시작] response ≤ 2 s from navigation, requests = 1 document — {"tReady":976,"tStart":1359,"reqs":1}
-✔ R12 avg fps ≥ 55 (4× CPU emulation, HEADED Chromium; headless rAF is throttled ~11 fps) — fps 64.7 · worst block gen 2.600 ms
+✔ R12 Fast 3G + 4× CPU: [시작] response ≤ 2 s from navigation, requests = 1 document (Vercel preview toolbar blocked) — {"tReady":997,"tStart":1348,"reqs":1,"urls":["http://localhost:5199/ko/play/sort-rail/?seed=load"]}
+✔ R12 avg fps ≥ 55 (4× CPU emulation, HEADED Chromium; headless rAF is throttled ~11 fps) — fps 74.3 · worst block gen 2.800 ms
 ✔ R3/R5/R6b same admitted log in browser (20/60 fps frame lists) == node replay — score 1801 correct 104/138 late 0
-✔ R3 live 20 fps page log == node replay of its admitted inputs (first 12 parcels) — avg frame 70.5 ms
+✔ R3 live 20 fps page log == node replay of its admitted inputs (first 12 parcels) — avg frame 71.4 ms
 
 local: 30/30 pass
