@@ -5,6 +5,7 @@ import { CODES, COLORS, bestBuddy } from '../public/js/logic.js';
 import { HEAD_SNIPPET } from '../public/js/theme.js';
 import { buildMagnet, MAGNET_LANGS } from './build-magnet.mjs'; // magnet-harbor public game (t_1c491685, launch t_45f1a325)
 import { buildOrbit } from './build-orbit.mjs'; // orbit-switch candidate (noindex, not in sitemap) [t_06bfa4bc]
+import { buildEcho } from './build-echo.mjs'; // echo-courier candidate (noindex, not in sitemap) [t_06bfa4bc]
 const MT = JSON.parse(readFileSync(new URL('../i18n/magnet-harbor.json', import.meta.url), 'utf8'));
 
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -216,6 +217,7 @@ export function build() {
   writeFileSync(`${ROOT}public/robots.txt`, `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /*/r/\nDisallow: /*/i/\nDisallow: /*/c/\n\nSitemap: ${SITE}/sitemap.xml\n`);
   buildMagnet();
   buildOrbit();
+  buildEcho();
   console.log(`built ${n} index pages + ${LANGS.length * SHELLS.length} noindex shells + / ; sitemap ${urls.length} urls`);
   return { pages: n, sitemap: urls.length };
 }
