@@ -153,7 +153,7 @@
   },
   "start": "¡Adelante!",
   "resume": "Seguir corriendo",
-  "newRun": "Nueva expedición",
+  "shareHint": "Envíalo a un amigo y podrá retar la misma partida. Compartir es opcional.", "newRun": "Nueva expedición",
   "restart": "Empezar de cero",
   "slow": "Lento (0.8×)",
   "assistNote": "Los récords en modo lento llevan la insignia ASSIST y no generan enlaces de reto.",
@@ -411,5 +411,6 @@
  },
  "halloween": {"banner": "🎃 Tema limitado de Halloween", "sub": "Hasta el 31 de octubre, las tarjetas de resultado llevan marco de Halloween.", "frame": "HAPPY HALLOWEEN"},
  "quickbreak": {"title": "Juego de navegador de 30 segundos — sin registro", "desc": "¿Tienes 30 segundos? Juega gratis en el navegador sin instalar ni registrarte, y prueba el test de personaje o la química con amigos.", "h1": "¿Aburrido? Una partida de 30 segundos", "p1": "Para un descanso corto no hace falta instalar nada. Una partida de Gate Rush dura 30 segundos, así que termina antes de que se enfríe el café, y empieza en el navegador sin registro.", "p2": "Si te sobra un minuto, haz el test de personaje de 10 preguntas para encontrar tu personaje de juego, o envía un enlace a un amigo para ver vuestra química. Todo es gratis.", "link": "Juego de 30 segundos para un descanso"},
+ "commute": {"title": "Juego web para el trayecto — 30 s sin instalar", "desc": "Un juego web gratis para el trayecto: una partida de 30 segundos sin instalar nada y con opción de continuar. Prueba Gate Rush o el test de personaje.", "h1": "¿Vuelves a casa? Juega una partida", "p1": "No hace falta instalar ninguna app. Abre el enlace y empieza una partida de 30 segundos. Si te interrumpen por el camino, puedes continuar donde lo dejaste.", "p2": "Tras una partida rápida, también puedes hacer el test de personaje de juego o ver tu química con un amigo. Todo es gratis.", "link": "Juego para el trayecto"},
  "friendplay": {"title": "Qué hacer con amigos online — compatibilidad y juego de 30 s", "desc": "¿Qué hacer con amigos? Envía un enlace para ver vuestra compatibilidad y juega una partida de 30 segundos. Sin registro y gratis.", "h1": "¿Qué hacer con amigos? Basta un enlace", "p1": "Da igual la distancia. Envía un enlace, tu amigo responde 10 preguntas y al instante veis la química de vuestros personajes. Sin registro ni instalación.", "p2": "Después de la química, prueba una partida de 30 segundos de Gate Rush y comparad puntuaciones. Compartir el resultado es siempre opcional.", "link": "Qué hacer con amigos"}
 }

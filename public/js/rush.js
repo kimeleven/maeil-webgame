@@ -107,6 +107,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
           // show the link right away: the native share sheet (desktop Chrome/macOS) can stay pending indefinitely
           showUrl(url);
           const r = await shareOrCopy({ title: g.name, text: fmt(g.shareText, { stage: rec.cleared, url }), canvas: await rushCard(D, rec), name: 'gate-rush.png' });
+          track('share_result', { from: 'rush', r: r === 'shared' ? 'shared' : r === 'copied' ? 'copied' : r === 'failed' ? 'failed' : 'cancel' });
           showUrl(url, r === 'failed' ? D.common.error : r === 'copied' ? D.common.copied : '');
         } finally { busy = false; }
       }),
@@ -121,14 +122,17 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
           try {
             track('challenge_copy', { method: 'native' });
             await navigator.share({ title: g.challengeTitle, text: fmt(g.challengeShareText, { stage: rec.cleared, score: rec.score.toLocaleString(), url }) });
+            track('share_result', { from: 'rush', r: 'shared', k: 'challenge' });
             return;
-          } catch (e) { if (e.name === 'AbortError') return; }
+          } catch (e) { if (e.name === 'AbortError') { track('share_result', { from: 'rush', r: 'cancel', k: 'challenge' }); return; } }
         } else track('challenge_copy', { method: 'copy' });
-        showUrl(url, (await copyText(url)) ? D.common.copied : '');
+        const okc = await copyText(url);
+        track('share_result', { from: 'rush', r: okc ? 'copied' : 'failed', k: 'challenge' });
+        showUrl(url, okc ? D.common.copied : '');
       } finally { busy = false; }
     }));
     buttons.push(btn(g.newRun, 'ghost', () => { run = G.createRun({ seed: run.seed }); run.assist = assist; persist(); screenReady(); }));
-    show(`<span class="tag">${rec.assist ? 'ASSIST' : 'GAME OVER'}</span><h2>${g.lostTitle}</h2><p style="font-size:30px;font-weight:800;margin:6px 0">${g.sector} ${rec.stage}</p><p>${fmt(g.lostDesc, { stage: rec.cleared, score: rec.score.toLocaleString() })}</p>${beat ? `<p class="tag">${g.beat}</p>` : ''}<p class="muted">${g.best}: ${save.bestStage} · ${save.best.toLocaleString()}</p>`, buttons);
+    show(`<span class="tag">${rec.assist ? 'ASSIST' : 'GAME OVER'}</span><h2>${g.lostTitle}</h2><p style="font-size:30px;font-weight:800;margin:6px 0">${g.sector} ${rec.stage}</p><p>${fmt(g.lostDesc, { stage: rec.cleared, score: rec.score.toLocaleString() })}</p>${beat ? `<p class="tag">${g.beat}</p>` : ''}<p class="muted">${g.best}: ${save.bestStage} · ${save.best.toLocaleString()}</p><p class="muted" data-share-hint>${g.shareHint}</p>`, buttons);
     modal.append(status);
   }
   function start() { if (run.stage === 1) track('play_start', { mode: challenge ? 'challenge' : 'daily' }); G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }

@@ -153,7 +153,7 @@
   },
   "start": "Partiu!",
   "resume": "Continuar correndo",
-  "newRun": "Nova expedição",
+  "shareHint": "Envie a um amigo e ele pode encarar a mesma partida. Compartilhar é opcional.", "newRun": "Nova expedição",
   "restart": "Recomeçar do zero",
   "slow": "Devagar (0.8×)",
   "assistNote": "Recordes no modo devagar ganham o selo ASSIST e não geram link de desafio.",
@@ -411,5 +411,6 @@
  },
  "halloween": {"banner": "🎃 Tema limitado de Halloween", "sub": "Até 31 de outubro, os cards de resultado ganham moldura de Halloween.", "frame": "HAPPY HALLOWEEN"},
  "quickbreak": {"title": "Jogo de 30 segundos no navegador — sem cadastro", "desc": "Tem 30 segundos? Jogue grátis no navegador, sem instalar nem se cadastrar, e faça o teste de personagem ou veja a química com amigos.", "h1": "Entediado? Uma partida de 30 segundos", "p1": "Para uma pausa curta, não precisa instalar nada. Uma partida de Gate Rush dura 30 segundos, termina antes de o café esfriar e começa direto no navegador, sem cadastro.", "p2": "Se ainda sobrar um minuto, faça o teste de personagem de 10 perguntas ou envie um link para um amigo ver a química de vocês. Tudo é grátis.", "link": "Jogo de 30 segundos para uma pausa"},
+ "commute": {"title": "Jogo web para o trajeto — 30 s sem instalar", "desc": "Um jogo web grátis para o trajeto: uma partida de 30 segundos sem instalar nada e com opção de continuar. Teste o Gate Rush ou o teste de personagem.", "h1": "Voltando para casa? Jogue uma partida", "p1": "Não precisa instalar nenhum app. Abra o link e uma partida de 30 segundos começa na hora. Se for interrompido no caminho, dá para continuar de onde parou.", "p2": "Depois de uma partida rápida, você também pode fazer o teste de personagem de jogo ou ver a química com um amigo. Tudo é grátis.", "link": "Jogo para o trajeto"},
  "friendplay": {"title": "O que fazer com amigos online — química e jogo de 30 s", "desc": "O que fazer com amigos? Envie um link para ver a compatibilidade e jogue uma partida de 30 segundos. Sem cadastro e grátis.", "h1": "O que fazer com amigos? Um link basta", "p1": "A distância não importa. Envie um link, seu amigo responde 10 perguntas e vocês veem na hora a química dos personagens. Sem cadastro nem instalação.", "p2": "Depois da química, jogue uma partida de 30 segundos de Gate Rush e comparem as pontuações. Compartilhar o resultado é sempre opcional.", "link": "O que fazer com amigos"}
 }
