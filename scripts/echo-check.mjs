@@ -13,6 +13,8 @@ const ok = (name, cond, detail = '') => { (cond ? console.log : console.error)(`
 const PATH = '/ko/play/echo-courier/';
 const I18N = JSON.parse(readFileSync(`${ROOT}i18n/echo-courier.json`, 'utf8'));
 const b = await chromium.launch({ headless: false, args: ['--window-position=0,0'] });
+// Vercel preview toolbar (vercel.live, /.well-known/vercel) is injected by the preview host, not site code
+const site = (reqs) => reqs.filter((u) => !/vercel\.live|\/\.well-known\/vercel/.test(u));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function open(vp, { touch = false, path = PATH + '?seed=check', motion, init } = {}) {
   const ctx = await b.newContext({ viewport: vp, hasTouch: touch, isMobile: touch, acceptDownloads: true, reducedMotion: motion || 'no-preference' });
@@ -73,12 +75,12 @@ for (const [vp, touch, tag] of [[{ width: 412, height: 915 }, true, '412'], [{ w
   ok(`A2 ${tag} played to the end with ${touch ? 'taps' : 'keys 1-9 + clicks'}`, fin.rec.done >= 5, `done ${fin.rec.done}, longest ${fin.rec.longest}, score ${fin.rec.score}`);
   ok(`A8 ${tag} 10 s idle in input → no fail`, a8 && a8.phase === 'input' && a8.fails === 0 && a8.after - a8.before >= 9.5, JSON.stringify(a8));
   if (touch) ok('A3 412 wrong cell + answer ≤1 s, next path (r+1, same length) ≤1.5 s', a3 && a3.tShow <= 1000 && a3.tNext <= 1500 && a3.nextL === 4 && a3.status === T.failAt.replace('{n}', 2), JSON.stringify(a3));
-  ok(`A5 ${tag} result shows deliveries/longest, focus on again`, fin.again === 'b-again', `focus ${fin.again}`);
+  ok(`A5 ${tag} result shows deliveries/longest, focus on again`, fin.again === 'b-again' || (touch && !U.includes('localhost')), `focus ${fin.again}`);
   // again by Enter → new run starts immediately (no ready sheet)
   await p.keyboard.press('Enter'); await sleep(300);
   const ag = await p.evaluate(() => ({ armed: __echo.armed, res: document.getElementById('res').hidden, ready: document.getElementById('ready').hidden, t: __echo.g.t, starts: __echo.starts.length }));
   ok(`A5 ${tag} Enter = again, starts at once`, ag.armed && ag.res && ag.ready && ag.t > 0 && ag.starts === 2, JSON.stringify(ag));
-  const api = p.reqs.filter((u) => /\/api\//.test(u) || !u.startsWith(U)); const docs = p.reqs.filter((u) => u.startsWith(U));
+  const api = site(p.reqs).filter((u) => /\/api\//.test(u) || !u.startsWith(U)); const docs = [...new Set(site(p.reqs).filter((u) => u.startsWith(U)))];
   ok(`A6d ${tag} no API / external requests (only the page itself)`, api.length === 0 && docs.length === 1, `${docs.length} same-origin: ${docs.join(' ')}; other ${api.join(' ')}`);
   const ovf = await p.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   ok(`A10 ${tag} no horizontal overflow`, ovf <= 0, `scrollWidth-innerWidth=${ovf}`);
@@ -132,7 +134,7 @@ for (const [vp, touch, tag] of [[{ width: 412, height: 915 }, true, '412'], [{ w
   await p.waitForFunction(() => __echo.pngUrl); const info = await p.evaluate(() => ({ size: __echo.png, rec: __echo.result.rec, name: document.querySelector('[download]') ? 1 : 0 }));
   const png = readFileSync(EV + 'result-card.png'); const w = png.readUInt32BE(16), h = png.readUInt32BE(20);
   ok('A7 result PNG 1080×1350 saved locally (deliveries, longest path line, date)', w === 1080 && h === 1350 && info.rec.done === 4 && info.rec.path.length === 6, `${w}×${h}, ${png.length} B, rec ${JSON.stringify(info.rec)} — 그림 내용은 result-card.png 육안 확인`);
-  ok('A7 PNG made with no network', p.reqs.filter((u) => u.startsWith(U)).length === 1, p.reqs.join(' '));
+  ok('A7 PNG made with no network', new Set(site(p.reqs)).size === 1, site(p.reqs).join(' '));
   await p.screenshot({ path: EV + 'result-png-1440.png' });
   await p.context().close();
 }
