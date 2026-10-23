@@ -1,6 +1,6 @@
 {
- "base": "http://localhost:5192",
- "at": "2026-10-23T05:16:50.503Z",
+ "base": "https://maeil-webgame-o52q4237y-sanghunkims-projects.vercel.app",
+ "at": "2026-10-23T05:41:50.591Z",
  "READY_412": {
   "beforeInput": {
    "t": 0,
@@ -16,7 +16,7 @@
    ]
   },
   "afterStartInput": {
-   "t": 0,
+   "t": 0.054,
    "armed": true,
    "hud": "90",
    "readyVisible": false,
@@ -30,7 +30,7 @@
   },
   "timeline5s": [
    {
-    "t": 1.004,
+    "t": 1.012,
     "armed": true,
     "hud": "89",
     "readyVisible": false,
@@ -43,7 +43,7 @@
     ]
    },
    {
-    "t": 2.004,
+    "t": 2.012,
     "armed": true,
     "hud": "88",
     "readyVisible": false,
@@ -58,7 +58,7 @@
     ]
    },
    {
-    "t": 3.008,
+    "t": 3,
     "armed": true,
     "hud": "87",
     "readyVisible": false,
@@ -73,7 +73,7 @@
     ]
    },
    {
-    "t": 4.008,
+    "t": 4,
     "armed": true,
     "hud": "86",
     "readyVisible": false,
@@ -86,7 +86,7 @@
     ]
    },
    {
-    "t": 5.013,
+    "t": 5.004,
     "armed": true,
     "hud": "85",
     "readyVisible": false,
@@ -98,7 +98,7 @@
    }
   ],
   "afterSwitch": {
-   "t": 5.192,
+   "t": 5.183,
    "armed": true,
    "hud": "85",
    "readyVisible": false,
@@ -291,7 +291,7 @@
    "ds": "연속 회피 +0",
    "near": ""
   },
-  "restartMs": 123,
+  "restartMs": 65,
   "sw": 412,
   "w": 412,
   "small": [],
@@ -303,10 +303,15 @@
    "w": 1080,
    "h": 1350
   },
-  "link": "http://localhost:5192/ko/play/orbit-switch/?seed=res",
+  "link": "https://maeil-webgame-o52q4237y-sanghunkims-projects.vercel.app/ko/play/orbit-switch/?seed=res",
   "apiReqs": [],
   "reqs": [
-   "/ko/play/orbit-switch/"
+   "/ko/play/orbit-switch/",
+   "/_next-live/feedback/feedback.js",
+   "/_vercel/insights/script.js",
+   "/_next-live/feedback/feedback.html",
+   "/.well-known/vercel/jwe",
+   "/login/validate"
   ]
  },
  "O6_360": {
@@ -324,7 +329,7 @@
    "ds": "연속 회피 +0",
    "near": ""
   },
-  "restartMs": 53,
+  "restartMs": 84,
   "sw": 360,
   "w": 360,
   "small": [],
@@ -345,7 +350,7 @@
    "ds": "연속 회피 +0",
    "near": ""
   },
-  "restartMs": 76,
+  "restartMs": 77,
   "sw": 1440,
   "w": 1440,
   "small": [],
@@ -377,10 +382,15 @@
   "sw": 1
  },
  "O8": {
-  "tapReadyWallMs": 1053,
-  "tapReadyPerfNowMs": 1041,
-  "transferBytes": 47736,
+  "tapReadyWallMs": 927,
+  "tapReadyPerfNowMs": 915,
+  "transferBytes": 44554,
   "requests": [
+   "/ko/play/orbit-switch/",
+   "/_vercel/insights/script.js",
+   "/_next-live/feedback/feedback.js",
+   "/_next-live/feedback/feedback.html",
+   "/.well-known/vercel/jwe",
    "/ko/play/orbit-switch/"
   ],
   "htmlGzipBytes": 17035,
