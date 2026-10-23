@@ -24,6 +24,8 @@ export default async function handler(req, res, deps = {}) {
   if (req.method !== 'POST') return send(res, 405, { error: 'method not allowed' });
   if (rateLimited(req)) { res.setHeader('Retry-After', '60'); return send(res, 429, { error: 'rate limited' }); }
   if (!originOk(req)) return send(res, 403, { error: 'origin' });
+  const ct = String(req.headers['content-type'] || 'text/plain').split(';')[0].trim().toLowerCase();
+  if (ct !== 'text/plain' && ct !== 'application/json') return send(res, 415, { error: 'content-type' }); // form bodies get pre-parsed by the platform
   if (Number(req.headers['content-length'] || 0) > MAX_BYTES) return send(res, 413, { error: 'too large' });
   const raw = await rawBody(req);
   if (raw == null || Buffer.byteLength(raw) > MAX_BYTES) return send(res, 413, { error: 'too large' });
