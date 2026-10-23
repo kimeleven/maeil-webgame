@@ -84,7 +84,7 @@ const tapBtn = async (p, sel, touch) => { const r = await p.locator(sel).boundin
   ok('L1 arrows + Space: flips the cursor mirror once, redrawn next frame', a1.taps === a0.taps + 1 && ((a0.mask ^ a1.mask) === 1 << rIdx || a1.n !== a0.n) && fr2.mask === a1.mask, `mask ${a0.mask}→${a1.mask}`);
   // key auto-repeat: hold Space (repeat events)
   await sleep(200); const r0 = await st(p);
-  await p.keyboard.down('Space'); for (let i = 0; i < 5; i++) await p.evaluate(() => window.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', repeat: true, bubbles: true }))); await p.keyboard.up('Space'); await sleep(50); const r1 = await st(p);
+  await p.keyboard.down('Space'); for (let i = 0; i < 5; i++) await p.evaluate(() => document.body.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', repeat: true, bubbles: true }))); await p.keyboard.up('Space'); await sleep(50); const r1 = await st(p);
   ok('L10 Space auto-repeat ignored (only the first keydown counts)', r1.taps === r0.taps + 1 || (r1.n !== r0.n && r1.taps === r0.taps + 1), `taps ${r0.taps}→${r1.taps}`);
   // same mirror during 0.12 s rotation: two quick taps
   await sleep(300); const l0 = await st(p); const rm = await p.evaluate(() => __lw.g.board.rot[0]); const lc = await center(p, rm);

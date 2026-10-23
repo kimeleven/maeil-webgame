@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T07:12:06.348Z",
+ "at": "2026-10-23T07:21:11.985Z",
  "node": "v26.7.0",
  "out": {
   "L3 same seed+n twice → identical board (1000 seeds × 30)": {
@@ -42,8 +42,8 @@
    "pass": true,
    "detail": {
     "avg": 0.047,
-    "p99": 0.194,
-    "max": 0.682
+    "p99": 0.189,
+    "max": 0.394
    }
   },
   "L3 forced flip-fallback: deterministic, par in range": {
