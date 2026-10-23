@@ -1,0 +1,434 @@
+{
+ "base": "https://maeil-webgame-8r39vp5bb-sanghunkims-projects.vercel.app",
+ "at": "2026-10-23T18:21:50.903Z",
+ "cases": [
+  {
+   "w": 412,
+   "name": "tap",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": [
+     [
+      "pointer",
+      false,
+      "short"
+     ]
+    ]
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "pointer",
+     false,
+     "short"
+    ],
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "shortDrag",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": [
+     [
+      "pointer",
+      false,
+      "short"
+     ]
+    ]
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "pointer",
+     false,
+     "short"
+    ],
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "pointercancel",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "lostcapture",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "secondPointer",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "pauseMidDrag",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "tap",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": [
+     [
+      "pointer",
+      false,
+      "short"
+     ]
+    ]
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "pointer",
+     false,
+     "short"
+    ],
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "shortDrag",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": [
+     [
+      "pointer",
+      false,
+      "short"
+     ]
+    ]
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "pointer",
+     false,
+     "short"
+    ],
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "pointercancel",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "lostcapture",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "secondPointer",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "pauseMidDrag",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  }
+ ]
+}

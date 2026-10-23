@@ -1,0 +1,306 @@
+{
+ "base": "http://localhost:5198",
+ "at": "2026-10-23T18:15:38.259Z",
+ "cases": [
+  {
+   "w": 412,
+   "name": "tap",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": [
+     [
+      "pointer",
+      false,
+      "short"
+     ]
+    ]
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [
+    [
+     "pointer",
+     false,
+     "short"
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "shortDrag",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": [
+     [
+      "pointer",
+      false,
+      "short"
+     ]
+    ]
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [
+    [
+     "pointer",
+     false,
+     "short"
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "pointercancel",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": []
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "lostcapture",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": []
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "secondPointer",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": []
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [],
+   "errs": []
+  },
+  {
+   "w": 412,
+   "name": "pauseMidDrag",
+   "pass": true,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": {
+     "th": 0,
+     "shown": false
+    },
+    "cuts": []
+   },
+   "arrow": {
+    "th": 1,
+    "shown": true
+   },
+   "roundsAfterEnter": 1,
+   "roundsAfter2ndEnter": 1,
+   "keyCuts": 1,
+   "cuts": [
+    [
+     "key",
+     true,
+     null
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "tap",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": [
+     [
+      "pointer",
+      false,
+      "short"
+     ]
+    ]
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [
+    [
+     "pointer",
+     false,
+     "short"
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "shortDrag",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": [
+     [
+      "pointer",
+      false,
+      "short"
+     ]
+    ]
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [
+    [
+     "pointer",
+     false,
+     "short"
+    ]
+   ],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "pointercancel",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": []
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "lostcapture",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": []
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "secondPointer",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": []
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [],
+   "errs": []
+  },
+  {
+   "w": 1440,
+   "name": "pauseMidDrag",
+   "pass": null,
+   "after": {
+    "phase": "aim",
+    "r": 1,
+    "rounds": 0,
+    "drag": false,
+    "paused": false,
+    "kb": null,
+    "cuts": []
+   },
+   "arrow": null,
+   "roundsAfterEnter": 0,
+   "roundsAfter2ndEnter": 0,
+   "keyCuts": 0,
+   "cuts": [],
+   "errs": []
+  }
+ ]
+}
