@@ -1,0 +1,398 @@
+{
+ "base": "http://localhost:5192",
+ "at": "2026-10-23T05:16:50.503Z",
+ "READY_412": {
+  "beforeInput": {
+   "t": 0,
+   "armed": false,
+   "hud": "90",
+   "readyVisible": true,
+   "how": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+   "go": "탭해서 시작",
+   "hint": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+   "sw": 0,
+   "lbl": [
+    "나"
+   ]
+  },
+  "afterStartInput": {
+   "t": 0,
+   "armed": true,
+   "hud": "90",
+   "readyVisible": false,
+   "how": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+   "go": "탭해서 시작",
+   "hint": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+   "sw": 0,
+   "lbl": [
+    "나"
+   ]
+  },
+  "timeline5s": [
+   {
+    "t": 1.004,
+    "armed": true,
+    "hud": "89",
+    "readyVisible": false,
+    "how": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "go": "탭해서 시작",
+    "hint": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": [
+     "나"
+    ]
+   },
+   {
+    "t": 2.004,
+    "armed": true,
+    "hud": "88",
+    "readyVisible": false,
+    "how": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "go": "탭해서 시작",
+    "hint": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": [
+     "나",
+     "고리 +점수",
+     "지금 탭!"
+    ]
+   },
+   {
+    "t": 3.008,
+    "armed": true,
+    "hud": "87",
+    "readyVisible": false,
+    "how": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "go": "탭해서 시작",
+    "hint": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": [
+     "나",
+     "고리 +점수",
+     "지금 탭!"
+    ]
+   },
+   {
+    "t": 4.008,
+    "armed": true,
+    "hud": "86",
+    "readyVisible": false,
+    "how": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "go": "탭해서 시작",
+    "hint": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": [
+     "나"
+    ]
+   },
+   {
+    "t": 5.013,
+    "armed": true,
+    "hud": "85",
+    "readyVisible": false,
+    "how": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "go": "탭해서 시작",
+    "hint": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": []
+   }
+  ],
+  "afterSwitch": {
+   "t": 5.192,
+   "armed": true,
+   "hud": "85",
+   "readyVisible": false,
+   "how": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+   "go": "탭해서 시작",
+   "hint": "탭하면 안쪽 ↔ 바깥 궤도 전환",
+   "sw": 1,
+   "lbl": []
+  },
+  "firstHit": {
+   "kind": "shield",
+   "text": "실드 깨짐! 한 번 더 맞으면 끝",
+   "t": 6.76,
+   "lbl": [
+    "실드 깨짐! 한 번 더 맞으면 끝"
+   ]
+  },
+  "final": {
+   "kind": "lose",
+   "cause": {
+    "type": "block",
+    "text": "붉은 블록에 부딪힘",
+    "tip": "다음 판: 붉은 점선 예고가 보이면 반대 궤도로 탭"
+   },
+   "causeShown": true,
+   "causeText": "원인: 붉은 블록에 부딪힘\n다음 판: 붉은 점선 예고가 보이면 반대 궤도로 탭",
+   "againVisible": true
+  }
+ },
+ "READY_1440": {
+  "beforeInput": {
+   "t": 0,
+   "armed": false,
+   "hud": "90",
+   "readyVisible": true,
+   "how": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+   "go": "Space / Click으로 시작",
+   "hint": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+   "sw": 0,
+   "lbl": [
+    "나"
+   ]
+  },
+  "afterStartInput": {
+   "t": 0.058,
+   "armed": true,
+   "hud": "90",
+   "readyVisible": false,
+   "how": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+   "go": "Space / Click으로 시작",
+   "hint": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+   "sw": 0,
+   "lbl": [
+    "나"
+   ]
+  },
+  "timeline5s": [
+   {
+    "t": 1.004,
+    "armed": true,
+    "hud": "89",
+    "readyVisible": false,
+    "how": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "go": "Space / Click으로 시작",
+    "hint": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": [
+     "나"
+    ]
+   },
+   {
+    "t": 2.004,
+    "armed": true,
+    "hud": "88",
+    "readyVisible": false,
+    "how": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "go": "Space / Click으로 시작",
+    "hint": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": [
+     "나",
+     "고리 +점수",
+     "지금 탭!"
+    ]
+   },
+   {
+    "t": 3.008,
+    "armed": true,
+    "hud": "87",
+    "readyVisible": false,
+    "how": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "go": "Space / Click으로 시작",
+    "hint": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": [
+     "나",
+     "고리 +점수",
+     "지금 탭!"
+    ]
+   },
+   {
+    "t": 4.008,
+    "armed": true,
+    "hud": "86",
+    "readyVisible": false,
+    "how": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "go": "Space / Click으로 시작",
+    "hint": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": [
+     "나"
+    ]
+   },
+   {
+    "t": 5.008,
+    "armed": true,
+    "hud": "85",
+    "readyVisible": false,
+    "how": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "go": "Space / Click으로 시작",
+    "hint": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+    "sw": 0,
+    "lbl": []
+   }
+  ],
+  "afterSwitch": {
+   "t": 5.163,
+   "armed": true,
+   "hud": "85",
+   "readyVisible": false,
+   "how": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+   "go": "Space / Click으로 시작",
+   "hint": "Space / Click으로 안쪽 ↔ 바깥 궤도 전환",
+   "sw": 1,
+   "lbl": []
+  },
+  "firstHit": {
+   "kind": "shield",
+   "text": "실드 깨짐! 한 번 더 맞으면 끝",
+   "t": 6.76,
+   "lbl": [
+    "실드 깨짐! 한 번 더 맞으면 끝"
+   ]
+  },
+  "final": {
+   "kind": "lose",
+   "cause": {
+    "type": "block",
+    "text": "붉은 블록에 부딪힘",
+    "tip": "다음 판: 붉은 점선 예고가 보이면 반대 궤도로 탭"
+   },
+   "causeShown": true,
+   "causeText": "원인: 붉은 블록에 부딪힘\n다음 판: 붉은 점선 예고가 보이면 반대 궤도로 탭",
+   "againVisible": true
+  }
+ },
+ "O1_412": {
+  "tap": 1,
+  "doubleTapWithin40ms": 1,
+  "muteButtonTap": 0,
+  "sfxBeforeInput": 0,
+  "sfxAfter": 2
+ },
+ "O9_412_play": {
+  "sw": 412,
+  "w": 412
+ },
+ "O1_1440": {
+  "space": 1,
+  "click": 1,
+  "repeatEvent": 0,
+  "holdSpace700ms": 1
+ },
+ "O9_1440_play": {
+  "sw": 1440,
+  "w": 1440
+ },
+ "O6_412": {
+  "vp": "412",
+  "first": {
+   "title": "끝!",
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "첫 기록"
+  },
+  "second": {
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "+0.0초",
+   "ds": "연속 회피 +0",
+   "near": ""
+  },
+  "restartMs": 123,
+  "sw": 412,
+  "w": 412,
+  "small": [],
+  "againBigger": true,
+  "png": {
+   "name": "orbit-switch-res.png",
+   "bytes": 739889,
+   "sig": "PNG",
+   "w": 1080,
+   "h": 1350
+  },
+  "link": "http://localhost:5192/ko/play/orbit-switch/?seed=res",
+  "apiReqs": [],
+  "reqs": [
+   "/ko/play/orbit-switch/"
+  ]
+ },
+ "O6_360": {
+  "vp": "360",
+  "first": {
+   "title": "끝!",
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "첫 기록"
+  },
+  "second": {
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "+0.0초",
+   "ds": "연속 회피 +0",
+   "near": ""
+  },
+  "restartMs": 53,
+  "sw": 360,
+  "w": 360,
+  "small": [],
+  "againBigger": true
+ },
+ "O6_1440": {
+  "vp": "1440",
+  "first": {
+   "title": "끝!",
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "첫 기록"
+  },
+  "second": {
+   "now": "18.2초 · 연속 회피 0 · 160",
+   "best": "18.2초 · 연속 회피 0 · 160",
+   "dt": "+0.0초",
+   "ds": "연속 회피 +0",
+   "near": ""
+  },
+  "restartMs": 76,
+  "sw": 1440,
+  "w": 1440,
+  "small": [],
+  "againBigger": true
+ },
+ "O7_motion": {
+  "reduced": {
+   "trail": 0,
+   "reduced": true,
+   "shake": false,
+   "slow": false
+  },
+  "normal": {
+   "trail": 14,
+   "reduced": false,
+   "shake": false,
+   "slow": false
+  }
+ },
+ "O7_persist": {
+  "vibrateCallsWhileOn": 1,
+  "afterReload": {
+   "ls": "{\"sound\":false,\"haptic\":false,\"motion\":true}",
+   "mute": "false",
+   "haptic": "false"
+  },
+  "vib": 0,
+  "sfx": 0,
+  "sw": 1
+ },
+ "O8": {
+  "tapReadyWallMs": 1053,
+  "tapReadyPerfNowMs": 1041,
+  "transferBytes": 47736,
+  "requests": [
+   "/ko/play/orbit-switch/"
+  ],
+  "htmlGzipBytes": 17035,
+  "htmlRawBytes": 47570,
+  "fps8s": 72,
+  "note": "local dev server sends uncompressed; Vercel serves gzip/br"
+ },
+ "O10": {
+  "lobbyCats": {
+   "n": 3,
+   "orbitLinks": 0
+  },
+  "filesReferencingOrbit": []
+ }
+}
