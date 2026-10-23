@@ -1,6 +1,6 @@
 {
- "base": "https://maeil-webgame-iwsgsqiwb-sanghunkims-projects.vercel.app",
- "at": "2026-10-23T07:28:37.822Z",
+ "base": "https://maeil-webgame-ew0r1alof-sanghunkims-projects.vercel.app",
+ "at": "2026-10-23T10:16:16.711Z",
  "L0 ready 10 s + board taps: time 90, not started": {
   "pass": true,
   "detail": "{\"tick\":0,\"phase\":\"ready\",\"n\":0,\"used\":0,\"mask\":0,\"boards\":0,\"score\":0,\"left\":5400,\"resets\":0,\"hud\":\"90\",\"taps\":0}"
@@ -11,7 +11,7 @@
  },
  "L2 412: board 1 solved with 1 tap ≤5 s after start (game time)": {
   "pass": true,
-  "detail": "tick 73 (1.22 s), wall 1264 ms"
+  "detail": "tick 73 (1.22 s), wall 1267 ms"
  },
  "L10 pointercancel / up on another cell → no rotation, no tap counted": {
   "pass": true,
@@ -23,15 +23,15 @@
  },
  "L10 hidden tab stops active time": {
   "pass": true,
-  "detail": "ticks 172→172"
+  "detail": "ticks 174→174"
  },
  "L5 resume → 3 s count with no time loss, then time flows": {
   "pass": true,
-  "detail": "ticks 172 / 172 / 201"
+  "detail": "ticks 174 / 174 / 204"
  },
  "L6 skip button: −5 s, 0 points, next board": {
   "pass": true,
-  "detail": "left 5199→4897 over 2 ticks"
+  "detail": "left 5196→4895 over 1 ticks"
  },
  "no page errors (412 touch run)": {
   "pass": true,
@@ -59,11 +59,11 @@
  },
  "L3 same seed + log: node = Chromium = WebKit (boards/score/resets)": {
   "pass": true,
-  "detail": "node 4/750/23 81/23745/0 1/195/24 | chromium 4/750/23 81/23745/0 1/195/24 | webkit 4/750/23 81/23745/0 1/195/24 "
+  "detail": "node 5/1005/24 81/21345/0 1/195/26 | chromium 5/1005/24 81/21345/0 1/195/26 | webkit 5/1005/24 81/21345/0 1/195/26 "
  },
  "L5 idle after start → result at 90 s active (5400 ticks)": {
   "pass": true,
-  "detail": "tick 5400, wall 90427 ms"
+  "detail": "tick 5400, wall 90422 ms"
  },
  "L8 PNG saved locally 1080×1350": {
   "pass": true,
@@ -71,7 +71,7 @@
  },
  "L8 again → ready within 0.5 s": {
   "pass": true,
-  "detail": "24 ms"
+  "detail": "56 ms"
  },
  "L8 result shows this run, best and diff without sharing": {
   "pass": true,
@@ -91,11 +91,11 @@
  },
  "L4 diff: no server/DB/c-route/list/PWA/sitemap change; page noindex, not in sitemap or lobby": {
   "pass": true,
-  "detail": "41 files; bad: none"
+  "detail": "44 files; bad: none"
  },
  "L9 reduced-motion: animations off (body.rm), same replay result": {
   "pass": true,
-  "detail": "7/1335"
+  "detail": "5/905"
  },
  "L9 sound / haptic off persist after reload": {
   "pass": true,
@@ -107,15 +107,15 @@
  },
  "L12 first input usable ≤2 s (4× CPU, Fast 3G)": {
   "pass": true,
-  "detail": "882 ms"
+  "detail": "935 ms"
  },
  "L12 gzip ≤40 KB, no image/font/audio files": {
   "pass": true,
-  "detail": "15.6 KB, requests /ko/play/light-workshop/"
+  "detail": "15.8 KB, requests /ko/play/light-workshop/"
  },
  "L12 average fps ≥50 (headed Chromium, this Mac)": {
   "pass": true,
-  "detail": "71.8 fps"
+  "detail": "71.9 fps"
  },
  "L12 6×6 board cell ≥44 px touch (412 ≥56 target)": {
   "pass": true,
