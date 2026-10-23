@@ -342,6 +342,8 @@ const act = (ts) => Math.round(ts - T0 - P);
 const nowAct = () => (paused ? act(pauseAt) : act(performance.now()));
 const S = window.__fs = { ready: false, E: { FS, createGame, start, advance, cut, judgeCut, cutPoly, halfLine, replay, simulate, generate, genShapes, realValidate, checks, FALLBACK, kbInit, kbRotate, kbMove, kbPoints, kbOffset, bbox, area }, W, seed, set, evlog: [], act,
   get g() { return g; }, get kb() { return kb; }, get drag() { return drag; }, get paused() { return paused; }, get T0() { return T0; }, get P() { return P; } };
+// keyboard line for the current aim round: reset to the default (hidden) line, never null, so arrows work after any pointer outcome
+const kbFresh = () => { kbR = g.r; return kbInit(g.shapes[g.r - 1].poly); };
 const motion = () => set.motion && !mq.matches;
 function applySet() {
   document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, on = !!set[k]; b.setAttribute('aria-pressed', on); b.classList.toggle('off', !on); if (b.dataset.icon) b.textContent = k === 'sound' ? (on ? '🔊' : '🔇') : on ? '📳' : '📴'; });
@@ -368,7 +370,7 @@ pa.addEventListener('pointerdown', (e) => {
   if (ptr !== null && e.pointerId !== ptr) { S.evlog.push({ k: 'second-pointer', id: e.pointerId }); cancelDrag('second-pointer'); return; }   // GDD 2.1: 2nd pointer cancels
   if (paused || advance(g, nowAct()) !== 'aim') return;
   ptr = e.pointerId; try { pa.setPointerCapture(e.pointerId); } catch {}
-  const p = toGame(e); drag = { p0: p, p1: p, id: e.pointerId }; kb = null;   // pointer resets the keyboard line
+  const p = toGame(e); drag = { p0: p, p1: p, id: e.pointerId }; kb = kbFresh();   // pointer resets the keyboard line (hidden default, arrows recover it)
   S.evlog.push({ k: 'down', p, r: g.r });
 });
 pa.addEventListener('pointermove', (e) => { if (drag && e.pointerId === ptr) drag.p1 = toGame(e); });
@@ -390,7 +392,7 @@ addEventListener('keydown', (e) => {
   }
   if (k === 'Escape' || k === 'p' || k === 'P') { if (paused) resume(); else pause('key'); return; }
   if (!k.startsWith('Arrow') || paused || drag || g.phase === 'ready' || g.phase === 'result') return;
-  e.preventDefault(); if (advance(g, nowAct()) !== 'aim' || !kb) return;
+  e.preventDefault(); if (advance(g, nowAct()) !== 'aim') return; if (!kb || kbR !== g.r) kb = kbFresh();
   const big = e.shiftKey ? 10 : 1;
   kb = k === 'ArrowLeft' ? kbRotate(kb, -big) : k === 'ArrowRight' ? kbRotate(kb, big) : kbMove(kb, k === 'ArrowUp' ? -big : big);
   S.evlog.push({ k: 'kb', th: kb.th, d: Math.round(kbOffset(kb) * 10) / 10 });
@@ -461,7 +463,7 @@ function frame(now) {
   if (g.phase !== 'ready') {
     const a = nowAct(); if (!paused) advance(g, a - LAG);
     if (g.phase === 'result' && $('res').hidden) { cx.restore(); hud(a); showResult(); return requestAnimationFrame(frame); }
-    if (g.phase === 'aim' && kbR !== g.r) { kbR = g.r; kb = kbInit(g.shapes[g.r - 1].poly); }
+    if (g.phase === 'aim' && (kbR !== g.r || !kb)) kb = kbFresh();
     const sh = g.shapes[Math.max(0, g.r - 1)].poly;
     if (g.phase === 'intro') {
       const t = Math.min(1, Math.max(0, (a - g.at) / FS.INTRO)); cx.save();

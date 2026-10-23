@@ -84,3 +84,11 @@ test('R11 (measurement, not a guarantee): horizontal line through bbox centre, r
   console.log(`# R11 fixed-horizontal mean score r3-10 over 20 seeds: ${mean.toFixed(1)} (target ≤ 50 [estimate]); per seed ${per.map((x) => x.toFixed(0)).join(',')}`);
   assert.ok(Number.isFinite(mean));
 });
+
+// t_411a0ed8: after any aborted pointer the UI resets the keyboard line to kbInit (never null); arrows from that reset must preview the same round's line.
+test('kb reset after aborted pointer: kbInit → ArrowRight previews th=1, same foot', async () => {
+  const E = await import('../public/js/fair-core.js'); const g = E.createGame('kbr'); const P = g.shapes[0].poly;
+  const k0 = E.kbInit(P); assert.equal(k0.shown, false);
+  const k1 = E.kbRotate(k0, 1); assert.equal(k1.shown, true); assert.equal(k1.th, 1); assert.equal(Math.round(E.kbOffset(k1) * 10), 0);
+  const [p0, p1] = E.kbPoints(k1); assert.ok(Math.hypot(p1[0] - p0[0], p1[1] - p0[1]) > 0);
+});
