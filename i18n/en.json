@@ -259,6 +259,7 @@
    }
   ],
   "shareText": "I'm \"{name}\"! Which character are you? Just 10 questions → {url}",
+  "shareHint": "If you send it, your friend can find their own character in 10 questions too. Totally optional.",
   "cardCta": "Which character are you?",
   "rTitle": "My play character: {name}",
   "typeIntro": "If you got this character",
@@ -409,5 +410,6 @@
   ]
  },
  "halloween": {"banner": "🎃 Halloween limited theme", "sub": "Until Oct 31 — result cards get a Halloween frame.", "frame": "HAPPY HALLOWEEN"},
- "quickbreak": {"title": "30-Second Browser Game for a Quick Break — No Sign-up", "desc": "Got 30 seconds? Play a free browser game with no install or sign-up, then try the 10-question character quiz or a friend chemistry check.", "h1": "Bored? Play a 30-second game", "p1": "You don't need to install an app for a short break. A round of Gate Rush lasts 30 seconds, so it's over before your coffee cools, and it starts right in your browser with no sign-up.", "p2": "If you still have a minute, take the 10-question character quiz to find your play character, or send a link to a friend to check your chemistry. All of it is free.", "link": "30-second game for a quick break"}
+ "quickbreak": {"title": "30-Second Browser Game for a Quick Break — No Sign-up", "desc": "Got 30 seconds? Play a free browser game with no install or sign-up, then try the 10-question character quiz or a friend chemistry check.", "h1": "Bored? Play a 30-second game", "p1": "You don't need to install an app for a short break. A round of Gate Rush lasts 30 seconds, so it's over before your coffee cools, and it starts right in your browser with no sign-up.", "p2": "If you still have a minute, take the 10-question character quiz to find your play character, or send a link to a friend to check your chemistry. All of it is free.", "link": "30-second game for a quick break"},
+ "friendplay": {"title": "Things to Do With Friends Online — Chemistry Test & 30s Game", "desc": "Not sure what to do with friends? Send one link to see your chemistry, then race in a 30-second browser game. No sign-up, all free.", "h1": "What to do with friends? One link is enough", "p1": "Distance is fine. Send one link and your friend answers 10 questions, then you both see your play-character chemistry right away. No sign-up or install.", "p2": "After the chemistry result, try a 30-second Gate Rush round and compare scores. Sharing a result is always optional.", "link": "Things to do with friends"}
 }

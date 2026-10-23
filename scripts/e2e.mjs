@@ -128,6 +128,11 @@ try {
     await q2.waitForSelector('.result');
     const qn = await q2.evaluate(() => window.__trackLog);
     ok('track_quiz', qn.includes('quiz_start') && qn.includes('quiz_done'), qn.join(','));
+    ok('track_result_land', qn.includes('result_land'));
+    ok('quiz_share_hint_en', (await q2.textContent('[data-share-hint]')).includes('your friend can find'));
+    await q2.click('[data-share]'); await q2.waitForTimeout(800);
+    ok('track_share_result', (await q2.evaluate(() => window.__trackLog)).includes('share_result'));
+    for (const lg of ['ko', 'ja', 'zh-hans', 'es', 'pt-br']) { const pg = await page(sctx, `/${lg}/me/play-character/`); await pg.click('[data-start]'); for (let i = 0; i < 10; i++) await pg.click('[data-a="a"]'); await pg.waitForSelector('.result'); ok('quiz_share_hint_' + lg, (await pg.textContent('[data-share-hint]')).length > 10); }
     const iv = await page(sctx, '/en/i/AAAAAAAAAAAAAAAAAAAAAA/');
     ok('track_invite_land', (await iv.evaluate(() => window.__trackLog || [])).includes('invite_land'));
     // chem_done via invitee join flow (uses owner link from earlier)

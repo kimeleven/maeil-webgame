@@ -37,7 +37,7 @@ const fmt = (s, v) => String(s).replace(/\{(\w+)\}/g, (_, k) => (k in v ? v[k] :
 const PAGES = [
   ['lobby', ''], ['game', 'play/gate-rush/'], ['quiz', 'me/play-character/'],
   ...CODES.map((c) => [`type-${c}`, `me/play-character/types/${c.toLowerCase()}/`]),
-  ['chem', 'friends/chemistry/'], ['quickbreak', 'play/quick-break/'], ['about', 'about/'], ['privacy', 'privacy/'],
+  ['chem', 'friends/chemistry/'], ['quickbreak', 'play/quick-break/'], ['friendplay', 'friends/things-to-do/'], ['about', 'about/'], ['privacy', 'privacy/'],
 ];
 const SHELLS = [['r', 'r/'], ['c', 'c/'], ['i', 'i/']];
 const url = (l, suf) => `${SITE}/${l}/${suf}`;
@@ -87,7 +87,7 @@ function pageBody(l, key) {
 <a class="card cat" href="/${l}/friends/chemistry/"><span class="tag">${esc(D.nav.friends)}</span><span class="pair">${charImg('SIH', 72)}${charImg('CPT', 72)}</span><h3>${esc(c.friends.t)}</h3><p>${esc(c.friends.d)}</p><span class="btn ghost go">${esc(c.friends.cta)}</span></a>
 </nav>
 <section class="card row" style="justify-content:space-between"><div><h3>${esc(D.lobby.daily)}</h3><p class="muted" style="margin:0">${esc(D.lobby.dailyDesc)}</p></div><a class="btn ghost" href="/${l}/play/gate-rush/" data-daily>${esc(D.lobby.daily)} →</a></section>
-<p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a></p>`;
+<p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a> · <a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a></p>`;
   }
   if (key === 'game') {
     return `${hwBanner(D)}<div class="layout-game"><section class="intro"><span class="tag">${esc(D.nav.play)} · 30s</span><h1>${esc(g.name)} — ${esc(g.h1)}</h1><p>${esc(g.intro)}</p>
@@ -106,16 +106,21 @@ function pageBody(l, key) {
     const c = key.slice(5), T = D.types[c], b = bestBuddy(c);
     return `<section class="hero result"><img class="char" src="/img/chars/${c}.svg" width="240" height="240" alt="${esc(T.name)}"><div><span class="tag" style="background:${COLORS[c]}33;color:${COLORS[c]}">${esc(q.title)}</span><h1>${esc(T.name)}</h1><p><b>${esc(T.one)}</b></p><p>${esc(T.desc)}</p>
 <p>${esc(q.best)}: <a href="/${l}/me/play-character/types/${b.toLowerCase()}/">${esc(D.types[b].name)}</a></p><div class="row"><a class="btn" href="/${l}/me/play-character/">${esc(q.takeQuiz)}</a><a class="btn ghost" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a><a class="btn ghost" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a></div></div></section>${disc}
+<p class="muted"><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a></p>
 <h2>${esc(q.charsTitle)}</h2><div class="chars">${CODES.filter((x) => x !== c).map((x) => `<a class="card" href="/${l}/me/play-character/types/${x.toLowerCase()}/">${charImg(x, 72, D.types[x].name)}<b>${esc(D.types[x].name)}</b></a>`).join('')}</div>`;
   }
   if (key === 'quickbreak') {
     const Q = D.quickbreak;
-    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(Q.h1)}</h1><p>${esc(Q.p1)}</p><p>${esc(Q.p2)}</p><div class="row"><a class="btn" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a></div></section>`;
+    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(Q.h1)}</h1><p>${esc(Q.p1)}</p><p>${esc(Q.p2)}</p><div class="row"><a class="btn" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a></div><p class="muted"><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a></p></section>`;
+  }
+  if (key === 'friendplay') {
+    const F = D.friendplay;
+    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(F.h1)}</h1><p>${esc(F.p1)}</p><p>${esc(F.p2)}</p><div class="row"><a class="btn" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a></div><p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a></p></section>`;
   }
   if (key === 'chem') {
     const C = D.chem;
     return `<section class="hero"><span class="tag">${esc(D.nav.friends)}</span><h1>${esc(C.h1)}</h1><p>${esc(C.intro)}</p><ol class="prose">${C.steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol></section>
-<section id="chem" class="card"><p>${esc(D.common.loading)}</p></section>${disc}`;
+<section id="chem" class="card"><p>${esc(D.common.loading)}</p></section>${disc}<p class="muted"><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a></p>`;
   }
   if (key === 'about' || key === 'privacy') {
     const P = D[key];
@@ -128,6 +133,7 @@ function meta(l, key) {
   const D = dict[l], S = D.seo;
   if (key.startsWith('type-')) { const T = D.types[key.slice(5)]; return { title: `${T.name} — ${T.one} | ${D.brand}`, desc: T.desc.split(/(?<=[.!?。！？])\s*/).slice(0, 2).join(' ').trim() }; }
   if (key === 'quickbreak') return { title: D.quickbreak.title, desc: D.quickbreak.desc };
+  if (key === 'friendplay') return { title: D.friendplay.title, desc: D.friendplay.desc };
   const k = { lobby: 'lobby', game: 'game', quiz: 'quiz', chem: 'chem', quickbreak: 'quickbreak', about: 'about', privacy: 'privacy' }[key];
   return { title: S[k].title, desc: S[k].desc };
 }
@@ -144,6 +150,7 @@ function jsonld(l, key, m) {
   else if (key.startsWith('type-')) crumbs.push([D.nav.me, quizUrl], [D.types[key.slice(5)].name, self]);
   else if (key === 'chem') crumbs.push([D.nav.friends, self]);
   else if (key === 'quickbreak') crumbs.push([D.nav.play, gameUrl], [D.quickbreak.h1, self]);
+  else if (key === 'friendplay') crumbs.push([D.nav.friends, url(l, 'friends/chemistry/')], [D.friendplay.h1, self]);
   else crumbs.push([D.nav[key], self]); // about, privacy
   const graph = [page, { '@type': 'BreadcrumbList', itemListElement: crumbs.map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item })) }];
   // quiz: ItemList of the 8 types shown on the page (names + links only, no ratings/reviews)

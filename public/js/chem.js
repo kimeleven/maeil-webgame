@@ -105,6 +105,7 @@ export async function mountInvite(el, D, token) {
 
 function renderJoined(el, D, token, ch, ownerNick, myNick, memberKey, pct) {
   const C = D.chem;
+  track('result_land', { from: 'chem' });
   el.innerHTML = chemHtml(D, ch, ownerNick, myNick);
   chemActions(el, D, ch, ownerNick, myNick);
   const row = document.createElement('div'); row.className = 'row'; row.style.marginTop = '10px';
