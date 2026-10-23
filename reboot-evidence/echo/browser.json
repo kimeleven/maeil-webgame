@@ -1,6 +1,6 @@
 {
   "base": "http://localhost:5193",
-  "at": "2026-10-23T05:12:41.577Z",
+  "at": "2026-10-23T06:10:07.429Z",
   "READY 412 clock frozen before start (t=0, HUD 90)": {
     "pass": true,
     "detail": "{\"t\":0,\"phase\":\"show\",\"r\":1,\"L\":3,\"idx\":0,\"done\":0,\"over\":false,\"hud\":\"90\",\"path\":[3,4,2],\"armed\":false}"
@@ -10,7 +10,7 @@
     "detail": "잔상이 꺼지면 같은 순서로 칸을 탭 / 탭해서 시작 / true"
   },
   "RUN_412": {
-    "wall": 90.112,
+    "wall": 90.121,
     "gameT": 90,
     "rec": {
       "done": 14,
@@ -35,24 +35,24 @@
     "rounds": 16,
     "a3": {
       "tShow": 41,
-      "tNext": 1236,
+      "tNext": 1240,
       "status": "2번째 칸에서 갈렸어요",
       "nextL": 4,
       "nextR": 3,
       "wrongCell": 0
     },
     "a8": {
-      "before": 1.611,
-      "after": 11.679,
+      "before": 1.604,
+      "after": 11.672,
       "phase": "input",
       "fails": 0
     },
-    "sfx": 393,
-    "vib": 130
+    "sfx": 392,
+    "vib": 129
   },
   "A5 412 run ends at 90 s real time (±0.5 incl. 0.25 s lead + start/result detection)": {
     "pass": true,
-    "detail": "wall 90.11 s, game t 90"
+    "detail": "wall 90.12 s, game t 90"
   },
   "A1 412 lengths 3..12, +1 on success": {
     "pass": true,
@@ -64,11 +64,11 @@
   },
   "A8 412 10 s idle in input → no fail": {
     "pass": true,
-    "detail": "{\"before\":1.611,\"after\":11.679,\"phase\":\"input\",\"fails\":0}"
+    "detail": "{\"before\":1.604,\"after\":11.672,\"phase\":\"input\",\"fails\":0}"
   },
   "A3 412 wrong cell + answer ≤1 s, next path (r+1, same length) ≤1.5 s": {
     "pass": true,
-    "detail": "{\"tShow\":41,\"tNext\":1236,\"status\":\"2번째 칸에서 갈렸어요\",\"nextL\":4,\"nextR\":3,\"wrongCell\":0}"
+    "detail": "{\"tShow\":41,\"tNext\":1240,\"status\":\"2번째 칸에서 갈렸어요\",\"nextL\":4,\"nextR\":3,\"wrongCell\":0}"
   },
   "A5 412 result shows deliveries/longest, focus on again": {
     "pass": true,
@@ -76,7 +76,7 @@
   },
   "A5 412 Enter = again, starts at once": {
     "pass": true,
-    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.3006999999761611,\"starts\":2}"
+    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.29789999995232214,\"starts\":2}"
   },
   "A6d 412 no API / external requests (only the page itself)": {
     "pass": true,
@@ -95,7 +95,7 @@
     "detail": "잔상이 꺼지면 같은 순서로 클릭 또는 숫자 1~9 / 클릭 · Space · Enter로 시작 / true"
   },
   "RUN_1440": {
-    "wall": 90.089,
+    "wall": 90.048,
     "gameT": 90,
     "rec": {
       "done": 15,
@@ -121,16 +121,16 @@
     "a3": null,
     "a8": {
       "before": 1.604,
-      "after": 11.686,
+      "after": 11.728,
       "phase": "input",
       "fails": 0
     },
-    "sfx": 422,
-    "vib": 140
+    "sfx": 423,
+    "vib": 141
   },
   "A5 1440 run ends at 90 s real time (±0.5 incl. 0.25 s lead + start/result detection)": {
     "pass": true,
-    "detail": "wall 90.09 s, game t 90"
+    "detail": "wall 90.05 s, game t 90"
   },
   "A1 1440 lengths 3..12, +1 on success": {
     "pass": true,
@@ -142,7 +142,7 @@
   },
   "A8 1440 10 s idle in input → no fail": {
     "pass": true,
-    "detail": "{\"before\":1.604,\"after\":11.686,\"phase\":\"input\",\"fails\":0}"
+    "detail": "{\"before\":1.604,\"after\":11.728,\"phase\":\"input\",\"fails\":0}"
   },
   "A5 1440 result shows deliveries/longest, focus on again": {
     "pass": true,
@@ -150,7 +150,7 @@
   },
   "A5 1440 Enter = again, starts at once": {
     "pass": true,
-    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.2967000000715198,\"starts\":2}"
+    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.2937000000953704,\"starts\":2}"
   },
   "A6d 1440 no API / external requests (only the page itself)": {
     "pass": true,
@@ -166,11 +166,11 @@
   },
   "A5 hidden tab 10 s (simulated visibilitychange) → remaining time same, echo replays from start": {
     "pass": true,
-    "detail": "hidden=true,true, t 3.106→3.186, phase show, idx 1→0"
+    "detail": "hidden=true,true, t 3.113→3.173, phase show, idx 1→0"
   },
   "HIDDEN": {
     "before": {
-      "t": 3.106,
+      "t": 3.113,
       "phase": "input",
       "r": 1,
       "L": 3,
@@ -186,7 +186,7 @@
       "armed": true
     },
     "after": {
-      "t": 3.186,
+      "t": 3.173,
       "phase": "show",
       "r": 1,
       "L": 3,
@@ -224,7 +224,7 @@
   },
   "A10 first interaction ≤2 s (4× CPU, Fast 3G 562.5 ms)": {
     "pass": true,
-    "detail": "881 ms, HTML gzip 11.9 KB (1 request)"
+    "detail": "1562 ms, HTML gzip 11.9 KB (1 request)"
   },
   "A10 avg fps ≥50 under 4× CPU": {
     "pass": true,
@@ -232,12 +232,12 @@
   },
   "A10 game JS+HTML gzip ≤50 KB": {
     "pass": true,
-    "detail": "12168 B"
+    "detail": "12236 B"
   },
   "PERF": {
-    "tReady": 881,
+    "tReady": 1562,
     "fps": 72,
-    "gz": 12168
+    "gz": 12236
   },
   "A11 ko 360: no overflow (ready+result)": {
     "pass": true,

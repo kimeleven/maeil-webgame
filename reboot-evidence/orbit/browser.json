@@ -1,6 +1,6 @@
 {
- "base": "https://maeil-webgame-o52q4237y-sanghunkims-projects.vercel.app",
- "at": "2026-10-23T05:41:50.591Z",
+ "base": "http://localhost:5192",
+ "at": "2026-10-23T06:07:25.732Z",
  "READY_412": {
   "beforeInput": {
    "t": 0,
@@ -16,7 +16,7 @@
    ]
   },
   "afterStartInput": {
-   "t": 0.054,
+   "t": 0.05,
    "armed": true,
    "hud": "90",
    "readyVisible": false,
@@ -30,7 +30,7 @@
   },
   "timeline5s": [
    {
-    "t": 1.012,
+    "t": 1.008,
     "armed": true,
     "hud": "89",
     "readyVisible": false,
@@ -43,7 +43,7 @@
     ]
    },
    {
-    "t": 2.012,
+    "t": 2.008,
     "armed": true,
     "hud": "88",
     "readyVisible": false,
@@ -58,7 +58,7 @@
     ]
    },
    {
-    "t": 3,
+    "t": 3.013,
     "armed": true,
     "hud": "87",
     "readyVisible": false,
@@ -86,7 +86,7 @@
     ]
    },
    {
-    "t": 5.004,
+    "t": 5,
     "armed": true,
     "hud": "85",
     "readyVisible": false,
@@ -98,7 +98,7 @@
    }
   ],
   "afterSwitch": {
-   "t": 5.183,
+   "t": 5.179,
    "armed": true,
    "hud": "85",
    "readyVisible": false,
@@ -143,7 +143,7 @@
    ]
   },
   "afterStartInput": {
-   "t": 0.058,
+   "t": 0.05,
    "armed": true,
    "hud": "90",
    "readyVisible": false,
@@ -157,7 +157,7 @@
   },
   "timeline5s": [
    {
-    "t": 1.004,
+    "t": 1.008,
     "armed": true,
     "hud": "89",
     "readyVisible": false,
@@ -170,7 +170,7 @@
     ]
    },
    {
-    "t": 2.004,
+    "t": 2.008,
     "armed": true,
     "hud": "88",
     "readyVisible": false,
@@ -185,7 +185,7 @@
     ]
    },
    {
-    "t": 3.008,
+    "t": 3.013,
     "armed": true,
     "hud": "87",
     "readyVisible": false,
@@ -200,7 +200,7 @@
     ]
    },
    {
-    "t": 4.008,
+    "t": 4,
     "armed": true,
     "hud": "86",
     "readyVisible": false,
@@ -213,7 +213,7 @@
     ]
    },
    {
-    "t": 5.008,
+    "t": 5,
     "armed": true,
     "hud": "85",
     "readyVisible": false,
@@ -225,7 +225,7 @@
    }
   ],
   "afterSwitch": {
-   "t": 5.163,
+   "t": 5.154,
    "armed": true,
    "hud": "85",
    "readyVisible": false,
@@ -303,15 +303,11 @@
    "w": 1080,
    "h": 1350
   },
-  "link": "https://maeil-webgame-o52q4237y-sanghunkims-projects.vercel.app/ko/play/orbit-switch/?seed=res",
+  "link": "http://localhost:5192/ko/play/orbit-switch/?seed=res",
   "apiReqs": [],
   "reqs": [
    "/ko/play/orbit-switch/",
-   "/_next-live/feedback/feedback.js",
-   "/_vercel/insights/script.js",
-   "/_next-live/feedback/feedback.html",
-   "/.well-known/vercel/jwe",
-   "/login/validate"
+   "/js/gev.js"
   ]
  },
  "O6_360": {
@@ -329,7 +325,7 @@
    "ds": "연속 회피 +0",
    "near": ""
   },
-  "restartMs": 84,
+  "restartMs": 52,
   "sw": 360,
   "w": 360,
   "small": [],
@@ -350,7 +346,7 @@
    "ds": "연속 회피 +0",
    "near": ""
   },
-  "restartMs": 77,
+  "restartMs": 52,
   "sw": 1440,
   "w": 1440,
   "small": [],
@@ -382,20 +378,16 @@
   "sw": 1
  },
  "O8": {
-  "tapReadyWallMs": 927,
-  "tapReadyPerfNowMs": 915,
-  "transferBytes": 44554,
+  "tapReadyWallMs": 1593,
+  "tapReadyPerfNowMs": 1585,
+  "transferBytes": 51641,
   "requests": [
    "/ko/play/orbit-switch/",
-   "/_vercel/insights/script.js",
-   "/_next-live/feedback/feedback.js",
-   "/_next-live/feedback/feedback.html",
-   "/.well-known/vercel/jwe",
-   "/ko/play/orbit-switch/"
+   "/js/gev.js"
   ],
-  "htmlGzipBytes": 17035,
-  "htmlRawBytes": 47570,
-  "fps8s": 72,
+  "htmlGzipBytes": 17100,
+  "htmlRawBytes": 47720,
+  "fps8s": 71.9,
   "note": "local dev server sends uncompressed; Vercel serves gzip/br"
  },
  "O10": {

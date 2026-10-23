@@ -60,6 +60,7 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="et" type="application/json">{"name":"잔상 배달","title":"잔상 배달 (프리뷰)","desc":"잠깐 빛난 배달 경로를 기억했다가 같은 순서로 눌러 90초 동안 배달하기.","preview":"프리뷰","back":"매일웹겜","time":"남은","done":"배달","longest":"최장","score":"점수","cells":"칸","goal":"빛나는 칸 순서를 기억했다가 똑같이 눌러 배달하기 · 90초","howMobile":"잔상이 꺼지면 같은 순서로 칸을 탭","howDesktop":"잔상이 꺼지면 같은 순서로 클릭 또는 숫자 1~9","goMobile":"탭해서 시작","goDesktop":"클릭 · Space · Enter로 시작","watch":"잘 보세요","yourTurn":"따라 누르세요","failAt":"{n}번째 칸에서 갈렸어요","over":"배달 끝!","now":"이번","best":"내 최고","first":"첫 기록","newBest":"최고 기록!","again":"다시 하기","share":"공유","link":"도전 링크 복사","png":"이미지 저장","copied":"복사했어요","sound":"소리","haptic":"진동","motion":"움직임 효과","shareText":"잔상 배달 {done}건, 최장 {longest}칸! 같은 경로로 도전해 봐 → {url}","lastFail":"마지막 실패"}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{// Echo Courier core (prototype, t_0e812a29). Pure logic, no DOM: runs in node (tests/sim) and is
 // inlined into the preview page by scripts/build-echo.mjs.
 // GDD: workspace/maeil-arcade-local/games/echo-courier/GDD.md (times are [추정] initial values).
@@ -195,6 +196,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     const d = { g: 'echo', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail not in v1
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runOpen = false; // true between play_start and play_end of one run (dedupe)

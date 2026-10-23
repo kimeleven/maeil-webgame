@@ -70,6 +70,7 @@ export function buildOrbit() {
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="ot" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{${core}
 ${ui}})()</script>
 </body></html>`;

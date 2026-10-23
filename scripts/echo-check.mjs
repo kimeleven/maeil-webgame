@@ -14,8 +14,8 @@ const PATH = '/ko/play/echo-courier/';
 const I18N = JSON.parse(readFileSync(`${ROOT}i18n/echo-courier.json`, 'utf8'));
 const b = await chromium.launch({ headless: false, args: ['--window-position=0,0'] });
 // Vercel preview toolbar (vercel.live, /.well-known/vercel) is injected by the preview host, not site code.
-// /_vercel/insights/* = anonymous launch metrics (t_06bfa4bc, same as magnet): allowed, still no /api and no third party.
-const site = (reqs) => reqs.filter((u) => !/vercel\.live|\/\.well-known\/vercel|\/_vercel\/insights\//.test(u));
+// /_vercel/insights/* = anonymous launch metrics (t_06bfa4bc), /js/gev.js + POST /api/events = own anonymous collection (t_287677ef): allowed; still no other /api and no third party.
+const site = (reqs) => reqs.filter((u) => !/vercel\.live|\/\.well-known\/vercel|\/_vercel\/insights\/|\/js\/gev\.js$|\/api\/events$/.test(u));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function open(vp, { touch = false, path = PATH + '?seed=check', motion, init } = {}) {
   const ctx = await b.newContext({ viewport: vp, hasTouch: touch, isMobile: touch, acceptDownloads: true, reducedMotion: motion || 'no-preference' });

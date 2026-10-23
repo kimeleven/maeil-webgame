@@ -50,6 +50,7 @@ canvas{width:100%;aspect-ratio:1;display:block;margin:auto 0;touch-action:none}
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="ot" type="application/json">{"name":"オービットスイッチ","title":"オービットスイッチ（プレビュー）","desc":"タップで内側と外側の軌道を切り替え、90秒間生き残ろう。","preview":"プレビュー","time":"残り","streak":"連続回避","mult":"倍率","close":"ギリギリ！","sec":"秒","clear":"90秒間生存！","over":"ゲームオーバー","now":"今回","best":"自己ベスト","first":"最初の記録","newBest":"ベスト更新！","toBest":"自己ベストまであと{n}秒","again":"もう一度","share":"シェア","link":"挑戦リンクをコピー","png":"画像を保存","copied":"コピーしました","sound":"サウンド","haptic":"振動","motion":"モーション効果","paused":"一時停止 · タップで再開","back":"毎日ウェブゲーム","shareText":"オービットスイッチで{streak}回連続回避！同じ軌道で私に勝てる？ → {url}","startMobile":"タップで内側と外側を切り替え","startDesktop":"Space / Clickで内側と外側を切り替え","startGoal":"赤い障害物を避け、リングを集めて90秒間生き残ろう","startActionMobile":"タップしてスタート","startActionDesktop":"Space / Clickでスタート","hitShield":"シールド破損！もう一度ぶつかるとゲームオーバー","causeBlock":"ブロックに衝突","causeGate":"ゲートの閉じた側に衝突","causeBar":"回転バーに衝突","tipSwitch":"赤い予告が出たら反対側の軌道へ切り替えよう","legendYou":"自分","legendRing":"リング +ポイント","legendDanger":"赤 = 危険","tapNow":"今タップ！","tipEarly":"切り替え中も当たります。少し早めに切り替えよう","tipMash":"0.25秒以内の連打は無視されます。予告を見て1回だけタップ","tipBar":"回転バーは向かってきます。予告が出たらすぐ切り替えよう","cause":"原因","tip":"次のプレイ"}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{// Orbit Switch core (prototype, t_34f9c354). Pure logic, no DOM: same file runs in node (sim/tests)
 // and is inlined into the preview page by scripts/build-orbit.mjs. All tuning numbers live in OC.
 // GDD: workspace/maeil-arcade-local/games/orbit-switch/GDD.md (values are [추정] initial values).
@@ -342,6 +343,7 @@ function simulate(level, policy, maxT = OC.DUR) {
     const d = { g: 'orbit', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail not in v1
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runOpen = false; // true between play_start and play_end of one run (dedupe)

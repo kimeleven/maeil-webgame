@@ -60,6 +60,7 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="et" type="application/json">{"name":"残像デリバリー","title":"残像デリバリー (プレビュー)","desc":"一瞬光る配達ルートを覚えて同じ順にタップ、90秒間配達しよう。","preview":"プレビュー","back":"毎日ウェブゲーム","time":"残り","done":"配達","longest":"最長","score":"スコア","cells":"マス","goal":"光るマスの順番を覚えて同じ順に押そう · 90秒","howMobile":"残像が消えたら同じ順にマスをタップ","howDesktop":"残像が消えたら同じ順にクリックか数字1〜9","goMobile":"タップでスタート","goDesktop":"クリック・Space・Enterでスタート","watch":"よく見て","yourTurn":"同じ順に押して","failAt":"{n}マス目で外れました","over":"配達終了!","now":"今回","best":"自己ベスト","first":"初記録","newBest":"自己ベスト!","again":"もう一回","share":"シェア","link":"挑戦リンクをコピー","png":"画像を保存","copied":"コピーしました","sound":"音","haptic":"振動","motion":"動きの効果","shareText":"残像デリバリー {done}件、最長{longest}マス!同じルートで挑戦 → {url}","lastFail":"最後のミス"}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{// Echo Courier core (prototype, t_0e812a29). Pure logic, no DOM: runs in node (tests/sim) and is
 // inlined into the preview page by scripts/build-echo.mjs.
 // GDD: workspace/maeil-arcade-local/games/echo-courier/GDD.md (times are [추정] initial values).
@@ -195,6 +196,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     const d = { g: 'echo', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail not in v1
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runOpen = false; // true between play_start and play_end of one run (dedupe)

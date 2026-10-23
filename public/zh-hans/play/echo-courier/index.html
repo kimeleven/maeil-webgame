@@ -60,6 +60,7 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="et" type="application/json">{"name":"残影快递","title":"残影快递（预览）","desc":"记住一闪而过的配送路线，按同样顺序点回去，90秒内尽量多送。","preview":"预览","back":"每日网游","time":"剩余","done":"送达","longest":"最长","score":"得分","cells":"格","goal":"记住发光格子的顺序，再按同样顺序点击 · 90秒","howMobile":"残影消失后，按同样顺序点格子","howDesktop":"残影消失后，按同样顺序点击或按数字1~9","goMobile":"点击开始","goDesktop":"点击 · Space · Enter 开始","watch":"看清楚","yourTurn":"照着点","failAt":"第{n}格走错了","over":"配送结束！","now":"本次","best":"我的最佳","first":"首次记录","newBest":"新纪录！","again":"再来一次","share":"分享","link":"复制挑战链接","png":"保存图片","copied":"已复制","sound":"声音","haptic":"振动","motion":"动态效果","shareText":"残影快递送达{done}单，最长{longest}格！用同样的路线挑战我 → {url}","lastFail":"最后失误"}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{// Echo Courier core (prototype, t_0e812a29). Pure logic, no DOM: runs in node (tests/sim) and is
 // inlined into the preview page by scripts/build-echo.mjs.
 // GDD: workspace/maeil-arcade-local/games/echo-courier/GDD.md (times are [추정] initial values).
@@ -195,6 +196,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     const d = { g: 'echo', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail not in v1
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runOpen = false; // true between play_start and play_end of one run (dedupe)

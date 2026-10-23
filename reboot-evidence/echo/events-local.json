@@ -1,6 +1,6 @@
 {
- "base": "http://localhost:52162",
- "at": "2026-10-23T05:12:30.708Z",
+ "base": "http://localhost:59769",
+ "at": "2026-10-23T06:03:22.227Z",
  "checks": {
   "412 no event before first input": {
    "pass": true,

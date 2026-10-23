@@ -50,6 +50,7 @@ canvas{width:100%;aspect-ratio:1;display:block;margin:auto 0;touch-action:none}
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="ot" type="application/json">{"name":"轨道切换","title":"轨道切换（预览）","desc":"点击切换内外轨道，坚持生存 90 秒。","preview":"预览","time":"剩余","streak":"连续闪避","mult":"倍数","close":"好险！","sec":"秒","clear":"成功生存 90 秒！","over":"游戏结束","now":"本局","best":"我的最佳","first":"第一局记录","newBest":"新纪录！","toBest":"距个人最佳还差 {n} 秒","again":"再来一局","share":"分享","link":"复制挑战链接","png":"保存图片","copied":"已复制","sound":"声音","haptic":"振动","motion":"动态效果","paused":"已暂停 · 点击继续","back":"每日网页游戏","shareText":"我在《轨道切换》中连续闪避 {streak} 次！同一条轨道，敢来超过我吗？→ {url}","startMobile":"点击切换内外轨道","startDesktop":"按 Space / Click 切换内外轨道","startGoal":"躲开红色障碍，收集能量环，坚持生存 90 秒","startActionMobile":"点击开始","startActionDesktop":"按 Space / Click 开始","hitShield":"护盾已破！再次碰撞就会结束","causeBlock":"撞上了障碍块","causeGate":"撞上了门的封闭侧","causeBar":"撞上了旋转杆","tipSwitch":"看到红色预警时，切换到另一条轨道","legendYou":"你","legendRing":"能量环 +分","legendDanger":"红色 = 危险","tapNow":"现在点击！","tipEarly":"切换途中也会被撞，再早一点切换","tipMash":"0.25 秒内的连续点击会被忽略，看到预警后只点一次","tipBar":"旋转杆会迎面而来，预警一出现就切换","cause":"原因","tip":"下一局"}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{// Orbit Switch core (prototype, t_34f9c354). Pure logic, no DOM: same file runs in node (sim/tests)
 // and is inlined into the preview page by scripts/build-orbit.mjs. All tuning numbers live in OC.
 // GDD: workspace/maeil-arcade-local/games/orbit-switch/GDD.md (values are [추정] initial values).
@@ -342,6 +343,7 @@ function simulate(level, policy, maxT = OC.DUR) {
     const d = { g: 'orbit', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail not in v1
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runOpen = false; // true between play_start and play_end of one run (dedupe)
