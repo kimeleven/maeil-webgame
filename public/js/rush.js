@@ -85,6 +85,12 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     persist();
     const beat = challenge && (rec.stage > challenge.stage || (rec.stage === challenge.stage && rec.score > challenge.score));
     const status = document.createElement('p'); status.className = 'status'; status.setAttribute('role', 'status');
+    let busy = false;
+    const showUrl = (url, prefix = '') => {
+      status.textContent = prefix ? `${prefix}: ` : '';
+      const a = document.createElement('a'); a.href = url; a.textContent = url; a.target = '_blank'; a.rel = 'noopener';
+      status.append(a);
+    };
     const shareUrl = async () => {
       let id = null;
       try { const r = await api('/api/share', { method: 'POST', body: { kind: 'rush', lang, payload: { seed: run.seed, stage: rec.stage, score: rec.score, assist: rec.assist } } }); id = r.id; } catch {}
@@ -95,22 +101,31 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
       btn(D.cta.save, '', async () => saveCanvas(await rushCard(D, rec), `gate-rush-${rec.stage}.png`)),
       btn(D.cta.share, 'ghost', async () => {
         track('share_click', { from: 'rush' });
-        const url = await shareUrl();
-        const r = await shareOrCopy({ title: g.name, text: fmt(g.shareText, { stage: rec.cleared, url }), canvas: await rushCard(D, rec), name: 'gate-rush.png' });
-        status.textContent = r === 'failed' ? `${D.common.error}: ${url}` : r === 'copied' ? `${D.common.copied}: ${url}` : url;
+        if (busy) return; busy = true;
+        try {
+          const url = await shareUrl();
+          // show the link right away: the native share sheet (desktop Chrome/macOS) can stay pending indefinitely
+          showUrl(url);
+          const r = await shareOrCopy({ title: g.name, text: fmt(g.shareText, { stage: rec.cleared, url }), canvas: await rushCard(D, rec), name: 'gate-rush.png' });
+          showUrl(url, r === 'failed' ? D.common.error : r === 'copied' ? D.common.copied : '');
+        } finally { busy = false; }
       }),
     ];
     if (!rec.assist) buttons.push(btn(g.challenge, 'ghost', async () => {
-      const url = await shareUrl();
-      // native share sheet first (1 tap on mobile); fall back to copying the link
-      if (navigator.share) {
-        try {
-          track('challenge_copy', { method: 'native' });
-          await navigator.share({ title: g.challengeTitle, text: fmt(g.challengeShareText, { stage: rec.cleared, score: rec.score.toLocaleString(), url }) });
-          status.textContent = url; return;
-        } catch (e) { if (e.name === 'AbortError') return; }
-      } else track('challenge_copy', { method: 'copy' });
-      status.textContent = (await copyText(url)) ? `${D.common.copied}: ${url}` : url;
+      if (busy) return; busy = true;
+      try {
+        const url = await shareUrl();
+        showUrl(url);
+        // native share sheet first (1 tap on mobile); fall back to copying the link
+        if (navigator.share) {
+          try {
+            track('challenge_copy', { method: 'native' });
+            await navigator.share({ title: g.challengeTitle, text: fmt(g.challengeShareText, { stage: rec.cleared, score: rec.score.toLocaleString(), url }) });
+            return;
+          } catch (e) { if (e.name === 'AbortError') return; }
+        } else track('challenge_copy', { method: 'copy' });
+        showUrl(url, (await copyText(url)) ? D.common.copied : '');
+      } finally { busy = false; }
     }));
     buttons.push(btn(g.newRun, 'ghost', () => { run = G.createRun({ seed: run.seed }); run.assist = assist; persist(); screenReady(); }));
     show(`<span class="tag">${rec.assist ? 'ASSIST' : 'GAME OVER'}</span><h2>${g.lostTitle}</h2><p style="font-size:30px;font-weight:800;margin:6px 0">${g.sector} ${rec.stage}</p><p>${fmt(g.lostDesc, { stage: rec.cleared, score: rec.score.toLocaleString() })}</p>${beat ? `<p class="tag">${g.beat}</p>` : ''}<p class="muted">${g.best}: ${save.bestStage} · ${save.best.toLocaleString()}</p>`, buttons);
