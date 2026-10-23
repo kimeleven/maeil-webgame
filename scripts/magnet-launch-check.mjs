@@ -45,7 +45,8 @@ ok('share link is /ko/c/mh-<seed>', clip.includes(`${U}/ko/c/mh-qa-seed-1`), cli
 await p.click('#b-again'); await p.click('#b-start');
 const L = await p.evaluate(() => window.__trackLog);
 const names = L.map((e) => e.name + (e.end ? ':' + e.end : '') + (e.via ? ':' + e.via : ''));
-ok('events: start, end, share try/success, again', JSON.stringify(names) === JSON.stringify(['play_start', 'play_end:time', 'share_click:link', 'share_done:link', 'play_again']), names.join(','));
+ok('events: start, end, share try/success, again', JSON.stringify(names) === JSON.stringify(['play_start', 'play_end:time', 'share_click:link', 'share_done:link', 'play_again', 'play_start']), names.join(','));
+ok('restart = play_again 1 + play_start 1 (t_287677ef)', names.filter((x) => x === 'play_again').length === 1 && names.filter((x) => x === 'play_start').length === 2, names.join(','));
 ok('events tagged g=magnet from=c qa=1, no seed/score', L.every((e) => e.g === 'magnet' && e.from === 'c' && e.qa === '1' && !('seed' in e) && !('score' in e)));
 await p.goto(`${U}/ko/play/magnet-harbor/?qa=0`); await p.waitForFunction(() => window.__mh && window.__mh.ready); await p.click('#b-start');
 ok('qa=0 clears flag', await p.evaluate(() => window.__trackLog.every((e) => !e.qa && e.from === 'direct')));

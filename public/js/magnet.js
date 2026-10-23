@@ -77,7 +77,7 @@
     S.armed = false; S.evlog = []; S.blinkSeen = false;
   }
   function begin() { // explicit start only: [start] button, Space, Enter
-    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; runs++; ev(runs > 1 ? 'play_again' : 'play_start'); lastT = performance.now(); acc = 0; S.tStart = lastT;
+    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; runs++; if (runs > 1) ev('play_again'); ev('play_start'); // again1+start1 per restart, same as orbit/echo (PO t_287677ef) lastT = performance.now(); acc = 0; S.tStart = lastT;
   }
   $('#b-start').addEventListener('click', (e) => { e.stopPropagation(); begin(); });
 

@@ -1,7 +1,7 @@
 {
-  "at": "2026-10-23T05:56:10.100Z",
+  "at": "2026-10-23T06:14:32.733Z",
   "base": "local",
-  "pass": 22,
+  "pass": 24,
   "fail": 0,
   "res": [
     {
@@ -18,10 +18,15 @@
           "share_click:link",
           "share_done:link",
           "play_again",
+          "play_start",
           "play_end:time"
         ],
-        "sent": 6
+        "sent": 7
       }
+    },
+    {
+      "name": "412 restart = play_again 1 + play_start 1 (2 runs → start 2, again 1)",
+      "pass": true
     },
     {
       "name": "412 only contract keys sent",
@@ -49,7 +54,7 @@
       "pass": true,
       "extra": [
         [
-          6,
+          7,
           202,
           null
         ]
@@ -74,10 +79,15 @@
           "share_click:link",
           "share_done:link",
           "play_again",
+          "play_start",
           "play_end:time"
         ],
-        "sent": 6
+        "sent": 7
       }
+    },
+    {
+      "name": "1440 restart = play_again 1 + play_start 1 (2 runs → start 2, again 1)",
+      "pass": true
     },
     {
       "name": "1440 only contract keys sent",
@@ -105,7 +115,7 @@
       "pass": true,
       "extra": [
         [
-          6,
+          7,
           202,
           null
         ]
@@ -138,14 +148,14 @@
       "pass": true,
       "extra": {
         "db": {
-          "play_start": 2,
+          "play_start": 4,
           "play_again": 2,
           "play_end": 4,
           "share_click": 2,
           "share_done": 2
         },
         "want": {
-          "play_start": 2,
+          "play_start": 4,
           "play_again": 2,
           "play_end": 4,
           "share_click": 2,
@@ -177,7 +187,7 @@
     {
       "name": "availableSince set",
       "pass": true,
-      "extra": "2026-10-23T05:56:04.051Z"
+      "extra": "2026-10-23T06:14:25.860Z"
     }
   ]
 }
