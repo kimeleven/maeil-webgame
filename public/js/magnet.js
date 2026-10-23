@@ -22,6 +22,7 @@
     const d = { g: 'magnet', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail is not in v1 and is dropped
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runs = 0;
@@ -76,7 +77,7 @@
     S.armed = false; S.evlog = []; S.blinkSeen = false;
   }
   function begin() { // explicit start only: [start] button, Space, Enter
-    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; runs++; ev(runs > 1 ? 'play_again' : 'play_start'); lastT = performance.now(); acc = 0; S.tStart = lastT;
+    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; runs++; if (runs > 1) ev('play_again'); ev('play_start'); // again1+start1 per restart, same as orbit/echo (PO t_287677ef) lastT = performance.now(); acc = 0; S.tStart = lastT;
   }
   $('#b-start').addEventListener('click', (e) => { e.stopPropagation(); begin(); });
 

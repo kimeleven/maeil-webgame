@@ -87,6 +87,7 @@ export function buildMagnet() {
 <div class="bar"><span class="hint">${esc(D.hint)}</span><button class="ic" id="b-pause" type="button" data-ui aria-label="${esc(D.pause)}">⏸</button></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="mt" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{${core}
 ${ui}})()</script>
 </body></html>`;

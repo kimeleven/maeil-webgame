@@ -59,6 +59,7 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 <div class="bar"><span class="hint">Drag &amp; release / ←→ Space</span><button class="ic" id="b-pause" type="button" data-ui aria-label="一時停止">⏸</button></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="mt" type="application/json">{"name":"マグネットハーバー","title":"マグネットハーバー (プレビュー)","desc":"揺れる荷物を磁石クレーンで運び、揺れる船に積んで、90秒で何隻出港させられるか挑戦。","preview":"プレビュー","back":"毎日ウェブゲーム","time":"残り","ships":"船","target":"積荷","cols":"列","lives":"ライフ","goal":"揺れる荷物を船の上で放して積み、出港させよう · 90秒","howMobile":"どこでもドラッグでクレーン移動、指を離すと投下","howDesktop":"ドラッグで移動、離して投下 · ←/→ 移動 + Space 投下","start":"スタート","hint":"Drag & release / ←→ Space","pause":"一時停止","paused":"一時停止中","resume":"タップで再開 (3秒後)","over":"港じまい!","endTime":"90秒終了","endLives":"荷物が3つ海に落ちました","shipsN":"船 {n}隻","now":"今回","best":"自己ベスト","diff":"差","first":"初記録","newBest":"ベスト更新!","near":"あと{n}マスでもう1隻でした","score":"スコア","perfect":"PERFECT","again":"もう一度","png":"PNG保存","link":"挑戦リンクをコピー","copied":"コピーしました","sound":"サウンド","haptic":"振動","motion":"モーション効果","shareText":"マグネットハーバーで船を{ships}隻出港させた! 同じ港で挑戦してみる? → {url}","lastFall":"直前の落下","tipSea":"船の外に落ちました → 紫の影が緑のマス（船の上）に来たら手を離そう","tipHigh":"積みすぎました → 3段を超えないよう、低い列から横に広く積もう","tipTilt":"船が傾いて落ちました → 反対側にも積み、重心を中央に寄せよう","tipTime":"時間切れ → 揺れが止まってから離すとPERFECTが出やすい","left":"次の船まで{n}マス · あと{c}列","leftCells":"次の船まであと{n}マス","leftCols":"次の船まであと{c}列(4列以上必要)","guide":"緑のマス＝船上の着地点 · 影が緑のマスに来たら手を離そう","combo":"連続PERFECT ×{n}","comboRule":"PERFECTを続けると×2・×3、通常着地や落下で×1に戻る"}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{// Magnet Harbor rule engine (prototype, t_1c491685). DOM-free, deterministic, fixed step 1/60 s.
 // GDD r2: workspace/maeil-arcade-local/games/magnet-harbor/GDD.md (2.0 time, 2.1 stacking/departure, 2.2 coords).
 // All tunables live in MH. Same seed + same input log → same result (state quantized every tick).
@@ -304,6 +305,7 @@ const POLICIES = {
     const d = { g: 'magnet', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail is not in v1 and is dropped
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runs = 0;
@@ -358,7 +360,7 @@ const POLICIES = {
     S.armed = false; S.evlog = []; S.blinkSeen = false;
   }
   function begin() { // explicit start only: [start] button, Space, Enter
-    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; runs++; ev(runs > 1 ? 'play_again' : 'play_start'); lastT = performance.now(); acc = 0; S.tStart = lastT;
+    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; runs++; if (runs > 1) ev('play_again'); ev('play_start'); // again1+start1 per restart, same as orbit/echo (PO t_287677ef) lastT = performance.now(); acc = 0; S.tStart = lastT;
   }
   $('#b-start').addEventListener('click', (e) => { e.stopPropagation(); begin(); });
 
