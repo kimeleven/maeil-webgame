@@ -1,0 +1,23 @@
+✔ L3 same seed+n twice → identical board (1000 seeds × 30) — {"same":30000,"total":30000}
+✔ L3 par = independent exhaustive search, start unsolved — {"parOk":30000,"total":30000}
+✔ L3 board 1 par=1 (k=1); boards 2-30 par>=2 and inside tier range — {"rangeOk":30000,"b1":1000}
+✔ L3 k = number of rotatable mirrors, inside tier k range — {"kOk":30000}
+✔ L3 every board done within 33 tries; fallback use counted — {"maxTries":21,"how":{"gen":30000}}
+✔ L12 generation ≤ 5 ms per board (node, this Mac) — {"avg":0.049,"p99":0.198,"max":2.641}
+✔ L3 forced flip-fallback: deterministic, par in range — {"flipOk":1500,"flipN":1500}
+✔ L3 FALLBACK table: all 16 built-in boards par/k in range, used when forced — {"tabOk":1500,"tabN":1500,"tableEach":[true,true,true,true]}
+✔ L3 replay of input log → same boards/score (node) — {"boards":5,"score":855}
+✔ L2 scripted bot: board1 solved by 1 tap ≤5 s; ≤30 s fixed mirror, 2-lamp board, limit warning, min-tap bonus — {"pass":100,"N":100,"fails":{}}
+✔ L5 idle after start → result at exactly 5400 ticks (90 s), 20 seeds — {"ticks":[5400]}
+✔ L6 limit (par+extra) used without solving → start layout back, exactly −180 ticks (3 s) — {"taps":3,"limit":3,"dTime":180}
+✔ L6 skip → −300 ticks (5 s), 0 points, next board — {"d":300}
+✔ L6 penalty to ≤0 → result immediately
+✔ L6 reset penalty crossing 0 → result in that tick — {"phase":"result","taps":3,"limit":3}
+✔ L7 solve fires once; taps during 0.6 s transition not counted — {"r":["solve","ignored","ignored"]}
+✔ L7 transition lasts 36 ticks (0.6 s) — {"t":36}
+✔ L10 fixed mirror / wall / empty / lamp taps change nothing — {"n":13}
+✔ L10 same mirror during 0.12 s rotation → ignored, not counted — {"used":1}
+✔ Score: min-tap streak 1,2,3 → 195, 215, 265 (bonus ×mult only, limit par+1 from board 2) — [195,215,265]
+✔ L11a idle / same mirror / skip spam: 0 boards beyond board 1, reset on every limit hit (20 seeds) — {"rows":{"idle":{"boards":[0],"resets":[0,0],"score":[0,0]},"sameMirror":{"boards":[1],"resets":[26,26],"score":[195,195]},"skipSpam":{"boards":[0],"resets":[0,0],"score":[0,0]}},"check":{"taps2":78,"lim":3,"resets":26}}
+✔ L11b (measured) random tapping below oracle in boards & score: seeds — {"lower":20,"of":20,"sample":[[3,525,79,20815],[3,525,80,21080],[4,690,78,20550],[4,690,79,20815],[6,1020,79,20815]],"randomSolveRateByK":{"1":{"n":300,"solved":300,"rate":1},"3":{"n":600,"solved":151,"rate":0.252},"4":{"n":510,"solved":42,"rate":0.082},"5":{"n":390,"solved":29,"rate":0.074},"6":{"n":701,"solved":9,"rate":0.013},"7":{"n":582,"solved":4,"rate":0.007},"8":{"n":517,"solved":6,"rate":0.012}}}
+ALL PASS 22

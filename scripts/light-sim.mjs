@@ -74,7 +74,7 @@ const run = (g, pol) => { E.start(g); while (g.phase !== 'result') { if (g.phase
   const b = g.board, left0 = g.left, c = b.rot[0]; let taps = 0;
   while (g.used < b.limit - 0 && g.resets === 0) { E.tap(g, c); taps++; for (let i = 0; i < E.LW.ROT; i++) E.step(g); }
   const dTime = left0 - g.left - (taps - 1) * E.LW.ROT - E.LW.ROT; // subtract time stepped
-  ok('L6 limit (par+3) used without solving → start layout back, exactly −180 ticks (3 s)', g.resets === 1 && g.mask === b.start && g.used === 0 && dTime === 180 && taps === b.limit, { taps, limit: b.limit, dTime });
+  ok('L6 limit (par+extra) used without solving → start layout back, exactly −180 ticks (3 s)', g.resets === 1 && g.mask === b.start && g.used === 0 && dTime === 180 && taps === b.limit, { taps, limit: b.limit, dTime });
   const s0 = g.score, l1 = g.left, n1 = g.n; E.skip(g);
   ok('L6 skip → −300 ticks (5 s), 0 points, next board', l1 - g.left === 300 && g.score === s0 && g.n === n1 + 1, { d: l1 - g.left });
   g.left = 200; E.skip(g); ok('L6 penalty to ≤0 → result immediately', g.phase === 'result' && g.left === 0);
@@ -96,11 +96,11 @@ const run = (g, pol) => { E.start(g); while (g.phase !== 'result') { if (g.phase
   E.tap(g, b.rot[0]); const u = g.used; const rl = E.tap(g, b.rot[0]); E.step(g); const rl2 = E.tap(g, b.rot[0]);
   ok('L10 same mirror during 0.12 s rotation → ignored, not counted', rl.r === 'locked' && rl2.r === 'locked' && g.used === u, { used: g.used });
 }
-// ---- score example (GDD 7): 3rd consecutive min-tap solve with limit par+3 → 100 + 45 + 150 = 295 ----
+// ---- score example (GDD 7, t_da9e7634 limit par+1 from board 2): 195, then 100+15+100=215, 100+15+150=265 ----
 {
   const g = E.createGame('SC'); E.start(g); const pts = [];
   while (pts.length < 3 && g.phase !== 'result') { if (g.phase === 'play') { const a = E.POLICIES.safe({ ...g, tick: 0 }); const r = E.tap(g, a.c); if (r.r === 'solve') pts.push(r.pts); } for (let i = 0; i < 8; i++) E.step(g); }
-  ok('Score: min-tap streak 1,2,3 → 195, 245, 295 (bonus ×mult only)', JSON.stringify(pts) === '[195,245,295]', pts);
+  ok('Score: min-tap streak 1,2,3 → 195, 215, 265 (bonus ×mult only, limit par+1 from board 2)', JSON.stringify(pts) === '[195,215,265]', pts);
 }
 // ---- L11a design guarantees ----
 {

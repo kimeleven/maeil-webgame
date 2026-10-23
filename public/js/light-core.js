@@ -5,17 +5,18 @@ export const LW = {
   HZ: 60, ACTIVE: 5400,          // 90 s active time
   TRANS: 36,                     // 0.6 s board transition (time flows, input ignored)
   ROT: 7,                        // 0.12 s mirror rotation lock (same mirror)
-  EXTRA: 3,                      // tap limit = par + 3
+  EXTRA: 3,                      // default tap limit = par + 3 (per-tier TIERS[].extra wins)
   RESET_PEN: 180, SKIP_PEN: 300, // 3 s / 5 s
   TRIES: 32,
   SCORE: { base: 100, left: 15, bonus: 50, multMax: 3 },
 };
 // GDD 6: [from board n, grid N, k range, fixed, lamps range, par range]
 export const TIERS = [
-  { n: 1, N: 4, k: [1, 1], fixed: [0, 0], lamps: [1, 1], par: [1, 1] },
-  { n: 2, N: 4, k: [2, 3], fixed: [1, 1], lamps: [1, 2], par: [2, 2] },
-  { n: 4, N: 5, k: [4, 5], fixed: [2, 2], lamps: [2, 2], par: [2, 3] },
-  { n: 7, N: 6, k: [6, 8], fixed: [2, 3], lamps: [2, 3], par: [3, 5] },
+  { n: 1, N: 4, k: [1, 1], fixed: [0, 0], lamps: [1, 1], par: [1, 1], extra: 3 },   // board 1 stays easy: par + 3
+  // t_da9e7634: board 2+ limit = par + 1 (random tapping 17.2% -> 7.2%, scripts/light-tune.mjs), boards 2-3 always k=3
+  { n: 2, N: 4, k: [3, 3], fixed: [1, 1], lamps: [1, 2], par: [2, 2], extra: 1 },
+  { n: 4, N: 5, k: [4, 5], fixed: [2, 2], lamps: [2, 2], par: [2, 3], extra: 1 },
+  { n: 7, N: 6, k: [6, 8], fixed: [2, 3], lamps: [2, 3], par: [3, 5], extra: 1 },
 ];
 export const tierOf = (n) => { let t = 0; for (let i = 0; i < TIERS.length; i++) if (n >= TIERS[i].n) t = i; return t; };
 export function hash(s) { let h = 2166136261 >>> 0; for (const c of String(s)) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
@@ -102,7 +103,7 @@ function build(N, wp, k, lampsN, R) {
   let sol = 0; rot.forEach((i, r) => { sol |= fixedState[i] << r; delete fixedState[i]; });
   return { N, src: wp.src, type, rot, fixedState, sol, lamps };
 }
-const fin = (b, start, n, how, tries) => { b.start = start; const s = solve(b); return Object.assign(b, { par: s.par, sols: s.sols, k: b.rot.length, n, how, tries, limit: s.par + LW.EXTRA }); };
+const fin = (b, start, n, how, tries) => { b.start = start; const s = solve(b); return Object.assign(b, { par: s.par, sols: s.sols, k: b.rot.length, n, how, tries, limit: s.par + (TIERS[tierOf(n)].extra ?? LW.EXTRA) }); };
 const okPar = (b, start, t) => { if (solved(b, start)) return false; const p = solve(b, start).par; return p >= t.par[0] && p <= t.par[1]; };
 
 // GDD 2.1: tries i = 0..31 with rng(hash(seed,n,i)); then deterministic flip fallback on try 31; then FALLBACK table.
@@ -130,7 +131,7 @@ export function genBoard(seed, n, opt = {}) {
 // built-in boards per tier (4 each). rows: . empty  # wall  / \ fixed mirror  a b rotatable (start '/' '\')  L lamp ; src "x,y,d"
 export const FALLBACK = [
   ["0,2,0|....|#...|..a#|..L.","2,0,1|....|#...|...#|#Lb.","3,1,2|....|.#b.|..L#|..#.","1,0,1|...#|Lb..|....|#..."],
-  ["3,2,2|..#.|/.L.|L#b.|b.b.","0,1,0|#.L.|.a..|.\\b.|...#","0,1,0|....|.a.#|a/.#|aL.L","0,2,0|aL.L|\\..a|...b|#..#"],
+  ["3,2,2|#...|bL.#|./..|aa#.","0,1,0|...#|.\\#.|ab..|a.LL","3,2,2|b\\#.|.a.L|b...|..#.","3,2,2|.LLa|.#/a|..a.|#..."],  // t_da9e7634: k=3, par 2
   ["3,4,3|./\\..|.L...|..aLa|##.ba|....#","2,0,1|.#.#.|..aa.|..a/.|bL/..|L....","3,4,3|..L..|.aa..|bb.#.|\\L.\\#|.....","2,4,3|...L.|...L.|...aa|.#b\\.|#..b/"],
   ["0,1,0|.a\\.bL|.bLb/.|..aa..|.....#|......|#....#","0,4,0|/L...a|b.ba.a|La....|.aaL.#|.../..|.#.#..","0,2,0|b..L.b|\\a.#..|./....|.#..ab|.aL#..|.\\..b#","1,0,1|..a..b|.aa..L|...#..|.#.#ab|L..ab\\|...\\./"],
 ];
@@ -176,7 +177,7 @@ export function tap(g, c) {
     g.phase = 'trans'; g.trans = LW.TRANS; return { r: 'solve', pts, bonus, lit: tr.lit };
   }
   if (g.used >= b.limit) {
-    g.mask = b.start; g.used = 0; g.mult = 1; g.resets++; g.left -= LW.RESET_PEN; g.lock = {};
+    g.mask = b.start; g.used = 0; g.mult = 1; g.resets++; g.left -= LW.RESET_PEN; g.lock = { [c]: g.tick + LW.ROT }; // t_da9e7634: keep rotation lock across limit reset (fast double tap must not eat the new budget)
     g.ev.push({ t: g.tick, k: 'reset', n: g.n }); over(g); return { r: 'reset', lit: tr.lit };
   }
   if (b.limit - g.used === 1) g.ev.push({ t: g.tick, k: 'warn', n: g.n });

@@ -1,0 +1,148 @@
+{
+ "A_before": {
+  "board1": {
+   "par": 1,
+   "limit": 4
+  },
+  "random": 17.2,
+  "hammer": 0,
+  "minTap": 100,
+  "byK": {
+   "k2": 77.2,
+   "k3": 35.5,
+   "k4": 19.1,
+   "k5": 11.7,
+   "k6": 3.9,
+   "k7": 3.8,
+   "k8": 1.5
+  },
+  "byTier": {
+   "t1": 61.2,
+   "t2": 15.8,
+   "t3": 3.2
+  },
+  "game90s": {
+   "random": {
+    "boards": 5.8,
+    "score": 1008
+   },
+   "safe": {
+    "boards": 78.85,
+    "score": 23111
+   },
+   "sameMirror": {
+    "boards": 1,
+    "score": 195
+   }
+  }
+ },
+ "B_extra1": {
+  "board1": {
+   "par": 1,
+   "limit": 4
+  },
+  "random": 10.3,
+  "hammer": 0,
+  "minTap": 100,
+  "byK": {
+   "k2": 50.4,
+   "k3": 19.9,
+   "k4": 10.8,
+   "k5": 6.8,
+   "k6": 1.7,
+   "k7": 2.1,
+   "k8": 0.4
+  },
+  "byTier": {
+   "t1": 38.7,
+   "t2": 9,
+   "t3": 1.4
+  },
+  "game90s": {
+   "random": {
+    "boards": 5.35,
+    "score": 970
+   },
+   "safe": {
+    "boards": 78.85,
+    "score": 20775
+   },
+   "sameMirror": {
+    "boards": 1,
+    "score": 195
+   }
+  }
+ },
+ "C_extra1_k3_CHOSEN": {
+  "board1": {
+   "par": 1,
+   "limit": 4
+  },
+  "random": 7.2,
+  "hammer": 0,
+  "minTap": 100,
+  "byK": {
+   "k3": 21.5,
+   "k4": 10.8,
+   "k5": 6.8,
+   "k6": 1.7,
+   "k7": 2.1,
+   "k8": 0.4
+  },
+  "byTier": {
+   "t1": 21.5,
+   "t2": 9,
+   "t3": 1.4
+  },
+  "game90s": {
+   "random": {
+    "boards": 4.85,
+    "score": 863
+   },
+   "safe": {
+    "boards": 78.85,
+    "score": 20775
+   },
+   "sameMirror": {
+    "boards": 1,
+    "score": 195
+   }
+  }
+ },
+ "D_extra2_k3": {
+  "board1": {
+   "par": 1,
+   "limit": 4
+  },
+  "random": 13.2,
+  "hammer": 0,
+  "minTap": 100,
+  "byK": {
+   "k3": 39.8,
+   "k4": 19.1,
+   "k5": 11.7,
+   "k6": 3.6,
+   "k7": 3.8,
+   "k8": 1.3
+  },
+  "byTier": {
+   "t1": 39.8,
+   "t2": 15.8,
+   "t3": 3
+  },
+  "game90s": {
+   "random": {
+    "boards": 6.1,
+    "score": 946
+   },
+   "safe": {
+    "boards": 78.85,
+    "score": 21943
+   },
+   "sameMirror": {
+    "boards": 1,
+    "score": 195
+   }
+  }
+ }
+}
