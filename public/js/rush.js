@@ -97,7 +97,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
         track('share_click', { from: 'rush' });
         const url = await shareUrl();
         const r = await shareOrCopy({ title: g.name, text: fmt(g.shareText, { stage: rec.cleared, url }), canvas: await rushCard(D, rec), name: 'gate-rush.png' });
-        status.textContent = r === 'copied' ? D.common.copied : r === 'failed' ? D.common.error : '';
+        status.textContent = r === 'failed' ? `${D.common.error}: ${url}` : r === 'copied' ? `${D.common.copied}: ${url}` : url;
       }),
     ];
     if (!rec.assist) buttons.push(btn(g.challenge, 'ghost', async () => {
@@ -107,7 +107,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
         try {
           track('challenge_copy', { method: 'native' });
           await navigator.share({ title: g.challengeTitle, text: fmt(g.challengeShareText, { stage: rec.cleared, score: rec.score.toLocaleString(), url }) });
-          status.textContent = ''; return;
+          status.textContent = url; return;
         } catch (e) { if (e.name === 'AbortError') return; }
       } else track('challenge_copy', { method: 'copy' });
       status.textContent = (await copyText(url)) ? `${D.common.copied}: ${url}` : url;
