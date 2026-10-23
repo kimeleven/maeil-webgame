@@ -1,0 +1,503 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+<title>はんぶんカット (プレビュー) | playtoday</title><meta name="description" content="図形を直線ひと太刀でぴったり半分に切る目分量ゲーム。今日の図形10個、約1〜2分。"><meta name="robots" content="noindex,nofollow"><link rel="icon" href="data:,">
+<style>:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;overscroll-behavior:contain}
+body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;gap:6px}
+.logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:var(--gold)}.tr{display:flex;gap:6px;align-items:center}
+.langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--cyan)}
+.stage{position:relative;width:min(100vw,calc((100dvh - 64px)*9/16),540px);min-height:min(calc(100dvh - 64px),960px);display:flex;flex-direction:column;padding:0 10px 8px}
+.hud{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:6px;padding:4px 0 6px;font-variant-numeric:tabular-nums}.hud>div{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:4px 2px;backdrop-filter:blur(18px);overflow:hidden}
+.hud span{font-size:11px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud b{font-size:17px;white-space:nowrap}
+.tbar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:linear-gradient(90deg,#6366f1,#22d3ee)}.tbar.low{background:#f87171}
+#play{position:relative;width:100%;aspect-ratio:1/1;border-radius:20px;overflow:hidden;border:1px solid var(--edge);touch-action:none;cursor:crosshair;background:rgba(255,255,255,.025)}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.under{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:10px}
+.chip{font-size:14px;font-weight:700;padding:6px 12px;border-radius:99px;border:1px solid var(--edge);background:var(--panel);font-variant-numeric:tabular-nums}.chip.perfect{color:var(--gold);border-color:rgba(250,204,21,.45)}.chip.good{color:#4ade80}.chip.meh{color:#fca5a5}
+.hint{color:var(--muted);font-size:13px;text-align:center}
+.ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
+.ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
+.sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
+.sheet.pz{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8);max-height:100%;overflow-y:auto}
+.panel>*{flex-shrink:0}.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}
+.goal{margin:0;font-size:17px;font-weight:700}.how{margin:0;font-size:15px;color:var(--muted)}.icon{font-size:34px;letter-spacing:6px}.small{font-size:13px;color:var(--muted)}
+.btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.btn.main{min-height:64px;width:100%;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
+.nums{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:14px;font-variant-numeric:tabular-nums}.nums span{color:var(--muted)}.nums b{font-size:18px}.nums b.big{font-size:34px;color:var(--cyan)}
+.new{color:#4ade80;font-weight:800}.warn{color:#fca5a5;font-size:13px;font-weight:700}.near{font-size:15px;font-weight:700;color:var(--cyan)}
+.bars{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;height:92px;align-items:end}.rb{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}.rb i{display:block;width:100%;border-radius:4px 4px 0 0;background:#64748b}.rb.perfect i{background:var(--gold)}.rb.good i{background:#4ade80}.rb.ok i{background:#93c5fd}.rb.meh i{background:#f87171}
+.rb s{text-decoration:none;font-size:10px;color:var(--fg);font-variant-numeric:tabular-nums;order:-1}.rb u{text-decoration:none;font-size:10px;color:var(--muted)}.barsT{font-size:12px;color:var(--muted);font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
+.seed{color:var(--muted);font-size:12px;text-align:center;word-break:break-all}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+@media (min-width:900px){body{background:radial-gradient(900px 600px at 15% 30%,rgba(34,211,238,.10),transparent),radial-gradient(900px 600px at 85% 70%,rgba(99,102,241,.16),transparent),var(--bg)}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+@media (max-height:860px){.ready .icon{display:none}.panel{gap:6px;padding:12px}.btn.main{min-height:54px;font-size:20px}.nums b.big{font-size:26px}.bars{height:72px}.tgs .tg,.row .btn{min-height:44px}}</style></head>
+<body data-page="fair-slice" data-lang="ja">
+<header class="top"><a class="logo" href="/ja/"><i></i>playtoday</a><span class="tag">プレビュー</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="音" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="振動" aria-pressed="true">📳</button><button class="ic" id="b-pause" type="button" data-ui aria-label="一時停止">⏸</button><details class="langs" data-ui><summary aria-label="Language">ja ▾</summary><nav><a href="/ko/play/fair-slice/" hreflang="ko">ko</a><a href="/en/play/fair-slice/" hreflang="en">en</a><a href="/ja/play/fair-slice/" hreflang="ja" aria-current="true">ja</a><a href="/zh-hans/play/fair-slice/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/fair-slice/" hreflang="es">es</a><a href="/pt-br/play/fair-slice/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
+<main class="stage" id="stage">
+<div class="hud"><div><span>ラウンド</span><b id="h-round">1/10</b></div><div><span>残り秒</span><b id="h-time">10.0</b><i class="tbar" id="h-bar"></i></div><div><span>スコア</span><b id="h-score">0</b></div></div>
+<div id="play" role="application" aria-label="はんぶんカット"><canvas id="cv"></canvas></div>
+<div class="under"><div class="chip" id="chip" hidden></div><span class="hint">ドラッグで切る · 矢印 + Enter</span></div>
+<div class="sheet ready" id="ready" data-ui><div class="panel">
+<h2>はんぶんカット</h2><p class="goal">図形をひと太刀でぴったり半分に</p><div class="icon" aria-hidden="true">🔷✂️½</div><p class="how">どこでも押してドラッグして離すと、その直線で切れます · 10個</p>
+<button class="btn main" id="b-start" type="button">スタート</button><div class="small">Enterで開始 · 矢印で狙い、Enterで切る</div>
+</div></div>
+<div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>一時停止</h2><button class="btn main" id="b-resume" type="button">続ける</button><div class="tgs"><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">動きの効果</button></div></div></div>
+<div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
+<h2 id="r-title">今日のカット終了!</h2><div class="new" id="r-new" hidden>ベスト更新!</div><div class="new" id="r-first" hidden>初記録</div>
+<div class="nums"><span>今回</span><b class="big" id="r-score"></b><span>誤差合計</span><b id="r-err"></b><span>自己ベスト</span><b id="r-best"></b><span>差</span><b id="r-diff"></b></div>
+<div class="near" id="r-near"></div><div class="warn" id="r-warn" hidden>集中力注意: 惜しいが3回以上</div>
+<span class="barsT">ラウンド別の誤差</span><div class="bars" id="r-bars" aria-hidden="true"></div>
+<button class="btn main" id="b-again" type="button">もう一度</button>
+<div class="row"><button class="btn" id="b-png" type="button">PNG保存</button><button class="btn" id="b-link" type="button">挑戦リンクをコピー</button></div>
+<div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">音</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">振動</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">動きの効果</button></div><div class="seed">seed <span id="seed"></span> <span id="r-fb"></span></div>
+</div></div>
+</main><div class="toast" id="toast" role="status"></div>
+<script id="ft" type="application/json">{"name":"はんぶんカット","desc":"図形を直線ひと太刀でぴったり半分に切る目分量ゲーム。今日の図形10個、約1〜2分。","back":"playtoday","preview":"プレビュー","round":"ラウンド","time":"残り秒","score":"スコア","goal":"図形をひと太刀でぴったり半分に","how":"どこでも押してドラッグして離すと、その直線で切れます · 10個","start":"スタート","keys":"Enterで開始 · 矢印で狙い、Enterで切る","hint":"ドラッグで切る · 矢印 + Enter","pause":"一時停止","paused":"一時停止","resume":"続ける","over":"今日のカット終了!","now":"今回","best":"自己ベスト","diff":"差","first":"初記録","newBest":"ベスト更新!","errSum":"誤差合計","again":"もう一度","png":"PNG保存","link":"挑戦リンクをコピー","copied":"コピーしました","sound":"音","haptic":"振動","motion":"動きの効果","timeout":"時間切れ","err":"誤差","g_perfect":"完璧","g_good":"良い","g_ok":"普通","g_meh":"惜しい","missed":"外れ · 50.0","near":"いちばん惜しいラウンド: {r}番、誤差 {e}","allPerfect":"10個すべて完璧!","warn":"集中力注意: 惜しいが3回以上","barsT":"ラウンド別の誤差","shareText":"今日のはんぶんカット、10個の誤差合計 {sum}!もっとまっすぐ切れる? → {url}"}</script>
+<script>(()=>{// Fair Slice core (t_bbb6c617, GDD fair-slice r2). DOM-free, deterministic. Inlined into the preview page by scripts/build-fair.mjs.
+// Game space = 1000×1000 units. Times are integer "active ms" supplied by the caller (UI subtracts pauses).
+const FS = {
+  ROUNDS: 10, INTRO: 400, AIM: 10000, SPLIT: 1200,   // GDD 2.0 time contract (ms)
+  MIN_DRAG: 24,                                       // GDD 2.1: shorter drag = cancelled, not a cut
+  MISS_FRAC: 0.001,                                   // GDD 2.2: min piece / total < 0.001 → miss
+  PERFECT: 5, GOOD: 20, OK: 50,                       // grade limits in tenths of error (0.5 / 2.0 / 5.0)
+  BONUS: 20, TRIES: 8, MAX_V: 24, KB_LIMIT: 708,
+  AREA_MIN: 150000, AREA_MAX: 450000, BOX_MIN: 100, BOX_MAX: 900, MIN_ANGLE: 15, MIN_EDGE: 30, MIN_OFFSET: 40,
+};
+// vertex-count range per round (GDD 6), concave rounds (validator ⑥)
+const VRANGE = [null, [4, 4], [4, 4], [3, 3], [6, 8], [5, 8], [5, 8], [6, 12], [6, 12], [10, 16], [16, 24]];
+const CONCAVE = [null, false, false, false, true, false, false, true, true, true, true];
+
+// ---- hashing / rng (GDD 6.1) ----
+function fnv1a32(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
+function mulberry32(a) { return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+// ---- geometry ----
+function signedArea(P) { let s = 0; for (let i = 0, n = P.length; i < n; i++) { const a = P[i], b = P[(i + 1) % n]; s += a[0] * b[1] - b[0] * a[1]; } return s / 2; }
+const area = (P) => Math.abs(signedArea(P));
+function centroid(P) {
+  let cx = 0, cy = 0, s = 0;
+  for (let i = 0, n = P.length; i < n; i++) { const a = P[i], b = P[(i + 1) % n], c = a[0] * b[1] - b[0] * a[1]; s += c; cx += (a[0] + b[0]) * c; cy += (a[1] + b[1]) * c; }
+  return [cx / (3 * s), cy / (3 * s)];
+}
+function bbox(P) { let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity; for (const [x, y] of P) { if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; } return { x0, y0, x1, y1, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 }; }
+// Sutherland–Hodgman against the half-plane side(v) = cross(d, v − p) · sgn ≥ 0. Concave inputs may give one ring with
+// zero-width bridges on the cut line; its shoelace area is still the sum of that side's pieces (GDD 2.2).
+function clipHalf(P, p, d, sgn) {
+  const side = (v) => sgn * (d[0] * (v[1] - p[1]) - d[1] * (v[0] - p[0]));
+  const out = [];
+  for (let i = 0, n = P.length; i < n; i++) {
+    const a = P[i], b = P[(i + 1) % n], sa = side(a), sb = side(b);
+    if (sa >= 0) out.push(a);
+    if ((sa >= 0) !== (sb >= 0)) { const t = sa / (sa - sb); out.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); }
+  }
+  return out;
+}
+// Cut polygon by the infinite line through p0,p1. Returns both sides' areas and rings (for drawing).
+function cutPoly(P, p0, p1) {
+  const d = [p1[0] - p0[0], p1[1] - p0[1]];
+  const L = clipHalf(P, p0, d, 1), R = clipHalf(P, p0, d, -1);
+  const a1 = L.length >= 3 ? area(L) : 0, a2 = R.length >= 3 ? area(R) : 0;
+  return { a1, a2, L, R };
+}
+// round half up to tenths, returned as an integer number of tenths (no float drift in scores)
+const tenths = (x) => Math.floor(x * 10 + 0.5 + 1e-9);
+const q01 = (v) => Math.round(v * 10) / 10;   // input normalisation: 0.1 game units
+function grade(e10) { return e10 <= FS.PERFECT ? 'perfect' : e10 <= FS.GOOD ? 'good' : e10 <= FS.OK ? 'ok' : 'meh'; }
+function roundScore(e10) { return Math.max(0, 100 - 2 * e10) + (e10 <= FS.PERFECT ? FS.BONUS : 0); }   // 100 − 20e (+20 perfect)
+// The single judgement function (pointer, mouse and keyboard all end here).
+function judgeCut(P, p0, p1) {
+  const { a1, a2, L, R } = cutPoly(P, p0, p1), tot = a1 + a2, mn = Math.min(a1, a2);
+  if (!(tot > 0) || mn / tot < FS.MISS_FRAC) return { miss: true, small10: 0, e10: 500, score: 0, grade: 'meh', pct: [a1 >= a2 ? 1000 : 0, a1 >= a2 ? 0 : 1000], L, R };
+  const small10 = tenths((100 * mn) / tot), e10 = 500 - small10;
+  const pct = a1 <= a2 ? [small10, 1000 - small10] : [1000 - small10, small10];
+  return { miss: false, small10, e10, score: roundScore(e10), grade: grade(e10), pct, L, R };
+}
+const fmt10 = (n) => `${Math.floor(n / 10)}.${n % 10}`;
+
+// ---- shape validator (GDD 6.1 ①~⑦) ----
+function segX(a, b, c, d) {
+  const o = (p, q, r) => Math.sign((q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0]));
+  const on = (p, q, r) => Math.min(p[0], r[0]) <= q[0] && q[0] <= Math.max(p[0], r[0]) && Math.min(p[1], r[1]) <= q[1] && q[1] <= Math.max(p[1], r[1]);
+  const o1 = o(a, b, c), o2 = o(a, b, d), o3 = o(c, d, a), o4 = o(c, d, b);
+  if (o1 !== o2 && o3 !== o4) return true;
+  return (o1 === 0 && on(a, c, b)) || (o2 === 0 && on(a, d, b)) || (o3 === 0 && on(c, a, d)) || (o4 === 0 && on(c, b, d));
+}
+function isSimple(P) {
+  const n = P.length; if (n < 3) return false;
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+    if (j === i + 1 || (i === 0 && j === n - 1)) continue;
+    if (segX(P[i], P[(i + 1) % n], P[j], P[(j + 1) % n])) return false;
+  }
+  return signedArea(P) !== 0;
+}
+// interior angles (deg) and reflex flags, orientation-independent
+function angles(P) {
+  const n = P.length, s = Math.sign(signedArea(P)), out = [];
+  for (let i = 0; i < n; i++) {
+    const a = P[(i - 1 + n) % n], b = P[i], c = P[(i + 1) % n];
+    const u = [a[0] - b[0], a[1] - b[1]], v = [c[0] - b[0], c[1] - b[1]];
+    const ang = (Math.acos(Math.max(-1, Math.min(1, (u[0] * v[0] + u[1] * v[1]) / (Math.hypot(...u) * Math.hypot(...v))))) * 180) / Math.PI;
+    const turn = s * ((b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]));
+    out.push({ ang: turn >= 0 ? ang : 360 - ang, reflex: turn < 0 });
+  }
+  return out;
+}
+function checks(P, r) {
+  const A = area(P), B = bbox(P), C = centroid(P), an = angles(P), [vmin, vmax] = VRANGE[r];
+  let minEdge = Infinity; for (let i = 0; i < P.length; i++) { const a = P[i], b = P[(i + 1) % P.length]; minEdge = Math.min(minEdge, Math.hypot(b[0] - a[0], b[1] - a[1])); }
+  const minConvex = Math.min(...an.filter((x) => !x.reflex).map((x) => x.ang));
+  return {
+    int: P.every(([x, y]) => Number.isInteger(x) && Number.isInteger(y)),
+    simple: isSimple(P),                                                        // ①
+    count: P.length >= vmin && P.length <= vmax && P.length <= FS.MAX_V,         // ②
+    area: A >= FS.AREA_MIN && A <= FS.AREA_MAX,                                  // ③
+    box: B.x0 >= FS.BOX_MIN && B.y0 >= FS.BOX_MIN && B.x1 <= FS.BOX_MAX && B.y1 <= FS.BOX_MAX,   // ④
+    angle: minConvex >= FS.MIN_ANGLE, edge: minEdge >= FS.MIN_EDGE,             // ⑤
+    concave: CONCAVE[r] ? an.some((x) => x.reflex) : true,                       // ⑥
+    offset: r < 3 || Math.hypot(C[0] - B.cx, C[1] - B.cy) >= FS.MIN_OFFSET,     // ⑦
+    _m: { A, minEdge, minConvex, off: Math.hypot(C[0] - B.cx, C[1] - B.cy), n: P.length },
+  };
+}
+function realValidate(P, r) { const c = checks(P, r); return c.int && c.simple && c.count && c.area && c.box && c.angle && c.edge && c.concave && c.offset; }
+
+// ---- generators (one attempt = one rng; bounded by vertex count ≤ 24) ----
+const TAU = Math.PI * 2;
+function place(local, rng, rot) {
+  const c = Math.cos(rot), s = Math.sin(rot);
+  let P = local.map(([x, y]) => [x * c - y * s, x * s + y * c]);
+  const target = 1e6 * (0.2 + 0.17 * rng()); let k = Math.sqrt(target / area(P)); P = P.map(([x, y]) => [x * k, y * k]);
+  let B = bbox(P); const big = Math.max(B.x1 - B.x0, B.y1 - B.y0); if (big > 760) { k = 760 / big; P = P.map(([x, y]) => [x * k, y * k]); B = bbox(P); }   // fit [100,900]
+  const mx = Math.max(0, Math.min(40, (790 - (B.x1 - B.x0)) / 2)), my = Math.max(0, Math.min(40, (790 - (B.y1 - B.y0)) / 2));
+  const jx = (rng() * 2 - 1) * mx, jy = (rng() * 2 - 1) * my;
+  return P.map(([x, y]) => [Math.round(x - B.cx + 500 + jx), Math.round(y - B.cy + 500 + jy)]);
+}
+// star-shaped polygon from sorted angles + radii (always simple before rounding)
+function radial(rng, n, rad, jit = 0.7) {
+  const th = []; for (let i = 0; i < n; i++) th.push(((i + (1 - jit) / 2 + jit * rng()) / n) * TAU);
+  return th.map((t, i) => { const r = rad(t, i); return [Math.cos(t) * r, Math.sin(t) * r]; });
+}
+const GEN = {
+  1: () => [[250, 250], [750, 250], [750, 750], [250, 750]],   // tutorial: fixed axis-aligned square
+  2: (rng) => { const w = 1, h = 0.45 + 0.4 * rng(); return place([[-w, -h], [w, -h], [w, h], [-w, h]], rng, ((rng() * 30) * Math.PI) / 180); },
+  3: (rng) => { const a = rng() * TAU; return place([[Math.cos(a), Math.sin(a)], [Math.cos(a + 1.6 + rng()), Math.sin(a + 1.6 + rng())], [Math.cos(a + 3.6 + 0.9 * rng()), Math.sin(a + 3.6 + 0.9 * rng())]].map(([x, y], i) => [x * (i ? 1 : 1.6), y * (i ? 1 : 1.6)]), rng, rng() * TAU); },
+  4: (rng) => {
+    const t = 0.3 + 0.2 * rng(), w = 1, h = 1 + 0.5 * rng();
+    const L = [[0, 0], [w, 0], [w, t], [t, t], [t, h], [0, h]];
+    const a = 0.2 + 0.5 * rng(), T = [[0, 0], [w * 1.4, 0], [w * 1.4, t], [a + t, t], [a + t, h], [a, h], [a, t], [0, t]];
+    return place(rng() < 0.6 ? L : T, rng, rng() * TAU);
+  },
+  convex: (rng) => { const n = 5 + Math.floor(rng() * 4), e = 0.55 + 0.4 * rng(), sk = 0.5 + 0.35 * rng();
+    return place(radial(rng, n, (t) => 1 / Math.hypot(Math.cos(t) * (1 + sk * Math.cos(t)), Math.sin(t) / e) ), rng, rng() * TAU); },
+  concave: (rng) => { const n = 6 + Math.floor(rng() * 7), sk = 0.45 + 0.35 * rng();
+    return place(radial(rng, n, (t, i) => (i % 2 ? 0.45 + 0.3 * rng() : 0.85 + 0.3 * rng()) * (1 + sk * Math.cos(t))), rng, rng() * TAU); },
+  9: (rng) => { const n = 2 * (5 + Math.floor(rng() * 4)), sk = 0.45 + 0.3 * rng();
+    return place(radial(rng, n, (t, i) => (i % 2 ? 0.5 + 0.12 * rng() : 1 + 0.15 * rng()) * (1 + sk * Math.cos(t))), rng, rng() * TAU); },
+  10: (rng) => { const n = 16 + Math.floor(rng() * 9), f = 2 + Math.floor(rng() * 3), ph = rng() * TAU, a = 0.9 + 0.3 * rng();
+    // wavy blob + one narrow lobe at angle 0: the lobe stretches the bounding box more than it moves the area centroid (⑦)
+    return prune(place(radial(rng, n + 4, (t) => { const w = Math.atan2(Math.sin(t), Math.cos(t)); return (0.8 + 0.16 * Math.sin(f * t + ph) + 0.05 * rng()) * (1 + a * Math.exp(-(w * w) / 0.18)); }, 0.3), rng, rng() * TAU), n); },
+};
+// drop the vertex ending the shortest edge while an edge is < 34 units (and > 16 vertices) or more than `max` vertices remain
+function prune(P, max) { P = P.slice(); for (;;) { let k = -1, m = Infinity; for (let i = 0; i < P.length; i++) { const a = P[i], b = P[(i + 1) % P.length], e = Math.hypot(b[0] - a[0], b[1] - a[1]); if (e < m) { m = e; k = (i + 1) % P.length; } } if ((m >= 34 || P.length <= 16) && P.length <= max) return P; P.splice(k, 1); } }
+function makeShape(r, rng) { return (GEN[r] || (r <= 6 ? GEN.convex : GEN.concave))(rng); }
+// fixed fallback shapes (GDD 6.1). Not re-validated inside generate(); checked by realValidate separately (R7c).
+const FALLBACK = [
+  // produced once by makeShape(r, seed 'fallback-const') and frozen as literals
+  [[250,250],[750,250],[750,750],[250,750]],
+  [[208,234],[871,283],[837,750],[174,701]],
+  [[111,473],[871,300],[831,733]],
+  [[181,139],[866,357],[792,590],[587,525],[480,860],[247,786],[353,451],[106,372]],
+  [[127,755],[109,389],[318,137],[857,268],[489,834],[306,866]],
+  [[105,378],[257,263],[568,288],[865,634],[267,685],[106,576]],
+  [[869,407],[569,586],[348,713],[292,625],[109,551],[198,259]],
+  [[124,862],[275,400],[251,199],[523,336],[723,345],[739,475],[884,786],[473,800]],
+  [[285,765],[345,455],[111,386],[375,251],[444,168],[513,236],[543,172],[593,225],[816,251],[743,371],[871,715],[630,555]],
+  [[122,705],[170,584],[333,487],[423,449],[502,320],[557,270],[621,267],[670,310],[698,365],[782,405],[838,441],[882,503],[851,557],[795,609],[739,679],[708,739],[673,789],[595,791],[545,750],[498,723],[408,741],[255,762]]
+];
+function generate(seed, r, validate = realValidate) {
+  for (let n = 0; n < FS.TRIES; n++) {
+    const P = makeShape(r, mulberry32(fnv1a32(`${seed}#${r}#${n}`)));
+    if (validate(P, r)) return { poly: P, tries: n + 1, fallback: false };
+  }
+  return { poly: FALLBACK[r - 1].map((v) => v.slice()), tries: FS.TRIES, fallback: true, tag: `shape=fallback:${r}` };
+}
+function genShapes(seed, validate) { const a = []; for (let r = 1; r <= FS.ROUNDS; r++) a.push(generate(seed, r, validate)); return a; }
+
+// ---- keyboard cut line (GDD 2.1): integer angle 0..179, foot point F (closest point to bbox centre) ----
+function kbInit(P) { const B = bbox(P); return { th: 0, F: [B.cx, B.cy], C: [B.cx, B.cy], shown: false }; }
+const dirOf = (th) => [Math.cos((th * Math.PI) / 180), Math.sin((th * Math.PI) / 180)];
+const nrmOf = (th) => { const [c, s] = dirOf(th); return [-s, c]; };
+const kbOffset = (k) => { const n = nrmOf(k.th); return (k.F[0] - k.C[0]) * n[0] + (k.F[1] - k.C[1]) * n[1]; };
+function kbRotate(k, deg) {
+  const th = (((k.th + deg) % 180) + 180) % 180, n = nrmOf(th), d = (k.F[0] - k.C[0]) * n[0] + (k.F[1] - k.C[1]) * n[1];
+  return { ...k, th, F: [k.C[0] + n[0] * d, k.C[1] + n[1] * d], shown: true };   // rotate about F, re-project to the foot
+}
+function kbMove(k, du) { const n = nrmOf(k.th), d = Math.max(-FS.KB_LIMIT, Math.min(FS.KB_LIMIT, kbOffset(k) + du)); return { ...k, F: [k.C[0] + n[0] * d, k.C[1] + n[1] * d], shown: true }; }
+function kbPoints(k) { const u = dirOf(k.th); return [[q01(k.F[0] - u[0] * 100), q01(k.F[1] - u[1] * 100)], [q01(k.F[0] + u[0] * 100), q01(k.F[1] + u[1] * 100)]]; }
+// exact half line at angle th by bisection on the normal offset (R2 auto player / tests)
+function halfLine(P, th) {
+  const u = dirOf(th), n = nrmOf(th), B = bbox(P), C = [B.cx, B.cy], tot = area(P);
+  const at = (d) => { const p = [C[0] + n[0] * d, C[1] + n[1] * d]; return [p, [p[0] + u[0] * 100, p[1] + u[1] * 100]]; };
+  const left = (d) => { const [p0, p1] = at(d); return cutPoly(P, p0, p1).a1 / tot; };
+  let lo = -800, hi = 800; const s = left(lo) > left(hi) ? 1 : -1;
+  for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if ((left(m) - 0.5) * s > 0) lo = m; else hi = m; }
+  const [p0, p1] = at((lo + hi) / 2); return [[q01(p0[0]), q01(p0[1])], [q01(p1[0]), q01(p1[1])]];
+}
+
+// ---- game state (GDD 2.0). Caller passes active ms. ----
+function createGame(seed, opts = {}) {
+  return { seed, shapes: genShapes(seed, opts.validate), phase: 'ready', r: 0, at: 0, deadline: 0, rounds: [], log: [], score: 0, err10: 0, end: null };
+}
+function start(g, at = 0) { if (g.phase !== 'ready') return false; g.phase = 'intro'; g.r = 1; g.at = at; g.log.push({ k: 'start', at }); return true; }
+// move the clock to `now`: intro → aim → (timeout at deadline) → split → next intro … → result
+function advance(g, now) {
+  for (;;) {
+    if (g.phase === 'intro' && now >= g.at + FS.INTRO) { g.phase = 'aim'; g.at += FS.INTRO; g.deadline = g.at + FS.AIM; continue; }
+    if (g.phase === 'aim' && now >= g.deadline) { record(g, null, g.deadline); continue; }
+    if (g.phase === 'split' && now >= g.at + FS.SPLIT) {
+      g.at += FS.SPLIT;
+      if (g.r >= FS.ROUNDS) { g.phase = 'result'; g.end = { at: g.at }; } else { g.r++; g.phase = 'intro'; }
+      continue;
+    }
+    return g.phase;
+  }
+}
+function record(g, cut, at) {
+  const P = g.shapes[g.r - 1].poly;
+  const j = cut ? judgeCut(P, cut[0], cut[1]) : { miss: true, timeout: true, small10: 0, e10: 500, score: 0, grade: 'meh', pct: [1000, 0], L: P, R: [] };
+  const rec = { r: g.r, cut, at, timeout: !cut, miss: j.miss, small10: j.small10, e10: j.e10, score: j.score, grade: j.grade, pct: j.pct, L: j.L, R: j.R };
+  g.rounds.push(rec); g.score += j.score; g.err10 += j.e10; g.log.push(cut ? { r: g.r, p0: cut[0], p1: cut[1], at } : { r: g.r, timeout: true, at });
+  g.phase = 'split'; g.at = at; return rec;
+}
+// confirm a cut released at active time `at` (event timeStamp). Accepted only if at < deadline (GDD 2.0 boundary).
+function cut(g, p0, p1, at) {
+  if (g.phase === 'aim' && at >= g.deadline) { advance(g, at); return { ok: false, why: 'timeout' }; }
+  advance(g, at);
+  if (g.phase !== 'aim') return { ok: false, why: 'phase' };
+  const a = [q01(p0[0]), q01(p0[1])], b = [q01(p1[0]), q01(p1[1])];
+  if (Math.hypot(b[0] - a[0], b[1] - a[1]) < FS.MIN_DRAG) return { ok: false, why: 'short' };
+  return { ok: true, rec: record(g, [a, b], at) };
+}
+function finalRecord(g) { return { score: g.score, err10: g.err10 }; }
+function better(a, b) { return !b || a.score > b.score || (a.score === b.score && a.err10 < b.err10); }
+// replay a log [{r,p0,p1,at}|{r,timeout,at}] → per-round results (R3)
+function replay(seed, log) {
+  const g = createGame(seed); start(g, 0);
+  for (const e of log) { if (e.k === 'start') continue; if (e.timeout) advance(g, e.at); else { const r = cut(g, e.p0, e.p1, e.at); if (!r.ok) throw new Error(`replay rejected r${e.r}: ${r.why}`); } }
+  advance(g, 1e9);
+  return { score: g.score, err10: g.err10, rounds: g.rounds.map((x) => [x.r, x.small10, x.e10, x.score, x.grade]) };
+}
+// policy simulation (no real time): policy(P, r) → [p0,p1] or null; cuts at `delay` ms into each aim
+function simulate(seed, policy, delay = 1000) {
+  const g = createGame(seed); start(g, 0); let t = 0;
+  while (g.phase !== 'result') {
+    advance(g, t);
+    if (g.phase === 'aim') { const P = g.shapes[g.r - 1].poly, c = policy(P, g.r); if (c) cut(g, c[0], c[1], g.at + delay); else advance(g, g.deadline); t = g.at; }
+    else t = g.phase === 'intro' ? g.at + FS.INTRO : g.at + FS.SPLIT;
+  }
+  return g;
+}
+
+// Fair Slice UI (prototype, t_bbb6c617). Inlined after fair-core.js by scripts/build-fair.mjs. No /api, no analytics.
+// Active time: act(ts) = ts − T0 − P (P = paused total). Cuts are judged at the pointerup / Enter event.timeStamp.
+const D = JSON.parse(document.getElementById('ft').textContent);
+const $ = (id) => document.getElementById(id);
+const loadLS = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k) || 'null') || {}); } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const q = new URLSearchParams(location.search);
+const today = (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; })();
+const seed = (q.get('seed') || today).replace(/[^A-Za-z0-9-]/g, '').slice(0, 64) || today;
+const mq = matchMedia('(prefers-reduced-motion: reduce)');
+const set = loadLS('fs-set', { sound: true, haptic: true, motion: !mq.matches });
+const canVib = typeof navigator.vibrate === 'function';
+// evidence: snd = requested sounds, osc = real oscillator starts, vibs = real vibrate calls, txt = text drawn on canvas per phase, ft = frame times
+const W = { snd: [], osc: [], vibs: [], txt: { aim: 0, drag: 0 }, ft: [] };
+const LAG = 50;   // frames close the aim window 50 ms behind "now" so a queued pointerup with an earlier timeStamp is judged first
+// ---- audio (WebAudio synth, no files; created on the first input = Start) ----
+let ac = null;
+const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+function tone(f, dur, type = 'sine', vol = 0.12, at = 0, f2) {
+  if (!set.sound || !ac) return; const t = ac.currentTime + at, o = ac.createOscillator(), gn = ac.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+  gn.gain.setValueAtTime(vol, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + dur + 0.02);
+  W.osc.push({ k: curSnd, st: ac.state });
+}
+const SND = {
+  swish: () => tone(1800, 0.14, 'sawtooth', 0.035, 0, 300),
+  ting: () => [1568, 2093].forEach((f, j) => tone(f, 0.35, 'triangle', 0.07, 0.12 + j * 0.05)),
+  thud: () => tone(140, 0.22, 'sine', 0.14, 0.1, 70),
+  finish: () => [523, 659, 784, 1047].forEach((f, j) => tone(f, 0.4, 'triangle', 0.08, j * 0.06)),
+};
+let curSnd = '';
+const play = (k) => { W.snd.push(k); if (set.sound) { curSnd = k; SND[k](); } };
+const buzz = (p) => { if (set.haptic && canVib) try { navigator.vibrate(p); W.vibs.push(p); } catch {} };
+// ---- state ----
+let g = createGame(seed), T0 = 0, P = 0, pauseAt = 0, paused = false, ptr = null, drag = null, kb = null, kbR = 0, hinted = false;
+let best = loadLS('fs-best', { rec: null }).rec, shown = 0;
+const cv = $('cv'), cx = cv.getContext('2d'), pa = $('play');
+const act = (ts) => Math.round(ts - T0 - P);
+const nowAct = () => (paused ? act(pauseAt) : act(performance.now()));
+const S = window.__fs = { ready: false, E: { FS, createGame, start, advance, cut, judgeCut, cutPoly, halfLine, replay, simulate, generate, genShapes, realValidate, checks, FALLBACK, kbInit, kbRotate, kbMove, kbPoints, kbOffset, bbox, area }, W, seed, set, evlog: [], act,
+  get g() { return g; }, get kb() { return kb; }, get drag() { return drag; }, get paused() { return paused; }, get T0() { return T0; }, get P() { return P; } };
+const motion = () => set.motion && !mq.matches;
+function applySet() {
+  document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, on = !!set[k]; b.setAttribute('aria-pressed', on); b.classList.toggle('off', !on); if (b.dataset.icon) b.textContent = k === 'sound' ? (on ? '🔊' : '🔇') : on ? '📳' : '📴'; });
+  document.querySelectorAll('[data-set="haptic"]').forEach((b) => (b.hidden = !canVib));
+  document.body.classList.toggle('rm', !motion());
+}
+document.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save('fs-set', set); if (k === 'sound' && set.sound) unlock(); applySet(); }));
+applySet();
+// ---- coordinates: canvas CSS box → 1000×1000 game space, 0.1-unit rounding (GDD 2.1) ----
+const toGame = (e) => { const r = cv.getBoundingClientRect(); return [Math.round(((e.clientX - r.left) / r.width) * 10000) / 10, Math.round(((e.clientY - r.top) / r.height) * 10000) / 10]; };
+// ---- actions ----
+function doStart(ts) { if (g.phase !== 'ready') return; unlock(); start(g, 0); T0 = ts; P = 0; drag = null; ptr = null; kb = null; kbR = 0; hinted = false; $('ready').hidden = true; S.evlog.push({ k: 'start', at: ts }); hud(); }
+function cancelDrag(why) { if (drag) S.evlog.push({ k: 'cancel', why, r: g.r }); drag = null; ptr = null; }
+function onCut(r, via) {
+  S.evlog.push({ k: 'cut', via, ok: r.ok, why: r.why, r: r.rec ? r.rec.r : g.r, e10: r.rec && r.rec.e10, at: r.rec && r.rec.at });
+  if (!r.ok) return;
+  const rec = r.rec; play('swish'); buzz(15);
+  if (rec.grade === 'perfect') { play('ting'); buzz([10, 60, 10]); } else if (rec.grade === 'meh') play('thud');
+  chip(rec); kb = null; hud();
+}
+function chip(rec) { const c = $('chip'); c.hidden = false; c.className = 'chip ' + rec.grade; c.textContent = rec.timeout ? `${rec.r}/10 · ⌛ ${D.timeout} 50.0` : `${rec.r}/10 · ${D.err} ${fmt10(rec.e10)} · ${D['g_' + rec.grade]}`; }
+pa.addEventListener('pointerdown', (e) => {
+  if (e.target.closest('[data-ui]')) return; e.preventDefault(); unlock();
+  if (ptr !== null && e.pointerId !== ptr) { S.evlog.push({ k: 'second-pointer', id: e.pointerId }); cancelDrag('second-pointer'); return; }   // GDD 2.1: 2nd pointer cancels
+  if (paused || advance(g, nowAct()) !== 'aim') return;
+  ptr = e.pointerId; try { pa.setPointerCapture(e.pointerId); } catch {}
+  const p = toGame(e); drag = { p0: p, p1: p, id: e.pointerId }; kb = null;   // pointer resets the keyboard line
+  S.evlog.push({ k: 'down', p, r: g.r });
+});
+pa.addEventListener('pointermove', (e) => { if (drag && e.pointerId === ptr) drag.p1 = toGame(e); });
+pa.addEventListener('pointerup', (e) => {
+  if (!drag || e.pointerId !== ptr) return; const p1 = toGame(e), p0 = drag.p0; drag = null; ptr = null;
+  onCut(cut(g, p0, p1, act(e.timeStamp)), 'pointer');
+});
+const cancelEv = (e) => { if (drag && e.pointerId === ptr) cancelDrag(e.type); };
+pa.addEventListener('pointercancel', cancelEv); pa.addEventListener('lostpointercapture', cancelEv);
+addEventListener('keydown', (e) => {
+  const k = e.key;
+  if (k === 'Enter') {
+    e.preventDefault(); if (e.repeat) { S.evlog.push({ k: 'repeat' }); return; }   // GDD 2.1: held Enter never acts
+    if (g.phase === 'ready') { doStart(e.timeStamp); return; }
+    if (paused) { resume(); return; }
+    if (g.phase === 'result') { if (!$('res').hidden) again(); return; }
+    if (advance(g, nowAct()) !== 'aim' || drag || !kb || !kb.shown) { S.evlog.push({ k: 'enter-ignored', phase: g.phase, drag: !!drag, kb: !!(kb && kb.shown) }); return; }
+    const [p0, p1] = kbPoints(kb); onCut(cut(g, p0, p1, act(e.timeStamp)), 'key'); return;
+  }
+  if (k === 'Escape' || k === 'p' || k === 'P') { if (paused) resume(); else pause('key'); return; }
+  if (!k.startsWith('Arrow') || paused || drag || g.phase === 'ready' || g.phase === 'result') return;
+  e.preventDefault(); if (advance(g, nowAct()) !== 'aim' || !kb) return;
+  const big = e.shiftKey ? 10 : 1;
+  kb = k === 'ArrowLeft' ? kbRotate(kb, -big) : k === 'ArrowRight' ? kbRotate(kb, big) : kbMove(kb, k === 'ArrowUp' ? -big : big);
+  S.evlog.push({ k: 'kb', th: kb.th, d: Math.round(kbOffset(kb) * 10) / 10 });
+}, true);
+$('b-start').addEventListener('click', (e) => { e.stopPropagation(); doStart(e.timeStamp || performance.now()); });
+// pause (button, P/Esc, hidden tab, blur): timer frozen, drag cancelled, shape blurred by the sheet
+function pause(why) {
+  if (paused || g.phase === 'ready' || g.phase === 'result') return; pauseAt = performance.now(); paused = true; cancelDrag('pause');
+  $('pz').hidden = false; S.evlog.push({ k: 'pause', why, raw: act(pauseAt) });
+}
+function resume() { if (!paused) return; P += performance.now() - pauseAt; paused = false; $('pz').hidden = true; S.evlog.push({ k: 'resume', P: Math.round(P) }); }
+$('b-pause').addEventListener('click', (e) => { e.stopPropagation(); pause('button'); });
+$('b-resume').addEventListener('click', (e) => { e.stopPropagation(); resume(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) pause('hidden'); });
+addEventListener('blur', () => pause('blur'));
+// ---- result ----
+function showResult() {
+  const rec = finalRecord(g), was = best, nb = better(rec, was); if (nb) { best = rec; save('fs-best', { rec }); }
+  $('r-score').textContent = rec.score; $('r-err').textContent = fmt10(rec.err10);
+  $('r-best').textContent = was ? `${was.score} · ${D.errSum} ${fmt10(was.err10)}` : '—';
+  const sg = (n) => (n >= 0 ? '+' : '−') + Math.abs(n);
+  $('r-diff').textContent = was ? `${sg(rec.score - was.score)} · ${D.errSum} ${rec.err10 - was.err10 >= 0 ? '+' : '−'}${fmt10(Math.abs(rec.err10 - was.err10))}` : '—';
+  $('r-new').hidden = !(nb && was); $('r-first').hidden = !!was;
+  const bars = $('r-bars'); bars.textContent = '';
+  for (const x of g.rounds) { const b = document.createElement('div'); b.className = 'rb ' + x.grade; b.innerHTML = `<i style="height:${Math.max(4, (Math.min(x.e10, 200) / 200) * 100)}%"></i><s>${x.timeout ? '⌛' : fmt10(x.e10)}</s><u>${x.r}</u>`; bars.append(b); }
+  const near = g.rounds.filter((x) => !x.miss && x.e10 > FS.PERFECT).sort((a, b) => a.e10 - b.e10)[0];
+  $('r-near').textContent = near ? D.near.replace('{r}', near.r).replace('{e}', fmt10(near.e10)) : g.rounds.every((x) => x.grade === 'perfect') ? D.allPerfect : '';
+  const meh = g.rounds.filter((x) => x.grade === 'meh').length; $('r-warn').hidden = meh < 3;
+  $('seed').textContent = seed; $('r-fb').textContent = g.shapes.filter((s) => s.fallback).map((s) => s.tag).join(' ');
+  play('finish'); $('res').hidden = false; shown = performance.now(); S.evlog.push({ k: 'result', at: shown, rec }); $('b-again').focus({ preventScroll: true });
+}
+function again() { g = createGame(seed); paused = false; ptr = null; drag = null; kb = null; $('res').hidden = true; $('pz').hidden = true; $('chip').hidden = true; $('ready').hidden = false; hud(); S.evlog.push({ k: 'again', at: performance.now() }); }
+$('b-again').addEventListener('click', (e) => { e.stopPropagation(); again(); });
+const shareUrl = () => `${location.origin}${location.pathname}?seed=${encodeURIComponent(seed)}`;
+$('b-link').addEventListener('click', async (e) => { e.stopPropagation(); const t = D.shareText.replace('{sum}', fmt10(g.err10)).replace('{url}', shareUrl()); try { await navigator.clipboard.writeText(t); toast(D.copied); } catch { toast(t); } S.evlog.push({ k: 'copy', t }); });
+$('b-png').addEventListener('click', (e) => { e.stopPropagation(); const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
+  const gr = x.createLinearGradient(0, 0, 0, 1350); gr.addColorStop(0, '#141b33'); gr.addColorStop(1, '#07080c'); x.fillStyle = gr; x.fillRect(0, 0, 1080, 1350);
+  x.fillStyle = '#e8eaf0'; x.textAlign = 'center'; x.font = '700 46px system-ui,sans-serif'; x.fillText(`${D.name} · ${seed}`, 540, 90);
+  g.rounds.forEach((rc, i) => { const s = 180, ox = 60 + (i % 5) * 196, oy = 140 + Math.floor(i / 5) * 250, k = s / 1000;
+    x.save(); x.translate(ox, oy); x.fillStyle = 'rgba(255,255,255,.05)'; x.fillRect(0, 0, s, s); x.scale(k, k);
+    drawRing(x, rc.timeout ? g.shapes[i].poly : rc.L, rc.timeout ? 'rgba(148,163,184,.6)' : '#facc15'); if (!rc.timeout) drawRing(x, rc.R, '#22d3ee');
+    if (rc.cut) { x.strokeStyle = '#fff'; x.lineWidth = 8; lineAcross(x, rc.cut[0], rc.cut[1]); }
+    x.restore(); x.fillStyle = '#e8eaf0'; x.font = '700 34px system-ui,sans-serif'; x.fillText(rc.timeout ? '⌛' : fmt10(rc.e10), ox + s / 2, oy + s + 44); });
+  x.font = '800 170px system-ui,sans-serif'; x.fillText(g.score, 540, 860); x.font = '600 50px system-ui,sans-serif'; x.fillStyle = 'rgba(214,219,232,.85)';
+  x.fillText(`${D.errSum} ${fmt10(g.err10)}`, 540, 950); x.font = '500 34px system-ui,sans-serif'; x.fillText('playtoday.cloud', 540, 1290);
+  c.toBlob((bl) => { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = `fair-slice-${seed}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.evlog.push({ k: 'png' }); }, 'image/png'); });
+let tt = 0; function toast(s) { const t = $('toast'); t.textContent = s; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 1300); }
+// ---- HUD ----
+function hud(a) {
+  const ph = g.phase, now = a ?? nowAct();
+  const left = ph === 'aim' ? Math.max(0, g.deadline - now) : ph === 'intro' || ph === 'ready' ? FS.AIM : 0;
+  $('h-round').textContent = `${Math.max(1, g.r)}/10`; $('h-time').textContent = (Math.ceil(left / 100) / 10).toFixed(1); $('h-score').textContent = g.score;
+  $('h-bar').style.width = (100 * left) / FS.AIM + '%'; $('h-bar').classList.toggle('low', ph === 'aim' && left < 3000);
+}
+// ---- render ----
+function fit() { const r = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== Math.round(w * r) || cv.height !== Math.round(h * r)) { cv.width = Math.round(w * r); cv.height = Math.round(h * r); } cx.setTransform(r, 0, 0, r, 0, 0); return [w, h]; }
+function ringPath(x, R) { if (!R || R.length < 3) return false; x.beginPath(); x.moveTo(R[0][0], R[0][1]); for (let i = 1; i < R.length; i++) x.lineTo(R[i][0], R[i][1]); x.closePath(); return true; }
+function drawRing(x, R, fill, stroke = 'rgba(255,255,255,.55)') { if (!ringPath(x, R)) return; x.fillStyle = fill; x.fill(); x.strokeStyle = stroke; x.lineWidth = 3; x.lineJoin = 'round'; x.stroke(); }
+function lineAcross(x, p0, p1) { const d = [p1[0] - p0[0], p1[1] - p0[1]], L = Math.hypot(...d) || 1, u = [d[0] / L, d[1] / L]; x.beginPath(); x.moveTo(p0[0] - u[0] * 3000, p0[1] - u[1] * 3000); x.lineTo(p0[0] + u[0] * 3000, p0[1] + u[1] * 3000); x.stroke(); }
+function text(x, s, px, py, size, color, phase) { if (phase === 'aim') W.txt.aim++; if (drag) W.txt.drag++; x.font = `800 ${size}px system-ui,sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.lineWidth = size / 5; x.strokeStyle = 'rgba(7,8,12,.85)'; x.strokeText(s, px, py); x.fillStyle = color; x.fillText(s, px, py); }
+const cen = (R) => { if (!R || R.length < 3) return null; const a = area(R); if (a < 1) return null; let sx = 0, sy = 0, s = 0; for (let i = 0; i < R.length; i++) { const p = R[i], q2 = R[(i + 1) % R.length], c = p[0] * q2[1] - q2[0] * p[1]; s += c; sx += (p[0] + q2[0]) * c; sy += (p[1] + q2[1]) * c; } return [sx / (3 * s), sy / (3 * s)]; };
+function frame(now) {
+  W.ft.push(now); if (W.ft.length > 240) W.ft.shift();
+  const [w, h] = fit(); cx.clearRect(0, 0, w, h); const k = w / 1000, mo = motion();
+  cx.save(); cx.scale(k, k);
+  // backdrop grid
+  cx.strokeStyle = 'rgba(255,255,255,.04)'; cx.lineWidth = 1 / k; for (let i = 100; i < 1000; i += 100) { cx.beginPath(); cx.moveTo(i, 0); cx.lineTo(i, 1000); cx.moveTo(0, i); cx.lineTo(1000, i); cx.stroke(); }
+  if (g.phase !== 'ready') {
+    const a = nowAct(); if (!paused) advance(g, a - LAG);
+    if (g.phase === 'result' && $('res').hidden) { cx.restore(); hud(a); showResult(); return requestAnimationFrame(frame); }
+    if (g.phase === 'aim' && kbR !== g.r) { kbR = g.r; kb = kbInit(g.shapes[g.r - 1].poly); }
+    const sh = g.shapes[Math.max(0, g.r - 1)].poly;
+    if (g.phase === 'intro') {
+      const t = Math.min(1, Math.max(0, (a - g.at) / FS.INTRO)); cx.save();
+      if (mo) { const B = bbox(sh); cx.translate(B.cx, B.cy); cx.scale(0.85 + 0.15 * t, 0.85 + 0.15 * t); cx.translate(-B.cx, -B.cy); }
+      cx.globalAlpha = mo ? t : 1; drawRing(cx, sh, 'rgba(129,140,248,.55)'); cx.restore();
+    } else if (g.phase === 'aim' || (g.phase === 'split' && a < g.at) ) {
+      drawRing(cx, sh, 'rgba(129,140,248,.55)');
+      if (drag) { cx.setLineDash([16, 12]); cx.strokeStyle = '#fff'; cx.lineWidth = 4; lineAcross(cx, drag.p0, drag.p1); cx.setLineDash([]); cx.fillStyle = '#fff'; cx.beginPath(); cx.arc(drag.p0[0], drag.p0[1], 9, 0, 7); cx.fill(); }
+      else if (kb && kb.shown) { const [p0, p1] = kbPoints(kb); cx.setLineDash([16, 12]); cx.strokeStyle = '#fde68a'; cx.lineWidth = 4; lineAcross(cx, p0, p1); cx.setLineDash([]); }
+      else if (g.r === 1 && !hinted) {   // round-1 icon: a finger crossing the shape from outside (no words)
+        const t = ((a - g.at) % 1400) / 1000; if (t <= 1) { const px = 60 + 880 * t, py = 560 - 120 * t; cx.font = '64px system-ui'; cx.textAlign = 'center'; cx.textBaseline = 'middle'; cx.globalAlpha = 0.85; cx.fillText('👆', px, py + 40); cx.globalAlpha = 1; cx.setLineDash([10, 10]); cx.strokeStyle = 'rgba(255,255,255,.45)'; cx.lineWidth = 3; cx.beginPath(); cx.moveTo(60, 560); cx.lineTo(px, py); cx.stroke(); cx.setLineDash([]); }
+      }
+    } else if (g.phase === 'split' || g.phase === 'result') {
+      const rc = g.rounds[g.rounds.length - 1]; hinted = true; const t = a - rc.at;
+      if (rc.timeout) { drawRing(cx, sh, 'rgba(148,163,184,.35)'); text(cx, `⌛ ${D.timeout}`, 500, 500, 64, '#fecaca', g.phase); }
+      else {
+        const d = [rc.cut[1][0] - rc.cut[0][0], rc.cut[1][1] - rc.cut[0][1]], L = Math.hypot(...d), n = [-d[1] / L, d[0] / L];
+        const sp = mo ? 24 * Math.min(1, Math.max(0, (t - 150) / 500)) : 0;
+        cx.save(); cx.translate(n[0] * sp, n[1] * sp); drawRing(cx, rc.L, 'rgba(250,204,21,.6)', rc.miss ? 'rgba(255,255,255,.55)' : '#fde68a'); cx.restore();
+        cx.save(); cx.translate(-n[0] * sp, -n[1] * sp); drawRing(cx, rc.R, 'rgba(34,211,238,.55)', '#a5f3fc'); cx.restore();
+        if (t < 150 && mo) { cx.strokeStyle = 'rgba(255,255,255,.95)'; cx.lineWidth = 10; lineAcross(cx, rc.cut[0], rc.cut[1]); }
+        else if (!mo) { cx.strokeStyle = '#fff'; cx.lineWidth = 6; lineAcross(cx, rc.cut[0], rc.cut[1]); }
+        if (!mo || t >= 650) {
+          const c1 = cen(rc.L), c2 = cen(rc.R);
+          if (c1) text(cx, fmt10(rc.pct[0]) + '%', c1[0] + n[0] * sp, c1[1] + n[1] * sp, 60, '#fef08a', g.phase);
+          if (c2) text(cx, fmt10(rc.pct[1]) + '%', c2[0] - n[0] * sp, c2[1] - n[1] * sp, 60, '#a5f3fc', g.phase);
+          const col = { perfect: '#facc15', good: '#4ade80', ok: '#e8eaf0', meh: '#fca5a5' }[rc.grade];
+          text(cx, rc.miss ? D.missed : `${D['g_' + rc.grade]} · ${fmt10(rc.e10)}`, 500, 70, 58, col, g.phase);
+        }
+      }
+    }
+    hud(a);
+  }
+  cx.restore();
+  requestAnimationFrame(frame);
+}
+hud(); requestAnimationFrame(frame); S.ready = true;
+})()</script>
+</body></html>

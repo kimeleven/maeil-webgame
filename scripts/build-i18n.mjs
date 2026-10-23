@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node
 import { CODES, COLORS, bestBuddy } from '../public/js/logic.js';
 import { HEAD_SNIPPET } from '../public/js/theme.js';
 import { buildMagnet, MAGNET_LANGS } from './build-magnet.mjs'; // magnet-harbor public game (t_1c491685, launch t_45f1a325)
+import { buildFair } from './build-fair.mjs'; // fair-slice preview (noindex, not in sitemap) [t_bbb6c617]
 const MT = JSON.parse(readFileSync(new URL('../i18n/magnet-harbor.json', import.meta.url), 'utf8'));
 
 const ROOT = new URL('..', import.meta.url).pathname;
@@ -220,6 +221,7 @@ export function build() {
   writeFileSync(`${ROOT}public/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);
   writeFileSync(`${ROOT}public/robots.txt`, `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /*/r/\nDisallow: /*/i/\nDisallow: /*/c/\n\nSitemap: ${SITE}/sitemap.xml\n`);
   buildMagnet();
+  buildFair();
   console.log(`built ${n} index pages + ${LANGS.length * SHELLS.length} noindex shells + / ; sitemap ${urls.length} urls`);
   return { pages: n, sitemap: urls.length };
 }
