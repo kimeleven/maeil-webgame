@@ -1,0 +1,299 @@
+{
+ "base": "http://localhost:5199",
+ "at": "2026-10-23T15:21:47.190Z",
+ "rows": [
+  {
+   "name": "A edge d=39 (raw 1494 recv 1543 Δ49 frame 1498 path rebuild; provisional miss/wilts 1 silent=true)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "good"
+    ],
+    "expect": [
+     "good"
+    ],
+    "wiltOsc": 0,
+    "oscKinds": [
+     "tick",
+     "good"
+    ],
+    "vib40": 0,
+    "canVib": true,
+    "wilts": 0,
+    "score": 10,
+    "revoked": [
+     "wilt:miss:0"
+    ],
+    "errs": []
+   }
+  },
+  {
+   "name": "A edge d=40 (raw 1494 recv 1549 Δ55 frame 1505 path rebuild; provisional miss/wilts 1 silent=true)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "good"
+    ],
+    "expect": [
+     "good"
+    ],
+    "wiltOsc": 0,
+    "oscKinds": [
+     "tick",
+     "good"
+    ],
+    "vib40": 0,
+    "canVib": true,
+    "wilts": 0,
+    "score": 10,
+    "revoked": [
+     "wilt:miss:0"
+    ],
+    "errs": []
+   }
+  },
+  {
+   "name": "A edge d=41 (raw 1494 recv 1543 Δ49 frame 1497 path rebuild; provisional miss/wilts 1 silent=true)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "good"
+    ],
+    "expect": [
+     "good"
+    ],
+    "wiltOsc": 0,
+    "oscKinds": [
+     "tick",
+     "good"
+    ],
+    "vib40": 0,
+    "canVib": true,
+    "wilts": 0,
+    "score": 10,
+    "revoked": [
+     "wilt:miss:0"
+    ],
+    "errs": []
+   }
+  },
+  {
+   "name": "A edge d=160 (raw 1494 recv 1660 Δ166 frame 1613 path rebuild; provisional miss/wilts 1 silent=true)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "good"
+    ],
+    "expect": [
+     "good"
+    ],
+    "wiltOsc": 0,
+    "oscKinds": [
+     "tick",
+     "good"
+    ],
+    "vib40": 0,
+    "canVib": true,
+    "wilts": 0,
+    "score": 10,
+    "revoked": [
+     "wilt:miss:0"
+    ],
+    "errs": []
+   }
+  },
+  {
+   "name": "A edge d=161 (raw 1494 recv 1664 Δ170 frame 1619 path rebuild; provisional miss/wilts 1 silent=true)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "good"
+    ],
+    "expect": [
+     "good"
+    ],
+    "wiltOsc": 0,
+    "oscKinds": [
+     "tick",
+     "good"
+    ],
+    "vib40": 0,
+    "canVib": true,
+    "wilts": 0,
+    "score": 10,
+    "revoked": [
+     "wilt:miss:0"
+    ],
+    "errs": []
+   }
+  },
+  {
+   "name": "A edge d=250 (raw 1494 recv 1748 Δ254 frame 1702 path stale; provisional miss/wilts 1 silent=true)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "wilt:miss"
+    ],
+    "expect": [
+     "wilt:miss"
+    ],
+    "wiltOsc": 1,
+    "oscKinds": [
+     "tick",
+     "wilt"
+    ],
+    "vib40": 1,
+    "canVib": true,
+    "wilts": 1,
+    "score": 0,
+    "errs": []
+   }
+  },
+  {
+   "name": "A onbeat d=250 (raw 1334 recv 1598 Δ264 frame 1552 path stale; provisional miss/wilts 1 silent=true)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "wilt:miss"
+    ],
+    "expect": [
+     "wilt:miss"
+    ],
+    "wiltOsc": 1,
+    "oscKinds": [
+     "tick",
+     "wilt"
+    ],
+    "vib40": 1,
+    "canVib": true,
+    "wilts": 1,
+    "score": 0,
+    "errs": []
+   }
+  },
+  {
+   "name": "A edge d=320 (raw 1494 recv 1826 Δ332 frame 1780 path stale; provisional miss/wilts 1 silent=false)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "wilt:miss"
+    ],
+    "expect": [
+     "wilt:miss"
+    ],
+    "wiltOsc": 1,
+    "oscKinds": [
+     "tick",
+     "wilt"
+    ],
+    "vib40": 1,
+    "canVib": true,
+    "wilts": 2,
+    "score": 0,
+    "errs": []
+   }
+  },
+  {
+   "name": "A outside d=41 (raw 1495 recv 1549 Δ54 frame 1505 path rebuild; provisional miss/wilts 1 silent=true)",
+   "pass": true,
+   "info": {
+    "announced": [
+     "wilt:miss",
+     "wilt:stray"
+    ],
+    "expect": [
+     "wilt:miss",
+     "wilt:stray"
+    ],
+    "wiltOsc": 2,
+    "oscKinds": [
+     "tick",
+     "wilt"
+    ],
+    "vib40": 2,
+    "canVib": true,
+    "wilts": 2,
+    "score": 0,
+    "revoked": [],
+    "errs": []
+   }
+  },
+  {
+   "name": "B sound off: W.snd has feedback, W.osc empty (no WebAudio), gate same",
+   "pass": true,
+   "info": {
+    "snd": [
+     "tick",
+     "perfect"
+    ],
+    "osc": 0
+   }
+  },
+  {
+   "name": "C pause flush: beat0 miss silent before pause, announced once at pause, not re-announced after resume",
+   "pass": true,
+   "info": {
+    "pre": 0,
+    "w0": [
+     {
+      "a": "wilt",
+      "why": "miss",
+      "k": 0,
+      "c": 1494,
+      "raw": 1567,
+      "at": 1612.2000000476837,
+      "flush": true
+     }
+    ]
+   }
+  },
+  {
+   "name": "E 5th leaf: 5 wilts announced once each (5 wilt oscillators), result after HORIZON",
+   "pass": true,
+   "info": {
+    "ks": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "resAt": 4438,
+    "end": 4174
+   }
+  },
+  {
+   "name": "D again: new session announces its own beat0 miss once; old 5 not replayed",
+   "pass": true,
+   "info": {
+    "n": 6,
+    "newOsc": [
+     "tick",
+     "wilt"
+    ]
+   }
+  },
+  {
+   "name": "F 90 s run, 120 BPM + vines, late delivery 0–200 ms: 0 wilts announced, every hit announced once, finish once",
+   "pass": true,
+   "info": {
+    "wilts": 0,
+    "perfect": 132,
+    "good": 0,
+    "survived": true,
+    "vines": 12,
+    "b120": 48,
+    "paths": {
+     "rebuild": 207,
+     "direct": 33
+    },
+    "hitsAnnounced": 132,
+    "wiltOsc": 0,
+    "maxDelay": 214,
+    "inputs": 240,
+    "errs": []
+   }
+  }
+ ],
+ "fails": []
+}

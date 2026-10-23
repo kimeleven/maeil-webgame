@@ -12,7 +12,9 @@ const mq = matchMedia('(prefers-reduced-motion: reduce)');
 const set = loadLS('rg-set', { sound: true, haptic: true, motion: !mq.matches });
 let off = (() => { try { return normOffset(JSON.parse(localStorage.getItem('rg-off'))); } catch { return normOffset(localStorage.getItem('rg-off')); } })();
 const canVib = typeof navigator.vibrate === 'function';
-const W = { snd: [], vib: 0, frames: 0, ft: [], drawn: 0 };
+// W.snd = feedback requested (diagnostic, independent of settings); W.osc = real WebAudio oscillator starts; W.vibs = real navigator.vibrate calls;
+// W.fb = gated feedback log {a, why, k, c, raw, at} (t_5517535f). frames/ft/drawn = render evidence.
+const W = { snd: [], osc: [], vib: 0, vibs: [], fb: [], frames: 0, ft: [], drawn: 0 };
 const LAG = 40;           // frame driver closes windows 40 ms behind "now" so queued input events (earlier timeStamp) are judged first
 const LEAD = 2000;        // a pot travels from the left edge to the line in 2 s (constant speed)
 const CZ_ICON = { miss: '⌛', stray: '✋', double: '✌', rest: '◌✕', early: '⤴', late: '⏳' };
@@ -22,6 +24,7 @@ const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || 
 function tone(f, dur, type = 'sine', vol = 0.12, at = 0) {
   if (!set.sound || !ac) return; const t = ac.currentTime + at, o = ac.createOscillator(), gn = ac.createGain();
   o.type = type; o.frequency.setValueAtTime(f, t); gn.gain.setValueAtTime(vol, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + dur + 0.02);
+  W.osc.push({ k: curSnd, st: ac.state });   // evidence: an oscillator really started on a live AudioContext (enabled path only)
 }
 const SND = {
   tick: () => tone(1500, 0.035, 'square', 0.035),
@@ -30,16 +33,17 @@ const SND = {
   wilt: () => tone(110, 0.2, 'sawtooth', 0.06),
   finish: () => [523, 659, 784, 1047].forEach((f, j) => tone(f, 0.4, 'triangle', 0.08, j * 0.06)),
 };
-const play = (k) => { W.snd.push(k); if (set.sound) SND[k](); };
-const buzz = (ms) => { if (set.haptic && canVib) try { navigator.vibrate(ms); W.vib++; } catch {} };
+let curSnd = '';
+const play = (k) => { W.snd.push(k); if (set.sound) { curSnd = k; SND[k](); } };
+const buzz = (ms) => { if (set.haptic && canVib) try { navigator.vibrate(ms); W.vib++; W.vibs.push(ms); } catch {} };
 // ---- state ----
 let g = createGame(seed, { offset: off }), T0 = 0, P = 0, pauseAt = 0, paused = false, countEnd = 0, ptr = null, keyDown = false;
-let best = loadLS('rg-best', { rec: null }).rec, lastTick = -1, fx = [];
+let best = loadLS('rg-best', { rec: null }).rec, lastTick = -1, fx = [], fb = fbGate();
 const cv = $('cv'), cx = cv.getContext('2d');
 const grid = (() => { const a = []; let t = RG.FIRST; while (t <= RG.DUR) { a.push(t); t += segOf(t).p; } return a; })();
 const act = (ts) => Math.round(ts - T0 - P);
-const S = window.__rg = { ready: false, E: { RG, createGame, start, input, deliver, HORIZON, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy, causes, CAUSES }, W, seed, set, evlog: [], act, grid, LAG,
-  get g() { return g; }, get paused() { return paused || countEnd > 0; }, get T0() { return T0; }, get P() { return P; }, get off() { return off; } };
+const S = window.__rg = { ready: false, E: { RG, createGame, start, input, deliver, HORIZON, advance, replay, simulate, fbGate, fbStep, wiltFinal, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy, causes, CAUSES }, W, seed, set, evlog: [], act, grid, LAG,
+  get g() { return g; }, get fb() { return fb; }, get paused() { return paused || countEnd > 0; }, get T0() { return T0; }, get P() { return P; }, get off() { return off; } };
 const motion = () => set.motion && !mq.matches;
 function applySet() {
   document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, on = !!set[k]; b.setAttribute('aria-pressed', on); b.classList.toggle('off', !on); if (b.dataset.icon) b.textContent = k === 'sound' ? (on ? '🔊' : '🔇') : on ? '📳' : '📴'; });
@@ -55,28 +59,26 @@ $('o-p').addEventListener('click', (e) => { e.stopPropagation(); setOff(off + 10
 $('o-x').addEventListener('click', (e) => { e.stopPropagation(); $('ofs').hidden = true; });
 applySet();
 // ---- actions ----
-function doStart(ts) { if (g.phase !== 'ready') return; unlock(); g.o = off; start(g); T0 = ts; P = 0; lastTick = -1; fx = []; $('ready').hidden = true; $('ofs').hidden = true; S.evlog.push({ k: 'start', at: ts }); hud(); }
+function doStart(ts) { if (g.phase !== 'ready') return; unlock(); g.o = off; start(g); T0 = ts; P = 0; lastTick = -1; fx = []; fb = fbGate(); $('ready').hidden = true; $('ofs').hidden = true; S.evlog.push({ k: 'start', at: ts }); hud(); }
 // t_2b703714: inputs go through deliver() — judged at their event timeStamp even if a frame already closed that window
 // (bounded by HORIZON ms between timeStamp and delivery). Log keeps raw ts / receive time / frame point / path for evidence.
 function feed(kind, ts, id) {
   const shown = !$('res').hidden;
   if (!(g.phase === 'play' || (g.phase === 'result' && !shown)) || paused || countEnd) { S.evlog.push({ k: 'drop', kind }); return; }
-  const raw = act(ts), recv = act(performance.now()), frameAt = g.now, n0 = g.events.length;
+  const raw = act(ts), recv = act(performance.now()), frameAt = g.now;
   const r = deliver(g, kind, raw, id, recv);
   S.evlog.push({ k: kind, id, raw, recv, frameAt, path: r.path, r: r.e.a, why: r.e.why, revoked: r.revoked ? r.revoked.map((x) => `${x.a}:${x.why || ''}:${x.k}`) : undefined });
-  if (r.path === 'rebuild') {
-    const gone = new Set((r.revoked || []).filter((x) => x.a === 'wilt').map((x) => x.k)); fx = fx.filter((f) => !(f.k === 'wilt' && gone.has(f.bk)));
-    const i = g.events.indexOf(r.e); react(i >= 0 ? i : g.events.length, i >= 0); return;
-  }
-  react(n0);
+  react(recv);
 }
-function react(n0, one) {
-  for (let i = n0; i < (one ? n0 + 1 : g.events.length); i++) {
-    const e = g.events[i]; if (e.a === 'perfect' || e.a === 'good') { play(e.a); buzz(10); fx.push({ k: e.a, d: e.d, at: performance.now() }); }
-    if (e.a === 'wilt') { play('wilt'); buzz(40); fx.push({ k: 'wilt', why: e.why, bk: e.k, at: performance.now() }); }
+// t_5517535f: all irreversible feedback goes through the gate (rhythm-core fbStep): success now, wilt once when final.
+function react(nowRaw, flush = false) {
+  for (const e of fbStep(fb, g, nowRaw, flush)) {
+    const at = performance.now(); W.fb.push({ a: e.a, why: e.why, k: e.k, c: e.c, raw: nowRaw, at, flush: flush || undefined });
+    if (e.a === 'perfect' || e.a === 'good') { play(e.a); buzz(10); fx.push({ k: e.a, d: e.d, at }); }
+    else { play('wilt'); buzz(40); fx.push({ k: 'wilt', why: e.why, bk: e.k, at }); }
   }
   // result appears only once no in-flight input (≤ HORIZON old) can still revise it
-  if (g.phase === 'result' && $('res').hidden && act(performance.now()) - g.now > HORIZON) showResult();
+  if (!flush && g.phase === 'result' && $('res').hidden && act(performance.now()) - g.now > HORIZON) showResult();
 }
 // pointer: anywhere in the play area (not on UI). First pointer only; cancel/lost capture = up.
 const pa = $('play');
@@ -106,8 +108,8 @@ $('b-start').addEventListener('click', (e) => { e.stopPropagation(); doStart(e.t
 function pause() {
   if (g.phase !== 'play' || paused) return; const now = performance.now();
   if (countEnd) { countEnd = 0; } else pauseAt = now;
-  const n0 = g.events.length; if (g.held) { const r = pauseRelease(g, act(pauseAt)); S.evlog.push({ k: 'pause-release', r: r && r.a }); }
-  ptr = null; keyDown = false; paused = true; $('pz').hidden = false; $('pz-n').textContent = ''; S.evlog.push({ k: 'pause', raw: act(pauseAt) }); react(n0);
+  if (g.held) { const r = pauseRelease(g, act(pauseAt)); S.evlog.push({ k: 'pause-release', r: r && r.a }); }
+  ptr = null; keyDown = false; paused = true; $('pz').hidden = false; $('pz-n').textContent = ''; S.evlog.push({ k: 'pause', raw: act(pauseAt) }); react(act(pauseAt), true);   // inputs are dropped while paused → nothing can revise
 }
 $('b-pause').addEventListener('click', (e) => { e.stopPropagation(); pause(); });
 $('pz').addEventListener('click', (e) => { if (e.target.closest('[data-set]') || !paused) return; paused = false; countEnd = performance.now() + 3000; });
@@ -115,6 +117,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) pause
 addEventListener('blur', () => pause());
 // ---- result ----
 function showResult() {
+  react(act(performance.now()), true);   // remaining wilts are final now (HORIZON has passed since the end)
   const rec = record(g), was = best, nb = better(rec, was); if (nb) { best = rec; save('rg-best', { rec }); }
   $('r-score').textContent = rec.score; $('r-combo').textContent = rec.maxCombo; $('r-perf').textContent = rec.perfect;
   $('r-best').textContent = was ? `${was.score} · ${D.maxCombo} ${was.maxCombo}` : '—';
@@ -135,7 +138,7 @@ function showResult() {
   if (g.end.survived) play('finish');
   $('res').hidden = false; S.evlog.push({ k: 'result', at: performance.now(), rec, acc: A }); $('b-again').focus({ preventScroll: true });
 }
-function again() { g = createGame(seed, { offset: off }); paused = false; countEnd = 0; ptr = null; keyDown = false; fx = []; $('res').hidden = true; $('pz').hidden = true; $('ready').hidden = false; hud(); S.evlog.push({ k: 'again', at: performance.now() }); }
+function again() { g = createGame(seed, { offset: off }); fb = fbGate(); paused = false; countEnd = 0; ptr = null; keyDown = false; fx = []; $('res').hidden = true; $('pz').hidden = true; $('ready').hidden = false; hud(); S.evlog.push({ k: 'again', at: performance.now() }); }
 $('b-again').addEventListener('click', (e) => { e.stopPropagation(); again(); });
 const shareUrl = () => `${location.origin}${location.pathname}?seed=${encodeURIComponent(seed)}`;
 $('b-link').addEventListener('click', async (e) => { e.stopPropagation(); const t = D.shareText.replace('{combo}', g.maxCombo).replace('{url}', shareUrl()); try { await navigator.clipboard.writeText(t); toast(D.copied); } catch { toast(t); } S.evlog.push({ k: 'copy', t }); });
@@ -153,7 +156,7 @@ let tt = 0; function toast(s) { const t = $('toast'); t.textContent = s; t.class
 function hud(raw) {
   const left = g.phase === 'ready' ? 90 : Math.max(0, Math.ceil((RG.DUR - (raw ?? g.now)) / 1000));
   $('h-time').textContent = g.phase === 'result' && g.end && g.end.survived ? 0 : left; $('h-score').textContent = g.score;
-  $('h-combo').textContent = `${g.combo} ×${mult(g.combo)}`; $('h-leaves').textContent = `🍃${RG.LIVES - g.wilts}`;
+  $('h-combo').textContent = `${g.combo} ×${mult(g.combo)}`; $('h-leaves').textContent = `🍃${RG.LIVES - (g.phase === 'ready' ? 0 : fb.n)}`;   // confirmed wilts only
 }
 // ---- render ----
 function fit() { const r = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== Math.round(w * r) || cv.height !== Math.round(h * r)) { cv.width = Math.round(w * r); cv.height = Math.round(h * r); } cx.setTransform(r, 0, 0, r, 0, 0); return [w, h]; }
@@ -185,7 +188,8 @@ function frame(now) {
   const raw = g.phase === 'ready' ? 0 : g.phase === 'result' ? g.now : paused ? act(pauseAt) : countEnd ? act(pauseAt) : act(now);
   const c = raw - g.o, laneY = h * 0.8, s = Math.min(46, w * 0.1), lineX = w * 0.75, sp = lineX / LEAD;
   // garden (planted so far) in the middle: rows of 10 from the bottom up
-  const done = g.res.map((r, k) => ({ r, b: g.chart.beats[k] })).filter((o) => o.r && o.r !== 'pass' && o.b.kind !== 'tail');
+  const ok = (r, k) => r === 'perfect' || r === 'good' || r === 'hit' || fb.wk.has(k);   // provisional failures are not drawn
+  const done = g.res.map((r, k) => ({ r, k, b: g.chart.beats[k] })).filter((o) => o.r && o.r !== 'pass' && o.b.kind !== 'tail' && ok(o.r, o.k));
   const cols = 10, cs = Math.min(36, (w - 24) / cols), gy0 = laneY - s * 1.6;
   done.slice(-cols * 9).forEach((o, i) => drawFlower(cx, 12 + (i % cols + 0.5) * ((w - 24) / cols), gy0 - Math.floor(i / cols) * cs, cs * 0.38, o.r));
   // lane
@@ -202,11 +206,11 @@ function frame(now) {
   // pots
   const B = g.chart.beats;
   for (const v of g.chart.vines) { const h0 = lineX - (B[v.h].t - c) * sp, e0 = lineX - (B[v.e].t - c) * sp; if (h0 < -s || e0 > w + s) continue; const st = g.vine[v.h === undefined ? 0 : B[v.h].v];
-    cx.fillStyle = st === 'held' ? 'rgba(74,222,128,.85)' : g.res[v.e] === 'early' || g.res[v.e] === 'late' || g.res[v.h] === 'miss' ? 'rgba(146,64,14,.6)' : 'rgba(34,197,94,.6)';
+    cx.fillStyle = st === 'held' ? 'rgba(74,222,128,.85)' : fb.wk.has(v.e) || fb.wk.has(v.h) ? 'rgba(146,64,14,.6)' : 'rgba(34,197,94,.6)';
     cx.fillRect(e0, laneY - s * 0.16, h0 - e0, s * 0.32); cx.fillStyle = '#86efac'; cx.beginPath(); cx.arc(e0, laneY, s * 0.22, 0, 7); cx.fill(); }
   for (let k = Math.max(0, g.ci - 8); k < B.length; k++) {
     const b = B[k], px = lineX - (b.t - c) * sp; if (px > w + s) continue; if (px < -s) break; if (b.kind === 'tail') continue;
-    const r = g.res[k], bad = r === 'miss' || r === 'wilt';
+    const r0 = g.res[k], bad = (r0 === 'miss' || r0 === 'wilt') && fb.wk.has(k), r = r0 === 'perfect' || r0 === 'good' || bad ? r0 : null;
     if (px > lineX + 2) cx.globalAlpha = Math.max(0.15, 1 - (px - lineX) / (w - lineX + s));
     pot(cx, px, laneY, s, b, r && r !== 'pass' ? r : null, bad); cx.globalAlpha = 1;
     if (r === 'perfect' || r === 'good') drawFlower(cx, px, laneY - s * 0.55, s * 0.42, r);
@@ -234,11 +238,12 @@ function loop(now) {
   if (!FPS || now - lastDraw >= 1000 / FPS - 1) {
     lastDraw = now;
     if (g.phase === 'play' && !paused && !countEnd) {
-      const raw = act(now), n0 = g.events.length; advance(g, raw - LAG); if (raw >= RG.DUR) advance(g, raw);
+      const raw = act(now); advance(g, raw - LAG); if (raw >= RG.DUR) advance(g, raw);
       // metronome: one tick per grid beat as it reaches the line (sound only; judging never uses it)
       const gi = grid.findIndex((t) => t > raw - g.o) - 1; if (gi > lastTick) { lastTick = gi; if (gi >= 0) play('tick'); }
-      react(n0);
+      react(raw);
     }
+    if (g.phase === 'result' && $('res').hidden) react(act(now));
     if (g.phase === 'result' && $('res').hidden && act(now) - g.now > HORIZON) showResult();
     $('pz').hidden = !(paused || countEnd > 0); if (countEnd > 0) $('pz-n').textContent = Math.ceil((countEnd - now) / 1000);
     const raw = frame(now); hud(raw);

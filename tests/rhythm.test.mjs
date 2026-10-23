@@ -208,3 +208,67 @@ test('deliver: replay determinism — rebuilt game equals a game that received t
   for (const [k, raw, id] of ins) { E.advance(a, raw + 60 - LAG); E.deliver(a, k, raw, id, raw + 60); E.input(b, k, raw, id); }
   E.advance(a, RG.DUR); E.advance(b, RG.DUR); assert.equal(a.score, b.score); assert.equal(a.wilts, 0); assert.equal(a.perfect, b.perfect);
 });
+// ---- t_5517535f: feedback gate — success immediately, wilt (irreversible sound/vibration/fx) exactly once after it is final ----
+// UI model: every frame fbStep(now); every delivery fbStep(recv); pause/result → flush. Collect what would be announced.
+const H = E.HORIZON;
+function ui(g) { const f = E.fbGate(), said = []; const step = (now, flush) => { for (const e of E.fbStep(f, g, now, flush)) said.push({ ...e, at: now }); }; return { f, said, step,
+  frame: (now) => { E.advance(g, now - LAG); step(now); }, feed: (k, raw, recv, id = 'p') => { const r = E.deliver(g, k, raw, id, recv); step(recv); return r; } }; }
+test('gate: PO repro — beat 1334 closed by frame 1535, key ts 1494 recv 1594 → good once, the provisional miss never announced', () => {
+  const g = E.createGame('late'); E.start(g); const u = ui(g); const b = g.chart.beats[0]; assert.equal(b.t, 1334);
+  for (let t = 0; t <= 1535 + LAG; t += 16) u.frame(t); u.frame(1535 + LAG); assert.equal(g.res[0], 'miss'); assert.equal(g.wilts, 1);
+  assert.equal(u.said.length, 0, 'provisional miss is silent');
+  const r = u.feed('down', 1494, 1594, 'key'); assert.equal(r.path, 'rebuild'); assert.equal(g.wilts, 0); assert.equal(g.score, 10);
+  for (let t = 1600; t <= 3000; t += 16) u.frame(t); u.feed('up', 1524, 3000, 'key');
+  const w0 = u.said.filter((e) => e.a === 'wilt' && e.k === 0);
+  assert.equal(w0.length, 0); assert.deepEqual(u.said.filter((e) => e.k === 0).map((e) => e.a), ['good']);
+});
+test('gate: miss boundary — final exactly when now − (end + o) > HORIZON (250 silent, 251 announced once), with offset', () => {
+  for (const o of [0, 30, -40]) {
+    const g = game(mk([{ t: 20000, kind: 'seed' }, { t: 22000, kind: 'seed' }]), o); const u = ui(g); const end = 20120 + o;
+    u.frame(end + LAG + 1); assert.equal(g.wilts, 1); u.frame(end + H); assert.equal(u.said.length, 0, `o=${o} at +250`);
+    u.frame(end + H + 1); assert.equal(u.said.length, 1, `o=${o} at +251`); for (let t = end + H + 2; t < end + 900; t += 7) u.frame(t); assert.equal(u.said.length, 1);
+  }
+});
+test('gate: 39/40/41/160/161/250 ms late valid inputs → only success announced; 320 ms (stale) → the miss announced once, no stray', () => {
+  for (const d of [39, 40, 41, 160, 161, 250]) for (const raw of [70120, 70000]) {
+    const g = game(mk([{ t: 70000, kind: 'seed' }, { t: 70700, kind: 'seed' }])); const u = ui(g);
+    for (let t = 69000; t < raw + d; t += 16) u.frame(t); u.frame(raw + d); u.feed('down', raw, raw + d); for (let t = raw + d; t < 70500; t += 16) u.frame(t);
+    assert.deepEqual(u.said.map((e) => e.a), [raw === 70000 ? 'perfect' : 'good'], `d=${d} raw=${raw}`);
+  }
+  const g = game(mk([{ t: 70000, kind: 'seed' }, { t: 71000, kind: 'seed' }])); const u = ui(g);
+  for (let t = 69000; t <= 70440; t += 16) u.frame(t); const r = u.feed('down', 70120, 70440); assert.equal(r.path, 'stale');
+  for (let t = 70440; t < 70800; t += 16) u.frame(t); assert.deepEqual(u.said.map((e) => `${e.a}:${e.why}`), ['wilt:miss']);
+});
+test('gate: real failures still announced exactly once (stray, double, rest, early, late vine) — no loss, no duplicate', () => {
+  const g = game(mk([{ t: 20000, kind: 'seed' }, { t: 20700, kind: 'rest' }, { t: 61000, kind: 'head', v: 0 }, { t: 62000, kind: 'tail', v: 0 }, { t: 64000, kind: 'head', v: 1 }, { t: 65000, kind: 'tail', v: 1 }],
+    [{ h: 2, e: 3 }, { h: 4, e: 5 }])); const u = ui(g);
+  const ins = [[19000, 'down'], [19020, 'up'], [20000, 'down'], [20010, 'up'], [20040, 'down'], [20050, 'up'], [20700, 'down'], [20710, 'up'], [61000, 'down'], [61500, 'up'], [64000, 'down']];
+  let i = 0; for (let t = 18000; t < 66000; t += 16) { while (i < ins.length && ins[i][0] <= t) { u.feed(ins[i][1], ins[i][0], t + 30); i++; } u.frame(t); }
+  const w = u.said.filter((e) => e.a === 'wilt').map((e) => e.why); assert.deepEqual(w, ['stray', 'double', 'rest', 'early', 'late']);
+  assert.equal(w.length, g.wilts); assert.equal(new Set(u.said.map(E.fbSig)).size, u.said.length);
+});
+test('gate: pause flush — pending wilt announced once at pause (inputs dropped), nothing re-announced after resume', () => {
+  const g = game(mk([{ t: 20000, kind: 'seed' }, { t: 22000, kind: 'seed' }])); const u = ui(g); u.frame(20200); assert.equal(u.said.length, 0);
+  u.step(20200, true); assert.equal(u.said.length, 1); for (let t = 20200; t < 21000; t += 16) u.frame(t); assert.equal(u.said.length, 1);
+});
+test('gate: 5th leaf — provisional end revoked by late tap → that wilt never announced; real 5th announced once by result flush', () => {
+  const B = [20000, 20600, 21200, 21800, 22400, 23000].map((t) => ({ t, kind: 'seed' }));
+  { const g = game(mk(B)); const u = ui(g); for (let t = 19000; t <= 22561; t += 16) u.frame(t); u.frame(22561); assert.equal(g.phase, 'result');
+    u.feed('down', 22520, 22561); assert.equal(g.phase, 'play'); for (let t = 22561; t < 24000; t += 16) u.frame(t);
+    assert.deepEqual(u.said.filter((e) => e.a === 'wilt').map((e) => e.k), [0, 1, 2, 3, 5]); assert.ok(!u.said.some((e) => e.a === 'wilt' && e.k === 4)); }
+  { const g = game(mk(B)); const u = ui(g); for (let t = 19000; t <= 22600; t += 16) u.frame(t); assert.equal(g.phase, 'result'); const n = u.said.length;
+    assert.equal(n, 4); u.step(22600, true); assert.equal(u.said.length, 5); u.step(23000, true); u.frame(23000); assert.equal(u.said.length, 5); }
+});
+test('gate: rebuild re-creates earlier successes silently (no duplicate success), random late-delivery soak = engine totals', () => {
+  for (const seed of ['s1', 's2', 's3', 'late']) {
+    const g = E.createGame(seed); E.start(g); const u = ui(g); const r = E.rng(E.hash('soak' + seed));
+    const ins = E.policyInputs(g.chart, 'random', r).map(([k, raw, id]) => [k, raw, id, raw + Math.floor(r() * 300)]).sort((a, b) => a[3] - b[3]);
+    let i = 0; for (let t = 0; t <= RG.DUR + 400 && g.phase !== 'result'; t += 16) { while (i < ins.length && ins[i][3] <= t) { const [k, raw, id, recv] = ins[i++]; u.feed(k, raw, recv, id); } u.frame(t); if (t >= RG.DUR) E.advance(g, t); }
+    u.step(RG.DUR + 400, true);
+    const sigs = u.said.map(E.fbSig); assert.equal(new Set(sigs).size, sigs.length, `${seed}: no duplicate`);
+    const wilts = u.said.filter((e) => e.a === 'wilt');
+    // every final engine wilt announced; nothing announced that is not in the final timeline
+    const fin = new Set(g.events.filter((e) => e.a === 'wilt').map(E.fbSig)); assert.equal(wilts.length, fin.size, seed); for (const w of wilts) assert.ok(fin.has(E.fbSig(w)), seed);
+    assert.equal(u.said.filter((e) => e.a !== 'wilt').length >= g.perfect + g.good, true);
+  }
+});

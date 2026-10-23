@@ -190,6 +190,26 @@ export function deliver(g, kind, raw, id = 'p', recv = raw, H = HORIZON) {
   for (const key of Object.keys(g)) delete g[key]; Object.assign(g, h);
   return { e: e || { a: 'ignored' }, path: 'rebuild', revoked };
 }
+// Feedback gate (t_5517535f). Contract for the UI's irreversible feedback (sound, vibration, failure fx / wilted pot / leaf):
+// - success (perfect/good) is announced immediately, at most once per (beat, part) — a rebuild that re-creates it is silent;
+// - a wilt is provisional while an in-flight input could still revoke it: any input that can change it has timeStamp ≤ the
+//   wilt's raw time (c + o) and is replayed only if received ≤ HORIZON later. So a wilt is FINAL once nowRaw − (c + o) > HORIZON,
+//   and is announced exactly once then (signature a|why|k|c). Revoked provisional wilts are never announced.
+// - flush (pause / result): no further input can be delivered into this timeline, so every remaining wilt is final now.
+// Windows, chart, score, 90 s and HORIZON are unchanged; this only decides WHEN the UI may react.
+export function fbGate() { return { said: new Set(), wk: new Set(), n: 0 }; }
+export const fbSig = (e) => (e.a === 'wilt' ? `wilt|${e.why}|${e.k}|${e.c}` : `hit|${e.k}|${e.part}`);
+export const wiltFinal = (g, e, nowRaw) => nowRaw - (e.c + g.o) > HORIZON;
+export function fbStep(f, g, nowRaw, flush = false) {
+  const out = [];
+  for (const e of g.events) {
+    if (e.a !== 'perfect' && e.a !== 'good' && e.a !== 'wilt') continue;
+    const s = fbSig(e); if (f.said.has(s)) continue;
+    if (e.a === 'wilt' && !flush && !wiltFinal(g, e, nowRaw)) continue;
+    f.said.add(s); if (e.a === 'wilt') { f.n++; if (e.k >= 0) f.wk.add(e.k); } out.push(e);
+  }
+  return out;
+}
 // pause while holding a vine: treat as up at the last active time before the pause; buttons/keys still down after resume are not "held".
 export function pauseRelease(g, raw) { if (g.held) return input(g, 'up', raw, g.held.id); return null; }
 export function record(g) { return { score: g.score, maxCombo: g.maxCombo, perfect: g.perfect }; }
