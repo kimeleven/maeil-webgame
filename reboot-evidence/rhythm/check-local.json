@@ -1,0 +1,133 @@
+{
+  "base": "http://localhost:5197",
+  "at": "2026-10-23T12:29:53.806Z",
+  "R0 ready 10 s + screen tap + Space: still ready, time 90": {
+    "pass": true,
+    "detail": "{\"phase\":\"ready\",\"now\":0,\"score\":0,\"wilts\":0,\"combo\":0,\"ev\":0,\"judged\":0,\"log\":0,\"hud\":\"90\",\"act\":0}"
+  },
+  "R1 412 touch tap (top-left, away from lane) → exactly 1 judgement; position not used": {
+    "pass": true,
+    "detail": "{\"a\":\"perfect\",\"k\":0,\"d\":-26,\"pts\":20,\"part\":\"seed\",\"c\":1308}"
+  },
+  "R2 412 first plant success ≤ 5 s after start (real touch)": {
+    "pass": true,
+    "detail": "c=1308 d=-26"
+  },
+  "R10 two simultaneous touches → 1 judgement (second pointer ignored)": {
+    "pass": true,
+    "detail": "judged +1, second-pointer logs 1"
+  },
+  "R10 pointercancel after down: cancel is not an extra tap (down judged once, cancel outside vine = no effect)": {
+    "pass": true,
+    "detail": "judged +1"
+  },
+  "R10 UI button taps (sound ×2) are not game input": {
+    "pass": true,
+    "detail": "log 6→6"
+  },
+  "R10 hidden tab pauses; active time excludes pause + 3 s count (P ≈ pause length)": {
+    "pass": true,
+    "detail": "P=5588ms, act 3531→3788"
+  },
+  "R10 after resume beat phase not shifted (auto player hits with small Δ)": {
+    "pass": true,
+    "detail": "deltas 5,5,5,4,7,5"
+  },
+  "no page errors (412 touch run)": {
+    "pass": true,
+    "detail": ""
+  },
+  "R10 offset + sound setting persist after reload": {
+    "pass": true,
+    "detail": "{\"off\":30,\"sound\":false,\"label\":\"+30\"}"
+  },
+  "R0 Enter starts": {
+    "pass": true,
+    "detail": "play"
+  },
+  "R1 1440 click → exactly 1 judgement": {
+    "pass": true,
+    "detail": "0→1"
+  },
+  "R1 Space → 1 judgement; R10 5 auto-repeat keydowns ignored": {
+    "pass": true,
+    "detail": "judged +1, repeats logged 5"
+  },
+  "R2 browser auto-player to 40 s: no wilt after warm-up, rest passes <30 s, first vine head 30–36 s and tail judged": {
+    "pass": true,
+    "detail": "wilts 0, passes 6, head 30953, tail perfect/tail/32051/11, max|Δ| 14ms, mean|Δ| 5.7ms"
+  },
+  "autoplayDeltas60fps": {
+    "max": 14,
+    "n": 52
+  },
+  "R1 sound played after first input (WebAudio synth, recorded calls)": {
+    "pass": true,
+    "detail": "perfect,tick,tick,wilt,perfect,tick"
+  },
+  "no page errors (1440 run)": {
+    "pass": true,
+    "detail": ""
+  },
+  "R6 render throttled to 20 fps: auto player 15 s → no wilts, Δ stays small (judging uses event timeStamp)": {
+    "pass": true,
+    "detail": "hits 21, max|Δ| 21ms, wilts 0"
+  },
+  "R3 same seed + log: node = Chromium = Chromium(muted, reduced-motion) = WebKit": {
+    "pass": true,
+    "detail": "node 40/3/0/5 9480/131/131/0 940/13/42/5 | chromium 40/3/0/5 9480/131/131/0 940/13/42/5 | muted+rm 40/3/0/5 9480/131/131/0 940/13/42/5 | webkit 40/3/0/5 9480/131/131/0 940/13/42/5 "
+  },
+  "R5 idle after start → result < 6 s, score 0": {
+    "pass": true,
+    "detail": "wall 4320 ms, end c=4162"
+  },
+  "R8 again → ready within 0.5 s": {
+    "pass": true,
+    "detail": "46 ms"
+  },
+  "R8 result: this vs best + diff, new best flag, accuracy bar + mean line, seed shown": {
+    "pass": true,
+    "detail": "{\"score\":\"400\",\"best\":\"0 · 최대 연속 0\",\"diff\":\"+400 · +15\",\"nb\":true,\"acc\":[\"0%\",\"100%\",\"0%\"],\"stat\":\"잎 5장이 모두 시들었어요 · 평균 정확(±10ms)\",\"seed\":\"r5\"}"
+  },
+  "R8 PNG saved locally 1080×1350 (no upload)": {
+    "pass": true,
+    "detail": "rhythm-garden-r5.png"
+  },
+  "R9 ?seed= chart used; network: no /api, no external requests": {
+    "pass": true,
+    "detail": "requests 1, api 0, external "
+  },
+  "no page errors (result run)": {
+    "pass": true,
+    "detail": ""
+  },
+  "R12 first input ready ≤ 2 s (4× CPU + Fast 3G emulation, headed Chromium)": {
+    "pass": true,
+    "detail": "ready+start actionable 593 ms, DCL 529 ms, transfer 47678 B"
+  },
+  "R12 gzip ≤ 40 KB, 0 images/fonts/audio files": {
+    "pass": true,
+    "detail": "16764 B gzip (47378 B raw)"
+  },
+  "R12 fps (measured, emulation): 4× CPU / 1× CPU": {
+    "pass": true,
+    "detail": "4× 72 fps, 1× 72 fps"
+  },
+  "fps": {
+    "cpu4": 72,
+    "cpu1": 72
+  },
+  "R12 6 langs × 360/412/1440: no horizontal overflow, touch targets ≥ 44px, meta noindex": {
+    "pass": true,
+    "detail": "18 screens"
+  },
+  "R9 diff: no api/db/lib/middleware/vercel.json/manifest/sw/sitemap/robots//c//lobby changes": {
+    "pass": true,
+    "detail": "15 files"
+  },
+  "R9 sitemap has no rhythm-garden (103 urls)": {
+    "pass": true,
+    "detail": "103 urls"
+  },
+  "fails": []
+}

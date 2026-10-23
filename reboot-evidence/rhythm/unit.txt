@@ -1,0 +1,24 @@
+R11b random: 20/20 seeds mean survival ≤ 10 s; means(ms) 4404,4539,3712,4489,5171,3906,4137,4760,5072,4477,3990,5135,5184,3971,3927,4086,4402,4472,4074,4560
+✔ R4 judge boundaries t>=10000: ±50 PERFECT, ±51/±120 GOOD, ±121 stray wilt (0.619083ms)
+✔ R4 t<10000: ±160 GOOD, ±161 wilt; t=9999 → w160, t=10000 → w120 (0.106208ms)
+✔ R4 second tap in the same window wilts; tap inside a rest window wilts (0.0675ms)
+✔ R4 offset: o=+30, input at t+30 → Δ0 PERFECT; storage normalisation (0.05975ms)
+✔ boundary priority: input exactly at window close counts before the miss (±w inclusive) (0.075292ms)
+✔ R4/R10 active time: pause is outside the engine (UI subtracts P); inputs outside play ignored (0.047875ms)
+✔ R5 idle: 100 seeds → result before 6 s, score 0 (4.824458ms)
+✔ R7 100 seeds pass ①~⑧; same seed twice → same chart; validator forced to fail → 8 tries then fallback (valid) (7.140958ms)
+✔ R2 perfect bot: first success < 5 s; PERFECT, rest pass, combo 10 before 30 s; no vine < 30 s, first vine success 30–36 s (3.114875ms)
+✔ R3 replay: same seed + log → identical results (also through the policy logs) (1.594416ms)
+✔ R6 frame rate independence: advancing at 60 / 20 / 7 fps between inputs gives the same judgements (0.178875ms)
+✔ R11a 20 seeds × idle / double tap / every-beat tap: all end by 5 wilts (every-beat within 30 s), 0 finishes (1.652208ms)
+✔ R13 vine contract (0.151375ms)
+✔ R13 fuzz: any random input log → wilts per vine ≤ 1 (0.814ms)
+✔ R11b (measured, not guaranteed): random 1 tap/beat — seeds with mean survival ≤ 10 s (4.058791ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65.30025

@@ -32,7 +32,7 @@ const waitAct = (p, t) => p.evaluate((t) => new Promise((r) => { const f = () =>
 // in-page auto player: dispatches real-looking events (trusted=false but same handlers) at beat times; used for R2/R6 in the browser
 const autoplay = (p, untilMs) => p.evaluate((until) => new Promise((res) => {
   const g = __rg.g, B = g.chart.beats; let i = 0; { const a0 = __rg.act(performance.now()) - __rg.off; while (i < B.length && B[i].t < a0 + 30) i++; while (B[i] && B[i].kind === "tail") i++; }
-  const kd = () => dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', bubbles: true })), ku = () => dispatchEvent(new KeyboardEvent('keyup', { key: ' ', code: 'Space', bubbles: true }));
+  const kd = () => document.body.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', bubbles: true })), ku = () => document.body.dispatchEvent(new KeyboardEvent('keyup', { key: ' ', code: 'Space', bubbles: true }));
   const tick = () => { const a = __rg.act(performance.now()) - __rg.off; while (i < B.length && B[i].t <= a) { const bb = B[i]; if (bb.kind === 'seed' || bb.kind === 'head') { kd(); if (bb.kind === 'seed') ku(); } if (bb.kind === 'tail') ku(); i++; }
     if (a >= until || __rg.g.phase !== 'play') return res({ a, ev: g.events.map((e) => [e.a, e.part || '', e.c, e.d ?? null]) }); setTimeout(tick, 0); };
   tick(); }), untilMs);
@@ -96,7 +96,7 @@ const autoplay = (p, untilMs) => p.evaluate((until) => new Promise((res) => {
   await waitAct(p, E.RG.FIRST - 20); const k0 = await st(p); const pb = await playBox(p); await p.mouse.click(pb.x + 30, pb.y + 60); await sleep(40); const k1 = await st(p);
   ok('R1 1440 click → exactly 1 judgement', k1.judged - k0.judged === 1, `${k0.judged}→${k1.judged}`);
   const nxt = E.RG.FIRST + 667 * 2; await waitAct(p, nxt - 20); const s0 = await st(p);
-  await p.keyboard.down('Space'); for (let i = 0; i < 5; i++) await p.evaluate(() => dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', repeat: true, bubbles: true }))); await p.keyboard.up('Space'); await sleep(30); const s1 = await st(p);
+  await p.keyboard.down('Space'); for (let i = 0; i < 5; i++) await p.evaluate(() => document.body.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space', repeat: true, bubbles: true }))); await p.keyboard.up('Space'); await sleep(30); const s1 = await st(p);
   const reps = await p.evaluate(() => __rg.evlog.filter((e) => e.k === 'repeat').length);
   ok('R1 Space → 1 judgement; R10 5 auto-repeat keydowns ignored', s1.judged - s0.judged === 1 && reps >= 5, `judged +${s1.judged - s0.judged}, repeats logged ${reps}`);
   // auto player from now to 40 s: PERFECTs, a rest pass, combo 10 and the first vine 30–36 s, no wilts
