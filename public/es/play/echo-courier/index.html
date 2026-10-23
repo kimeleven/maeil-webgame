@@ -1,0 +1,352 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+<title>Mensajero Eco (vista previa)</title><meta name="description" content="Memoriza la ruta que brilla un instante, tócala en el mismo orden y reparte durante 90 segundos."><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><link rel="icon" href="data:,">
+<style>:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--red:#ff4d5e;--glass:rgba(10,11,18,.72);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+body{display:flex;flex-direction:column;align-items:center;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;gap:8px}
+.logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:var(--gold)}.tr{display:flex;gap:6px;align-items:center}
+.langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--cyan)}
+.stage{position:relative;width:100%;max-width:min(100vw,calc((100dvh - 64px)*9/16),540px);min-height:min(calc(100dvh - 64px),960px);display:flex;flex-direction:column;padding:0 16px 12px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px 0;font-variant-numeric:tabular-nums}.hud div{display:flex;flex-direction:column;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:6px 4px;backdrop-filter:blur(18px)}
+.hud span{font-size:11px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud b{font-size:20px}
+.status{text-align:center;font-weight:700;min-height:28px;font-size:18px;color:var(--muted);margin:6px 0}.status.input{color:var(--fg)}.status.fail{color:#ff8a96}.status.ok{color:var(--gold)}
+.wrap{position:relative;width:88%;max-width:480px;margin:8px auto;aspect-ratio:1}
+#board{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px;border-radius:24px;background:var(--panel);border:1px solid var(--edge);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%)}
+.cell{position:relative;min-width:44px;min-height:44px;border-radius:18px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.03));color:var(--fg);cursor:pointer;padding:0;font:800 26px/1 inherit;transition:background .12s,box-shadow .12s}
+.cell small{position:absolute;left:8px;top:6px;font-size:11px;font-weight:600;color:var(--muted)}.cell i{font-style:normal}
+.cell.lit{background:rgba(34,211,238,.55);box-shadow:0 0 28px rgba(34,211,238,.8),inset 0 0 0 2px var(--cyan)}
+.cell.got{background:rgba(34,211,238,.18);box-shadow:inset 0 0 0 2px rgba(34,211,238,.6)}
+.cell.ans{background:rgba(34,211,238,.14);box-shadow:inset 0 0 0 2px rgba(34,211,238,.7)}.cell.gold{background:rgba(250,204,21,.2);box-shadow:inset 0 0 0 2px var(--gold),0 0 18px rgba(250,204,21,.5)}
+.cell.bad{background:rgba(255,77,94,.35);box-shadow:inset 0 0 0 3px var(--red)}.cell.bad::after{content:"✕";position:absolute;right:8px;top:4px;color:#fff;font-size:20px}
+#lines{position:absolute;inset:10px;width:calc(100% - 20px);height:calc(100% - 20px);pointer-events:none}
+.draw{stroke-dasharray:1200;stroke-dashoffset:1200;animation:dr .6s ease-out forwards}@keyframes dr{to{stroke-dashoffset:0}}
+.shake{animation:sh .3s}@keyframes sh{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.rm .shake,.rm .draw{animation:none;stroke-dashoffset:0}.rm .cell{transition:none}
+.follow{display:flex;justify-content:center;align-items:center;gap:6px;color:var(--muted);font-size:14px;min-height:24px}.follow[hidden]{display:none}
+.bar{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:auto;padding-top:6px}
+.ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
+.ic.off,.tg.off{opacity:.55;text-decoration:line-through}
+.sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}.sheet[hidden]{display:none}
+.panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.panel h2{margin:0;font-size:22px}.ready .panel{align-items:center;text-align:center;cursor:pointer}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
+.go{min-height:56px;display:flex;align-items:center;justify-content:center;width:100%;border-radius:14px;font-weight:800;font-size:19px;color:#fff;padding:0 10px;background:linear-gradient(135deg,#6366f1,#0ea5c6)}
+.card{display:flex;gap:14px;align-items:center}.card .nums{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:14px;min-width:0}.card .nums span{color:var(--muted)}.card .nums b{font-size:18px}.card .nums b.big{font-size:32px;color:var(--cyan)}
+.new{color:#4ade80;font-weight:800}.new[hidden]{display:none}.cmp{font-size:13px;color:var(--muted)}
+.btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.btn.main{min-height:64px;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 110px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
+.seed{color:var(--muted);font-size:12px;text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast,.cell{transition:none}.shake,.draw{animation:none;stroke-dashoffset:0}}</style></head>
+<body data-page="echo-courier" data-lang="es">
+<header class="top"><a class="logo" href="/es/"><i></i>Juego del Día</a><span class="tag">Vista previa</span><div class="tr"><button class="ic" type="button" data-set="sound" data-icon="1" aria-label="Sonido" aria-pressed="true">🔊</button><details class="langs"><summary aria-label="Language">es ▾</summary><nav><a href="/ko/play/echo-courier/" hreflang="ko">ko</a><a href="/en/play/echo-courier/" hreflang="en">en</a><a href="/ja/play/echo-courier/" hreflang="ja">ja</a><a href="/zh-hans/play/echo-courier/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/echo-courier/" hreflang="es" aria-current="true">es</a><a href="/pt-br/play/echo-courier/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
+<main class="stage" id="stage">
+<div class="hud"><div><span>Quedan</span><b id="h-time">90</b></div><div><span>Entregas</span><b id="h-done">0</b></div><div><span>casillas</span><b id="h-len">3</b></div><div><span>Puntos</span><b id="h-score">0</b></div></div>
+<div class="status" id="status" aria-live="polite"></div>
+<div class="wrap"><div id="board" role="group" aria-label="Mensajero Eco"><button class="cell" type="button" data-cell="0" aria-label="7"><small>7</small><i></i></button><button class="cell" type="button" data-cell="1" aria-label="8"><small>8</small><i></i></button><button class="cell" type="button" data-cell="2" aria-label="9"><small>9</small><i></i></button><button class="cell" type="button" data-cell="3" aria-label="4"><small>4</small><i></i></button><button class="cell" type="button" data-cell="4" aria-label="5"><small>5</small><i></i></button><button class="cell" type="button" data-cell="5" aria-label="6"><small>6</small><i></i></button><button class="cell" type="button" data-cell="6" aria-label="1"><small>1</small><i></i></button><button class="cell" type="button" data-cell="7" aria-label="2"><small>2</small><i></i></button><button class="cell" type="button" data-cell="8" aria-label="3"><small>3</small><i></i></button></div><svg id="lines" viewBox="0 0 300 300" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+<div class="follow" id="follow"><span aria-hidden="true">👆</span><span>Tu turno</span></div>
+<div class="bar"><button class="tg" type="button" data-set="haptic" aria-pressed="true">Vibración</button><button class="tg" type="button" data-set="motion" aria-pressed="true">Efectos de movimiento</button></div>
+<div class="sheet ready" id="ready"><div class="panel">
+<h2>Mensajero Eco</h2><p class="goal">Memoriza las casillas que brillan y tócalas en el mismo orden · 90 s</p><p class="how" id="r-how">Cuando se apague el eco, haz clic o pulsa 1–9 en el mismo orden</p><div class="go" id="r-go">Clic · Espacio · Enter para empezar</div>
+</div></div>
+<div class="sheet" id="res" hidden><div class="panel" role="dialog" aria-labelledby="r-title">
+<h2 id="r-title">¡Fin del reparto!</h2><div class="new" id="r-new" hidden>¡Nuevo récord!</div><div class="new" id="r-first" hidden>Primer récord</div>
+<div class="card"><div id="r-path"></div><div class="nums"><span>Entregas</span><b class="big" id="r-done"></b><span>Máx.</span><b id="r-long"></b><span>Puntos</span><b id="r-score"></b></div></div>
+<div class="cmp">Mi récord: <span id="r-best"></span></div>
+<button class="btn main" id="b-again" type="button">Jugar otra vez</button>
+<div class="row"><button class="btn" id="b-share" type="button">Compartir</button><button class="btn" id="b-link" type="button">Copiar enlace de reto</button><button class="btn" id="b-png" type="button">Guardar imagen</button></div>
+<div class="tgs"><button class="tg" type="button" data-set="sound" aria-pressed="true">Sonido</button><button class="tg" type="button" data-set="haptic" aria-pressed="true">Vibración</button><button class="tg" type="button" data-set="motion" aria-pressed="true">Efectos de movimiento</button></div><div class="seed">seed <span id="seed"></span></div>
+</div></div>
+</main><div class="toast" id="toast" role="status"></div>
+<script id="et" type="application/json">{"name":"Mensajero Eco","title":"Mensajero Eco (vista previa)","desc":"Memoriza la ruta que brilla un instante, tócala en el mismo orden y reparte durante 90 segundos.","preview":"Vista previa","back":"Juego del Día","time":"Quedan","done":"Entregas","longest":"Máx.","score":"Puntos","cells":"casillas","goal":"Memoriza las casillas que brillan y tócalas en el mismo orden · 90 s","howMobile":"Cuando se apague el eco, toca las casillas en el mismo orden","howDesktop":"Cuando se apague el eco, haz clic o pulsa 1–9 en el mismo orden","goMobile":"Toca para empezar","goDesktop":"Clic · Espacio · Enter para empezar","watch":"Mira bien","yourTurn":"Tu turno","failAt":"Fallaste en la casilla {n}","over":"¡Fin del reparto!","now":"Esta vez","best":"Mi récord","first":"Primer récord","newBest":"¡Nuevo récord!","again":"Jugar otra vez","share":"Compartir","link":"Copiar enlace de reto","png":"Guardar imagen","copied":"Copiado","sound":"Sonido","haptic":"Vibración","motion":"Efectos de movimiento","shareText":"Mensajero Eco: {done} entregas, máx. {longest} casillas. Prueba las mismas rutas → {url}","lastFail":"Último fallo"}</script>
+<script>(()=>{// Echo Courier core (prototype, t_0e812a29). Pure logic, no DOM: runs in node (tests/sim) and is
+// inlined into the preview page by scripts/build-echo.mjs.
+// GDD: workspace/maeil-arcade-local/games/echo-courier/GDD.md (times are [추정] initial values).
+const EC = {
+  DUR: 90, // real elapsed active seconds, from the first echo display (ready sheet excluded)
+  MIN: 3, MAX: 12, BASE: 12, // path length bounds; every round has a 12-cell base path, L-prefix is used
+  FAIL_SHOW: 0.8, FAIL_GAP: 0.4, // wrong → answer replay 0.8 s → 0.4 s → next path
+  OK_GAP: 0.5, // success → next path
+  LEAD: 0.25, // blank time before the first echo cell of a round
+  COMBO_STEP: 1.1, COMBO_MAX: 2, SHORT_MULT: 0.8,
+  FAINT_FROM: 9, FAINT_ALPHA: 0.6,
+};
+// numpad layout: cell index 0..8 is row-major from the top-left; key = NUMPAD[cell]
+const NUMPAD = [7, 8, 9, 4, 5, 6, 1, 2, 3];
+const cellOfKey = (k) => NUMPAD.indexOf(Number(k));
+const showTime = (L) => (L <= 5 ? 0.45 : L <= 8 ? 0.4 : 0.35);
+
+function hash(s) { let h = 2166136261; for (const c of String(s)) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function rng(a) { return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const adjacent = (a, b) => a !== b && Math.abs((a % 3) - (b % 3)) <= 1 && Math.abs(((a / 3) | 0) - ((b / 3) | 0)) <= 1;
+
+// Base path for round r (1-based): depends only on seed and r (GDD §5 contract).
+// Cells 1..6 never repeat; from cell 7 revisits are allowed; never the same cell twice in a row; moves are adjacent.
+function basePath(seed, r) {
+  const R = rng((hash(seed) + r * 7919) >>> 0);
+  for (;;) {
+    const p = [Math.floor(R() * 9)];
+    while (p.length < EC.BASE) {
+      const prev = p[p.length - 1], uniq = p.length < 6;
+      const opts = [];
+      for (let c = 0; c < 9; c++) if (adjacent(prev, c) && (!uniq || !p.includes(c))) opts.push(c);
+      if (!opts.length) break; // dead end inside the unique part: retry with the same stream (deterministic)
+      p.push(opts[Math.floor(R() * opts.length)]);
+    }
+    if (p.length === EC.BASE) return p;
+  }
+}
+
+function createGame(seed) {
+  const g = { seed, t: 0, over: false, r: 0, L: EC.MIN, fails: 0, short: false, streak: 0, done: 0, score: 0,
+    longest: 0, longestPath: [], path: [], phase: 'idle', ph0: 0, idx: 0, wrong: null, events: [],
+    log: { rounds: [], ignored: [], taps: [] } };
+  nextRound(g);
+  return g;
+}
+function nextRound(g) {
+  g.r++; g.path = basePath(g.seed, g.r).slice(0, g.L); g.idx = 0; g.wrong = null;
+  g.phase = 'show'; g.ph0 = g.t; g.log.rounds.push({ r: g.r, L: g.L, path: g.path.slice(), t: +g.t.toFixed(3) });
+  g.events.push({ e: 'round', r: g.r, L: g.L });
+}
+const showEnd = (g) => EC.LEAD + g.path.length * showTime(g.path.length);
+// which echo cell is lit right now (index into path) or -1
+function litIndex(g) {
+  if (g.phase !== 'show') return -1;
+  const k = g.t - g.ph0 - EC.LEAD; if (k < 0) return -1;
+  const i = Math.floor(k / showTime(g.path.length)); return i < g.path.length ? i : -1;
+}
+// advance active time; the round in progress when 90 s hits is not recorded
+function step(g, dt) {
+  if (g.over) return;
+  g.t = Math.min(EC.DUR, g.t + dt);
+  for (let guard = 0; guard < 4; guard++) {
+    const k = g.t - g.ph0;
+    if (g.phase === 'show' && k >= showEnd(g)) { g.phase = 'input'; g.ph0ShowEnd = g.t; g.events.push({ e: 'input' }); }
+    else if (g.phase === 'fail' && k >= EC.FAIL_SHOW + EC.FAIL_GAP) nextRound(g);
+    else if (g.phase === 'ok' && k >= EC.OK_GAP) nextRound(g);
+    else break;
+  }
+  if (g.t >= EC.DUR) { g.over = true; g.phase = 'over'; g.events.push({ e: 'over' }); }
+}
+// a cell tap/key. Returns 'ok' | 'step' | 'fail' | 'ignored'
+function tap(g, cell) {
+  if (g.over || g.phase !== 'input') { g.log.ignored.push({ t: +g.t.toFixed(3), cell, phase: g.phase }); return 'ignored'; }
+  g.log.taps.push({ t: +g.t.toFixed(3), cell, r: g.r });
+  if (cell !== g.path[g.idx]) {
+    g.wrong = { at: g.idx, cell }; g.phase = 'fail'; g.ph0 = g.t; g.streak = 0; g.fails++;
+    const L = g.L; if (g.fails >= 2) { g.L = Math.max(EC.MIN, g.L - 1); g.fails = 0; g.short = g.L < L; }
+    g.log.rounds[g.log.rounds.length - 1].res = 'fail';
+    g.events.push({ e: 'fail', at: g.idx, cell }); return 'fail';
+  }
+  g.idx++; g.events.push({ e: 'cell', i: g.idx - 1, cell });
+  if (g.idx < g.path.length) return 'step';
+  const L = g.path.length; g.streak++; g.done++; g.fails = 0;
+  const mult = Math.min(EC.COMBO_MAX, EC.COMBO_STEP ** (g.streak - 1)) * (g.short ? EC.SHORT_MULT : 1);
+  g.score += Math.round(L * 100 * mult); g.short = false;
+  if (L > g.longest || (L === g.longest && !g.longestPath.length)) { g.longest = L; g.longestPath = g.path.slice(); }
+  g.L = Math.min(EC.MAX, L + 1);
+  g.phase = 'ok'; g.ph0 = g.t; g.log.rounds[g.log.rounds.length - 1].res = 'ok';
+  g.events.push({ e: 'ok', L }); return 'ok';
+}
+// tab came back: replay the current round's echo from the start (time keeps running from where it paused)
+function replay(g) {
+  if (g.over || (g.phase !== 'show' && g.phase !== 'input')) return false;
+  g.phase = 'show'; g.ph0 = g.t; g.idx = 0; g.events.push({ e: 'replay' }); return true;
+}
+const record = (g) => ({ done: g.done, longest: g.longest, score: g.score, path: g.longestPath.slice(), rounds: g.r });
+const better = (a, b) => !b || a.done > b.done || (a.done === b.done && (a.score > b.score || (a.score === b.score && a.longest > b.longest)));
+
+// headless play: policy(g) → cell to tap at input phase ('perfect', 'failAt:<round list>', function)
+function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
+  const g = createGame(seed); let wait = 0;
+  while (!g.over) {
+    if (g.phase === 'input') {
+      wait += dt;
+      if (wait >= perCell) { wait = 0; const want = g.path[g.idx]; const c = typeof policy === 'function' ? policy(g, want) : want; tap(g, c); }
+    } else wait = 0;
+    step(g, dt);
+  }
+  return g;
+}
+
+// Echo Courier UI (prototype, t_0e812a29). Inlined after echo-core.js by scripts/build-echo.mjs.
+/* global EC, NUMPAD, cellOfKey, showTime, createGame, step, tap, replay, litIndex, record, better */
+(() => {
+  const T = JSON.parse(document.getElementById('et').textContent);
+  const $ = (s) => document.querySelector(s);
+  const LS_SET = 'echo-courier-settings', LS_BEST = 'echo-courier-best';
+  const load = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k) || 'null') || {}); } catch { return d; } };
+  const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  const set = load(LS_SET, { sound: true, haptic: true, motion: true });
+  const mq = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = () => mq.matches || !set.motion;
+  const q = new URLSearchParams(location.search);
+  const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  const seed = (q.get('seed') || today()).slice(0, 64);
+  // ---- launch metrics (t_06bfa4bc): same contract as magnet (main 8a5531e) — Vercel Web Analytics custom events,
+  // g=echo, from=c|direct, qa='1' when ?qa=1 set localStorage 'pt-qa' (?qa=0 clears). No ids/seeds/scores/paths.
+  // per run: play_start x1 (+ play_again x1 just before it when restarted from the result), play_end x1 end=time.
+  if (q.get('qa') === '1') save('pt-qa', 1); else if (q.get('qa') === '0') { try { localStorage.removeItem('pt-qa'); } catch {} }
+  const qa = (() => { try { return localStorage.getItem('pt-qa') === '1'; } catch { return false; } })();
+  const from = q.get('from') === 'c' ? 'c' : 'direct';
+  const ev = (name, data = {}) => {
+    const d = { g: 'echo', from, ...data }; if (qa) d.qa = '1';
+    (window.__trackLog = window.__trackLog || []).push({ name, ...d });
+    try { if (window.va) window.va('event', { name, data: d }); } catch {}
+  };
+  if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
+  let runOpen = false; // true between play_start and play_end of one run (dedupe)
+  const runStart = () => { if (runOpen) return; runOpen = true; ev('play_start'); };
+  const runEnd = (end) => { if (!runOpen) return; runOpen = false; ev('play_end', { end }); };
+
+  // ---- audio: 9-note pentatonic, WebAudio synth, created only on the first user input ----
+  let ac = null;
+  const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+  const PENTA = [261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25, 783.99];
+  const tone = (f, d, type = 'triangle', v = 0.13, at = 0) => {
+    if (!ac || !set.sound) return; const t = ac.currentTime + at, o = ac.createOscillator(), gn = ac.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t); gn.gain.setValueAtTime(v, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + d + 0.02); W.sfx++;
+  };
+  const noteOf = (cell) => PENTA[[6, 7, 8, 3, 4, 5, 0, 1, 2][cell]]; // low notes bottom-left like a numpad scale
+  const buzz = (ms) => { if (set.haptic && navigator.vibrate) try { navigator.vibrate(ms); W.vib++; } catch {} };
+
+  // ---- DOM ----
+  const board = $('#board'), cells = [...board.querySelectorAll('.cell')], svg = $('#lines');
+  const hud = { time: $('#h-time'), done: $('#h-done'), len: $('#h-len'), score: $('#h-score') };
+  const ready = $('#ready'), res = $('#res'), toast = $('#toast'), status = $('#status'), follow = $('#follow');
+  const touchUi = matchMedia('(hover: none) and (pointer: coarse)').matches;
+  $('#r-how').textContent = touchUi ? T.howMobile : T.howDesktop;
+  $('#r-go').textContent = touchUi ? T.goMobile : T.goDesktop;
+  const syncToggles = () => { for (const b of document.querySelectorAll('[data-set]')) { const k = b.dataset.set; b.setAttribute('aria-pressed', String(!!set[k])); b.classList.toggle('off', !set[k]); if (b.dataset.icon) b.textContent = set[k] ? '🔊' : '🔇'; } document.body.classList.toggle('rm', reduced()); };
+  for (const b of document.querySelectorAll('[data-set]')) b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save(LS_SET, set); if (k === 'sound') { if (set.sound) unlock(); else if (ac) ac.suspend(); } syncToggles(); });
+  mq.addEventListener && mq.addEventListener('change', syncToggles);
+  syncToggles();
+  const say = (m) => { toast.textContent = m; toast.classList.add('show'); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove('show'), 1600); };
+
+  // ---- game ----
+  let g, last = 0, running = false, armed = false, hidden = false, firstOk = false, lastLit = -1, finished = false;
+  const W = window.__echo = { seed, sfx: 0, vib: 0, frames: 0, ready: false, starts: [], get g() { return g; }, get armed() { return armed; }, get hidden() { return hidden; } };
+  function start(go) {
+    if (go) { if (runOpen) return; ev('play_again'); } // restart only from a finished run; arm() sends play_start
+    g = createGame(seed); running = true; finished = false; lastLit = -1; res.hidden = true; W.result = null; // also for Enter/Space restart (was click-only → no result after a keyboard restart)
+    armed = !!go; ready.hidden = armed; if (armed) arm(); W.ready = true;
+  }
+  function arm() { runStart(); armed = true; ready.hidden = true; last = performance.now(); W.armedAt = last; W.starts.push(last); }
+  function press(cell) {
+    unlock();
+    if (!running || g.over) return;
+    if (!armed) { arm(); return; } // the starting input only starts the run
+    const r = tap(g, cell);
+    if (r === 'ignored') return;
+    flush();
+  }
+  board.addEventListener('pointerdown', (e) => { const c = e.target.closest('.cell'); if (!c || e.button > 0) return; e.preventDefault(); press(+c.dataset.cell); });
+  ready.addEventListener('pointerdown', (e) => { if (e.button > 0) return; e.preventDefault(); unlock(); if (running && !armed) arm(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.repeat) return;
+    if (!res.hidden) { if ((e.key === 'Enter' || e.code === 'Space') && !(document.activeElement && document.activeElement !== $('#b-again') && document.activeElement.tagName === 'BUTTON')) { e.preventDefault(); unlock(); start(true); } return; }
+    if (running && !armed && (e.key === 'Enter' || e.code === 'Space')) { e.preventDefault(); unlock(); arm(); return; }
+    const c = cellOfKey(e.key); if (c >= 0 && armed) { e.preventDefault(); press(c); }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { hidden = true; if (ac) ac.suspend(); W.hiddenAt = g && g.t; }
+    else { hidden = false; last = performance.now(); if (ac && set.sound) ac.resume(); if (g && armed && !g.over) { replay(g); lastLit = -1; flush(); } }
+  });
+
+  let failUntil = 0, okUntil = 0;
+  function flush() {
+    for (const ev of g.events.splice(0)) {
+      if (ev.e === 'cell') { tone(noteOf(ev.cell), 0.18); buzz(10); }
+      else if (ev.e === 'fail') { tone(196, 0.22, 'square', 0.1); tone(147, 0.3, 'square', 0.1, 0.16); buzz(60); }
+      else if (ev.e === 'ok') { g.path.forEach((c, i) => tone(noteOf(c), 0.12, 'sine', 0.1, 0.12 + i * 0.05)); if (!firstOk) { firstOk = true; follow.hidden = true; } }
+      else if (ev.e === 'round' || ev.e === 'replay') lastLit = -1;
+      else if (ev.e === 'over') finished = true;
+    }
+  }
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!running) return;
+    W.frames++;
+    if (armed && !hidden && !g.over) { step(g, (now - last) / 1000); flush(); }
+    last = now;
+    const li = litIndex(g); if (li !== lastLit && li >= 0) tone(noteOf(g.path[li]), 0.2, 'sine', 0.11); lastLit = li;
+    draw(li);
+    if (finished && !W.result) finish();
+  }
+  const cxy = (c) => [(c % 3) * 100 + 50, ((c / 3) | 0) * 100 + 50];
+  let drawKey = '';
+  function draw(li) {
+    const ph = g.phase, k = `${ph}|${li}|${g.idx}|${g.r}|${armed}`;
+    hud.time.textContent = Math.max(0, Math.ceil(EC.DUR - g.t)); hud.done.textContent = g.done; hud.len.textContent = g.path.length; hud.score.textContent = g.score;
+    if (k === drawKey) return; drawKey = k;
+    const L = g.path.length, faint = L >= EC.FAINT_FROM;
+    cells.forEach((el, c) => { el.className = 'cell'; el.style.opacity = ''; el.querySelector('i').textContent = ''; });
+    let lines = '';
+    if (ph === 'show' && li >= 0) { const el = cells[g.path[li]]; el.classList.add('lit'); if (faint && li >= L - 2) el.style.opacity = String(EC.FAINT_ALPHA); }
+    if (ph === 'input') for (let i = 0; i < g.idx; i++) { cells[g.path[i]].classList.add('got'); cells[g.path[i]].querySelector('i').textContent = i + 1; }
+    if (ph === 'fail' || ph === 'ok') {
+      g.path.forEach((c, i) => { const el = cells[c]; el.classList.add(ph === 'ok' ? 'gold' : 'ans'); const n = el.querySelector('i'); n.textContent = n.textContent ? n.textContent + '·' + (i + 1) : i + 1; });
+      if (ph === 'fail' && g.wrong) { cells[g.wrong.cell].classList.add('bad'); }
+      lines = path(g.path, ph === 'ok' ? '#facc15' : '#22d3ee');
+    }
+    svg.innerHTML = lines;
+    status.textContent = !armed ? '' : ph === 'show' ? T.watch : ph === 'input' ? T.yourTurn : ph === 'fail' && g.wrong ? T.failAt.replace('{n}', g.wrong.at + 1) : ph === 'ok' ? '✓' : '';
+    status.className = 'status ' + ph;
+    board.classList.toggle('shake', ph === 'fail' && !reduced());
+  }
+  const path = (p, col) => `<polyline points="${p.map((c) => cxy(c).join(',')).join(' ')}" fill="none" stroke="${col}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity=".85"${reduced() ? '' : ' class="draw"'}/>`;
+
+  // ---- results ----
+  let lastRec = null;
+  function finish() {
+    runEnd('time'); // echo ends only on the 90 s timer = complete
+    const rec = record(g), prev = load(LS_BEST, { v: null }).v; lastRec = rec; W.lastFail = g.log.rounds.filter((x) => x.res === 'fail').length;
+    const isBest = better(rec, prev); if (isBest) save(LS_BEST, { v: rec });
+    const best = isBest ? rec : prev;
+    $('#r-done').textContent = rec.done; $('#r-long').textContent = `${rec.longest} ${T.cells}`; $('#r-score').textContent = rec.score;
+    $('#r-best').textContent = `${T.done} ${best.done} · ${T.longest} ${best.longest} · ${best.score}`;
+    $('#r-new').hidden = !(isBest && prev); $('#r-first').hidden = !!prev;
+    $('#r-path').innerHTML = mini(rec.path);
+    res.hidden = false; W.result = { rec, best, prev };
+    setTimeout(() => $('#b-again').focus({ preventScroll: true }), 30);
+  }
+  const mini = (p) => `<svg viewBox="0 0 300 300" width="120" height="120" aria-hidden="true">${[...Array(9)].map((_, c) => `<rect x="${(c % 3) * 100 + 8}" y="${((c / 3) | 0) * 100 + 8}" width="84" height="84" rx="16" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.12)"/>`).join('')}${p.length ? `<polyline points="${p.map((c) => cxy(c).join(',')).join(' ')}" fill="none" stroke="#facc15" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>` : ''}</svg>`;
+  const shareUrl = () => { const u = new URL(location.href); u.search = ''; u.searchParams.set('seed', seed); return u.toString(); };
+  $('#b-again').addEventListener('click', () => { unlock(); W.result = null; start(true); });
+  $('#b-share').addEventListener('click', async () => {
+    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{url}', shareUrl());
+    if (navigator.share) {
+      ev('share_click', { via: 'native' });
+      try { await navigator.share({ text }); ev('share_done', { via: 'native' }); return; } // handed to the share sheet, not an SNS post
+      catch (e) { if (e && e.name === 'AbortError') { ev('share_fail', { via: 'native' }); return; } } // cancelled: never a success
+    }
+    ev('share_click', { via: 'text' });
+    try { await navigator.clipboard.writeText(text); ev('share_done', { via: 'text' }); say(T.copied); } catch { ev('share_fail', { via: 'text' }); say(text); }
+  });
+  $('#b-link').addEventListener('click', async () => { ev('share_click', { via: 'link' }); try { await navigator.clipboard.writeText(shareUrl()); ev('share_done', { via: 'link' }); say(T.copied); } catch { ev('share_fail', { via: 'link' }); say(shareUrl()); } });
+  $('#b-png').addEventListener('click', () => {
+    ev('share_click', { via: 'png' });
+    const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d'), r = lastRec || record(g);
+    const gr = x.createLinearGradient(0, 0, 1080, 1350); gr.addColorStop(0, '#0b0d1a'); gr.addColorStop(1, '#07080c'); x.fillStyle = gr; x.fillRect(0, 0, 1080, 1350);
+    x.textAlign = 'center'; x.fillStyle = '#e8eaf0'; x.font = '700 60px system-ui,sans-serif'; x.fillText(T.name, 540, 120);
+    const ox = 240, oy = 200, s = 200;
+    for (let k = 0; k < 9; k++) { x.fillStyle = 'rgba(255,255,255,.06)'; x.strokeStyle = 'rgba(255,255,255,.16)'; x.lineWidth = 3; x.beginPath(); x.roundRect(ox + (k % 3) * s + 14, oy + ((k / 3) | 0) * s + 14, s - 28, s - 28, 28); x.fill(); x.stroke(); }
+    if (r.path.length) {
+      x.strokeStyle = '#facc15'; x.lineWidth = 18; x.lineCap = x.lineJoin = 'round'; x.shadowColor = '#facc15'; x.shadowBlur = 24; x.beginPath();
+      r.path.forEach((k, i) => { const px = ox + (k % 3) * s + s / 2, py = oy + ((k / 3) | 0) * s + s / 2; i ? x.lineTo(px, py) : x.moveTo(px, py); }); x.stroke(); x.shadowBlur = 0;
+      const [sx, sy] = [ox + (r.path[0] % 3) * s + s / 2, oy + ((r.path[0] / 3) | 0) * s + s / 2]; x.fillStyle = '#22d3ee'; x.beginPath(); x.arc(sx, sy, 22, 0, Math.PI * 2); x.fill();
+    }
+    x.font = '800 116px system-ui,sans-serif'; x.fillStyle = '#22d3ee'; x.fillText(`${T.done} ${r.done}`, 540, 1000);
+    x.font = '600 54px system-ui,sans-serif'; x.fillStyle = '#e8eaf0'; x.fillText(`${T.longest} ${r.longest} ${T.cells} · ${r.score}`, 540, 1090);
+    x.font = '500 34px system-ui,sans-serif'; x.fillStyle = 'rgba(214,219,232,.72)'; x.fillText(`${today()} · seed ${seed} · playtoday.cloud`, 540, 1280);
+    c.toBlob((b) => { if (!b) { ev('share_fail', { via: 'png' }); return; } const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `echo-courier-${seed}.png`; document.body.appendChild(a); a.click(); a.remove(); ev('share_done', { via: 'png' }); setTimeout(() => URL.revokeObjectURL(a.href), 4000); W.png = b.size; W.pngUrl = c.toDataURL('image/png'); }, 'image/png');
+  });
+  $('#seed').textContent = seed;
+  requestAnimationFrame(frame);
+  start(false);
+})();
+})()</script>
+</body></html>
