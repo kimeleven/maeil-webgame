@@ -22,6 +22,7 @@
     const d = { g: 'magnet', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail is not in v1 and is dropped
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runs = 0;

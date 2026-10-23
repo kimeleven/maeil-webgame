@@ -1,0 +1,183 @@
+{
+  "at": "2026-10-23T05:56:10.100Z",
+  "base": "local",
+  "pass": 22,
+  "fail": 0,
+  "res": [
+    {
+      "name": "412 no event before first input",
+      "pass": true
+    },
+    {
+      "name": "412 sent = trackLog minus share_fail",
+      "pass": true,
+      "extra": {
+        "log": [
+          "play_start",
+          "play_end:time",
+          "share_click:link",
+          "share_done:link",
+          "play_again",
+          "play_end:time"
+        ],
+        "sent": 6
+      }
+    },
+    {
+      "name": "412 only contract keys sent",
+      "pass": true,
+      "extra": [
+        "id",
+        "name",
+        "lang",
+        "g",
+        "from",
+        "end",
+        "via"
+      ]
+    },
+    {
+      "name": "412 g=magnet lang=ko from=c",
+      "pass": true
+    },
+    {
+      "name": "412 unique ids",
+      "pass": true
+    },
+    {
+      "name": "412 batches ≤20 and 202",
+      "pass": true,
+      "extra": [
+        [
+          6,
+          202,
+          null
+        ]
+      ]
+    },
+    {
+      "name": "412 no page errors",
+      "pass": true,
+      "extra": []
+    },
+    {
+      "name": "1440 no event before first input",
+      "pass": true
+    },
+    {
+      "name": "1440 sent = trackLog minus share_fail",
+      "pass": true,
+      "extra": {
+        "log": [
+          "play_start",
+          "play_end:time",
+          "share_click:link",
+          "share_done:link",
+          "play_again",
+          "play_end:time"
+        ],
+        "sent": 6
+      }
+    },
+    {
+      "name": "1440 only contract keys sent",
+      "pass": true,
+      "extra": [
+        "id",
+        "name",
+        "lang",
+        "g",
+        "from",
+        "end",
+        "via"
+      ]
+    },
+    {
+      "name": "1440 g=magnet lang=ko from=c",
+      "pass": true
+    },
+    {
+      "name": "1440 unique ids",
+      "pass": true
+    },
+    {
+      "name": "1440 batches ≤20 and 202",
+      "pass": true,
+      "extra": [
+        [
+          6,
+          202,
+          null
+        ]
+      ]
+    },
+    {
+      "name": "1440 no page errors",
+      "pass": true,
+      "extra": []
+    },
+    {
+      "name": "qa=1: 0 POST /api/events",
+      "pass": true
+    },
+    {
+      "name": "automation(webdriver): 0 POST /api/events",
+      "pass": true
+    },
+    {
+      "name": "network down: game still finishes runs, nothing sent, no page errors",
+      "pass": true,
+      "extra": {
+        "phase": true,
+        "again": true,
+        "sent": 0
+      }
+    },
+    {
+      "name": "DB stats.games.magnet counts == events sent by 412+1440",
+      "pass": true,
+      "extra": {
+        "db": {
+          "play_start": 2,
+          "play_again": 2,
+          "play_end": 4,
+          "share_click": 2,
+          "share_done": 2
+        },
+        "want": {
+          "play_start": 2,
+          "play_again": 2,
+          "play_end": 4,
+          "share_click": 2,
+          "share_done": 2
+        }
+      }
+    },
+    {
+      "name": "DB endReasons match",
+      "pass": true,
+      "extra": {
+        "time": 4,
+        "lives": 0
+      }
+    },
+    {
+      "name": "DB rows exactly = unique sent (qa/automation/failed not stored)",
+      "pass": true
+    },
+    {
+      "name": "orbit/echo untouched (0) and sample flagged",
+      "pass": true,
+      "extra": {
+        "ends": 4,
+        "enough": false,
+        "label": "표본부족(n=4)"
+      }
+    },
+    {
+      "name": "availableSince set",
+      "pass": true,
+      "extra": "2026-10-23T05:56:04.051Z"
+    }
+  ]
+}

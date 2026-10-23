@@ -59,6 +59,7 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 <div class="bar"><span class="hint">Drag &amp; release / ←→ Space</span><button class="ic" id="b-pause" type="button" data-ui aria-label="暂停">⏸</button></div>
 </main><div class="toast" id="toast" role="status"></div>
 <script id="mt" type="application/json">{"name":"磁铁港口","title":"磁铁港口 (预览)","desc":"用磁铁吊车搬运摇晃的货物，堆到摇晃的船上，看看90秒能送出几艘船。","preview":"预览","back":"每日小游戏","time":"剩余","ships":"船","target":"装载","cols":"列","lives":"生命","goal":"在船上方松开摇晃的货物，堆好后发船 · 90秒","howMobile":"任意位置拖动移动吊车，松手即投放","howDesktop":"拖动移动，松开投放 · ←/→ 移动 + 空格投放","start":"开始","hint":"Drag & release / ←→ Space","pause":"暂停","paused":"已暂停","resume":"点击继续 (3秒后恢复)","over":"港口收工!","endTime":"90秒结束","endLives":"3个货物掉进了海里","shipsN":"{n} 艘船","now":"本局","best":"我的最佳","diff":"差距","first":"首次记录","newBest":"新纪录!","near":"再装 {n} 格就能多送一艘","score":"分数","perfect":"PERFECT","again":"再玩一次","png":"保存PNG","link":"复制挑战链接","copied":"已复制","sound":"声音","haptic":"振动","motion":"动态效果","shareText":"我在磁铁港口送出了 {ships} 艘船！同一个港口，你来试试？ → {url}","lastFall":"上次掉落","tipSea":"掉到船外了 → 紫色影子移到绿色格（船上）时再松手","tipHigh":"堆得太高 → 不要超过 3 层，从最低的一列开始向两侧铺开","tipTilt":"船身倾斜，货物掉落 → 另一侧也要堆放，让重心保持在中间","tipTime":"时间到 → 等摆动停下再松手，更容易获得 PERFECT","left":"距下一艘船还差{n}格 · {c}列","leftCells":"距下一艘船还差{n}格","leftCols":"距下一艘船还差{c}列(需4列以上)","guide":"绿色格＝船上落点 · 影子移到绿色格时松手","combo":"连续PERFECT ×{n}","comboRule":"连续 PERFECT 可获得 ×2、×3 得分；普通着陆或掉落会重置为 ×1"}</script>
+<script src="/js/gev.js"></script>
 <script>(()=>{// Magnet Harbor rule engine (prototype, t_1c491685). DOM-free, deterministic, fixed step 1/60 s.
 // GDD r2: workspace/maeil-arcade-local/games/magnet-harbor/GDD.md (2.0 time, 2.1 stacking/departure, 2.2 coords).
 // All tunables live in MH. Same seed + same input log → same result (state quantized every tick).
@@ -304,6 +305,7 @@ const POLICIES = {
     const d = { g: 'magnet', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail is not in v1 and is dropped
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runs = 0;
