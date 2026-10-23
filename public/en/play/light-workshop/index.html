@@ -354,7 +354,7 @@ cv.addEventListener('pointerup', (e) => { if (!pending || pending.id !== e.point
 cv.addEventListener('pointercancel', () => { pending = null; S.evlog.push({ k: 'cancel' }); });
 cv.addEventListener('lostpointercapture', () => { pending = null; });
 addEventListener('keydown', (e) => {
-  if (e.target.closest && e.target.closest('button,summary,a') && (e.key === ' ' || e.key === 'Enter') && g.phase !== 'ready') return;
+  if (e.target instanceof Element && e.target.closest('button,summary,a') && (e.key === ' ' || e.key === 'Enter') && g.phase !== 'ready') return;
   if (e.repeat) { if (e.key === ' ' || e.key.startsWith('Arrow') || e.key === 'Enter') e.preventDefault(); S.evlog.push({ k: 'repeat' }); return; }
   if (g.phase === 'ready') { if (e.key === 'Enter') { e.preventDefault(); doStart(); } return; }
   if (g.phase === 'result') { if (e.key === 'Enter') { e.preventDefault(); again(); } return; }
