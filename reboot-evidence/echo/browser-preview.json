@@ -1,0 +1,314 @@
+{
+  "base": "https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app",
+  "at": "2026-10-23T00:28:00.837Z",
+  "READY 412 clock frozen before start (t=0, HUD 90)": {
+    "pass": true,
+    "detail": "{\"t\":0,\"phase\":\"show\",\"r\":1,\"L\":3,\"idx\":0,\"done\":0,\"over\":false,\"hud\":\"90\",\"path\":[3,4,2],\"armed\":false}"
+  },
+  "READY 412 device wording": {
+    "pass": true,
+    "detail": "잔상이 꺼지면 같은 순서로 칸을 탭 / 탭해서 시작 / true"
+  },
+  "RUN_412": {
+    "wall": 90.019,
+    "gameT": 90,
+    "rec": {
+      "done": 14,
+      "longest": 12,
+      "score": 21444,
+      "path": [
+        3,
+        1,
+        0,
+        4,
+        8,
+        7,
+        5,
+        8,
+        5,
+        4,
+        3,
+        7
+      ],
+      "rounds": 16
+    },
+    "rounds": 16,
+    "a3": {
+      "tShow": 43,
+      "tNext": 1238,
+      "status": "2번째 칸에서 갈렸어요",
+      "nextL": 4,
+      "nextR": 3,
+      "wrongCell": 0
+    },
+    "a8": {
+      "before": 1.613,
+      "after": 11.653,
+      "phase": "input",
+      "fails": 0
+    },
+    "sfx": 388,
+    "vib": 125
+  },
+  "A5 412 run ends at 90 s real time (±0.5 incl. 0.25 s lead + start/result detection)": {
+    "pass": true,
+    "detail": "wall 90.02 s, game t 90"
+  },
+  "A1 412 lengths 3..12, +1 on success": {
+    "pass": true,
+    "detail": "3 4x 4 5 6 7 8 9 10 11 12 12 12 12 12 12"
+  },
+  "A2 412 played to the end with taps": {
+    "pass": true,
+    "detail": "done 14, longest 12, score 21444"
+  },
+  "A8 412 10 s idle in input → no fail": {
+    "pass": true,
+    "detail": "{\"before\":1.613,\"after\":11.653,\"phase\":\"input\",\"fails\":0}"
+  },
+  "A3 412 wrong cell + answer ≤1 s, next path (r+1, same length) ≤1.5 s": {
+    "pass": true,
+    "detail": "{\"tShow\":43,\"tNext\":1238,\"status\":\"2번째 칸에서 갈렸어요\",\"nextL\":4,\"nextR\":3,\"wrongCell\":0}"
+  },
+  "A5 412 result shows deliveries/longest, focus on again": {
+    "pass": true,
+    "detail": "focus "
+  },
+  "A5 412 Enter = again, starts at once": {
+    "pass": true,
+    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.2912000000238477,\"starts\":2}"
+  },
+  "A6d 412 no API / external requests (only the page itself)": {
+    "pass": true,
+    "detail": "1 same-origin: https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=check; other "
+  },
+  "A10 412 no horizontal overflow": {
+    "pass": true,
+    "detail": "scrollWidth-innerWidth=0"
+  },
+  "READY 1440 clock frozen before start (t=0, HUD 90)": {
+    "pass": true,
+    "detail": "{\"t\":0,\"phase\":\"show\",\"r\":1,\"L\":3,\"idx\":0,\"done\":0,\"over\":false,\"hud\":\"90\",\"path\":[3,4,2],\"armed\":false}"
+  },
+  "READY 1440 device wording": {
+    "pass": true,
+    "detail": "잔상이 꺼지면 같은 순서로 클릭 또는 숫자 1~9 / 클릭 · Space · Enter로 시작 / true"
+  },
+  "RUN_1440": {
+    "wall": 90.073,
+    "gameT": 90,
+    "rec": {
+      "done": 15,
+      "longest": 12,
+      "score": 24600,
+      "path": [
+        3,
+        0,
+        4,
+        8,
+        5,
+        1,
+        5,
+        8,
+        4,
+        3,
+        0,
+        3
+      ],
+      "rounds": 16
+    },
+    "rounds": 16,
+    "a3": null,
+    "a8": {
+      "before": 1.606,
+      "after": 11.741,
+      "phase": "input",
+      "fails": 0
+    },
+    "sfx": 424,
+    "vib": 142
+  },
+  "A5 1440 run ends at 90 s real time (±0.5 incl. 0.25 s lead + start/result detection)": {
+    "pass": true,
+    "detail": "wall 90.07 s, game t 90"
+  },
+  "A1 1440 lengths 3..12, +1 on success": {
+    "pass": true,
+    "detail": "3 4 5 6 7 8 9 10 11 12 12 12 12 12 12 12"
+  },
+  "A2 1440 played to the end with keys 1-9 + clicks": {
+    "pass": true,
+    "detail": "done 15, longest 12, score 24600"
+  },
+  "A8 1440 10 s idle in input → no fail": {
+    "pass": true,
+    "detail": "{\"before\":1.606,\"after\":11.741,\"phase\":\"input\",\"fails\":0}"
+  },
+  "A5 1440 result shows deliveries/longest, focus on again": {
+    "pass": true,
+    "detail": "focus b-again"
+  },
+  "A5 1440 Enter = again, starts at once": {
+    "pass": true,
+    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.2955000000238361,\"starts\":2}"
+  },
+  "A6d 1440 no API / external requests (only the page itself)": {
+    "pass": true,
+    "detail": "1 same-origin: https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=check; other "
+  },
+  "A10 1440 no horizontal overflow": {
+    "pass": true,
+    "detail": "scrollWidth-innerWidth=0"
+  },
+  "A6b browser: rounds 1..10 share the shorter prefix across different histories": {
+    "pass": true,
+    "detail": "10/10 rounds, length differs at rounds 3,4,5,6,7,8,9,10"
+  },
+  "A5 hidden tab 10 s (simulated visibilitychange) → remaining time same, echo replays from start": {
+    "pass": true,
+    "detail": "hidden=true,true, t 3.105→3.16, phase show, idx 1→0"
+  },
+  "HIDDEN": {
+    "before": {
+      "t": 3.105,
+      "phase": "input",
+      "r": 1,
+      "L": 3,
+      "idx": 1,
+      "done": 0,
+      "over": false,
+      "hud": "87",
+      "path": [
+        3,
+        4,
+        2
+      ],
+      "armed": true
+    },
+    "after": {
+      "t": 3.16,
+      "phase": "show",
+      "r": 1,
+      "L": 3,
+      "idx": 0,
+      "done": 0,
+      "over": false,
+      "hud": "87",
+      "path": [
+        3,
+        4,
+        2
+      ],
+      "armed": true
+    }
+  },
+  "A9 reduced motion: no shake / line animation": {
+    "pass": true,
+    "detail": "{\"body\":true,\"shake\":\"none\",\"line\":\"none\"}"
+  },
+  "A9 sound off + haptic off persist after reload": {
+    "pass": true,
+    "detail": "{\"ls\":\"{\\\"sound\\\":false,\\\"haptic\\\":false,\\\"motion\\\":true}\",\"sound\":\"false\",\"haptic\":\"false\",\"icon\":\"🔇\"}"
+  },
+  "A9 haptic off → no vibrate calls, sound off → no tones": {
+    "pass": true,
+    "detail": "vib 0, sfx 0"
+  },
+  "A7 result PNG 1080×1350 saved locally (deliveries, longest path line, date)": {
+    "pass": true,
+    "detail": "1080×1350, 753628 B, rec {\"done\":4,\"longest\":6,\"score\":2144,\"path\":[4,3,1,2,5,7],\"rounds\":5} — 그림 내용은 result-card.png 육안 확인"
+  },
+  "A7 PNG made with no network": {
+    "pass": true,
+    "detail": "https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=png-card https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=png-card"
+  },
+  "A10 first interaction ≤2 s (4× CPU, Fast 3G 562.5 ms)": {
+    "pass": true,
+    "detail": "889 ms, HTML gzip 11.0 KB (1 request)"
+  },
+  "A10 avg fps ≥50 under 4× CPU": {
+    "pass": true,
+    "detail": "72.0 fps"
+  },
+  "A10 game JS+HTML gzip ≤50 KB": {
+    "pass": true,
+    "detail": "11289 B"
+  },
+  "PERF": {
+    "tReady": 889,
+    "fps": 72,
+    "gz": 11289
+  },
+  "A11 ko 360: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 ko 412: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 ko 1440: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 en 360: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 en 412: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 en 1440: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 ja 360: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 ja 412: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 ja 1440: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 zh-hans 360: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 zh-hans 412: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 zh-hans 1440: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 es 360: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 es 412: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 es 1440: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 pt-br 360: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 pt-br 412: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  },
+  "A11 pt-br 1440: no overflow (ready+result)": {
+    "pass": true,
+    "detail": "{\"a\":{\"bad\":[],\"ovf\":0},\"r\":{\"bad\":[],\"ovf\":0}}"
+  }
+}
