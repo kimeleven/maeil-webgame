@@ -1,0 +1,498 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+<title>Rhythm Garden (Preview) | playtoday</title><meta name="description" content="Tap when each pot reaches the planting line. Keep the streak going and fill your garden in 90 seconds."><meta name="robots" content="noindex,nofollow"><link rel="icon" href="data:,">
+<style>:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;overscroll-behavior:contain}
+body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;gap:6px}
+.logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:var(--gold)}.tr{display:flex;gap:6px;align-items:center}
+.langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--cyan)}
+.stage{position:relative;width:min(100vw,calc((100dvh - 64px)*9/16),540px);height:min(calc(100dvh - 64px),960px);display:flex;flex-direction:column;padding:0 10px 8px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:4px 0 6px;font-variant-numeric:tabular-nums}.hud div{display:flex;flex-direction:column;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:4px 2px;backdrop-filter:blur(18px)}
+.hud span{font-size:11px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud b{font-size:17px;white-space:nowrap}
+#play{position:relative;flex:1;min-height:0;border-radius:20px;overflow:hidden;border:1px solid var(--edge);touch-action:none;cursor:pointer}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:6px}.hint{color:var(--muted);font-size:13px}
+.ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
+.ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
+.sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
+.panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}
+.sheet.ready{align-items:flex-start;padding-top:10px;background:linear-gradient(rgba(7,8,12,.55) 60%,rgba(7,8,12,0) 78%)}.ready .panel{gap:8px;padding:14px}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
+.icon{font-size:34px;letter-spacing:6px}.t90{font-size:13px;color:var(--muted)}
+.btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.btn.main{min-height:64px;width:100%;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
+.nums{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:14px}.nums span{color:var(--muted)}.nums b{font-size:18px}.nums b.big{font-size:34px;color:var(--cyan)}
+.new{color:#4ade80;font-weight:800}.cmp{font-size:13px;color:var(--muted)}.why{font-size:14px;color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
+.seed{color:var(--muted);font-size:12px;text-align:center}
+.guide{margin:0;font-size:14px;font-weight:600;color:#4ade80;padding:8px 10px;border-radius:12px;border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.08)}
+.tip{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;border:1px solid rgba(250,204,21,.35);background:rgba(250,204,21,.08)}.tip b{font-size:15px;line-height:1.35}.tipk{font-size:12px;color:var(--gold);font-weight:700}
+.near{font-size:15px;font-weight:700;color:var(--cyan)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+@media (min-width:900px){body{background:radial-gradient(900px 600px at 15% 30%,rgba(34,211,238,.10),transparent),radial-gradient(900px 600px at 85% 70%,rgba(99,102,241,.16),transparent),var(--bg)}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.sheet .panel{max-height:100%;overflow-y:auto}
+@media (max-height:860px){.ready .icon{display:none}.ready .panel{gap:6px;padding:12px}.ready .how,.ready .guide{font-size:13px}.ready .goal{font-size:15px}.btn.main{min-height:54px;font-size:20px}
+#res{padding:8px}#res .panel{gap:5px;padding:12px}.panel h2{font-size:19px}.nums b.big{font-size:26px}.nums{font-size:13px}.nums b{font-size:16px}.tip{padding:7px 10px}.tip b{font-size:14px}.near{font-size:14px}.tgs .tg,.row .btn{min-height:44px}}
+.hud .warn{border-color:#f87171;animation:bl .5s steps(2) infinite}@keyframes bl{50%{background:rgba(248,113,113,.25)}}.rm .hud .warn{animation:none;background:rgba(248,113,113,.25)}
+.skip{min-height:44px}@media (min-width:900px){.stage{width:min(760px,100vw);height:min(calc(100dvh - 64px),860px)}}
+.ofs{display:flex;align-items:center;justify-content:center;gap:10px}.ofs b{min-width:84px;text-align:center;font-size:22px;font-variant-numeric:tabular-nums}.lnk{background:none;border:0;color:var(--cyan);font:600 14px/1.2 inherit;min-height:44px;cursor:pointer;text-decoration:underline}
+.acc{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}.acc i{display:block;height:100%}.acc .e{background:#60a5fa}.acc .o{background:#4ade80}.acc .l{background:#f59e0b}.accl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}</style></head>
+<body data-page="rhythm-garden" data-lang="en">
+<header class="top"><a class="logo" href="/en/"><i></i>playtoday</a><span class="tag">Preview</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="Sound" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="Vibration" aria-pressed="true">📳</button><button class="ic" id="b-pause" type="button" data-ui aria-label="Pause">⏸</button><details class="langs" data-ui><summary aria-label="Language">en ▾</summary><nav><a href="/ko/play/rhythm-garden/" hreflang="ko">ko</a><a href="/en/play/rhythm-garden/" hreflang="en" aria-current="true">en</a><a href="/ja/play/rhythm-garden/" hreflang="ja">ja</a><a href="/zh-hans/play/rhythm-garden/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/rhythm-garden/" hreflang="es">es</a><a href="/pt-br/play/rhythm-garden/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
+<main class="stage" id="stage">
+<div class="hud"><div><span>Time</span><b id="h-time">90</b></div><div><span>Score</span><b id="h-score">0</b></div><div><span>Streak</span><b id="h-combo">0 ×1</b></div><div><span>Leaves</span><b id="h-leaves">🍃5</b></div></div>
+<div id="play" role="application" aria-label="Rhythm Garden"><canvas id="cv"></canvas>
+<div class="sheet ready" id="ready" data-ui><div class="panel">
+<h2>Rhythm Garden</h2><p class="goal">Tap as pots reach the line · 90 s</p><div class="icon" aria-hidden="true">🪴👆🌸</div><p class="how">Skip empty (dashed) pots; hold vines and let go at the end</p>
+<button class="btn main" id="b-start" type="button">Start</button><div class="t90">Time 90 · Enter to start · Space / tap to plant</div>
+<button class="lnk" id="b-ofs" type="button">Timing offset: <span id="ofs-v">0</span>ms</button>
+</div></div>
+<div class="sheet pz" id="ofs" data-ui hidden><div class="panel"><h2>Timing offset</h2><p class="how">+ if taps register late, − if early</p>
+<div class="ofs"><button class="btn" id="o-m" type="button" aria-label="-10">−10</button><b id="o-v">0</b><button class="btn" id="o-p" type="button" aria-label="+10">+10</button></div>
+<button class="btn" id="o-x" type="button">Close</button></div></div>
+<div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>Paused</h2><p class="how">Tap to continue (resumes in 3 s)</p><b id="pz-n"></b><div class="tgs"><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">Motion effects</button></div></div></div>
+<div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
+<h2 id="r-title">Garden closed!</h2><div class="new" id="r-new" hidden>New best!</div><div class="new" id="r-first" hidden>First record</div>
+<div class="nums"><span>This run</span><b class="big" id="r-score"></b><span>Best streak</span><b id="r-combo"></b><span>PERFECT</span><b id="r-perf"></b><span>My best</span><b id="r-best"></b><span>Diff</span><b id="r-diff"></b></div>
+<div class="acc" id="r-acc" aria-hidden="true"><i class="e"></i><i class="o"></i><i class="l"></i></div><div class="accl"><span id="r-ae"></span><span id="r-ao"></span><span id="r-al"></span></div>
+<div class="why" id="r-stat"></div>
+<button class="btn main" id="b-again" type="button">Play again</button>
+<div class="row"><button class="btn" id="b-png" type="button">Save PNG</button><button class="btn" id="b-link" type="button">Copy challenge link</button></div>
+<div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">Sound</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">Vibration</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">Motion effects</button></div><div class="seed">seed <span id="seed"></span> <span id="r-chart"></span></div>
+</div></div>
+</div>
+<div class="bar"><span class="hint">Tap / Space on the beat</span></div>
+</main><div class="toast" id="toast" role="status"></div>
+<script id="rt" type="application/json">{"name":"Rhythm Garden","desc":"Tap when each pot reaches the planting line. Keep the streak going and fill your garden in 90 seconds.","back":"playtoday","preview":"Preview","time":"Time","score":"Score","combo":"Streak","leaves":"Leaves","goal":"Tap as pots reach the line · 90 s","how":"Skip empty (dashed) pots; hold vines and let go at the end","start":"Start","keys":"Enter to start · Space / tap to plant","hint":"Tap / Space on the beat","pause":"Pause","paused":"Paused","resume":"Tap to continue (resumes in 3 s)","over":"Garden closed!","now":"This run","best":"My best","diff":"Diff","first":"First record","newBest":"New best!","maxCombo":"Best streak","perfect":"PERFECT","again":"Play again","png":"Save PNG","link":"Copy challenge link","copied":"Copied","sound":"Sound","haptic":"Vibration","motion":"Motion effects","offset":"Timing offset","offsetHelp":"+ if taps register late, − if early","close":"Close","early":"Early","ok":"On beat","late":"Late","meanEarly":"Avg {n} ms early","meanLate":"Avg {n} ms late","meanOk":"On beat on average (±{n} ms)","finish":"Finish bonus +{n}","wilted":"All 5 leaves wilted","fallback":"Standard chart","shareText":"I grew a {combo}-flower streak in Rhythm Garden. Same garden, your turn? → {url}"}</script>
+<script>(()=>{// Rhythm Garden rule engine (prototype, t_177308a9). DOM-free, deterministic, integer ms on the ACTIVE clock.
+// GDD r2: workspace/maeil-arcade-local/games/rhythm-garden/GDD.md (2.0 time, 2.1 judge, 2.2 vine, 6/6.1 chart, 7 score, 8 abuse).
+// Same seed → same chart. Same input log (kind, raw active ms, offset) → same result. No wall clock, no frames.
+const RG = {
+  DUR: 90000, LIVES: 5, PERFECT: 50,
+  W_EARLY: 160, W_LATE: 120, W_SWITCH: 10000,   // w_k = t_k < 10000 ? 160 : 120 (10000 exactly → 120)
+  GAP_PAD: 20,                                    // neighbours: t_{k+1} - t_k >= w_k + w_{k+1} + 20
+  FIRST: 1334,                                    // intro 2 beats at 90 BPM (2 × 667)
+  TRIES: 8,
+  SCORE: { good: 10, perfect: 20, per: 10, multMax: 4, finish: 100, leaf: 20 },
+  // [from ms, beat ms, rest ratio, vine ratio, vine lengths, offbeat ratio]
+  SEG: [
+    { at: 0, p: 667, rest: 0, vine: 0, len: [], off: 0 },
+    { at: 10000, p: 600, rest: 0.2, vine: 0, len: [], off: 0 },
+    { at: 30000, p: 545, rest: 0.2, vine: 0.12, len: [1, 2], off: 0.1 },
+    { at: 60000, p: 500, rest: 0.25, vine: 0.12, len: [2], off: 0 },   // 120 BPM: no offbeats (PO)
+  ],
+  VINE_FIRST: [30000, 36000],
+};
+const winOf = (t) => (t < RG.W_SWITCH ? RG.W_EARLY : RG.W_LATE);
+const segOf = (t) => { let s = RG.SEG[0]; for (const x of RG.SEG) if (t >= x.at) s = x; return s; };
+function hash(s) { let h = 2166136261 >>> 0; for (const c of String(s)) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+// offset o (ms): o > 0 means "my input is stamped late". Stored value → integer in [-100, 100]; NaN → 0.
+function normOffset(v) { const n = typeof v === 'number' ? v : typeof v === 'string' && v.trim() !== '' ? Number(v) : NaN; if (!Number.isFinite(n)) return 0; return Math.max(-100, Math.min(100, Math.round(n))); }
+
+// ---- chart ----
+// beat: { t, w, kind: 'seed'|'rest'|'head'|'tail', off?: true, v?: vine index }; vines: [{ h, e }] (beat indexes)
+// Last beat window must end by 90000 (t + w <= 90000) so every judged beat can close inside the session.
+function build(R) {
+  const beats = [], vines = []; let t = RG.FIRST, slot = 0, restRun = 0, vineDone = false;
+  const push = (b) => { b.w = winOf(b.t); beats.push(b); return beats.length - 1; };
+  const room = (t) => t + winOf(t) <= RG.DUR;
+  while (room(t)) {
+    const s = segOf(t);
+    // first vine guaranteed in [30000, 36000]: R decides early, forced at the last slot that still fits
+    const vineOk = s.vine > 0 && (vineDone || (t >= RG.VINE_FIRST[0] && t <= RG.VINE_FIRST[1]));
+    const forceVine = !vineDone && vineOk && t + segOf(t).p > RG.VINE_FIRST[1];
+    if (slot >= 5 && vineOk && (forceVine || R('vine') < (vineDone ? s.vine : 0.35))) {
+      const L = s.len.length === 1 ? s.len[0] : s.len[Math.floor(R('len') * s.len.length) % s.len.length];
+      let e = t; for (let i = 0; i < L; i++) e += segOf(e).p;
+      const after = e + segOf(e).p;               // the slot after the tail stays empty
+      if (room(e)) {
+        const h = push({ t, kind: 'head', v: vines.length }), ei = push({ t: e, kind: 'tail', v: vines.length });
+        vines.push({ h, e: ei }); vineDone = true; restRun = 0; t = after + segOf(after).p; slot += L + 2; continue;
+      }
+    }
+    if (slot >= 5 && s.rest > 0 && restRun < 2 && R('rest') < s.rest) { push({ t, kind: 'rest' }); restRun++; }
+    else {
+      push({ t, kind: 'seed' }); restRun = 0;
+      const half = Math.ceil(s.p / 2), nt = t + s.p;
+      if (slot >= 5 && s.off > 0 && t + half < 60000 && segOf(nt).off > 0 && room(t + half) && R('off') < s.off) push({ t: t + half, kind: 'seed', off: true });
+    }
+    t += s.p; slot++;
+  }
+  return { beats, vines };
+}
+// 6.1 validator ①~⑧ (independent of the builder). Returns list of failed rule numbers.
+function validate(c) {
+  const B = c.beats, bad = new Set();
+  for (let k = 0; k + 1 < B.length; k++) if (B[k + 1].t - B[k].t < B[k].w + B[k + 1].w + RG.GAP_PAD) bad.add(1);
+  for (const b of B) if (b.w !== winOf(b.t)) bad.add(1);
+  if (B.length < 5 || B.slice(0, 5).some((b) => b.kind !== 'seed')) bad.add(2);
+  if (B.filter((b) => b.kind === 'rest' && b.t >= 10000 && b.t < 30000).length < 5) bad.add(3);
+  let run = 0; for (const b of B) { run = b.kind === 'rest' ? run + 1 : 0; if (run > 2) bad.add(4); }
+  for (const v of c.vines) {
+    const h = B[v.h], e = B[v.e]; if (h.kind !== 'head' || e.kind !== 'tail' || v.e !== v.h + 1 || h.off || e.off) bad.add(5);
+    const nxt = B[v.e + 1], gap = segOf(e.t).p;  // nothing inside the vine and in the slot right after the tail
+    if (nxt && nxt.t <= e.t + gap) bad.add(5);
+    const L = Math.round((e.t - h.t) / segOf(h.t).p); if (L < 1 || L > 2) bad.add(5);
+  }
+  B.forEach((b, i) => { if ((b.kind === 'head' || b.kind === 'tail') && !c.vines.some((v) => v.h === i || v.e === i)) bad.add(5); });
+  const firstV = c.vines.length ? B[c.vines[0].h].t : -1;
+  if (!(firstV >= RG.VINE_FIRST[0] && firstV <= RG.VINE_FIRST[1]) || c.vines.some((v) => B[v.h].t < 30000)) bad.add(6);
+  if (B.some((b) => b.off && b.t >= 60000)) bad.add(7);
+  if (!B.length || B[B.length - 1].t > RG.DUR) bad.add(8);
+  for (let k = 0; k + 1 < B.length; k++) if (B[k + 1].t <= B[k].t) bad.add(1);
+  return [...bad].sort();
+}
+// Fixed fallback chart (no rng): seeds, rest pattern every 3rd/7th slot in 10–30 s, vine 1 at first slot ≥ 30 s, more vines every 9 slots.
+let FB = null;
+function fallbackChart() {
+  if (FB) return FB; let n = 0;
+  const R = (k) => { n++; if (k === 'rest') return n % 4 === 0 ? 0 : 1; if (k === 'vine') return n % 9 === 0 ? 0 : 1; if (k === 'len') return 0.9; return 1; };
+  FB = { ...build(R), attempt: -1, fallback: true }; return FB;
+}
+function genChart(seed, opts = {}) {
+  const check = opts.validate || validate; let tries = 0;
+  for (let a = 0; a < RG.TRIES; a++) {
+    tries++; const r = rng(hash(`${seed}#${a}`)); const c = build(() => r());
+    if (check(c).length === 0) return { ...c, attempt: a, fallback: false, tries };
+  }
+  return { ...fallbackChart(), tries };
+}
+
+// ---- game ----
+// phases: ready → play → result. The UI owns pause/count; it converts event.timeStamp → raw active ms (integer) and calls these.
+function createGame(seed, opts = {}) {
+  const chart = opts.chart || genChart(seed, opts);
+  return { seed, chart, o: normOffset(opts.offset ?? 0), phase: 'ready', now: 0, ci: 0,
+    res: chart.beats.map(() => null),         // per beat: null | 'perfect'|'good'|'miss'|'pass'|'wilt'|'hit'
+    taps: chart.beats.map(() => 0), vine: chart.vines.map(() => 'wait'),   // wait|held|done
+    held: null, wilts: 0, score: 0, combo: 0, maxCombo: 0, perfect: 0, good: 0, deltas: [], events: [], log: [], end: null };
+}
+function start(g) { if (g.phase !== 'ready') return false; g.phase = 'play'; g.now = 0; return true; }
+const mult = (combo) => Math.min(RG.SCORE.multMax, 1 + Math.floor(combo / RG.SCORE.per));
+const ev = (g, e) => { g.events.push(e); return e; };
+function wilt(g, c, why, k) {
+  g.wilts++; g.combo = 0; const e = ev(g, { a: 'wilt', why, k, c });
+  if (g.wilts >= RG.LIVES) finish(g, c, false);
+  return e;
+}
+function hit(g, k, c, part) {
+  const b = g.chart.beats[k], d = c - b.t, per = Math.abs(d) <= RG.PERFECT;
+  const m = mult(g.combo), pts = (per ? RG.SCORE.perfect : RG.SCORE.good) * m;
+  g.score += pts; g.combo++; g.maxCombo = Math.max(g.maxCombo, g.combo); if (per) g.perfect++; else g.good++; g.deltas.push(d);
+  return ev(g, { a: per ? 'perfect' : 'good', k, d, pts, part, c });
+}
+function finish(g, c, survived) {
+  if (g.phase === 'result') return; g.phase = 'result'; g.held = null;
+  const leaves = RG.LIVES - g.wilts, bonus = survived ? RG.SCORE.finish + RG.SCORE.leaf * leaves : 0;
+  g.score += bonus; g.end = { c, survived, bonus, leaves };
+}
+// close every beat whose window ended before corrected time c (strictly: an input exactly at t+w still belongs to the window)
+function close(g, c) {
+  const B = g.chart.beats;
+  while (g.phase === 'play' && g.ci < B.length && B[g.ci].t + B[g.ci].w < c) {
+    const k = g.ci, b = B[k]; g.ci++; const end = b.t + b.w;
+    if (b.kind === 'seed') { if (!g.taps[k]) { g.res[k] = 'miss'; wilt(g, end, 'miss', k); } }
+    else if (b.kind === 'rest') { if (!g.res[k]) { g.res[k] = 'pass'; ev(g, { a: 'pass', k, c: end }); } }
+    else if (b.kind === 'head') { if (g.vine[b.v] === 'wait') { g.vine[b.v] = 'done'; g.res[k] = 'miss'; wilt(g, end, 'miss', k); } }
+    else if (b.kind === 'tail') { if (g.vine[b.v] === 'held') { g.vine[b.v] = 'done'; g.held = null; g.res[k] = 'late'; wilt(g, end, 'late', k); } }
+  }
+}
+// advance to raw active ms (frame driver / before every input). Ends at 90 s active.
+function advance(g, raw) {
+  if (g.phase !== 'play') return; raw = Math.max(raw, g.now); g.now = raw;
+  close(g, raw - g.o);
+  if (g.phase === 'play' && raw >= RG.DUR) { close(g, RG.DUR - g.o); if (g.phase === 'play') finish(g, RG.DUR - g.o, true); }
+}
+const beatAt = (g, c) => { const B = g.chart.beats; for (let k = g.ci; k < B.length && B[k].t - B[k].w <= c; k++) if (Math.abs(c - B[k].t) <= B[k].w) return k; return -1; };
+// kind: 'down' | 'up' | 'cancel'; id: pointer id or 'key'. Returns the event it produced (or {a:'ignored'}).
+function input(g, kind, raw, id = 'p') {
+  raw = Math.round(raw); if (g.phase !== 'play') return { a: 'ignored' };
+  g.log.push([kind, raw, g.o, id]);
+  advance(g, raw); if (g.phase !== 'play') return { a: 'ignored' };
+  const c = raw - g.o, B = g.chart.beats;
+  if (kind === 'down') {
+    if (g.held) return ev(g, { a: 'ignored', why: 'holding', c });
+    const k = beatAt(g, c);
+    if (k < 0) return wilt(g, c, 'stray', -1);
+    const b = B[k];
+    if (b.kind === 'seed') { g.taps[k]++; if (g.taps[k] > 1) { g.res[k] = 'wilt'; return wilt(g, c, 'double', k); } const e = hit(g, k, c, 'seed'); g.res[k] = e.a; return e; }
+    if (b.kind === 'rest') { g.taps[k]++; g.res[k] = 'wilt'; return wilt(g, c, 'rest', k); }
+    if (b.kind === 'head' && g.vine[b.v] === 'wait') { g.vine[b.v] = 'held'; g.held = { v: b.v, id }; const e = hit(g, k, c, 'head'); g.res[k] = e.a; return e; }
+    return ev(g, { a: 'ignored', why: 'vine-done', c });   // head/tail window of a finished vine: no extra wilt (≤ 1 per vine)
+  }
+  // up / cancel
+  if (!g.held || g.held.id !== id) return { a: 'ignored', why: 'not-held' };
+  const v = g.held.v, e = B[g.chart.vines[v].e], ek = g.chart.vines[v].e; g.held = null; g.vine[v] = 'done';
+  if (c < e.t - e.w) { g.res[ek] = 'early'; return wilt(g, c, 'early', ek); }
+  const r = hit(g, ek, c, 'tail'); g.res[ek] = r.a; return r;
+}
+// pause while holding a vine: treat as up at the last active time before the pause; buttons/keys still down after resume are not "held".
+function pauseRelease(g, raw) { if (g.held) return input(g, 'up', raw, g.held.id); return null; }
+function record(g) { return { score: g.score, maxCombo: g.maxCombo, perfect: g.perfect }; }
+function better(a, b) { if (!b) return true; if (a.score !== b.score) return a.score > b.score; return a.maxCombo > b.maxCombo; }
+function accuracy(g) {
+  const d = g.deltas, n = d.length, mean = n ? Math.round(d.reduce((s, x) => s + x, 0) / n) : 0;
+  const bins = { early: d.filter((x) => x < -RG.PERFECT).length, ok: d.filter((x) => Math.abs(x) <= RG.PERFECT).length, late: d.filter((x) => x > RG.PERFECT).length };
+  return { n, mean, bins };
+}
+// replay a log [[kind, raw, o, id], ...] — o comes from the log, so changing the setting later does not change a replay
+function replay(seed, log, opts = {}) {
+  const g = createGame(seed, opts); start(g);
+  for (const [kind, raw, o, id] of log) { g.o = o; input(g, kind, raw, id); }
+  g.o = log.length ? log[log.length - 1][2] : g.o; advance(g, RG.DUR); return g;
+}
+// ---- policies (R2 / R5 / R11) ----
+const POLICIES = ['perfect', 'idle', 'double', 'everyBeat', 'random'];
+// returns list of [kind, raw, id]
+function policyInputs(chart, pol, r = rng(1)) {
+  const out = [], B = chart.beats;
+  if (pol === 'perfect') for (const b of B) { if (b.kind === 'seed' || b.kind === 'head') out.push(['down', b.t, 'p']); if (b.kind === 'tail') out.push(['up', b.t, 'p']); }
+  if (pol === 'double') for (const b of B) if (b.kind !== 'tail' && !b.off) { out.push(['down', b.t, 'p'], ['up', b.t + 20, 'p'], ['down', b.t + 40, 'p'], ['up', b.t + 60, 'p']); }
+  if (pol === 'everyBeat') for (const b of B) if (!b.off && b.kind !== 'tail') { out.push(['down', b.t, 'p'], ['up', b.t + 30, 'p']); }  // on every grid beat incl. rests, ignoring kinds
+  if (pol === 'random') { // one tap per beat period at a uniformly random moment inside it
+    let t = RG.FIRST - Math.round(segOf(0).p / 2); while (t < RG.DUR) { const p = segOf(t).p; const x = t + Math.floor(r() * p); out.push(['down', x, 'p'], ['up', x + 40, 'p']); t += p; }
+  }
+  return out;
+}
+function simulate(seed, pol, opts = {}) {
+  const g = createGame(seed, opts); start(g); const r = rng(hash('pol:' + seed));
+  for (const [k, raw, id] of policyInputs(g.chart, pol, r)) { if (g.phase !== 'play') break; input(g, k, raw, id); }
+  advance(g, RG.DUR); return g;
+}
+
+// Rhythm Garden UI (prototype, t_177308a9). Inlined after rhythm-core.js by scripts/build-rhythm.mjs. No /api, no analytics.
+// Judging uses event.timeStamp → active ms (GDD 2.1): active(ts) = ts − T_start − P. Frames only draw and close windows (with a small lag).
+const D = JSON.parse(document.getElementById('rt').textContent);
+const $ = (id) => document.getElementById(id);
+const loadLS = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k) || 'null') || {}); } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const q = new URLSearchParams(location.search);
+const today = (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; })();
+const seed = (q.get('seed') || today).replace(/[^A-Za-z0-9-]/g, '').slice(0, 64) || today;
+const FPS = Math.max(0, Math.min(120, Number(q.get('fps')) || 0));   // debug: throttle drawing + frame driver (R6 evidence)
+const mq = matchMedia('(prefers-reduced-motion: reduce)');
+const set = loadLS('rg-set', { sound: true, haptic: true, motion: !mq.matches });
+let off = (() => { try { return normOffset(JSON.parse(localStorage.getItem('rg-off'))); } catch { return normOffset(localStorage.getItem('rg-off')); } })();
+const canVib = typeof navigator.vibrate === 'function';
+const W = { snd: [], vib: 0, frames: 0, ft: [], drawn: 0 };
+const LAG = 40;           // frame driver closes windows 40 ms behind "now" so queued input events (earlier timeStamp) are judged first
+const LEAD = 2000;        // a pot travels from the left edge to the line in 2 s (constant speed)
+// ---- audio (WebAudio synth, no files; silent until the first input = Start) ----
+let ac = null;
+const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+function tone(f, dur, type = 'sine', vol = 0.12, at = 0) {
+  if (!set.sound || !ac) return; const t = ac.currentTime + at, o = ac.createOscillator(), gn = ac.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t); gn.gain.setValueAtTime(vol, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + dur + 0.02);
+}
+const SND = {
+  tick: () => tone(1500, 0.035, 'square', 0.035),
+  perfect: () => [659, 831, 988].forEach((f) => tone(f, 0.22, 'triangle', 0.07)),
+  good: () => tone(659, 0.16, 'triangle', 0.08),
+  wilt: () => tone(110, 0.2, 'sawtooth', 0.06),
+  finish: () => [523, 659, 784, 1047].forEach((f, j) => tone(f, 0.4, 'triangle', 0.08, j * 0.06)),
+};
+const play = (k) => { W.snd.push(k); if (set.sound) SND[k](); };
+const buzz = (ms) => { if (set.haptic && canVib) try { navigator.vibrate(ms); W.vib++; } catch {} };
+// ---- state ----
+let g = createGame(seed, { offset: off }), T0 = 0, P = 0, pauseAt = 0, paused = false, countEnd = 0, ptr = null, keyDown = false;
+let best = loadLS('rg-best', { rec: null }).rec, lastTick = -1, fx = [];
+const cv = $('cv'), cx = cv.getContext('2d');
+const grid = (() => { const a = []; let t = RG.FIRST; while (t <= RG.DUR) { a.push(t); t += segOf(t).p; } return a; })();
+const act = (ts) => Math.round(ts - T0 - P);
+const S = window.__rg = { ready: false, E: { RG, createGame, start, input, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy }, W, seed, set, evlog: [], act, grid,
+  get g() { return g; }, get paused() { return paused || countEnd > 0; }, get T0() { return T0; }, get P() { return P; }, get off() { return off; } };
+const motion = () => set.motion && !mq.matches;
+function applySet() {
+  document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, on = !!set[k]; b.setAttribute('aria-pressed', on); b.classList.toggle('off', !on); if (b.dataset.icon) b.textContent = k === 'sound' ? (on ? '🔊' : '🔇') : on ? '📳' : '📴'; });
+  document.querySelectorAll('[data-set="haptic"]').forEach((b) => (b.hidden = !canVib));
+  document.body.classList.toggle('rm', !motion());
+  $('ofs-v').textContent = (off > 0 ? '+' : '') + off; $('o-v').textContent = (off > 0 ? '+' : '') + off;
+}
+document.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save('rg-set', set); if (k === 'sound' && set.sound) unlock(); applySet(); }));
+const setOff = (v) => { off = normOffset(v); save('rg-off', off); g.o = off; applySet(); };
+$('b-ofs').addEventListener('click', (e) => { e.stopPropagation(); $('ofs').hidden = false; });
+$('o-m').addEventListener('click', (e) => { e.stopPropagation(); setOff(off - 10); });
+$('o-p').addEventListener('click', (e) => { e.stopPropagation(); setOff(off + 10); });
+$('o-x').addEventListener('click', (e) => { e.stopPropagation(); $('ofs').hidden = true; });
+applySet();
+// ---- actions ----
+function doStart(ts) { if (g.phase !== 'ready') return; unlock(); g.o = off; start(g); T0 = ts; P = 0; lastTick = -1; fx = []; $('ready').hidden = true; $('ofs').hidden = true; S.evlog.push({ k: 'start', at: ts }); hud(); }
+function feed(kind, ts, id) {
+  if (g.phase !== 'play' || paused || countEnd) { S.evlog.push({ k: 'drop', kind }); return; }
+  const n0 = g.events.length; const r = input(g, kind, act(ts), id); S.evlog.push({ k: kind, id, raw: act(ts), r: r.a, why: r.why });
+  react(n0);
+}
+function react(n0) {
+  for (let i = n0; i < g.events.length; i++) {
+    const e = g.events[i]; if (e.a === 'perfect' || e.a === 'good') { play(e.a); buzz(10); fx.push({ k: e.a, d: e.d, at: performance.now() }); }
+    if (e.a === 'wilt') { play('wilt'); buzz(40); fx.push({ k: 'wilt', why: e.why, at: performance.now() }); }
+  }
+  if (g.phase === 'result' && $('res').hidden) showResult();
+}
+// pointer: anywhere in the play area (not on UI). First pointer only; cancel/lost capture = up.
+const pa = $('play');
+pa.addEventListener('pointerdown', (e) => {
+  if (e.target.closest('[data-ui]')) return; e.preventDefault(); unlock();
+  if (g.phase !== 'play') return;
+  if (ptr !== null) { S.evlog.push({ k: 'second-pointer', id: e.pointerId }); return; }
+  ptr = e.pointerId; try { pa.setPointerCapture(e.pointerId); } catch {}
+  feed('down', e.timeStamp, e.pointerId);
+});
+const endPtr = (kind) => (e) => { if (ptr !== e.pointerId) return; ptr = null; S.evlog.push({ k: 'ptr-' + e.type }); feed(kind, e.timeStamp, e.pointerId); };
+pa.addEventListener('pointerup', endPtr('up'));
+pa.addEventListener('pointercancel', endPtr('cancel'));
+pa.addEventListener('lostpointercapture', endPtr('cancel'));
+addEventListener('keydown', (e) => {
+  if (g.phase === 'ready') { if (e.key === 'Enter' && $('ofs').hidden) { e.preventDefault(); doStart(e.timeStamp); } return; }
+  if (g.phase === 'result') { if (e.key === 'Enter') { e.preventDefault(); again(); } return; }
+  if (e.key === ' ' || e.code === 'Space') {
+    e.preventDefault(); if (e.repeat) { S.evlog.push({ k: 'repeat' }); return; }
+    if (keyDown) return; keyDown = true; unlock(); feed('down', e.timeStamp, 'key'); return;
+  }
+  if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') pause();
+}, true);
+addEventListener('keyup', (e) => { if ((e.key === ' ' || e.code === 'Space') && keyDown) { e.preventDefault(); keyDown = false; feed('up', e.timeStamp, 'key'); } }, true);
+$('b-start').addEventListener('click', (e) => { e.stopPropagation(); doStart(e.timeStamp || performance.now()); });
+// pause (button, P/Esc, hidden tab, blur) → tap → 3 s count; active time frozen the whole time
+function pause() {
+  if (g.phase !== 'play' || paused) return; const now = performance.now();
+  if (countEnd) { countEnd = 0; } else pauseAt = now;
+  const n0 = g.events.length; if (g.held) { const r = pauseRelease(g, act(pauseAt)); S.evlog.push({ k: 'pause-release', r: r && r.a }); }
+  ptr = null; keyDown = false; paused = true; $('pz').hidden = false; $('pz-n').textContent = ''; S.evlog.push({ k: 'pause', raw: act(pauseAt) }); react(n0);
+}
+$('b-pause').addEventListener('click', (e) => { e.stopPropagation(); pause(); });
+$('pz').addEventListener('click', (e) => { if (e.target.closest('[data-set]') || !paused) return; paused = false; countEnd = performance.now() + 3000; });
+document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+addEventListener('blur', () => pause());
+// ---- result ----
+function showResult() {
+  const rec = record(g), was = best, nb = better(rec, was); if (nb) { best = rec; save('rg-best', { rec }); }
+  $('r-score').textContent = rec.score; $('r-combo').textContent = rec.maxCombo; $('r-perf').textContent = rec.perfect;
+  $('r-best').textContent = was ? `${was.score} · ${D.maxCombo} ${was.maxCombo}` : '—';
+  const sg = (n) => (n >= 0 ? '+' : '') + n;
+  $('r-diff').textContent = was ? `${sg(rec.score - was.score)} · ${sg(rec.maxCombo - was.maxCombo)}` : '—';
+  $('r-new').hidden = !(nb && was); $('r-first').hidden = !!was; $('seed').textContent = seed; $('r-chart').textContent = g.chart.fallback ? `· chart=fallback (${D.fallback})` : '';
+  const A = accuracy(g), tot = Math.max(1, A.n), bars = $('r-acc').children;
+  bars[0].style.width = (100 * A.bins.early) / tot + '%'; bars[1].style.width = (100 * A.bins.ok) / tot + '%'; bars[2].style.width = (100 * A.bins.late) / tot + '%';
+  $('r-ae').textContent = `◀ ${D.early} ${A.bins.early}`; $('r-ao').textContent = `${D.ok} ${A.bins.ok}`; $('r-al').textContent = `${D.late} ${A.bins.late} ▶`;
+  const mean = !A.n ? '' : Math.abs(A.mean) <= 10 ? D.meanOk.replace('{n}', 10) : (A.mean < 0 ? D.meanEarly : D.meanLate).replace('{n}', Math.abs(A.mean));
+  $('r-stat').textContent = [g.end.survived ? D.finish.replace('{n}', g.end.bonus) : D.wilted, mean].filter(Boolean).join(' · ');
+  if (g.end.survived) play('finish');
+  $('res').hidden = false; S.evlog.push({ k: 'result', at: performance.now(), rec, acc: A }); $('b-again').focus({ preventScroll: true });
+}
+function again() { g = createGame(seed, { offset: off }); paused = false; countEnd = 0; ptr = null; keyDown = false; fx = []; $('res').hidden = true; $('pz').hidden = true; $('ready').hidden = false; hud(); S.evlog.push({ k: 'again', at: performance.now() }); }
+$('b-again').addEventListener('click', (e) => { e.stopPropagation(); again(); });
+const shareUrl = () => `${location.origin}${location.pathname}?seed=${encodeURIComponent(seed)}`;
+$('b-link').addEventListener('click', async (e) => { e.stopPropagation(); const t = D.shareText.replace('{combo}', g.maxCombo).replace('{url}', shareUrl()); try { await navigator.clipboard.writeText(t); toast(D.copied); } catch { toast(t); } S.evlog.push({ k: 'copy', t }); });
+$('b-png').addEventListener('click', (e) => { e.stopPropagation(); const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
+  const gr = x.createLinearGradient(0, 0, 0, 1350); gr.addColorStop(0, '#0f1f17'); gr.addColorStop(1, '#07080c'); x.fillStyle = gr; x.fillRect(0, 0, 1080, 1350);
+  // garden strip: planted pots in order (flower / wilted leaf)
+  const items = g.res.map((r, k) => ({ r, b: g.chart.beats[k] })).filter((o) => o.r && o.r !== 'pass' && o.b.kind !== 'tail');
+  const per = 14, sz = 64; items.slice(0, per * 8).forEach((o, i) => { const px = 70 + (i % per) * sz, py = 150 + Math.floor(i / per) * sz; drawFlower(x, px + sz / 2, py + sz / 2, sz * 0.4, o.r); });
+  x.fillStyle = '#e8eaf0'; x.textAlign = 'center'; x.font = '800 150px system-ui,sans-serif'; x.fillText(g.score, 540, 900);
+  x.font = '600 48px system-ui,sans-serif'; x.fillStyle = 'rgba(214,219,232,.85)'; x.fillText(`${D.maxCombo} ${g.maxCombo} · PERFECT ${g.perfect}`, 540, 990); x.fillText(D.name, 540, 1080);
+  x.font = '500 34px system-ui,sans-serif'; x.fillText('playtoday.cloud', 540, 1290);
+  c.toBlob((bl) => { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = `rhythm-garden-${seed}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.evlog.push({ k: 'png' }); }, 'image/png'); });
+let tt = 0; function toast(s) { const t = $('toast'); t.textContent = s; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 1300); }
+// ---- HUD ----
+function hud(raw) {
+  const left = g.phase === 'ready' ? 90 : Math.max(0, Math.ceil((RG.DUR - (raw ?? g.now)) / 1000));
+  $('h-time').textContent = g.phase === 'result' && g.end && g.end.survived ? 0 : left; $('h-score').textContent = g.score;
+  $('h-combo').textContent = `${g.combo} ×${mult(g.combo)}`; $('h-leaves').textContent = `🍃${RG.LIVES - g.wilts}`;
+}
+// ---- render ----
+function fit() { const r = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== Math.round(w * r) || cv.height !== Math.round(h * r)) { cv.width = Math.round(w * r); cv.height = Math.round(h * r); } cx.setTransform(r, 0, 0, r, 0, 0); return [w, h]; }
+function drawFlower(x, px, py, s, r) {
+  if (r === 'perfect' || r === 'good' || r === 'hit') {
+    const big = r === 'perfect', R = s * (big ? 1 : 0.7);
+    x.fillStyle = big ? '#f472b6' : '#f9a8d4'; for (let a = 0; a < 5; a++) { const an = (a * 2 * Math.PI) / 5 - Math.PI / 2; x.beginPath(); x.arc(px + Math.cos(an) * R * 0.55, py + Math.sin(an) * R * 0.55, R * 0.42, 0, 7); x.fill(); }
+    x.fillStyle = '#facc15'; x.beginPath(); x.arc(px, py, R * 0.3, 0, 7); x.fill();
+    if (big) { x.strokeStyle = '#facc15'; x.lineWidth = 3; x.beginPath(); x.arc(px, py, R * 1.08, 0, 7); x.stroke(); }
+  } else { // wilted leaf
+    x.save(); x.translate(px, py); x.rotate(0.6); x.fillStyle = '#92400e'; x.beginPath(); x.ellipse(0, 0, s * 0.55, s * 0.25, 0, 0, 7); x.fill(); x.strokeStyle = '#451a03'; x.lineWidth = 2; x.beginPath(); x.moveTo(-s * 0.5, 0); x.lineTo(s * 0.5, 0); x.stroke(); x.restore();
+  }
+}
+function pot(x, px, py, s, b, r, tilt) {
+  x.save(); x.translate(px, py); if (tilt) x.rotate(0.35);
+  if (b.kind === 'rest') {
+    x.setLineDash([5, 4]); x.strokeStyle = 'rgba(214,219,232,.75)'; x.lineWidth = 2.5; x.beginPath(); x.moveTo(-s * 0.5, -s * 0.4); x.lineTo(s * 0.5, -s * 0.4); x.lineTo(s * 0.36, s * 0.45); x.lineTo(-s * 0.36, s * 0.45); x.closePath(); x.stroke(); x.setLineDash([]);
+    x.strokeStyle = 'rgba(248,113,113,.9)'; x.lineWidth = 3; x.beginPath(); x.moveTo(-s * 0.18, -s * 0.12); x.lineTo(s * 0.18, s * 0.24); x.moveTo(s * 0.18, -s * 0.12); x.lineTo(-s * 0.18, s * 0.24); x.stroke();
+  } else {
+    const k = b.off ? 0.72 : 1; x.scale(k, k);
+    x.fillStyle = '#b45309'; x.strokeStyle = '#fbbf24'; x.lineWidth = 2; x.beginPath(); x.moveTo(-s * 0.5, -s * 0.4); x.lineTo(s * 0.5, -s * 0.4); x.lineTo(s * 0.36, s * 0.45); x.lineTo(-s * 0.36, s * 0.45); x.closePath(); x.fill(); x.stroke();
+    x.fillStyle = '#78350f'; x.fillRect(-s * 0.55, -s * 0.5, s * 1.1, s * 0.16);
+    if (!r) { x.fillStyle = '#fde68a'; x.beginPath(); x.ellipse(0, s * 0.02, s * 0.11, s * 0.16, 0, 0, 7); x.fill(); }
+  }
+  x.restore();
+}
+function frame(now) {
+  const [w, h] = fit(); cx.clearRect(0, 0, w, h); const mo = motion();
+  const raw = g.phase === 'ready' ? 0 : g.phase === 'result' ? g.now : paused ? act(pauseAt) : countEnd ? act(pauseAt) : act(now);
+  const c = raw - g.o, laneY = h * 0.8, s = Math.min(46, w * 0.1), lineX = w * 0.75, sp = lineX / LEAD;
+  // garden (planted so far) in the middle: rows of 10 from the bottom up
+  const done = g.res.map((r, k) => ({ r, b: g.chart.beats[k] })).filter((o) => o.r && o.r !== 'pass' && o.b.kind !== 'tail');
+  const cols = 10, cs = Math.min(36, (w - 24) / cols), gy0 = laneY - s * 1.6;
+  done.slice(-cols * 9).forEach((o, i) => drawFlower(cx, 12 + (i % cols + 0.5) * ((w - 24) / cols), gy0 - Math.floor(i / cols) * cs, cs * 0.38, o.r));
+  // lane
+  cx.fillStyle = 'rgba(34,197,94,.08)'; cx.fillRect(0, laneY - s, w, s * 2); cx.strokeStyle = 'rgba(34,197,94,.3)'; cx.lineWidth = 1; cx.strokeRect(-1, laneY - s, w + 2, s * 2);
+  cx.strokeStyle = 'rgba(255,255,255,.12)'; for (const t of grid) { const px = lineX - (t - c) * sp; if (px < -4 || px > w + 4) continue; cx.beginPath(); cx.moveTo(px, laneY + s * 0.7); cx.lineTo(px, laneY + s); cx.stroke(); }
+  // plant line + beat flashes (intro, resume count, 1 beat before a tempo change: 2 flashes)
+  const near = grid.reduce((m, t) => (Math.abs(t - c) < Math.abs(m - c) ? t : m), grid[0]);
+  const chg = RG.SEG.some((sg) => sg.at > 0 && near < sg.at && sg.at - near <= segOf(near).p * 1.01);
+  const flashOn = (c < RG.FIRST || countEnd > 0 || chg) && Math.abs(near - c) < 90 && g.phase === 'play';
+  cx.strokeStyle = flashOn && !mo ? '#fff' : flashOn ? '#fef9c3' : 'rgba(125,211,252,.9)'; cx.lineWidth = flashOn ? (mo ? 6 : 9) : 3;
+  if (flashOn && mo) { cx.fillStyle = 'rgba(254,249,195,.18)'; cx.fillRect(lineX - 24, laneY - s * 1.2, 48, s * 2.4); }
+  cx.beginPath(); cx.moveTo(lineX, laneY - s * 1.15); cx.lineTo(lineX, laneY + s * 1.15); cx.stroke();
+  cx.font = `${s * 0.6}px system-ui`; cx.textAlign = 'center'; cx.textBaseline = 'middle'; cx.fillText('💧', lineX, laneY - s * 1.45);
+  // pots
+  const B = g.chart.beats;
+  for (const v of g.chart.vines) { const h0 = lineX - (B[v.h].t - c) * sp, e0 = lineX - (B[v.e].t - c) * sp; if (h0 < -s || e0 > w + s) continue; const st = g.vine[v.h === undefined ? 0 : B[v.h].v];
+    cx.fillStyle = st === 'held' ? 'rgba(74,222,128,.85)' : g.res[v.e] === 'early' || g.res[v.e] === 'late' || g.res[v.h] === 'miss' ? 'rgba(146,64,14,.6)' : 'rgba(34,197,94,.6)';
+    cx.fillRect(e0, laneY - s * 0.16, h0 - e0, s * 0.32); cx.fillStyle = '#86efac'; cx.beginPath(); cx.arc(e0, laneY, s * 0.22, 0, 7); cx.fill(); }
+  for (let k = Math.max(0, g.ci - 8); k < B.length; k++) {
+    const b = B[k], px = lineX - (b.t - c) * sp; if (px > w + s) continue; if (px < -s) break; if (b.kind === 'tail') continue;
+    const r = g.res[k], bad = r === 'miss' || r === 'wilt';
+    if (px > lineX + 2) cx.globalAlpha = Math.max(0.15, 1 - (px - lineX) / (w - lineX + s));
+    pot(cx, px, laneY, s, b, r && r !== 'pass' ? r : null, bad); cx.globalAlpha = 1;
+    if (r === 'perfect' || r === 'good') drawFlower(cx, px, laneY - s * 0.55, s * 0.42, r);
+    if (bad) drawFlower(cx, px, laneY - s * 0.6, s * 0.4, 'wilt');
+  }
+  // judgement fx (0.6 s): early/late arrows (shape, not colour), wilt cause icon
+  fx = fx.filter((f) => now - f.at < 600);
+  for (const f of fx) { const a = 1 - (now - f.at) / 600, yy = laneY - s * 2.2 - (mo ? (1 - a) * 20 : 0); cx.globalAlpha = a; cx.textAlign = 'center';
+    if (f.k === 'wilt') { cx.font = `800 ${s * 0.55}px system-ui`; cx.fillStyle = '#fca5a5'; cx.fillText({ miss: '⌛', stray: '✋', double: '✌', rest: '◌✕', early: '⤴', late: '⏳' }[f.why] || '✕', lineX, yy); }
+    else { cx.font = `800 ${s * 0.5}px system-ui`; cx.fillStyle = f.k === 'perfect' ? '#facc15' : '#e8eaf0'; cx.fillText((f.k === 'good' && f.d < -RG.PERFECT ? '◀ ' : '') + (f.k === 'perfect' ? 'PERFECT' : 'GOOD') + (f.k === 'good' && f.d > RG.PERFECT ? ' ▶' : ''), lineX, yy); }
+    cx.globalAlpha = 1; }
+  if (mo && fx.some((f) => f.k === 'wilt' && now - f.at < 120)) { cv.style.transform = `translateX(${Math.sin(now / 15) * 3}px)`; } else cv.style.transform = '';
+  // first-run icon during the intro: "tap when the pot touches the line"
+  if (g.phase === 'play' && c < RG.FIRST + 200) { cx.font = `${s * 0.8}px system-ui`; cx.fillText('👆', lineX, laneY + s * 1.6 + (mo ? Math.sin(now / 160) * 4 : 0)); }
+  if (countEnd > 0) { cx.fillStyle = 'rgba(7,8,12,.45)'; cx.fillRect(0, 0, w, h * 0.6); cx.fillStyle = '#fff'; cx.font = '800 72px system-ui'; cx.fillText(Math.ceil((countEnd - now) / 1000), w / 2, h * 0.35); }
+  W.drawn = raw;
+  return raw;
+}
+// ---- loop ----
+let lastDraw = 0;
+function loop(now) {
+  W.frames++; W.ft.push(now); if (W.ft.length > 600) W.ft.shift();
+  if (countEnd && now >= countEnd) { P += now - pauseAt; countEnd = 0; $('pz').hidden = true; }
+  if (!FPS || now - lastDraw >= 1000 / FPS - 1) {
+    lastDraw = now;
+    if (g.phase === 'play' && !paused && !countEnd) {
+      const raw = act(now), n0 = g.events.length; advance(g, raw - LAG); if (raw >= RG.DUR) advance(g, raw);
+      // metronome: one tick per grid beat as it reaches the line (sound only; judging never uses it)
+      const gi = grid.findIndex((t) => t > raw - g.o) - 1; if (gi > lastTick) { lastTick = gi; if (gi >= 0) play('tick'); }
+      react(n0);
+    }
+    $('pz').hidden = !(paused || countEnd > 0); if (countEnd > 0) $('pz-n').textContent = Math.ceil((countEnd - now) / 1000);
+    const raw = frame(now); hud(raw);
+  }
+  requestAnimationFrame(loop);
+}
+$('pz').hidden = true;
+requestAnimationFrame(loop);
+S.ready = true;
+})()</script>
+</body></html>
