@@ -39,7 +39,8 @@ export function mountQuiz(el, D) {
 
 export function showResult(el, D, code, pct, retry) {
   try { localStorage.setItem('play-character', JSON.stringify({ code, pct, at: Date.now() })); } catch {}
-  el.innerHTML = resultHtml(D, code, pct) + `<div class="row" style="margin-top:16px"><button class="btn" data-share>${esc(D.cta.share)}</button><button class="btn ghost" data-save>${esc(D.cta.save)}</button><a class="btn ghost" href="/${D.lang}/friends/chemistry/">${esc(D.cta.chem)}</a><button class="btn ghost" data-retry>${esc(D.cta.retry)}</button></div><p class="status" role="status"></p>`;
+  track('result_land', { from: 'quiz' });
+  el.innerHTML = resultHtml(D, code, pct) + `<p class="muted" data-share-hint style="margin:16px 0 6px">${esc(D.quiz.shareHint)}</p><div class="row" style="margin-top:6px"><button class="btn" data-share>${esc(D.cta.share)}</button><button class="btn ghost" data-save>${esc(D.cta.save)}</button><a class="btn ghost" href="/${D.lang}/friends/chemistry/">${esc(D.cta.chem)}</a><button class="btn ghost" data-retry>${esc(D.cta.retry)}</button></div><p class="status" role="status"></p>`;
   const st = el.querySelector('.status');
   el.querySelector('[data-save]').onclick = async () => saveCanvas(await quizCard(D, code, pct), `play-character-${code}.png`);
   el.querySelector('[data-share]').onclick = async () => {
@@ -47,6 +48,7 @@ export function showResult(el, D, code, pct, retry) {
     let url = `${location.origin}/${D.lang}/me/play-character/`;
     try { const r = await api('/api/share', { method: 'POST', body: { kind: 'quiz', lang: D.lang, payload: { code } } }); url = `${location.origin}/${D.lang}/r/${r.id}`; } catch {}
     const r = await shareOrCopy({ title: D.quiz.title, text: fmt(D.quiz.shareText, { name: D.types[code].name, url }), canvas: await quizCard(D, code, pct), name: 'play-character.png' });
+    track('share_result', { from: 'quiz', r: r === 'shared' ? 'shared' : r === 'copied' ? 'copied' : r === 'failed' ? 'failed' : 'cancel' });
     st.textContent = r === 'copied' ? D.common.copied : r === 'failed' ? D.common.error : '';
   };
   el.querySelector('[data-retry]').onclick = retry || (() => location.reload());
