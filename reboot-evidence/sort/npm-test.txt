@@ -1,0 +1,65 @@
+
+> test
+> node --test tests/*.test.mjs
+
+✔ schema: only CREATE TABLE IF NOT EXISTS, no answer/ip columns (D5) (9.161125ms)
+✔ share: create + read + validation (1420.107875ms)
+✔ invite: full flow, privacy, 9th join 409, delete (28.942833ms)
+✔ invite: default nick per lang, expiry → 404 (5.771ms)
+✔ rate limit: 11th create in a minute → 429 (7.880084ms)
+✔ static: rewrites for r/c/i shells, sitemap, robots (7.926208ms)
+✔ stats: token required, aggregates only (6.841209ms)
+✔ schema: additive only, no PII columns (5.4975ms)
+✔ stats before any collection: games observed=false, byGame null (not 0), existing fields kept (1397.421084ms)
+✔ schema validation: unknown field / name / game / reason / lang / via → 400, nothing stored (15.69925ms)
+✔ size: 21 events → 400, >16KB → 413 (2.913292ms)
+✔ content-type: form → 415 (0.7815ms)
+✔ origin: missing / forged → 403 (1.507916ms)
+✔ qa=1 and bot/automation UA are dropped server side (2.739333ms)
+✔ store → aggregate: start/end/again/share incl. cancel, resend de-dup, numbers match (16.920458ms)
+✔ rate limit: 61st request in a minute → 429 (24.371666ms)
+✔ non-production without isolated store never writes (preview/local with prod DATABASE_URL) (0.210167ms)
+✔ validateBatch drops qa and in-batch duplicates without touching others (0.057625ms)
+✔ cutoff is 2026-11-01 00:00 KST and the same in both places (0.348208ms)
+✔ theme on before cutoff, off after, query overrides (0.093416ms)
+✔ og rewrite only for known OG names, only before cutoff (0.146792ms)
+✔ quiz: all-a → SPH, all-b → CIT, tie broken by last question of axis (0.4815ms)
+✔ quiz: every code reachable (1024 combos) (3.375125ms)
+✔ chemistry: 8 patterns, symmetric pattern, best buddy opposite (0.492166ms)
+✔ rush: deterministic course & attacks; no attack impact within 0.7s of gates (9.535791ms)
+✔ rush: sim evidence passes spec targets (0.246ms)
+✔ i18n: 6 languages share ko key structure; MBTI only in disclaimer (1.650375ms)
+✔ core has no DOM / Math.random (0.4475ms)
+✔ magnet M5: idle after start → auto drop 360 ticks after ready, result < 30 s, 0 ships (15.217583ms)
+✔ magnet M3: replay of the input log is identical (31.306458ms)
+✔ magnet M11a: one column / stay-tap policies never ship (5.053208ms)
+✔ magnet snap: column from ship-relative x, err ≥0.5 → sea (0.107625ms)
+R7a fallback 1/1600 = 0.06% · worst generate 1.336 ms
+R11 {"idle":{"avgScore":0,"avgAcc":0},"L":{"avgScore":1137.2,"avgAcc":33.4},"C":{"avgScore":1160,"avgAcc":34},"R":{"avgScore":1108.7,"avgAcc":32.7},"random0":{"avgScore":1199,"avgAcc":32.8},"random100":{"avgScore":953.8,"avgAcc":33},"skilled50":{"avgScore":3495,"avgAcc":100}} {"skilledAvg":3495,"bestNonSkilledAvg":1199,"ratio":2.914929107589658,"target":3}
+✔ R0 ready: no parcel, no clock before start (0.603333ms)
+✔ R2/R4b tutorial constants: parcel 1 ★→C, answers C·L·R, generate not called for 1~3 (1.267458ms)
+✔ R4 judgment: R-A, R-B "!" → C only, non-"!" after 25 → R-A (0.0595ms)
+✔ R4 speed bonus boundaries and combo steps; score never decreases (2.135666ms)
+✔ R5 idle: exactly 90 s logical, 0 correct 0 points, end at T+G (0.756333ms)
+✔ R5 parcel deadline: D−1 accepted (bonus 0), D = miss (0.278709ms)
+✔ R5 late arrival: t<D arriving D+G−1 accepted, D+G → late_drop and miss kept (0.370041ms)
+✔ R5 board deadline: T−1 first input judged past T, result at T−1+W+G; T input ignored and parcel discarded (3.832542ms)
+✔ R5 D == T → board deadline wins (discard, not miss) (0.108125ms)
+✔ R6 W window: +15 ms other input → both void, parcel keeps waiting; +16 → t0 kept, second ignored (0.166375ms)
+✔ R6 t0 < D ≤ t1 → t0 confirmed; one judgment per parcel; inputs in fx not carried over (0.066167ms)
+✔ R6b receive deadline: t1=1015 arriving 1030/1065 → void, 1066 → late_drop with t0 commit; t1=1016 never voids (0.141875ms)
+✔ R6b miss (D+G) and board end (T+G) arrival edges −1 / exact (2.146125ms)
+✔ R3/R5/R6b determinism: same admitted log at 20 fps and 60 fps (and twice) → identical judgments/score/late (5.505166ms)
+✔ R7a 100 seeds × blocks 0~15: validate ①~⑤ pass, reproducible, mixed b2, layout change points, fallback rate (54.876292ms)
+✔ R7b injected always-false validate → exactly 8 calls per block then fallback, logged block=fallback:b (0.256458ms)
+✔ R7c constructive fallback: every b 0~15 × 9 prevTail combos passes ①~⑤ (0.740042ms)
+✔ R7a/R11 fixed policy: every complete block ≤ 4/9 per lane (design) (17.815583ms)
+✔ R11 policy measurement over 20 seeds (recorded; only design bounds asserted) (33.921042ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11513.596125

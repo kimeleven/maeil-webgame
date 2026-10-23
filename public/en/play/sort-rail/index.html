@@ -1,0 +1,496 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+<title>Sort Rail (Preview) | playtoday</title><meta name="description" content="Match each parcel's symbol to the rail with the same symbol. How many in 90 seconds?"><meta name="robots" content="noindex,nofollow"><link rel="icon" href="data:,">
+<style>:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;overscroll-behavior:contain}
+body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;gap:6px}
+.logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:var(--gold)}.tr{display:flex;gap:6px;align-items:center}
+.langs{position:relative}.langs summary{white-space:nowrap;list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--cyan)}
+.stage{position:relative;width:min(100vw,calc((100dvh - 64px)*9/16),540px);height:min(calc(100dvh - 64px),960px);display:flex;flex-direction:column;padding:0 10px 8px}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:4px 0 6px;font-variant-numeric:tabular-nums}.hud div{display:flex;flex-direction:column;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:4px 2px;backdrop-filter:blur(18px)}
+.hud span{font-size:11px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud b{font-size:17px;white-space:nowrap}
+#play{position:relative;flex:1;min-height:0;border-radius:20px;overflow:hidden;border:1px solid var(--edge);touch-action:none;cursor:pointer}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:6px}.hint{color:var(--muted);font-size:13px}
+.ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
+.ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
+.sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
+.panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}
+.sheet.ready{align-items:flex-start;padding-top:10px;background:linear-gradient(rgba(7,8,12,.55) 60%,rgba(7,8,12,0) 78%)}.ready .panel{gap:8px;padding:14px}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
+.icon{font-size:34px;letter-spacing:6px}.t90{font-size:13px;color:var(--muted)}
+.btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.btn.main{min-height:64px;width:100%;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
+.nums{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:14px}.nums span{color:var(--muted)}.nums b{font-size:18px}.nums b.big{font-size:34px;color:var(--cyan)}
+.new{color:#4ade80;font-weight:800}.cmp{font-size:13px;color:var(--muted)}.why{font-size:14px;color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
+.seed{color:var(--muted);font-size:12px;text-align:center}
+.guide{margin:0;font-size:14px;font-weight:600;color:#4ade80;padding:8px 10px;border-radius:12px;border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.08)}
+.tip{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;border:1px solid rgba(250,204,21,.35);background:rgba(250,204,21,.08)}.tip b{font-size:15px;line-height:1.35}.tipk{font-size:12px;color:var(--gold);font-weight:700}
+.near{font-size:15px;font-weight:700;color:var(--cyan)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+@media (min-width:900px){body{background:radial-gradient(900px 600px at 15% 30%,rgba(34,211,238,.10),transparent),radial-gradient(900px 600px at 85% 70%,rgba(99,102,241,.16),transparent),var(--bg)}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.sheet .panel{max-height:100%;overflow-y:auto}
+@media (max-height:860px){.ready .icon{display:none}.ready .panel{gap:6px;padding:12px}.ready .how,.ready .guide{font-size:13px}.ready .goal{font-size:15px}.btn.main{min-height:54px;font-size:20px}
+#res{padding:8px}#res .panel{gap:5px;padding:12px}.panel h2{font-size:19px}.nums b.big{font-size:26px}.nums{font-size:13px}.nums b{font-size:16px}.tip{padding:7px 10px}.tip b{font-size:14px}.near{font-size:14px}.tgs .tg,.row .btn{min-height:44px}}
+.hud .warn{border-color:#f87171;animation:bl .5s steps(2) infinite}@keyframes bl{50%{background:rgba(248,113,113,.25)}}.rm .hud .warn{animation:none;background:rgba(248,113,113,.25)}
+.skip{min-height:44px}@media (min-width:900px){.stage{width:min(760px,100vw);height:min(calc(100dvh - 64px),860px)}}
+.ofs{display:flex;align-items:center;justify-content:center;gap:10px}.ofs b{min-width:84px;text-align:center;font-size:22px;font-variant-numeric:tabular-nums}.lnk{background:none;border:0;color:var(--cyan);font:600 14px/1.2 inherit;min-height:44px;cursor:pointer;text-decoration:underline}
+.acc{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}.acc i{display:block;height:100%}.acc .e{background:#60a5fa}.acc .o{background:#4ade80}.acc .l{background:#f59e0b}.accl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.cz{display:flex;flex-direction:column;gap:4px}.czt{font-size:12px;color:var(--muted);font-weight:700}.czl{display:flex;flex-wrap:wrap;gap:4px}.czl i{font-style:normal;font-size:13px;padding:3px 8px;border-radius:99px;border:1px solid rgba(248,113,113,.35);background:rgba(248,113,113,.10);color:#fecaca;white-space:nowrap}.czl i.top{border-color:#f87171;background:rgba(248,113,113,.22);font-weight:800}.czl i.zero{border-color:rgba(74,222,128,.35);background:rgba(74,222,128,.08);color:#bbf7d0}
+.accn{font-size:12px;color:var(--muted);font-weight:700}#res .panel>*{flex-shrink:0}.czl{align-self:flex-start}
+.hud{grid-template-columns:1.1fr 1fr 1fr 1fr}.tbar{height:4px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden;margin:-2px 0 6px}.tbar i{display:block;height:100%;background:linear-gradient(90deg,#22d3ee,#6366f1)}
+.rules{display:flex;justify-content:center;align-items:center;gap:10px;min-height:30px;padding-bottom:6px;font-size:15px;color:var(--muted)}.rules b{padding:2px 10px;border-radius:99px;border:1px solid var(--edge);background:var(--panel);color:var(--fg);letter-spacing:2px;white-space:nowrap}.rules .rb{border-color:rgba(250,204,21,.5);color:var(--gold)}
+#play{display:flex;align-items:center;justify-content:center;cursor:default;touch-action:manipulation;background:radial-gradient(400px 300px at 50% 40%,rgba(99,102,241,.12),transparent)}
+.parcel{position:relative;width:min(46%,200px);aspect-ratio:1;border-radius:26px;background:linear-gradient(rgba(255,255,255,.10),rgba(255,255,255,.03));border:2px solid var(--edge);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 24px 50px -24px rgba(0,0,0,.9);backdrop-filter:blur(18px)}
+.parcel .sym{font-size:min(22vw,110px);line-height:1;font-weight:800;text-shadow:0 0 18px currentColor}.parcel .bx{position:absolute;top:8px;right:12px;font:900 30px/1 system-ui;color:#fff;display:none}
+.parcel.bang{border:6px dashed #fff}.parcel.bang .bx{display:block}
+.dl{position:absolute;left:12px;right:12px;bottom:10px;height:6px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden}.dl i{display:block;height:100%;background:linear-gradient(90deg,#f59e0b,#22d3ee)}
+.parcel.in{animation:pin .18s ease-out}@keyframes pin{from{transform:translateY(-40px);opacity:.2}to{transform:none;opacity:1}}
+.fb{position:absolute;top:12%;left:0;right:0;text-align:center;font:900 44px/1 system-ui;opacity:0;pointer-events:none}.fb.ok{opacity:1;color:#4ade80}.fb.bad{opacity:1;color:#f87171}
+#rails{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:8px}
+.rail{min-height:64px;min-width:44px;border-radius:16px;border:2px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.04));color:var(--fg);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;touch-action:manipulation;font:700 15px/1 inherit;padding:0}
+.rail i{font-style:normal;font-size:34px;font-weight:800;line-height:1}.rail span{color:var(--muted);font-size:18px}
+.rail.on{background:rgba(255,255,255,.22);transform:translateY(2px)}.rail.ok{border-color:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.35)}.rail.ok::after{content:"✓";color:#4ade80;font-size:22px;font-weight:900}.rail.bad{border-color:#f87171}.rail.bad::after{content:"✕";color:#f87171;font-size:22px;font-weight:900}
+#rails.flash .rail{border-color:#fff;border-width:4px}.rm .parcel.in{animation:none}
+.tut{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:28px;color:#4ade80;animation:bl .5s steps(2) infinite}.rm .tut{animation:none}
+.hid .parcel .sym,.hid .rail i{visibility:hidden}.hid #play{filter:blur(6px)}
+.note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;background:rgba(7,8,12,.6)}.note .panel{align-items:center;text-align:center}.note .pic{font-size:44px;font-weight:900;letter-spacing:4px;color:var(--gold)}
+.dots{font-size:16px;letter-spacing:1px;word-break:break-all;color:var(--gold);line-height:1.25}.fbn{font-size:11px;color:var(--muted)}.cut{font-size:12px;color:var(--muted)}
+@media (min-width:900px){.stage{width:min(560px,100vw)}}
+@media (max-width:380px){.rail i{font-size:28px}.rail span{font-size:15px}}
+@media(max-width:460px){.top .tag{display:none}.tr{gap:6px}.top{padding-left:12px;padding-right:12px}}</style></head>
+<body data-page="sort-rail" data-lang="en">
+<header class="top"><a class="logo" href="/en/"><i></i>Play Today</a><span class="tag">Preview</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="Sound" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="Vibration" aria-pressed="true">📳</button><button class="ic" id="b-pause" type="button" data-ui aria-label="Pause">⏸</button><details class="langs" data-ui><summary aria-label="Language">en ▾</summary><nav><a href="/ko/play/sort-rail/" hreflang="ko">ko</a><a href="/en/play/sort-rail/" hreflang="en" aria-current="true">en</a><a href="/ja/play/sort-rail/" hreflang="ja">ja</a><a href="/zh-hans/play/sort-rail/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/sort-rail/" hreflang="es">es</a><a href="/pt-br/play/sort-rail/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
+<main class="stage" id="stage">
+<div class="hud"><div><span>Sec left</span><b id="h-time">90</b></div><div><span>Sorted</span><b id="h-n">0</b></div><div><span>Score</span><b id="h-score">0</b></div><div><span>Streak</span><b id="h-combo">0 ×1</b></div></div>
+<div class="tbar" aria-hidden="true"><i id="h-bar" style="width:100%"></i></div>
+<div class="rules" aria-label="Rule"><b>★→★</b><b class="rb" id="rule-b" hidden>!→↓</b></div>
+<div id="play" role="application" aria-label="Sort Rail">
+<div class="parcel" id="parcel" hidden><span class="sym" id="p-sym"></span><span class="bx" aria-hidden="true">!</span><div class="dl" aria-hidden="true"><i id="p-dl"></i></div></div>
+<div class="fb" id="fb" aria-live="polite"></div><div class="tut" id="tut" hidden aria-hidden="true">↓</div>
+<div class="note" id="note" hidden><div class="panel"><div class="pic" aria-hidden="true">!→↓</div><h2>New rule: ! parcels always go to the middle</h2></div></div>
+<div class="sheet ready" id="ready" data-ui><div class="panel">
+<h2>Sort Rail</h2><p class="goal">Send as many parcels to the right rail as you can in 90 s</p><div class="icon" aria-hidden="true">📦★→★</div><p class="how">Tap the rail with the same symbol as the parcel. Colour doesn't matter.</p>
+<button class="btn main" id="b-start" type="button">Start</button><div class="t90">Sec left 90 · ← ↓ → keys or the buttons below</div>
+</div></div>
+<div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>Paused</h2><p class="how">Time and deadlines are stopped.</p><button class="btn main" id="b-resume" type="button">Continue</button><button class="btn" id="b-restart" type="button">Restart</button><div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">Sound</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">Vibration</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">Motion</button></div></div></div>
+<div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
+<h2 id="r-title">Sorting done!</h2><div class="new" id="r-new" hidden>New best!</div><div class="new" id="r-first" hidden>Your first record</div>
+<div class="nums"><span>Score</span><b class="big" id="r-score"></b><span>Best</span><b id="r-best"></b><span>Diff</span><b id="r-diff"></b><span>Sorted</span><b id="r-n"></b><span>Accuracy</span><b id="r-acc"></b><span>Longest streak</span><b id="r-max"></b></div>
+<div class="czt">Per parcel (● right ○ wrong · missed)</div><div class="dots" id="r-dots"></div><div class="cut" id="r-cut" hidden>Last parcel cut by time</div>
+<button class="btn main" id="b-again" type="button">Again</button>
+<div class="row"><button class="btn" id="b-png" type="button">Save PNG</button><button class="btn" id="b-link" type="button">Copy challenge link</button></div>
+<div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">Sound</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">Vibration</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">Motion</button></div><div class="seed">seed <span id="seed"></span> <span class="fbn" id="r-fb"></span></div>
+</div></div>
+</div>
+<div id="rails"><button class="rail" type="button" data-lane="0" aria-label="Left"><span>←</span><i></i></button><button class="rail" type="button" data-lane="1" aria-label="Middle"><span>↓</span><i></i></button><button class="rail" type="button" data-lane="2" aria-label="Right"><span>→</span><i></i></button></div>
+<div class="bar"><span class="hint">← ↓ →</span></div>
+</main><div class="toast" id="toast" role="status"></div>
+<script id="st" type="application/json">{"name":"Sort Rail","preview":"Preview","desc":"Match each parcel's symbol to the rail with the same symbol. How many in 90 seconds?","back":"Play Today","sound":"Sound","haptic":"Vibration","motion":"Motion","pause":"Pause","paused":"Paused","resumeHelp":"Time and deadlines are stopped.","cont":"Continue","restart":"Restart","time":"Sec left","sorted":"Sorted","score":"Score","combo":"Streak","goal":"Send as many parcels to the right rail as you can in 90 s","how":"Tap the rail with the same symbol as the parcel. Colour doesn't matter.","start":"Start","keys":"← ↓ → keys or the buttons below","hint":"← ↓ →","rule":"Rule","ruleNew":"New rule: ! parcels always go to the middle","over":"Sorting done!","newBest":"New best!","first":"Your first record","best":"Best","diff":"Diff","acc":"Accuracy","maxCombo":"Longest streak","unit":"","again":"Again","png":"Save PNG","link":"Copy challenge link","copied":"Copied","shareText":"Sorted {n} parcels on today's Sort Rail. Same parcels, can you beat it? → {url}","pts":"pts","dotsT":"Per parcel (● right ○ wrong · missed)","lastCut":"Last parcel cut by time","lanes":"Left,Middle,Right"}</script>
+<script>(()=>{// Sort Rail core (t_3f092e76) — DOM-free deterministic engine. GDD r3 (games/sort-rail/GDD.md).
+// All times are LOGICAL game ms (active clock: pauses and the R-B notice do not advance it).
+// Input = { t: logical event time (from event.timeStamp), at: logical arrival time, lane: 0|1|2 (L|C|R) }.
+// Judgment uses t only; irreversible commit (score/log/sound) happens at the receive deadline (+G), see §2.0.1.
+const SR = { DUR: 90000, W: 16, G: 50, FX_OK: 250, FX_BAD: 600, NOTICE: 1500, RB: 25, TRIES: 8, BLOCK: 9, FIRST: 4 };
+const LANES = ['L', 'C', 'R'];
+const SYMS = ['●', '▲', '■', '★'];
+function fnv1a32(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
+function mulberry32(a) { return () => { a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+// §4 table [추정 초기값]. decoy null = colour unconstrained (4~12).
+function tableOf(k) {
+  if (k <= 3) return { row: 0, dl: 4000, decoy: 0, bang: 0 };
+  if (k <= 12) return { row: 1, dl: 2400, decoy: null, bang: 0 };
+  if (k <= 24) return { row: 2, dl: 1800, decoy: 0.5, bang: 0 };
+  if (k <= 40) return { row: 3, dl: 1600, decoy: 0.5, bang: 0.3 };
+  return { row: 4, dl: 1300, decoy: 0.6, bang: 0.35 };
+}
+const ruleOf = (k) => (k >= SR.RB ? 'A+B' : 'A');
+const layoutChangeAt = (k) => k === 4 || k === 13 || (k >= 22 && (k - 22) % 3 === 0);
+const blockOf = (k) => Math.floor((k - SR.FIRST) / SR.BLOCK);
+const blockStart = (b) => SR.FIRST + b * SR.BLOCK;
+// answer lane by the rule in force for parcel k
+function answerOf(p) { if (ruleOf(p.k) === 'A+B' && p.bang) return 1; const i = p.lanes.indexOf(p.sym); return i; }
+const isDecoy = (p) => p.color !== p.lanes[p.ans] && p.lanes.includes(p.color);
+// Tutorial constants (generate() never called for 1~3). lanes = [L,C,R] symbol indices; ★ on C for parcel 1.
+const TL = [0, 3, 1];
+const TUTORIAL = Object.freeze([
+  Object.freeze({ k: 1, lanes: TL, sym: 3, color: 3, bang: false, dl: 4000, ans: 1, tutorial: true }),
+  Object.freeze({ k: 2, lanes: TL, sym: 0, color: 0, bang: false, dl: 4000, ans: 0, tutorial: true }),
+  Object.freeze({ k: 3, lanes: TL, sym: 1, color: 1, bang: false, dl: 4000, ans: 2, tutorial: true }),
+]);
+const pick = (rng, n) => Math.floor(rng() * n);
+function shuffle(rng, a) { for (let i = a.length - 1; i > 0; i--) { const j = pick(rng, i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const rowGroups = (ks) => { const m = new Map(); ks.forEach((k, i) => { const r = tableOf(k).row; if (!m.has(r)) m.set(r, []); m.get(r).push(i); }); return m; };
+// one random proposal for block b
+function propose(rng, b, prevTail) {
+  const k0 = blockStart(b), ks = Array.from({ length: SR.BLOCK }, (_, i) => k0 + i);
+  let lanes = null; const ans = [], tail = prevTail.slice();
+  const out = ks.map((k) => {
+    if (layoutChangeAt(k) || !lanes) lanes = shuffle(rng, [0, 1, 2, 3]).slice(0, 3);
+    let a = pick(rng, 3); const n = tail.length;
+    if (n >= 2 && tail[n - 1] === tail[n - 2] && a === tail[n - 1]) a = (a + 1 + pick(rng, 2)) % 3;
+    tail.push(a); ans.push(a);
+    return { k, lanes: lanes.slice(), ans: a, dl: tableOf(k).dl, bang: false, sym: lanes[a], color: lanes[a] };
+  });
+  for (const [row, idx] of rowGroups(ks)) {
+    const T = tableOf(ks[idx[0]]);
+    if (T.bang) { const cs = shuffle(rng, idx.filter((i) => out[i].ans === 1)); const need = Math.round(idx.length * T.bang); cs.slice(0, need).forEach((i) => { const p = out[i]; p.bang = true; p.sym = p.lanes[pick(rng, 2) ? 2 : 0]; }); }
+    if (T.decoy === null) idx.forEach((i) => (out[i].color = pick(rng, 4)));
+    else if (T.decoy) {
+      const need = Math.round(idx.length * T.decoy), ds = new Set(shuffle(rng, idx.slice()).slice(0, need));
+      idx.forEach((i) => { const p = out[i]; if (ds.has(i)) p.color = p.lanes[(p.ans + 1 + pick(rng, 2)) % 3]; else { const absent = [0, 1, 2, 3].find((s) => !p.lanes.includes(s)); p.color = pick(rng, 2) ? absent : p.lanes[p.ans]; } });
+    }
+    void row;
+  }
+  return out;
+}
+// validate ①~⑤ (GDD §4.1). Returns { ok, why }.
+function realValidate(block, b, prevTail) {
+  const bad = (why) => ({ ok: false, why });
+  if (!Array.isArray(block) || block.length !== SR.BLOCK) return bad('size');
+  const k0 = blockStart(b), cnt = [0, 0, 0], tail = prevTail.slice();
+  for (let i = 0; i < SR.BLOCK; i++) {
+    const p = block[i], k = k0 + i;
+    if (p.k !== k) return bad('k');
+    // ⑤ lanes distinct, layout changes only at layoutChangeAt, parcel symbol is one of the lane symbols
+    if (p.lanes.length !== 3 || new Set(p.lanes).size !== 3 || p.lanes.some((s) => !(s >= 0 && s <= 3))) return bad('⑤lanes');
+    if (i > 0 && !layoutChangeAt(k) && p.lanes.join() !== block[i - 1].lanes.join()) return bad('⑤layout');
+    if (!p.lanes.includes(p.sym)) return bad('⑤sym');
+    // ① unique answer under ruleOf(k); no "!" before 25; "!" symbol is L or R rail symbol (no fake "!")
+    if (p.bang && k < SR.RB) return bad('①bang<25');
+    if (p.bang && p.sym === p.lanes[1]) return bad('⑤fakebang');
+    if (p.lanes.filter((s) => s === p.sym).length !== 1) return bad('①unique');
+    const a = answerOf(p); if (a !== p.ans) return bad('①ans');
+    // ④ deadline = table
+    if (p.dl !== tableOf(k).dl) return bad('④dl');
+    cnt[a]++; tail.push(a); const n = tail.length;
+    if (n >= 3 && tail[n - 1] === tail[n - 2] && tail[n - 2] === tail[n - 3]) return bad('③run');
+  }
+  // ② each lane 2~4 (C includes "!" parcels)
+  if (cnt.some((c) => c < 2 || c > 4)) return bad('②count');
+  // ④ decoy / "!" counts per table row within the block, ±1
+  for (const [, idx] of rowGroups(block.map((p) => p.k))) {
+    const T = tableOf(block[idx[0]].k);
+    const nb = idx.filter((i) => block[i].bang).length; if (Math.abs(nb - Math.round(idx.length * T.bang)) > 1) return bad('④bang');
+    if (T.decoy !== null) { const nd = idx.filter((i) => isDecoy(block[i])).length; if (Math.abs(nd - Math.round(idx.length * T.decoy)) > 1) return bad('④decoy'); }
+  }
+  return { ok: true, why: '' };
+}
+// constructive fallback (§4.1). Guarantees ①~⑤ by construction (checked by R7c).
+const PATTERNS = { L: [0, 1, 2, 0, 2, 1, 0, 2, 1], C: [1, 0, 2, 1, 2, 0, 1, 2, 0], R: [2, 0, 1, 2, 1, 0, 2, 0, 1] };
+const ROT = [[0, 1, 2], [1, 2, 3], [2, 3, 0], [3, 0, 1]];
+const changeIndex = (k) => (k < 13 ? 0 : k < 22 ? 1 : 2 + Math.floor((k - 22) / 3));
+function fallbackBlock(b, prevTail) {
+  const order = ['L', 'C', 'R'];
+  const same = prevTail.length >= 2 && prevTail[prevTail.length - 1] === prevTail[prevTail.length - 2] ? prevTail[prevTail.length - 1] : -1;
+  const pat = PATTERNS[order.find((n) => PATTERNS[n][0] !== same)];
+  const k0 = blockStart(b), ks = pat.map((_, i) => k0 + i);
+  const out = pat.map((a, i) => { const k = ks[i], lanes = ROT[changeIndex(k) % 4].slice(); return { k, lanes, ans: a, dl: tableOf(k).dl, bang: false, sym: lanes[a], color: lanes[a], fallback: true }; });
+  for (const [, idx] of rowGroups(ks)) {
+    const T = tableOf(ks[idx[0]]);
+    if (T.bang) idx.filter((i) => out[i].ans === 1).slice(0, Math.round(idx.length * T.bang)).forEach((i) => { out[i].bang = true; out[i].sym = out[i].lanes[0]; });
+    if (T.decoy) idx.slice(0, Math.round(idx.length * T.decoy)).forEach((i) => { const p = out[i]; p.color = p.lanes[(p.ans + 1) % 3]; });
+  }
+  return out;
+}
+// generate(seed, b, prevTail, validate) — 8 tries, then fallback. Only the injected validate is called.
+function generate(seed, b, prevTail, validate = realValidate) {
+  for (let n = 0; n < SR.TRIES; n++) {
+    const m = propose(mulberry32(fnv1a32(seed + '#' + b + '#' + n)), b, prevTail);
+    if (validate(m, b, prevTail).ok) return { block: m, tries: n + 1, fallback: false };
+  }
+  return { block: fallbackBlock(b, prevTail), tries: SR.TRIES, fallback: true };
+}
+// ---- scoring ----
+const mult = (streak) => (streak >= 10 ? 3 : streak >= 5 ? 2 : 1);
+const bonus = (D, t0, dl) => Math.max(0, Math.min(10, Math.floor((10 * (D - t0)) / dl)));
+// ---- game state machine ----
+// phase: ready → wait (parcel shown at p.s) ⇄ fx → … → end; 'notice' is a flag on parcel 25 handled by the UI clock.
+function newGame(seed) {
+  return { seed, phase: 'ready', k: 0, cur: null, blocks: new Map(), fallbacks: [], genMs: [], gens: 0,
+    score: 0, correct: 0, judged: 0, streak: 0, maxStreak: 0, late: 0, voids: 0, discarded: false, log: [], commits: [], end: null, endAt: null, noticeDone: false };
+}
+function parcelK(g, k) {
+  if (k <= 3) return { ...TUTORIAL[k - 1] };
+  const b = blockOf(k); ensureBlock(g, b); return { ...g.blocks.get(b).block[k - blockStart(b)] };
+}
+function ensureBlock(g, b) {
+  if (g.blocks.has(b)) return;
+  const prev = b === 0 ? [TUTORIAL[1].ans, TUTORIAL[2].ans] : g.blocks.get(b - 1).block.slice(-2).map((p) => p.ans);
+  const t0 = typeof performance !== 'undefined' ? performance.now() : 0;
+  const r = generate(g.seed, b, prev); g.blocks.set(b, r); g.gens++;
+  g.genMs.push((typeof performance !== 'undefined' ? performance.now() : 0) - t0);
+  if (r.fallback) g.fallbacks.push('fallback:' + b);
+}
+function show(g, k, s) {
+  const p = parcelK(g, k); p.s = s; p.D = s + p.dl; p.pend = null; p.voidUntil = -1; p.voids = 0; p.late = 0; p.res = null;
+  p.notice = k === SR.RB; g.cur = p; g.k = k; g.phase = 'wait';
+  if (k === SR.FIRST) ensureBlock(g, 0);
+  if (k >= SR.FIRST && k === blockStart(blockOf(k))) ensureBlock(g, blockOf(k) + 1);   // block b first parcel → generate b+1
+  return p;
+}
+function start(g) { if (g.phase !== 'ready') return false; ensureBlock(g, 0); show(g, 1, 0); return true; }   // block 0 generated at [start]
+// judgment (logical) decided; commit is deferred to commitAt
+function decide(g, p, res, lane, jt, commitAt) { p.res = { res, lane, jt, commitAt, t0: p.pend ? p.pend.t : null }; g.phase = 'fx'; }
+// advance logical time to `now`: commits everything whose receive deadline ≤ now, in order.
+function advance(g, now) {
+  for (let guard = 0; guard < 1000; guard++) {
+    if (g.phase === 'ready' || g.phase === 'end') return;
+    const p = g.cur, T = SR.DUR;
+    if (!p.res) {
+      if (p.pend) {   // pending first input: judged at t0+W, commit at max(t0+W+G, its arrival)
+        const jt = p.pend.t + SR.W, ca = Math.max(jt + SR.G, p.pend.at);
+        if (now < ca) return;
+        decide(g, p, p.pend.lane === p.ans ? 'ok' : 'bad', p.pend.lane, jt, ca); commit(g, p);
+      } else if (p.D < T) {   // miss at D, commit at D+G
+        if (now < p.D + SR.G) return;
+        decide(g, p, 'miss', null, p.D, p.D + SR.G); commit(g, p);
+      } else {        // board deadline first: parcel discarded at T, end at T+G
+        if (now < T + SR.G) return;
+        p.res = { res: 'discard', jt: T, commitAt: T + SR.G }; g.discarded = true; g.log.push(p.logE = { k: p.k, s: p.s, D: Math.min(p.D, T), jt: T, res: 'discard', lane: null, t0: null, pts: 0, voids: p.voids, late: 0 }); finish(g, T + SR.G); return;
+      }
+    }
+    // after commit: next parcel or end
+    const fxLen = p.res.res === 'ok' ? SR.FX_OK : SR.FX_BAD, s = p.res.jt + fxLen;
+    if (s >= T || p.res.jt >= T) { const endAt = Math.max(T, p.res.jt) + SR.G; if (now < endAt) return; finish(g, endAt); return; }
+    show(g, p.k + 1, s);
+  }
+}
+function commit(g, p) {
+  const r = p.res; g.judged++;
+  let pts = 0;
+  if (r.res === 'ok') { g.streak++; g.correct++; pts = (10 + bonus(p.D, r.t0, p.dl)) * mult(g.streak); g.score += pts; g.maxStreak = Math.max(g.maxStreak, g.streak); }
+  else g.streak = 0;
+  r.pts = pts; r.streak = g.streak;
+  const e = { k: p.k, s: p.s, D: p.D, ans: p.ans, res: r.res, lane: r.lane, t0: r.t0, jt: r.jt, commitAt: r.commitAt, pts, voids: p.voids, late: 0, fallback: !!p.fallback };
+  g.log.push(e); g.commits.push(e); p.logE = e;
+}
+function finish(g, at) { g.phase = 'end'; g.end = { at, score: g.score, correct: g.correct, judged: g.judged, discarded: g.discarded }; g.endAt = at; }
+// one input. Caller must not call while paused/notice (UI drops). Returns a tag for evidence.
+// late_drop: the input's time t lies inside an already committed parcel's decision window [s, min(D, jt)).
+function lateFor(g, t) {
+  for (let i = g.log.length - 1; i >= 0 && i >= g.log.length - 3; i--) { const e = g.log[i]; if (t >= e.s) return t < Math.min(e.D, e.jt) ? e : null; }
+  return null;
+}
+function input(g, inp) {
+  const { t, at, lane } = inp;
+  if (g.phase === 'ready') return 'ignored';
+  if (t >= SR.DUR) { if (g.phase !== 'end') advance(g, at); return 'ignored_T'; }
+  if (g.phase !== 'end') advance(g, at);
+  const p = g.cur;
+  if (g.phase === 'end' || p.res || t < p.s) { const e = lateFor(g, t); if (e) { e.late++; g.late++; return 'late_drop'; } return 'ignored_fx'; }
+  if (t >= p.D) return 'ignored_D';
+  if (t < p.voidUntil) { p.voids++; g.voids++; return 'void'; }
+  if (!p.pend) { p.pend = { t, at, lane }; return 'pending'; }
+  if (t < p.pend.t) {   // earlier timestamp arrived later (still before commit): reorder
+    if (p.pend.t < t + SR.W) { p.voidUntil = t + SR.W; p.pend = null; p.voids += 2; g.voids += 2; return 'void'; }
+    p.pend = { t, at, lane }; return 'pending_reorder';
+  }
+  if (t < p.pend.t + SR.W) { p.voidUntil = p.pend.t + SR.W; p.pend = null; p.voids += 2; g.voids += 2; return 'void'; }
+  return 'ignored_after_W';
+}
+// replay an admitted log; frames = optional list of frame times (only call advance) → identical results by construction
+function replay(seed, inputs, frames = []) {
+  const g = newGame(seed); start(g);
+  const ev = [...inputs.map((x, i) => ({ ...x, i, kind: 'in' })), ...frames.map((f) => ({ at: f, kind: 'fr' }))].sort((a, b) => a.at - b.at || (a.kind === 'fr') - (b.kind === 'fr') || (a.i ?? 0) - (b.i ?? 0));
+  const tags = [];
+  for (const e of ev) { if (e.kind === 'fr') advance(g, e.at); else tags.push(input(g, e)); }
+  advance(g, Infinity);
+  return { g, tags, summary: summary(g) };
+}
+function summary(g) { return { score: g.score, correct: g.correct, judged: g.judged, late: g.late, voids: g.voids, end: g.end, dots: g.log.filter((e) => e.res !== 'discard').map((e) => (e.res === 'ok' ? '●' : e.res === 'bad' ? '○' : '·')).join(''), log: g.log.map((e) => [e.k, e.res, e.lane, e.t0, e.pts, e.voids, e.late]) }; }
+// policy simulator (R11). policy(p) → { t, lane } | null. Arrival = t (+delay).
+function simulate(seed, policy, delay = 0) {
+  const g = newGame(seed); start(g); let guard = 0; const inputs = [], tags = [];
+  while (g.phase !== 'end' && guard++ < 5000) {
+    const p = g.cur;
+    if (g.phase === 'wait' && !p.pend && !p._asked) { p._asked = true; const a = policy(p, g); if (a) { const inp = { t: a.t, at: a.at ?? a.t + delay, lane: a.lane }; inputs.push(inp); tags.push(input(g, inp)); continue; } }
+    advance(g, g.phase === 'wait' ? (p.pend ? p.pend.t + SR.W + SR.G : p.D + SR.G) : Infinity);
+  }
+  return { g, inputs, tags, summary: summary(g) };
+}
+
+// Sort Rail UI (prototype, t_3f092e76). Inlined after sort-core.js by scripts/build-sort.mjs. No /api, no analytics.
+// Game clock gt(ts) = ts − T0 − P (P = frozen total: pauses + R-B notice). Inputs use event.timeStamp → t, arrival performance.now() → at.
+// Frames only call advance(now) and draw; judgments come from (t, at) alone (sort-core §2.0.1).
+const D = JSON.parse(document.getElementById('st').textContent);
+const $ = (id) => document.getElementById(id);
+const loadLS = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k) || 'null') || {}); } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const q = new URLSearchParams(location.search);
+const today = (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; })();
+const seed = (q.get('seed') || today).replace(/[^A-Za-z0-9-]/g, '').slice(0, 64) || today;
+const FPS = Math.max(0, Math.min(120, Number(q.get('fps')) || 0));   // debug: throttle frames (evidence only)
+const mq = matchMedia('(prefers-reduced-motion: reduce)');
+const set = loadLS('sr-set', { sound: true, haptic: true, motion: !mq.matches });
+const canVib = typeof navigator.vibrate === 'function';
+const COL = ['#22d3ee', '#facc15', '#f472b6', '#4ade80'];
+const ARW = ['←', '↓', '→'];
+// evidence: W.snd = requested sounds (at commit), W.osc = oscillator starts, W.vibs = vibrate calls
+const W = { snd: [], osc: [], vibs: [], frames: 0, ft: [] };
+let ac = null;
+const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+function tone(f, dur, type = 'sine', vol = 0.1, at = 0) {
+  if (!set.sound || !ac) return; const t = ac.currentTime + at, o = ac.createOscillator(), gn = ac.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t); gn.gain.setValueAtTime(vol, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + dur + 0.02); W.osc.push(ac.state);
+}
+const SND = { tick: () => tone(1568, 0.07, 'triangle', 0.07), thud: () => tone(130, 0.14, 'sine', 0.12), up: () => [1047, 1568].forEach((f, j) => tone(f, 0.16, 'triangle', 0.07, j * 0.08)), finish: () => [523, 659, 784].forEach((f, j) => tone(f, 0.3, 'triangle', 0.07, j * 0.07)) };
+const play = (k) => { W.snd.push(k); if (set.sound) SND[k](); };
+const buzz = (ms) => { if (set.haptic && canVib) try { navigator.vibrate(ms); W.vibs.push(ms); } catch {} };
+// ---- state ----
+let g = newGame(seed), T0 = 0, P = 0, frozen = null, paused = false, notice = null, lastThaw = 0, seen = 0, shownK = 0, lastLanes = '', flashUntil = 0, fxUntil = 0;
+let best = loadLS('sr-best', { rec: null }).rec;
+const gt = (ts) => (frozen !== null ? frozen : ts) - T0 - P;
+const S = window.__sr = { ready: false, E: { SR, TUTORIAL, generate, realValidate, fallbackBlock, newGame, start, advance, input, replay, simulate, answerOf, ruleOf, tableOf, mult, bonus },
+  W, seed, set, evlog: [], gt: (ts) => gt(ts ?? performance.now()), get g() { return g; }, get paused() { return paused; }, get notice() { return notice; }, get frozen() { return frozen; } };
+const motion = () => set.motion && !mq.matches;
+function applySet() {
+  document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, on = !!set[k]; b.setAttribute('aria-pressed', on); b.classList.toggle('off', !on); if (b.dataset.icon) b.textContent = k === 'sound' ? (on ? '🔊' : '🔇') : on ? '📳' : '📴'; });
+  document.querySelectorAll('[data-set="haptic"]').forEach((b) => (b.hidden = !canVib));
+  document.body.classList.toggle('rm', !motion());
+}
+document.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save('sr-set', set); if (k === 'sound' && set.sound) unlock(); applySet(); }));
+applySet();
+// ---- freeze (pause / notice): game clock stops at the freeze instant ----
+function freeze(realTs) { if (frozen === null) { frozen = realTs; } }
+function thaw(now) { if (frozen === null || paused || notice) return; P += now - frozen; frozen = null; lastThaw = now; }
+// ---- actions ----
+function doStart(ts) {
+  if (g.phase !== 'ready') return; unlock(); start(g); T0 = ts; P = 0; frozen = null; seen = 0; shownK = 0; lastLanes = ''; lastThaw = ts;
+  $('ready').hidden = true; S.evlog.push({ k: 'start', at: ts }); render(ts);
+}
+const rails = [...document.querySelectorAll('.rail')];
+function press(lane, ts, src) {
+  const now = performance.now();
+  rails[lane].classList.add('on'); setTimeout(() => rails[lane].classList.remove('on'), 110);   // DOM press shown immediately
+  if (g.phase === 'ready' || g.phase === 'end') { S.evlog.push({ k: 'in-ignored', phase: g.phase, src }); return; }
+  if (paused || notice || frozen !== null || ts < lastThaw) { S.evlog.push({ k: 'in-dropped', why: paused ? 'paused' : notice ? 'notice' : 'thaw', src }); return; }
+  const t = gt(ts), at = Math.max(t, gt(now)); const tag = input(g, { t, at, lane });
+  S.evlog.push({ k: 'in', t, at, lane, src, tag, kk: g.k }); react(now);
+}
+document.querySelectorAll('.rail').forEach((b) => b.addEventListener('pointerdown', (e) => { e.preventDefault(); e.stopPropagation(); unlock(); press(+b.dataset.lane, e.timeStamp, 'ptr' + e.pointerId); }));
+// pointercancel / lostpointercapture / pointerup never cancel a pending or committed choice (GDD §2.1)
+document.querySelectorAll('.rail').forEach((b) => ['pointercancel', 'lostpointercapture', 'pointerup'].forEach((ty) => b.addEventListener(ty, () => S.evlog.push({ k: ty }))));
+const KEYS = { ArrowLeft: 0, ArrowDown: 1, ArrowRight: 2 };
+addEventListener('keydown', (e) => {
+  const k = e.key;
+  if (k in KEYS || k === 'Enter' || k === 'Escape') e.preventDefault();
+  if (e.repeat) { S.evlog.push({ k: 'repeat', key: k }); return; }
+  if (g.phase === 'ready') { if (k === 'Enter' && !$('ready').hidden) doStart(e.timeStamp); return; }
+  if (g.phase === 'end') { if (k === 'Enter' && !$('res').hidden) again(); return; }
+  if (paused) { if (k === 'Enter' || k === 'Escape' || k === 'p' || k === 'P') resume(); else if (k in KEYS) S.evlog.push({ k: 'in-dropped', why: 'paused', src: 'key' }); return; }
+  if (k === 'Escape' || k === 'p' || k === 'P') { pause('key'); return; }
+  if (k in KEYS) press(KEYS[k], e.timeStamp, 'key');
+  else if (k === 'Enter') S.evlog.push({ k: 'enter-ignored', phase: g.phase });
+}, true);
+$('b-start').addEventListener('click', (e) => { e.stopPropagation(); doStart(performance.now()); });
+// ---- pause: button, Esc/P, hidden tab, blur. Logical pending candidate is kept; DOM pressed state dropped. ----
+function pause(why) {
+  if (paused || g.phase === 'ready' || g.phase === 'end') return; const now = performance.now(); paused = true; freeze(now);
+  rails.forEach((r) => r.classList.remove('on'));
+  $('pz').hidden = false; document.body.classList.add('hid'); S.evlog.push({ k: 'pause', why, t: gt(now) }); $('b-resume').focus({ preventScroll: true });
+}
+function resume() { if (!paused) return; const now = performance.now(); paused = false; if (notice) notice.last = now; $('pz').hidden = true; document.body.classList.remove('hid'); thaw(now); S.evlog.push({ k: 'resume', t: gt(now), P }); }
+$('b-pause').addEventListener('click', (e) => { e.stopPropagation(); pause('button'); });
+$('b-resume').addEventListener('click', (e) => { e.stopPropagation(); resume(); });
+$('b-restart').addEventListener('click', (e) => { e.stopPropagation(); S.evlog.push({ k: 'restart', at: performance.now() }); again(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) pause('hidden'); });
+addEventListener('blur', () => pause('blur'));
+// ---- feedback at commit (after the receive deadline) ----
+function react(now) {
+  for (; seen < g.commits.length; seen++) {
+    const e = g.commits[seen]; const lane = e.lane ?? -1;
+    if (e.res === 'ok') { play(e.streak === 5 || e.streak === 10 ? 'up' : 'tick'); buzz(10); }
+    else { play('thud'); buzz(25); }
+    mark(e, now); S.evlog.push({ k: 'commit', e, at: now }); void lane;
+  }
+}
+function mark(e, now) {
+  rails.forEach((r) => r.classList.remove('ok', 'bad')); const fb = $('fb');
+  if (e.res === 'ok') { rails[e.lane].classList.add('ok'); fb.textContent = '✓'; fb.className = 'fb ok'; }
+  else { const ans = e.ans; if (e.lane !== null) rails[e.lane].classList.add('bad'); if (ans !== null) rails[ans].classList.add('ok'); fb.textContent = e.res === 'miss' ? '·  ✕' : '✕'; fb.className = 'fb bad'; }
+  fxUntil = now + (e.res === 'ok' ? SR.FX_OK : SR.FX_BAD) - 40;
+}
+// ---- result ----
+const rec = () => ({ score: g.score, correct: g.correct });
+const better = (a, b) => !b || a.score > b.score || (a.score === b.score && a.correct > b.correct);
+const dotsOf = () => g.log.filter((e) => e.res !== 'discard').map((e) => (e.res === 'ok' ? '●' : e.res === 'bad' ? '○' : '·')).join('');
+const accOf = () => (g.judged ? Math.round((100 * g.correct) / g.judged) : 0);
+function showResult() {
+  const r = rec(), was = best, nb = better(r, was); if (nb) { best = r; save('sr-best', { rec: r }); }
+  const sg = (n) => (n >= 0 ? '+' : '') + n;
+  $('r-n').textContent = r.correct; $('r-score').textContent = r.score; $('r-acc').textContent = accOf() + '%'; $('r-max').textContent = g.maxStreak;
+  $('r-best').textContent = was ? `${was.score} · ${was.correct}${D.unit}` : '—';
+  $('r-diff').textContent = was ? `${sg(r.score - was.score)} · ${sg(r.correct - was.correct)}${D.unit}` : '—';
+  $('r-new').hidden = !(nb && was); $('r-first').hidden = !!was; $('r-cut').hidden = !g.discarded;
+  $('r-dots').textContent = dotsOf() || '—';
+  $('seed').textContent = seed; $('r-fb').textContent = g.fallbacks.map((f) => 'block=' + f).join(' ');
+  play('finish'); $('res').hidden = false; S.evlog.push({ k: 'result', at: performance.now(), r, end: g.end }); $('b-again').focus({ preventScroll: true });
+}
+function again() {
+  g = newGame(seed); paused = false; notice = null; frozen = null; seen = 0; shownK = 0; lastLanes = '';
+  $('res').hidden = true; $('pz').hidden = true; $('note').hidden = true; document.body.classList.remove('hid'); $('ready').hidden = false;
+  rails.forEach((r) => r.classList.remove('ok', 'bad', 'on')); render(performance.now()); S.evlog.push({ k: 'again', at: performance.now() });
+}
+$('b-again').addEventListener('click', (e) => { e.stopPropagation(); again(); });
+const shareUrl = () => `${location.origin}${location.pathname}?seed=${encodeURIComponent(seed)}`;
+$('b-link').addEventListener('click', async (e) => { e.stopPropagation(); const t = D.shareText.replace('{n}', g.correct).replace('{url}', shareUrl()); try { await navigator.clipboard.writeText(t); toast(D.copied); } catch { toast(t); } S.evlog.push({ k: 'copy', t }); });
+$('b-png').addEventListener('click', (e) => { e.stopPropagation(); const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
+  const gr = x.createLinearGradient(0, 0, 0, 1350); gr.addColorStop(0, '#1b1a3a'); gr.addColorStop(1, '#07080c'); x.fillStyle = gr; x.fillRect(0, 0, 1080, 1350);
+  x.textAlign = 'center'; x.fillStyle = '#e8eaf0'; x.font = '700 56px system-ui,sans-serif'; x.fillText(D.name, 540, 150);
+  x.font = '800 220px system-ui,sans-serif'; x.fillStyle = '#22d3ee'; x.fillText(g.correct, 540, 470); x.font = '600 52px system-ui,sans-serif'; x.fillStyle = '#e8eaf0'; x.fillText(`${D.sorted} · ${g.score} ${D.pts} · ${accOf()}%`, 540, 560);
+  const dots = dotsOf(), per = 20, sz = 44; [...dots].slice(0, per * 9).forEach((d, i) => { const px = 540 - (Math.min(per, dots.length) * sz) / 2 + (i % per + 0.5) * sz, py = 680 + Math.floor(i / per) * sz; x.beginPath(); if (d === '●') { x.arc(px, py, 14, 0, 7); x.fillStyle = '#facc15'; x.fill(); } else if (d === '○') { x.arc(px, py, 13, 0, 7); x.strokeStyle = 'rgba(214,219,232,.75)'; x.lineWidth = 4; x.stroke(); } else { x.arc(px, py, 4, 0, 7); x.fillStyle = 'rgba(214,219,232,.6)'; x.fill(); } });
+  x.font = '500 44px system-ui,sans-serif'; x.fillStyle = 'rgba(214,219,232,.85)'; x.fillText(`${D.maxCombo} ${g.maxStreak}`, 540, 1150); x.fillText(seed, 540, 1215);
+  x.font = '500 34px system-ui,sans-serif'; x.fillText('playtoday.cloud', 540, 1300);
+  c.toBlob((bl) => { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = `sort-rail-${seed}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.evlog.push({ k: 'png' }); }, 'image/png'); });
+let tt = 0; function toast(s) { const t = $('toast'); t.textContent = s; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 1300); }
+// ---- render (DOM) ----
+const pc = $('parcel'), psym = $('p-sym'), pdl = $('p-dl');
+function render(now) {
+  const G = g.phase === 'ready' ? 0 : gt(now), left = g.phase === 'ready' ? SR.DUR : Math.max(0, SR.DUR - G);
+  $('h-time').textContent = Math.ceil(left / 1000); $('h-bar').style.width = (100 * left) / SR.DUR + '%'; $('h-time').parentNode.classList.toggle('warn', g.phase !== 'ready' && left <= 10000 && left > 0);
+  $('h-n').textContent = g.correct; $('h-score').textContent = g.score; $('h-combo').textContent = `${g.streak} ×${mult(g.streak)}`;
+  const p = g.cur, live = p && (g.phase === 'wait' || g.phase === 'fx') && G >= p.s && !(p.notice && notice);
+  // rule strip (pictures): R-A always, R-B after its notice
+  $('rule-b').hidden = !(g.noticeDone || (p && p.k > SR.RB));
+  if (!p || g.phase === 'ready') { pc.hidden = true; rails.forEach((r, i) => { r.querySelector('i').textContent = ''; r.setAttribute('aria-label', D.lanes.split(',')[i]); }); return; }
+  const lk = p.lanes.join();
+  if (lk !== lastLanes) { if (lastLanes) flashUntil = now + 150; lastLanes = lk; rails.forEach((r, i) => { const s = r.querySelector('i'); s.textContent = SYMS[p.lanes[i]]; s.style.color = COL[p.lanes[i]]; r.setAttribute('aria-label', `${D.lanes.split(',')[i]} ${SYMS[p.lanes[i]]}`); }); }
+  document.getElementById('rails').classList.toggle('flash', now < flashUntil);
+  if (g.phase === 'wait' && shownK !== p.k && G >= p.s) { shownK = p.k; rails.forEach((r) => r.classList.remove('ok', 'bad')); $('fb').className = 'fb'; $('fb').textContent = ''; pc.classList.remove('in'); void pc.offsetWidth; if (motion()) pc.classList.add('in'); }
+  pc.hidden = !live || (g.phase === 'fx' && now > fxUntil);
+  if (live) {
+    psym.textContent = SYMS[p.sym]; psym.style.color = COL[p.color]; pc.classList.toggle('bang', !!p.bang);
+    const rem = g.phase === 'wait' ? Math.max(0, Math.min(1, (p.D - G) / p.dl)) : 0; pdl.style.width = rem * 100 + '%';
+    pc.setAttribute('aria-label', `${SYMS[p.sym]}${p.bang ? ' !' : ''}`);
+  }
+  $('tut').hidden = !(g.phase === 'wait' && p.k === 1 && G >= p.s && G < 1000);
+}
+// ---- frame loop: notice freeze, advance, commit feedback, result ----
+let lastF = 0;
+function frame(now) {
+  requestAnimationFrame(frame);
+  if (FPS && now - lastF < 1000 / FPS - 0.5) return; lastF = now; W.frames++; if (W.ft.length < 4000) W.ft.push(now);
+  if (g.phase !== 'ready' && g.phase !== 'end') {
+    if (notice && !paused) { notice.left -= now - notice.last; notice.last = now; if (notice.left <= 0) { S.evlog.push({ k: 'notice-end', at: now, G: gt(now) }); notice = null; $('note').hidden = true; thaw(now); } }
+    if (frozen === null) {
+      const G = gt(now), p = g.cur;
+      advance(g, G); react(now);
+      const c = g.cur;
+      if (c && c.notice && !g.noticeDone && g.phase === 'wait' && G >= c.s) {   // R-B notice: clock frozen exactly at parcel 25's logical start
+        g.noticeDone = true; freeze(T0 + P + c.s); notice = { left: SR.NOTICE, last: now }; $('note').hidden = false; S.evlog.push({ k: 'notice', at: now, s: c.s, G: gt(now) });
+      }
+      void p;
+    }
+    if (g.phase === 'end' && $('res').hidden) { render(now); showResult(); return; }
+  }
+  render(now);
+}
+requestAnimationFrame(frame);
+S.ready = true;
+})()</script>
+</body></html>
