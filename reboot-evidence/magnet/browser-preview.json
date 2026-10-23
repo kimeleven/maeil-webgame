@@ -1,6 +1,6 @@
 {
- "base": "https://maeil-webgame-pai29heuf-sanghunkims-projects.vercel.app",
- "at": "2026-10-23T02:18:06.907Z",
+ "base": "https://maeil-webgame-fp0nauzsz-sanghunkims-projects.vercel.app",
+ "at": "2026-10-23T03:16:24.239Z",
  "M0 ready 10 s: time 90, gauge untouched, drag does not start": {
   "pass": true,
   "detail": "{\"tick\":0,\"phase\":\"ready\",\"auto\":null,\"x\":0.5,\"ships\":0,\"fails\":0,\"score\":0,\"hud\":\"90\",\"armed\":false,\"rel\":0,\"lands\":0}"
@@ -11,7 +11,7 @@
  },
  "M2 412 first landing within 5 s of start": {
   "pass": true,
-  "detail": "lands 1 at ~2.40 s wall, game 2.38 s"
+  "detail": "lands 1 at ~2.44 s wall, game 2.43 s"
  },
  "M10 pointercancel ends drag without release": {
   "pass": true,
@@ -19,11 +19,11 @@
  },
  "M10 pause tap: no release, time & auto drop frozen": {
   "pass": true,
-  "detail": "ticks 230→232, auto 272"
+  "detail": "ticks 233→235, auto 272"
  },
  "M10 resume: 3 s countdown before time flows": {
   "pass": true,
-  "detail": "during countdown +0 ticks, after +36"
+  "detail": "during countdown +0 ticks, after +35"
  },
  "M1 1440 mouse drag moves crane, mouse-up = 1 release": {
   "pass": true,
@@ -47,7 +47,7 @@
  },
  "M10 hidden tab stops active time and auto drop": {
   "pass": true,
-  "detail": "ticks 298→298"
+  "detail": "ticks 301→301"
  },
  "M5 idle: auto drop 360 ticks after ready, blink seen, result <30 s": {
   "pass": true,
@@ -59,7 +59,7 @@
  },
  "M8 again → ready within 0.5 s": {
   "pass": true,
-  "detail": "27 ms"
+  "detail": "24 ms"
  },
  "M8 result shows this run, best and diff without sharing": {
   "pass": true,
@@ -87,15 +87,15 @@
  },
  "M12 first input usable ≤2 s (4× CPU, Fast 3G)": {
   "pass": true,
-  "detail": "963 ms"
+  "detail": "1017 ms"
  },
  "M12 gzip ≤60 KB, 1 request": {
   "pass": true,
-  "detail": "16.3 KB"
+  "detail": "17.8 KB"
  },
  "M12 average fps ≥50 (headed Chromium, this Mac)": {
   "pass": true,
-  "detail": "72.1 fps"
+  "detail": "72.2 fps"
  },
  "M12 6 langs × 360/412/1440: no horizontal overflow, targets ≥44px": {
   "pass": true,

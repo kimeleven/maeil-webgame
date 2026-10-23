@@ -17,7 +17,8 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
 .sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
 .panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
-.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
+.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}
+.sheet.ready{align-items:flex-start;padding-top:10px;background:linear-gradient(rgba(7,8,12,.55) 60%,rgba(7,8,12,0) 78%)}.ready .panel{gap:8px;padding:14px}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
 .icon{font-size:34px;letter-spacing:6px}.t90{font-size:13px;color:var(--muted)}
 .btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
 .btn.main{min-height:64px;width:100%;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
@@ -25,9 +26,15 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .new{color:#4ade80;font-weight:800}.cmp{font-size:13px;color:var(--muted)}.why{font-size:14px;color:var(--muted)}
 .row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
 .seed{color:var(--muted);font-size:12px;text-align:center}
+.guide{margin:0;font-size:14px;font-weight:600;color:#4ade80;padding:8px 10px;border-radius:12px;border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.08)}
+.tip{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;border:1px solid rgba(250,204,21,.35);background:rgba(250,204,21,.08)}.tip b{font-size:15px;line-height:1.35}.tipk{font-size:12px;color:var(--gold);font-weight:700}
+.near{font-size:15px;font-weight:700;color:var(--cyan)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
 @media (min-width:900px){body{background:radial-gradient(900px 600px at 15% 30%,rgba(34,211,238,.10),transparent),radial-gradient(900px 600px at 85% 70%,rgba(99,102,241,.16),transparent),var(--bg)}}
-@media (prefers-reduced-motion:reduce){.toast{transition:none}}</style></head>
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.sheet .panel{max-height:100%;overflow-y:auto}
+@media (max-height:860px){.ready .icon{display:none}.ready .panel{gap:6px;padding:12px}.ready .how,.ready .guide{font-size:13px}.ready .goal{font-size:15px}.btn.main{min-height:54px;font-size:20px}
+#res{padding:8px}#res .panel{gap:5px;padding:12px}.panel h2{font-size:19px}.nums b.big{font-size:26px}.nums{font-size:13px}.nums b{font-size:16px}.tip{padding:7px 10px}.tip b{font-size:14px}.near{font-size:14px}.tgs .tg,.row .btn{min-height:44px}}</style></head>
 <body data-page="magnet-harbor" data-lang="zh-hans">
 <header class="top"><a class="logo" href="/zh-hans/"><i></i>每日小游戏</a><span class="tag">预览</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="声音" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="振动" aria-pressed="true">📳</button><details class="langs" data-ui><summary aria-label="Language">zh-hans ▾</summary><nav><a href="/ko/play/magnet-harbor/" hreflang="ko">ko</a><a href="/en/play/magnet-harbor/" hreflang="en">en</a><a href="/ja/play/magnet-harbor/" hreflang="ja">ja</a><a href="/zh-hans/play/magnet-harbor/" hreflang="zh-Hans" aria-current="true">zh-hans</a><a href="/es/play/magnet-harbor/" hreflang="es">es</a><a href="/pt-br/play/magnet-harbor/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
 <main class="stage" id="stage">
@@ -36,12 +43,14 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 <div class="sheet ready" id="ready" data-ui><div class="panel">
 <h2>磁铁港口</h2><p class="goal">在船上方松开摇晃的货物，堆好后发船 · 90秒</p><div class="icon" aria-hidden="true">👆↔️✋⬇️</div><p class="how" id="r-how">拖动移动，松开投放 · ←/→ 移动 + 空格投放</p>
 <button class="btn main" id="b-start" type="button">开始</button><div class="t90">剩余 90 · Space / Enter</div>
+<p class="guide" id="r-guide">绿色格=船上落点 · 影子到绿色格时松手</p><div class="t90" id="r-combo">连续PERFECT得分×2·×3,普通着陆或落水重置为×1</div>
 </div></div>
 <div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>已暂停</h2><p class="how">点击继续 (3秒后恢复)</p><span id="pz-n"></span><div class="tgs"><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">动态效果</button></div></div></div>
 <div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">港口收工!</h2><div class="why" id="r-why"></div><div class="new" id="r-new" hidden>新纪录!</div><div class="new" id="r-first" hidden>首次记录</div>
 <div class="nums"><span>本局</span><b class="big" id="r-ships"></b><span>分数</span><b id="r-score"></b><span>PERFECT</span><b id="r-perf"></b><span>我的最佳</span><b id="r-best"></b><span>差距</span><b id="r-diff"></b></div>
-<div class="cmp" id="r-near" hidden></div>
+<div class="tip" id="r-tipbox"><span class="tipk" id="r-tipk"></span><b id="r-tip"></b></div>
+<div class="cmp near" id="r-near" hidden></div>
 <button class="btn main" id="b-again" type="button">再玩一次</button>
 <div class="row"><button class="btn" id="b-png" type="button">保存PNG</button><button class="btn" id="b-link" type="button">复制挑战链接</button></div>
 <div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">声音</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">振动</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">动态效果</button></div><div class="seed">seed <span id="seed"></span></div>
@@ -49,7 +58,7 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 </div>
 <div class="bar"><span class="hint">Drag &amp; release / ←→ Space</span><button class="ic" id="b-pause" type="button" data-ui aria-label="暂停">⏸</button></div>
 </main><div class="toast" id="toast" role="status"></div>
-<script id="mt" type="application/json">{"name":"磁铁港口","title":"磁铁港口 (预览)","desc":"用磁铁吊车搬运摇晃的货物，堆到摇晃的船上，看看90秒能送出几艘船。","preview":"预览","back":"每日小游戏","time":"剩余","ships":"船","target":"装载","cols":"列","lives":"生命","goal":"在船上方松开摇晃的货物，堆好后发船 · 90秒","howMobile":"任意位置拖动移动吊车，松手即投放","howDesktop":"拖动移动，松开投放 · ←/→ 移动 + 空格投放","start":"开始","hint":"Drag & release / ←→ Space","pause":"暂停","paused":"已暂停","resume":"点击继续 (3秒后恢复)","over":"港口收工!","endTime":"90秒结束","endLives":"3个货物掉进了海里","shipsN":"{n} 艘船","now":"本局","best":"我的最佳","diff":"差距","first":"首次记录","newBest":"新纪录!","near":"再装 {n} 格就能多送一艘","score":"分数","perfect":"PERFECT","again":"再玩一次","png":"保存PNG","link":"复制挑战链接","copied":"已复制","sound":"声音","haptic":"振动","motion":"动态效果","shareText":"我在磁铁港口送出了 {ships} 艘船！同一个港口，你来试试？ → {url}"}</script>
+<script id="mt" type="application/json">{"name":"磁铁港口","title":"磁铁港口 (预览)","desc":"用磁铁吊车搬运摇晃的货物，堆到摇晃的船上，看看90秒能送出几艘船。","preview":"预览","back":"每日小游戏","time":"剩余","ships":"船","target":"装载","cols":"列","lives":"生命","goal":"在船上方松开摇晃的货物，堆好后发船 · 90秒","howMobile":"任意位置拖动移动吊车，松手即投放","howDesktop":"拖动移动，松开投放 · ←/→ 移动 + 空格投放","start":"开始","hint":"Drag & release / ←→ Space","pause":"暂停","paused":"已暂停","resume":"点击继续 (3秒后恢复)","over":"港口收工!","endTime":"90秒结束","endLives":"3个货物掉进了海里","shipsN":"{n} 艘船","now":"本局","best":"我的最佳","diff":"差距","first":"首次记录","newBest":"新纪录!","near":"再装 {n} 格就能多送一艘","score":"分数","perfect":"PERFECT","again":"再玩一次","png":"保存PNG","link":"复制挑战链接","copied":"已复制","sound":"声音","haptic":"振动","motion":"动态效果","shareText":"我在磁铁港口送出了 {ships} 艘船！同一个港口，你来试试？ → {url}","lastFall":"最后一次落水","tipSea":"掉到船外了 → 紫色影子落在绿色格(船上)时再松手","tipHigh":"堆得太高 → 不要超过3层,从最低的列向两侧铺开","tipTilt":"船倾斜把货甩下 → 另一侧也要堆,让重心靠中间","tipTime":"时间到 → 等摆动停下再松手,更容易PERFECT","left":"距下一艘船还差{n}格 · {c}列","leftCells":"距下一艘船还差{n}格","leftCols":"距下一艘船还差{c}列(需4列以上)","guide":"绿色格=船上落点 · 影子到绿色格时松手","combo":"连续PERFECT ×{n}","comboRule":"连续PERFECT得分×2·×3,普通着陆或落水重置为×1"}</script>
 <script>(()=>{// Magnet Harbor rule engine (prototype, t_1c491685). DOM-free, deterministic, fixed step 1/60 s.
 // GDD r2: workspace/maeil-arcade-local/games/magnet-harbor/GDD.md (2.0 time, 2.1 stacking/departure, 2.2 coords).
 // All tunables live in MH. Same seed + same input log → same result (state quantized every tick).
@@ -166,7 +175,7 @@ function release(g, why) {
   g.falling = { ...cg, x0, xl, at: g.tick, land: g.tick + MH.FALL, why };
   g.cargo = null; g.cool = MH.COOL; ev(g, 'release', { i: cg.i, why, x: x0, xl });
 }
-function fail(g, why, d = {}) { g.fails++; g.mult = 1; ev(g, 'fall', { why, ...d }); if (g.fails >= MH.LIVES) end(g, 'lives'); }
+function fail(g, why, d = {}) { g.fails++; g.mult = 1; g.lastFail = why; ev(g, 'fall', { why, ...d }); if (g.fails >= MH.LIVES) end(g, 'lives'); }
 // snap: landing x → ship-relative x → column (roll/heave not used for snapping, GDD 2.2)
 function snap(xl, w) {
   const rel = xl - MH.SHIP_CX, c = Math.max(0, Math.min(MH.COLS - w, Math.round(rel + 2.5 - (w - 1) / 2)));
@@ -181,11 +190,11 @@ function land(g) {
   if (seat > MH.MAXH) return fail(g, 'over', { i: f.i, c });
   const id = ++g.boxN;
   for (const k of span) { while (g.cols[k].length < seat - 1) g.cols[k].push({ k: 'block' }); g.cols[k].push({ k: 'box', id, w: f.w, c, lv: seat }); }
-  const perfect = err < MH.PERFECT;
+  const perfect = err < MH.PERFECT, mult = perfect ? g.mult : 1; // streak multiplier applied to this landing
   if (perfect) { g.score += MH.SCORE.perfect * g.mult; g.mult = Math.min(MH.SCORE.multMax, g.mult + 1); g.perfects++; g.lastPerfect = true; }
   else { g.score += MH.SCORE.land; g.mult = 1; }
   g.placed.push({ id, ship: g.ship.n, c, lv: seat, w: f.w, tick: g.tick });
-  ev(g, 'land', { i: f.i, id, c, lv: seat, w: f.w, perfect, err: q3(err) });
+  ev(g, 'land', { i: f.i, id, c, lv: seat, w: f.w, perfect, mult, err: q3(err) });
   // step rule is applied in the same tick (landing-caused violation drops immediately)
   if (stepViolation(g) >= 0) { g.dropGap = 0; ruleDrop(g); }
   if (!g.over && load(g) >= g.ship.target && usedCols(g) >= 4) departShip(g);
@@ -380,7 +389,7 @@ const POLICIES = {
     for (const e of g.events.splice(0)) {
       S.evlog.push(e);
       if (e.k === 'release') { SFX.release(); }
-      else if (e.k === 'land') { if (e.perfect) { SFX.perfect(); buzz(25); fx.flash = 20; } else { SFX.land(); buzz(15); } if (!reduced()) fx.shake = e.perfect ? 4 : 6; }
+      else if (e.k === 'land') { if (e.perfect) { SFX.perfect(); buzz(25); fx.flash = e.mult > 1 ? 40 : 20; fx.flashText = e.mult > 1 ? fmt(T.combo, { n: e.mult }) : T.perfect; } else { SFX.land(); buzz(15); } if (!reduced()) fx.shake = e.perfect ? 4 : 6; }
       else if (e.k === 'fall') { SFX.fall(); buzz(50); const x = e.xl != null ? e.xl : MH.SHIP_CX; fx.icons.push({ why: e.why, x: e.why === 'sea' ? x : MH.SHIP_CX, t: 36 }); if (!reduced()) for (let i = 0; i < 14; i++) fx.parts.push({ x, y: 0, vx: (Math.random() - 0.5) * 0.12, vy: -Math.random() * 0.18, t: 40 }); }
       else if (e.k === 'drop') { fx.icons.push({ why: e.why, x: MH.SHIP_CX + colCenter(e.c, e.w), t: 36 }); }
       else if (e.k === 'depart') { SFX.depart(); fx.departShape = g.cols.map((c) => c.slice()); fx.departT = MH.DEPART; }
@@ -444,12 +453,27 @@ const POLICIES = {
     cx.save(); cx.globalAlpha = alpha; cx.translate(shipX + dx, deckY + g.heave * s); cx.rotate((g.roll * Math.PI) / 180);
     cx.fillStyle = C.hull; cx.beginPath(); cx.moveTo(-3.3 * s, 0); cx.lineTo(3.3 * s, 0); cx.lineTo(2.7 * s, 0.9 * s); cx.lineTo(-2.7 * s, 0.9 * s); cx.closePath(); cx.fill();
     cx.fillStyle = 'rgba(255,255,255,.12)'; for (let c = 0; c < 6; c++) cx.fillRect((c - 3) * s + 2, -3, s - 4, 3);
+    // first-landing guide: ready screen + until the first box lands, the 6 deck cells glow green (valid landing width)
+    if (g.phase === 'ready' || (g.phase === 'play' && !g.placed.length)) {
+      const pulse = rm ? 0.3 : 0.22 + 0.12 * Math.sin(performance.now() / 260);
+      cx.fillStyle = `rgba(74,222,128,${pulse})`; cx.strokeStyle = 'rgba(74,222,128,.85)'; cx.lineWidth = 2;
+      for (let c = 0; c < 6; c++) { cx.fillRect((c - 3) * s + 2, -s + 2, s - 4, s - 4); cx.strokeRect((c - 3) * s + 2, -s + 2, s - 4, s - 4); }
+      if (g.phase === 'ready') { cx.fillStyle = 'rgba(74,222,128,.95)'; cx.font = `800 ${Math.round(s * 0.8)}px system-ui`; cx.textAlign = 'center'; cx.fillText('⬇', colCenter(2) * s, -s * 1.4); } // aim a cell centre, not the ship centre (a column boundary)
+    }
     const seen = new Set();
     g.cols.forEach((col, c) => col.forEach((b, lv) => { const y = -(lv + 1) * s; if (b.k === 'block') boxRect((c - 3) * s, y, 1, 'block', s); else if (!seen.has(b.id)) { seen.add(b.id); boxRect((b.c - 3) * s, y, b.w, 'box', s); } }));
     cx.restore();
     // landing shadow on the waterline (x_land), helps when the finger covers the ship
     const live = g.cargo && (g.phase === 'play');
-    if (live) { const xl = landX(g) * s, w = g.cargo.w * s; cx.fillStyle = 'rgba(167,139,250,.28)'; cx.fillRect(xl - w / 2, deckY - 6, w, 6); }
+    if (live) {
+      const lx = landX(g), xl = lx * s, w = g.cargo.w * s, sn = snap(lx, g.cargo.w), okLand = sn.err < MH.LAND;
+      cx.fillStyle = 'rgba(167,139,250,.28)'; cx.fillRect(xl - w / 2, deckY - 6, w, 6);
+      // landing marker over the snapped cell: green ✓ near the cell centre, amber ✓ at the edge (still lands), red ✕ = sea
+      const tier = sn.err < 0.25 ? 'good' : okLand ? 'edge' : 'miss';
+      cx.font = `800 ${Math.round(s * 0.55)}px system-ui`; cx.textAlign = 'center';
+      cx.fillStyle = { good: 'rgba(74,222,128,.95)', edge: 'rgba(250,204,21,.95)', miss: 'rgba(255,77,94,.95)' }[tier]; cx.fillText(okLand ? '✓' : '✕', xl, deckY - (okLand ? Math.max(...g.cols.slice(sn.c, sn.c + g.cargo.w).map((c) => c.length)) : 0) * s - s * 0.15 - 10); // above the stack it would land on
+      S.aim = okLand; S.aimTier = tier;
+    }
     // crane trolley + rope + cargo
     const crX = g.crane.x * s; cx.fillStyle = C.mag; cx.fillRect(crX - s * 0.45, railY - s * 0.25, s * 0.9, s * 0.4);
     if (g.cargo) {
@@ -466,7 +490,7 @@ const POLICIES = {
     fx.parts = fx.parts.filter((p) => p.t-- > 0); cx.fillStyle = 'rgba(180,220,255,.8)'; for (const p of fx.parts) { p.x += p.vx; p.y += p.vy; p.vy += 0.012; cx.fillRect(p.x * s, seaY + p.y * s, 3, 3); }
     fx.icons = fx.icons.filter((i) => i.t-- > 0); cx.font = `${Math.round(s * 0.8)}px system-ui`; cx.textAlign = 'center';
     for (const i of fx.icons) { cx.fillText({ sea: '🌊', over: '⬆', step: '⬆', tilt: '⚖' }[i.why] || '!', i.x * s, deckY - s * 3.8); }
-    if (fx.flash) { fx.flash--; cx.fillStyle = '#facc15'; cx.font = `800 ${Math.round(s * 0.75)}px system-ui`; cx.fillText('PERFECT', Wd / 2, H * 0.47); }
+    if (fx.flash) { fx.flash--; cx.fillStyle = '#facc15'; cx.font = `800 ${Math.round(s * 0.75)}px system-ui`; cx.fillText(fx.flashText || T.perfect, Wd / 2, H * 0.47); }
     if (countdown) { cx.fillStyle = '#fff'; cx.font = `800 ${Math.round(s * 2)}px system-ui`; cx.fillText(String(Math.ceil(countdown / 60)), Wd / 2, H * 0.45); }
     // first-play hint 0–2 s after start: finger drag → release icon (no text)
     if (g.phase === 'play' && g.tick < 120 && !g.placed.length) { cx.font = `${Math.round(s * 0.9)}px system-ui`; cx.globalAlpha = 0.9; const k = (g.tick % 60) / 60; cx.fillText('👆', (1 + k * 3) * s, H * 0.5); cx.fillText('→', 2.5 * s, H * 0.44); cx.globalAlpha = 1; }
@@ -482,8 +506,13 @@ const POLICIES = {
     $('#r-best').textContent = had ? `${fmt(T.shipsN, { n: prev.ships })} · ${prev.score}` : '—';
     $('#r-diff').textContent = had ? `${r.ships - prev.ships >= 0 ? '+' : ''}${r.ships - prev.ships} · ${r.score - prev.score >= 0 ? '+' : ''}${r.score - prev.score}` : '';
     $('#r-new').hidden = !(nb && had); $('#r-first').hidden = had;
-    const left = g.ship ? Math.max(0, g.ship.target - load(g)) : 0;
-    $('#r-near').hidden = !(had && !nb && r.ships + 1 >= prev.ships && left > 0); $('#r-near').textContent = fmt(T.near, { n: left });
+    // what to do next: cells / columns left for the next boat + a short tip for the last drop cause
+    const left = g.ship ? Math.max(0, g.ship.target - load(g)) : 0, colsLeft = Math.max(0, 4 - usedCols(g));
+    $('#r-near').hidden = !(left > 0 || colsLeft > 0);
+    $('#r-near').textContent = left > 0 && colsLeft > 0 ? fmt(T.left, { n: left, c: colsLeft }) : left > 0 ? fmt(T.leftCells, { n: left }) : fmt(T.leftCols, { c: colsLeft });
+    const lf = g.lastFail, tip = !lf ? T.tipTime : lf === 'sea' ? T.tipSea : lf === 'tilt' ? T.tipTilt : T.tipHigh;
+    $('#r-tip').textContent = tip; $('#r-tipk').textContent = lf ? `${T.lastFall} ${{ sea: '🌊', over: '⬆', step: '⬆', tilt: '⚖' }[lf] || ''}` : '⏱';
+    S.tip = { why: lf || 'time', text: tip, near: $('#r-near').textContent };
     $('#r-why').textContent = g.overWhy === 'time' ? T.endTime : T.endLives;
     $('#seed').textContent = seed;
     res.hidden = false; S.result = { ...r, at: performance.now() };

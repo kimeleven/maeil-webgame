@@ -107,7 +107,7 @@
     for (const e of g.events.splice(0)) {
       S.evlog.push(e);
       if (e.k === 'release') { SFX.release(); }
-      else if (e.k === 'land') { if (e.perfect) { SFX.perfect(); buzz(25); fx.flash = 20; } else { SFX.land(); buzz(15); } if (!reduced()) fx.shake = e.perfect ? 4 : 6; }
+      else if (e.k === 'land') { if (e.perfect) { SFX.perfect(); buzz(25); fx.flash = e.mult > 1 ? 40 : 20; fx.flashText = e.mult > 1 ? fmt(T.combo, { n: e.mult }) : T.perfect; } else { SFX.land(); buzz(15); } if (!reduced()) fx.shake = e.perfect ? 4 : 6; }
       else if (e.k === 'fall') { SFX.fall(); buzz(50); const x = e.xl != null ? e.xl : MH.SHIP_CX; fx.icons.push({ why: e.why, x: e.why === 'sea' ? x : MH.SHIP_CX, t: 36 }); if (!reduced()) for (let i = 0; i < 14; i++) fx.parts.push({ x, y: 0, vx: (Math.random() - 0.5) * 0.12, vy: -Math.random() * 0.18, t: 40 }); }
       else if (e.k === 'drop') { fx.icons.push({ why: e.why, x: MH.SHIP_CX + colCenter(e.c, e.w), t: 36 }); }
       else if (e.k === 'depart') { SFX.depart(); fx.departShape = g.cols.map((c) => c.slice()); fx.departT = MH.DEPART; }
@@ -171,12 +171,27 @@
     cx.save(); cx.globalAlpha = alpha; cx.translate(shipX + dx, deckY + g.heave * s); cx.rotate((g.roll * Math.PI) / 180);
     cx.fillStyle = C.hull; cx.beginPath(); cx.moveTo(-3.3 * s, 0); cx.lineTo(3.3 * s, 0); cx.lineTo(2.7 * s, 0.9 * s); cx.lineTo(-2.7 * s, 0.9 * s); cx.closePath(); cx.fill();
     cx.fillStyle = 'rgba(255,255,255,.12)'; for (let c = 0; c < 6; c++) cx.fillRect((c - 3) * s + 2, -3, s - 4, 3);
+    // first-landing guide: ready screen + until the first box lands, the 6 deck cells glow green (valid landing width)
+    if (g.phase === 'ready' || (g.phase === 'play' && !g.placed.length)) {
+      const pulse = rm ? 0.3 : 0.22 + 0.12 * Math.sin(performance.now() / 260);
+      cx.fillStyle = `rgba(74,222,128,${pulse})`; cx.strokeStyle = 'rgba(74,222,128,.85)'; cx.lineWidth = 2;
+      for (let c = 0; c < 6; c++) { cx.fillRect((c - 3) * s + 2, -s + 2, s - 4, s - 4); cx.strokeRect((c - 3) * s + 2, -s + 2, s - 4, s - 4); }
+      if (g.phase === 'ready') { cx.fillStyle = 'rgba(74,222,128,.95)'; cx.font = `800 ${Math.round(s * 0.8)}px system-ui`; cx.textAlign = 'center'; cx.fillText('⬇', colCenter(2) * s, -s * 1.4); } // aim a cell centre, not the ship centre (a column boundary)
+    }
     const seen = new Set();
     g.cols.forEach((col, c) => col.forEach((b, lv) => { const y = -(lv + 1) * s; if (b.k === 'block') boxRect((c - 3) * s, y, 1, 'block', s); else if (!seen.has(b.id)) { seen.add(b.id); boxRect((b.c - 3) * s, y, b.w, 'box', s); } }));
     cx.restore();
     // landing shadow on the waterline (x_land), helps when the finger covers the ship
     const live = g.cargo && (g.phase === 'play');
-    if (live) { const xl = landX(g) * s, w = g.cargo.w * s; cx.fillStyle = 'rgba(167,139,250,.28)'; cx.fillRect(xl - w / 2, deckY - 6, w, 6); }
+    if (live) {
+      const lx = landX(g), xl = lx * s, w = g.cargo.w * s, sn = snap(lx, g.cargo.w), okLand = sn.err < MH.LAND;
+      cx.fillStyle = 'rgba(167,139,250,.28)'; cx.fillRect(xl - w / 2, deckY - 6, w, 6);
+      // landing marker over the snapped cell: green ✓ near the cell centre, amber ✓ at the edge (still lands), red ✕ = sea
+      const tier = sn.err < 0.25 ? 'good' : okLand ? 'edge' : 'miss';
+      cx.font = `800 ${Math.round(s * 0.55)}px system-ui`; cx.textAlign = 'center';
+      cx.fillStyle = { good: 'rgba(74,222,128,.95)', edge: 'rgba(250,204,21,.95)', miss: 'rgba(255,77,94,.95)' }[tier]; cx.fillText(okLand ? '✓' : '✕', xl, deckY - (okLand ? Math.max(...g.cols.slice(sn.c, sn.c + g.cargo.w).map((c) => c.length)) : 0) * s - s * 0.15 - 10); // above the stack it would land on
+      S.aim = okLand; S.aimTier = tier;
+    }
     // crane trolley + rope + cargo
     const crX = g.crane.x * s; cx.fillStyle = C.mag; cx.fillRect(crX - s * 0.45, railY - s * 0.25, s * 0.9, s * 0.4);
     if (g.cargo) {
@@ -193,7 +208,7 @@
     fx.parts = fx.parts.filter((p) => p.t-- > 0); cx.fillStyle = 'rgba(180,220,255,.8)'; for (const p of fx.parts) { p.x += p.vx; p.y += p.vy; p.vy += 0.012; cx.fillRect(p.x * s, seaY + p.y * s, 3, 3); }
     fx.icons = fx.icons.filter((i) => i.t-- > 0); cx.font = `${Math.round(s * 0.8)}px system-ui`; cx.textAlign = 'center';
     for (const i of fx.icons) { cx.fillText({ sea: '🌊', over: '⬆', step: '⬆', tilt: '⚖' }[i.why] || '!', i.x * s, deckY - s * 3.8); }
-    if (fx.flash) { fx.flash--; cx.fillStyle = '#facc15'; cx.font = `800 ${Math.round(s * 0.75)}px system-ui`; cx.fillText('PERFECT', Wd / 2, H * 0.47); }
+    if (fx.flash) { fx.flash--; cx.fillStyle = '#facc15'; cx.font = `800 ${Math.round(s * 0.75)}px system-ui`; cx.fillText(fx.flashText || T.perfect, Wd / 2, H * 0.47); }
     if (countdown) { cx.fillStyle = '#fff'; cx.font = `800 ${Math.round(s * 2)}px system-ui`; cx.fillText(String(Math.ceil(countdown / 60)), Wd / 2, H * 0.45); }
     // first-play hint 0–2 s after start: finger drag → release icon (no text)
     if (g.phase === 'play' && g.tick < 120 && !g.placed.length) { cx.font = `${Math.round(s * 0.9)}px system-ui`; cx.globalAlpha = 0.9; const k = (g.tick % 60) / 60; cx.fillText('👆', (1 + k * 3) * s, H * 0.5); cx.fillText('→', 2.5 * s, H * 0.44); cx.globalAlpha = 1; }
@@ -209,8 +224,13 @@
     $('#r-best').textContent = had ? `${fmt(T.shipsN, { n: prev.ships })} · ${prev.score}` : '—';
     $('#r-diff').textContent = had ? `${r.ships - prev.ships >= 0 ? '+' : ''}${r.ships - prev.ships} · ${r.score - prev.score >= 0 ? '+' : ''}${r.score - prev.score}` : '';
     $('#r-new').hidden = !(nb && had); $('#r-first').hidden = had;
-    const left = g.ship ? Math.max(0, g.ship.target - load(g)) : 0;
-    $('#r-near').hidden = !(had && !nb && r.ships + 1 >= prev.ships && left > 0); $('#r-near').textContent = fmt(T.near, { n: left });
+    // what to do next: cells / columns left for the next boat + a short tip for the last drop cause
+    const left = g.ship ? Math.max(0, g.ship.target - load(g)) : 0, colsLeft = Math.max(0, 4 - usedCols(g));
+    $('#r-near').hidden = !(left > 0 || colsLeft > 0);
+    $('#r-near').textContent = left > 0 && colsLeft > 0 ? fmt(T.left, { n: left, c: colsLeft }) : left > 0 ? fmt(T.leftCells, { n: left }) : fmt(T.leftCols, { c: colsLeft });
+    const lf = g.lastFail, tip = !lf ? T.tipTime : lf === 'sea' ? T.tipSea : lf === 'tilt' ? T.tipTilt : T.tipHigh;
+    $('#r-tip').textContent = tip; $('#r-tipk').textContent = lf ? `${T.lastFall} ${{ sea: '🌊', over: '⬆', step: '⬆', tilt: '⚖' }[lf] || ''}` : '⏱';
+    S.tip = { why: lf || 'time', text: tip, near: $('#r-near').textContent };
     $('#r-why').textContent = g.overWhy === 'time' ? T.endTime : T.endLives;
     $('#seed').textContent = seed;
     res.hidden = false; S.result = { ...r, at: performance.now() };

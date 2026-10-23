@@ -114,7 +114,7 @@ function release(g, why) {
   g.falling = { ...cg, x0, xl, at: g.tick, land: g.tick + MH.FALL, why };
   g.cargo = null; g.cool = MH.COOL; ev(g, 'release', { i: cg.i, why, x: x0, xl });
 }
-function fail(g, why, d = {}) { g.fails++; g.mult = 1; ev(g, 'fall', { why, ...d }); if (g.fails >= MH.LIVES) end(g, 'lives'); }
+function fail(g, why, d = {}) { g.fails++; g.mult = 1; g.lastFail = why; ev(g, 'fall', { why, ...d }); if (g.fails >= MH.LIVES) end(g, 'lives'); }
 // snap: landing x → ship-relative x → column (roll/heave not used for snapping, GDD 2.2)
 export function snap(xl, w) {
   const rel = xl - MH.SHIP_CX, c = Math.max(0, Math.min(MH.COLS - w, Math.round(rel + 2.5 - (w - 1) / 2)));
@@ -129,11 +129,11 @@ function land(g) {
   if (seat > MH.MAXH) return fail(g, 'over', { i: f.i, c });
   const id = ++g.boxN;
   for (const k of span) { while (g.cols[k].length < seat - 1) g.cols[k].push({ k: 'block' }); g.cols[k].push({ k: 'box', id, w: f.w, c, lv: seat }); }
-  const perfect = err < MH.PERFECT;
+  const perfect = err < MH.PERFECT, mult = perfect ? g.mult : 1; // streak multiplier applied to this landing
   if (perfect) { g.score += MH.SCORE.perfect * g.mult; g.mult = Math.min(MH.SCORE.multMax, g.mult + 1); g.perfects++; g.lastPerfect = true; }
   else { g.score += MH.SCORE.land; g.mult = 1; }
   g.placed.push({ id, ship: g.ship.n, c, lv: seat, w: f.w, tick: g.tick });
-  ev(g, 'land', { i: f.i, id, c, lv: seat, w: f.w, perfect, err: q3(err) });
+  ev(g, 'land', { i: f.i, id, c, lv: seat, w: f.w, perfect, mult, err: q3(err) });
   // step rule is applied in the same tick (landing-caused violation drops immediately)
   if (stepViolation(g) >= 0) { g.dropGap = 0; ruleDrop(g); }
   if (!g.over && load(g) >= g.ship.target && usedCols(g) >= 4) departShip(g);

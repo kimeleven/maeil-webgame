@@ -24,7 +24,8 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
 .sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
 .panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
-.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
+.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}
+.sheet.ready{align-items:flex-start;padding-top:10px;background:linear-gradient(rgba(7,8,12,.55) 60%,rgba(7,8,12,0) 78%)}.ready .panel{gap:8px;padding:14px}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
 .icon{font-size:34px;letter-spacing:6px}.t90{font-size:13px;color:var(--muted)}
 .btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
 .btn.main{min-height:64px;width:100%;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
@@ -32,9 +33,15 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .new{color:#4ade80;font-weight:800}.cmp{font-size:13px;color:var(--muted)}.why{font-size:14px;color:var(--muted)}
 .row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
 .seed{color:var(--muted);font-size:12px;text-align:center}
+.guide{margin:0;font-size:14px;font-weight:600;color:#4ade80;padding:8px 10px;border-radius:12px;border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.08)}
+.tip{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;border:1px solid rgba(250,204,21,.35);background:rgba(250,204,21,.08)}.tip b{font-size:15px;line-height:1.35}.tipk{font-size:12px;color:var(--gold);font-weight:700}
+.near{font-size:15px;font-weight:700;color:var(--cyan)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
 @media (min-width:900px){body{background:radial-gradient(900px 600px at 15% 30%,rgba(34,211,238,.10),transparent),radial-gradient(900px 600px at 85% 70%,rgba(99,102,241,.16),transparent),var(--bg)}}
-@media (prefers-reduced-motion:reduce){.toast{transition:none}}`;
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.sheet .panel{max-height:100%;overflow-y:auto}
+@media (max-height:860px){.ready .icon{display:none}.ready .panel{gap:6px;padding:12px}.ready .how,.ready .guide{font-size:13px}.ready .goal{font-size:15px}.btn.main{min-height:54px;font-size:20px}
+#res{padding:8px}#res .panel{gap:5px;padding:12px}.panel h2{font-size:19px}.nums b.big{font-size:26px}.nums{font-size:13px}.nums b{font-size:16px}.tip{padding:7px 10px}.tip b{font-size:14px}.near{font-size:14px}.tgs .tg,.row .btn{min-height:44px}}`;
 
 export function buildMagnet() {
   const T = JSON.parse(readFileSync(`${ROOT}i18n/magnet-harbor.json`, 'utf8'));
@@ -57,12 +64,14 @@ export function buildMagnet() {
 <div class="sheet ready" id="ready" data-ui><div class="panel">
 <h2>${esc(D.name)}</h2><p class="goal">${esc(D.goal)}</p><div class="icon" aria-hidden="true">👆↔️✋⬇️</div><p class="how" id="r-how">${esc(D.howDesktop)}</p>
 <button class="btn main" id="b-start" type="button">${esc(D.start)}</button><div class="t90">${esc(D.time)} 90 · Space / Enter</div>
+<p class="guide" id="r-guide">${esc(D.guide)}</p><div class="t90" id="r-combo">${esc(D.comboRule)}</div>
 </div></div>
 <div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>${esc(D.paused)}</h2><p class="how">${esc(D.resume)}</p><span id="pz-n"></span><div class="tgs">${tg('motion')}</div></div></div>
 <div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">${esc(D.over)}</h2><div class="why" id="r-why"></div><div class="new" id="r-new" hidden>${esc(D.newBest)}</div><div class="new" id="r-first" hidden>${esc(D.first)}</div>
 <div class="nums"><span>${esc(D.now)}</span><b class="big" id="r-ships"></b><span>${esc(D.score)}</span><b id="r-score"></b><span>${esc(D.perfect)}</span><b id="r-perf"></b><span>${esc(D.best)}</span><b id="r-best"></b><span>${esc(D.diff)}</span><b id="r-diff"></b></div>
-<div class="cmp" id="r-near" hidden></div>
+<div class="tip" id="r-tipbox"><span class="tipk" id="r-tipk"></span><b id="r-tip"></b></div>
+<div class="cmp near" id="r-near" hidden></div>
 <button class="btn main" id="b-again" type="button">${esc(D.again)}</button>
 <div class="row"><button class="btn" id="b-png" type="button">${esc(D.png)}</button><button class="btn" id="b-link" type="button">${esc(D.link)}</button></div>
 <div class="tgs">${tg('sound')}${tg('haptic')}${tg('motion')}</div><div class="seed">seed <span id="seed"></span></div>
