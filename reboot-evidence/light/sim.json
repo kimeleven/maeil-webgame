@@ -1,0 +1,287 @@
+{
+ "at": "2026-10-23T07:12:06.348Z",
+ "node": "v26.7.0",
+ "out": {
+  "L3 same seed+n twice → identical board (1000 seeds × 30)": {
+   "pass": true,
+   "detail": {
+    "same": 30000,
+    "total": 30000
+   }
+  },
+  "L3 par = independent exhaustive search, start unsolved": {
+   "pass": true,
+   "detail": {
+    "parOk": 30000,
+    "total": 30000
+   }
+  },
+  "L3 board 1 par=1 (k=1); boards 2-30 par>=2 and inside tier range": {
+   "pass": true,
+   "detail": {
+    "rangeOk": 30000,
+    "b1": 1000
+   }
+  },
+  "L3 k = number of rotatable mirrors, inside tier k range": {
+   "pass": true,
+   "detail": {
+    "kOk": 30000
+   }
+  },
+  "L3 every board done within 33 tries; fallback use counted": {
+   "pass": true,
+   "detail": {
+    "maxTries": 20,
+    "how": {
+     "gen": 30000
+    }
+   }
+  },
+  "L12 generation ≤ 5 ms per board (node, this Mac)": {
+   "pass": true,
+   "detail": {
+    "avg": 0.047,
+    "p99": 0.194,
+    "max": 0.682
+   }
+  },
+  "L3 forced flip-fallback: deterministic, par in range": {
+   "pass": true,
+   "detail": {
+    "flipOk": 1500,
+    "flipN": 1500
+   }
+  },
+  "L3 FALLBACK table: all 16 built-in boards par/k in range, used when forced": {
+   "pass": true,
+   "detail": {
+    "tabOk": 1500,
+    "tabN": 1500,
+    "tableEach": [
+     true,
+     true,
+     true,
+     true
+    ]
+   }
+  },
+  "L3 replay of input log → same boards/score (node)": {
+   "pass": true,
+   "detail": {
+    "boards": 8,
+    "score": 1370
+   }
+  },
+  "L2 scripted bot: board1 solved by 1 tap ≤5 s; ≤30 s fixed mirror, 2-lamp board, limit warning, min-tap bonus": {
+   "pass": true,
+   "detail": {
+    "pass": 100,
+    "N": 100,
+    "fails": {}
+   }
+  },
+  "L5 idle after start → result at exactly 5400 ticks (90 s), 20 seeds": {
+   "pass": true,
+   "detail": {
+    "ticks": [
+     5400
+    ]
+   }
+  },
+  "L6 limit (par+3) used without solving → start layout back, exactly −180 ticks (3 s)": {
+   "pass": true,
+   "detail": {
+    "taps": 5,
+    "limit": 5,
+    "dTime": 180
+   }
+  },
+  "L6 skip → −300 ticks (5 s), 0 points, next board": {
+   "pass": true,
+   "detail": {
+    "d": 300
+   }
+  },
+  "L6 penalty to ≤0 → result immediately": {
+   "pass": true,
+   "detail": ""
+  },
+  "L6 reset penalty crossing 0 → result in that tick": {
+   "pass": true,
+   "detail": {
+    "phase": "result",
+    "taps": 5,
+    "limit": 5
+   }
+  },
+  "L7 solve fires once; taps during 0.6 s transition not counted": {
+   "pass": true,
+   "detail": {
+    "r": [
+     "solve",
+     "ignored",
+     "ignored"
+    ]
+   }
+  },
+  "L7 transition lasts 36 ticks (0.6 s)": {
+   "pass": true,
+   "detail": {
+    "t": 36
+   }
+  },
+  "L10 fixed mirror / wall / empty / lamp taps change nothing": {
+   "pass": true,
+   "detail": {
+    "n": 13
+   }
+  },
+  "L10 same mirror during 0.12 s rotation → ignored, not counted": {
+   "pass": true,
+   "detail": {
+    "used": 1
+   }
+  },
+  "Score: min-tap streak 1,2,3 → 195, 245, 295 (bonus ×mult only)": {
+   "pass": true,
+   "detail": [
+    195,
+    245,
+    295
+   ]
+  },
+  "L11a idle / same mirror / skip spam: 0 boards beyond board 1, reset on every limit hit (20 seeds)": {
+   "pass": true,
+   "detail": {
+    "rows": {
+     "idle": {
+      "boards": [
+       0
+      ],
+      "resets": [
+       0,
+       0
+      ],
+      "score": [
+       0,
+       0
+      ]
+     },
+     "sameMirror": {
+      "boards": [
+       1
+      ],
+      "resets": [
+       24,
+       24
+      ],
+      "score": [
+       195,
+       195
+      ]
+     },
+     "skipSpam": {
+      "boards": [
+       0
+      ],
+      "resets": [
+       0,
+       0
+      ],
+      "score": [
+       0,
+       0
+      ]
+     }
+    },
+    "check": {
+     "taps2": 120,
+     "lim": 5,
+     "resets": 24
+    }
+   }
+  },
+  "L11b (measured) random tapping below oracle in boards & score: seeds": {
+   "pass": true,
+   "detail": {
+    "lower": 20,
+    "of": 20,
+    "sample": [
+     [
+      4,
+      540,
+      79,
+      23155
+     ],
+     [
+      9,
+      1485,
+      80,
+      23450
+     ],
+     [
+      6,
+      1340,
+      78,
+      22860
+     ],
+     [
+      7,
+      1045,
+      79,
+      23155
+     ],
+     [
+      7,
+      1045,
+      79,
+      23155
+     ]
+    ],
+    "randomSolveRateByK": {
+     "1": {
+      "n": 300,
+      "solved": 300,
+      "rate": 1
+     },
+     "2": {
+      "n": 366,
+      "solved": 288,
+      "rate": 0.787
+     },
+     "3": {
+      "n": 234,
+      "solved": 99,
+      "rate": 0.423
+     },
+     "4": {
+      "n": 510,
+      "solved": 90,
+      "rate": 0.176
+     },
+     "5": {
+      "n": 390,
+      "solved": 51,
+      "rate": 0.131
+     },
+     "6": {
+      "n": 701,
+      "solved": 19,
+      "rate": 0.027
+     },
+     "7": {
+      "n": 582,
+      "solved": 12,
+      "rate": 0.021
+     },
+     "8": {
+      "n": 517,
+      "solved": 13,
+      "rate": 0.025
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,464 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+<title>ひかり修理工房 (プレビュー) | playtoday</title><meta name="description" content="鏡をタップして光をすべてのランプへ。90秒パズル、少ないタップほど高得点。"><meta name="robots" content="noindex,nofollow"><link rel="icon" href="data:,">
+<style>:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;overscroll-behavior:contain}
+body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;gap:6px}
+.logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:var(--gold)}.tr{display:flex;gap:6px;align-items:center}
+.langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--cyan)}
+.stage{position:relative;width:min(100vw,calc((100dvh - 64px)*9/16),540px);height:min(calc(100dvh - 64px),960px);display:flex;flex-direction:column;padding:0 10px 8px}
+.hud{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:4px 0 6px;font-variant-numeric:tabular-nums}.hud div{display:flex;flex-direction:column;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:4px 2px;backdrop-filter:blur(18px)}
+.hud span{font-size:11px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud b{font-size:17px;white-space:nowrap}
+#play{position:relative;flex:1;min-height:0;border-radius:20px;overflow:hidden;border:1px solid var(--edge);touch-action:none;cursor:pointer}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:6px}.hint{color:var(--muted);font-size:13px}
+.ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
+.ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
+.sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
+.panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}
+.sheet.ready{align-items:flex-start;padding-top:10px;background:linear-gradient(rgba(7,8,12,.55) 60%,rgba(7,8,12,0) 78%)}.ready .panel{gap:8px;padding:14px}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
+.icon{font-size:34px;letter-spacing:6px}.t90{font-size:13px;color:var(--muted)}
+.btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.btn.main{min-height:64px;width:100%;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
+.nums{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:14px}.nums span{color:var(--muted)}.nums b{font-size:18px}.nums b.big{font-size:34px;color:var(--cyan)}
+.new{color:#4ade80;font-weight:800}.cmp{font-size:13px;color:var(--muted)}.why{font-size:14px;color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
+.seed{color:var(--muted);font-size:12px;text-align:center}
+.guide{margin:0;font-size:14px;font-weight:600;color:#4ade80;padding:8px 10px;border-radius:12px;border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.08)}
+.tip{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;border:1px solid rgba(250,204,21,.35);background:rgba(250,204,21,.08)}.tip b{font-size:15px;line-height:1.35}.tipk{font-size:12px;color:var(--gold);font-weight:700}
+.near{font-size:15px;font-weight:700;color:var(--cyan)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+@media (min-width:900px){body{background:radial-gradient(900px 600px at 15% 30%,rgba(34,211,238,.10),transparent),radial-gradient(900px 600px at 85% 70%,rgba(99,102,241,.16),transparent),var(--bg)}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.sheet .panel{max-height:100%;overflow-y:auto}
+@media (max-height:860px){.ready .icon{display:none}.ready .panel{gap:6px;padding:12px}.ready .how,.ready .guide{font-size:13px}.ready .goal{font-size:15px}.btn.main{min-height:54px;font-size:20px}
+#res{padding:8px}#res .panel{gap:5px;padding:12px}.panel h2{font-size:19px}.nums b.big{font-size:26px}.nums{font-size:13px}.nums b{font-size:16px}.tip{padding:7px 10px}.tip b{font-size:14px}.near{font-size:14px}.tgs .tg,.row .btn{min-height:44px}}
+.hud .warn{border-color:#f87171;animation:bl .5s steps(2) infinite}@keyframes bl{50%{background:rgba(248,113,113,.25)}}.rm .hud .warn{animation:none;background:rgba(248,113,113,.25)}
+.skip{min-height:44px}@media (min-width:900px){.stage{width:min(760px,100vw);height:min(calc(100dvh - 64px),860px)}}</style></head>
+<body data-page="light-workshop" data-lang="ja">
+<header class="top"><a class="logo" href="/ja/"><i></i>playtoday</a><span class="tag">プレビュー</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="サウンド" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="振動" aria-pressed="true">📳</button><details class="langs" data-ui><summary aria-label="Language">ja ▾</summary><nav><a href="/ko/play/light-workshop/" hreflang="ko">ko</a><a href="/en/play/light-workshop/" hreflang="en">en</a><a href="/ja/play/light-workshop/" hreflang="ja" aria-current="true">ja</a><a href="/zh-hans/play/light-workshop/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/light-workshop/" hreflang="es">es</a><a href="/pt-br/play/light-workshop/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
+<main class="stage" id="stage">
+<div class="hud"><div><span>残り</span><b id="h-time">90</b></div><div><span>盤</span><b id="h-boards">0</b></div><div><span>残りタップ</span><b id="h-taps">—</b></div><div><span>スコア</span><b id="h-score">0</b></div><div><span>連続</span><b id="h-mult">×1</b></div></div>
+<div id="play" role="application" aria-label="ひかり修理工房"><canvas id="cv"></canvas>
+<div class="sheet ready" id="ready" data-ui><div class="panel">
+<h2>ひかり修理工房</h2><p class="goal">鏡をタップして全ランプに光を · 90秒</p><div class="icon" aria-hidden="true">👆🪞💡</div><p class="how">明るい枠の鏡をタップすると向きが変わる</p>
+<button class="btn main" id="b-start" type="button">スタート</button><div class="t90">残り 90 · Enter · 矢印キー + Spaceでも回せます</div>
+</div></div>
+<div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>一時停止</h2><p class="how">タップで再開(3秒後)</p><b id="pz-n"></b><div class="tgs"><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">動きの効果</button></div></div></div>
+<div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
+<h2 id="r-title">営業終了!</h2><div class="new" id="r-new" hidden>ベスト更新!</div><div class="new" id="r-first" hidden>初記録</div>
+<div class="nums"><span>今回</span><b class="big" id="r-boards"></b><span>スコア</span><b id="r-score"></b><span>最少タップ</span><b id="r-par"></b><span>自己ベスト</span><b id="r-best"></b><span>差</span><b id="r-diff"></b></div>
+<div class="why" id="r-stat"></div>
+<button class="btn main" id="b-again" type="button">もう一度</button>
+<div class="row"><button class="btn" id="b-png" type="button">PNG保存</button><button class="btn" id="b-link" type="button">挑戦リンクをコピー</button></div>
+<div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">サウンド</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">振動</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">動きの効果</button></div><div class="seed">seed <span id="seed"></span></div>
+</div></div>
+</div>
+<div class="bar"><button class="btn skip" id="b-skip" type="button" data-ui>スキップ −5秒</button><span class="hint">Tap mirrors / Arrows + Space</span><button class="ic" id="b-pause" type="button" data-ui aria-label="一時停止">⏸</button></div>
+</main><div class="toast" id="toast" role="status"></div>
+<script id="lt" type="application/json">{"name":"ひかり修理工房","desc":"鏡をタップして光をすべてのランプへ。90秒パズル、少ないタップほど高得点。","back":"playtoday","preview":"プレビュー","time":"残り","boards":"盤","taps":"残りタップ","score":"スコア","mult":"連続","goal":"鏡をタップして全ランプに光を · 90秒","how":"明るい枠の鏡をタップすると向きが変わる","howKey":"矢印キー + Spaceでも回せます","start":"スタート","hint":"Tap mirrors / Arrows + Space","skip":"スキップ −5秒","pause":"一時停止","paused":"一時停止","resume":"タップで再開(3秒後)","over":"営業終了!","boardsN":"{n}盤","now":"今回","best":"自己ベスト","diff":"差","first":"初記録","newBest":"ベスト更新!","par":"最少タップ","again":"もう一度","png":"PNG保存","link":"挑戦リンクをコピー","copied":"コピーしました","sound":"サウンド","haptic":"振動","motion":"動きの効果","bonus":"最少タップ","resetMsg":"タップ切れ · 初期配置に戻り −3秒","stat":"リセット {r}回 · スキップ {s}回","shareText":"ひかり修理工房で{boards}盤を直したよ!同じ盤で挑戦する? → {url}"}</script>
+<script>(()=>{// Light Workshop rule engine (prototype, t_b8fb1a93). DOM-free, deterministic, fixed step 1/60 s.
+// GDD r2: workspace/maeil-arcade-local/games/light-workshop/GDD.md (2.0 time, 2.1 generation, 6 curve, 7 score, 8 abuse).
+// Same seed + same board number → same board. Same input log → same result. Integers only in game state.
+const LW = {
+  HZ: 60, ACTIVE: 5400,          // 90 s active time
+  TRANS: 36,                     // 0.6 s board transition (time flows, input ignored)
+  ROT: 7,                        // 0.12 s mirror rotation lock (same mirror)
+  EXTRA: 3,                      // tap limit = par + 3
+  RESET_PEN: 180, SKIP_PEN: 300, // 3 s / 5 s
+  TRIES: 32,
+  SCORE: { base: 100, left: 15, bonus: 50, multMax: 3 },
+};
+// GDD 6: [from board n, grid N, k range, fixed, lamps range, par range]
+const TIERS = [
+  { n: 1, N: 4, k: [1, 1], fixed: [0, 0], lamps: [1, 1], par: [1, 1] },
+  { n: 2, N: 4, k: [2, 3], fixed: [1, 1], lamps: [1, 2], par: [2, 2] },
+  { n: 4, N: 5, k: [4, 5], fixed: [2, 2], lamps: [2, 2], par: [2, 3] },
+  { n: 7, N: 6, k: [6, 8], fixed: [2, 3], lamps: [2, 3], par: [3, 5] },
+];
+const tierOf = (n) => { let t = 0; for (let i = 0; i < TIERS.length; i++) if (n >= TIERS[i].n) t = i; return t; };
+function hash(s) { let h = 2166136261 >>> 0; for (const c of String(s)) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const DX = [1, 0, -1, 0], DY = [0, 1, 0, -1];   // 0 right, 1 down, 2 left, 3 up
+const BOUNCE = [[3, 2, 1, 0], [1, 0, 3, 2]];      // state 0 = '/', 1 = '\'
+// cell types
+const EMPTY = 0, WALL = 1, MIRROR = 2, LAMP = 3;
+const pop = (x) => { let c = 0; while (x) { c += x & 1; x >>>= 1; } return c; };
+
+// board: { N, src:{x,y,d}, type[], rot[] (cell indexes of rotatable mirrors, path order), fixedState{}, start (bitmask over rot), sols[], par, lamps[] }
+// state of mirror cell i: rotatable → bit of mask, fixed → fixedState
+function trace(b, mask) {
+  const N = b.N, lit = new Set(), path = [];
+  let x = b.src.x, y = b.src.y, d = b.src.d;
+  for (let s = 0; s < 4 * N * N; s++) {
+    if (x < 0 || y < 0 || x >= N || y >= N) break;
+    const i = y * N + x, t = b.type[i];
+    if (t === WALL) break;
+    path.push(i);
+    if (t === LAMP) lit.add(i);
+    if (t === MIRROR) { const r = b.rot.indexOf(i); const st = r >= 0 ? (mask >> r) & 1 : b.fixedState[i]; d = BOUNCE[st][d]; }
+    x += DX[d]; y += DY[d];
+  }
+  return { path, lit, all: b.lamps.every((l) => lit.has(l)) };
+}
+const solved = (b, mask) => trace(b, mask).all;
+// exact par: 2^k exhaustive (k ≤ 8 → ≤ 256 states)
+function solve(b, start = b.start) {
+  const k = b.rot.length; let par = Infinity; const sols = [];
+  for (let m = 0; m < 1 << k; m++) if (solved(b, m)) { sols.push(m); par = Math.min(par, pop(m ^ start)); }
+  return { par, sols };
+}
+
+function walk(N, R, need) {
+  // self-avoiding beam path from an edge cell inward with exactly `need` turns, ending at the edge or a wall
+  const side = Math.floor(R() * 4); const p = 1 + Math.floor(R() * (N - 2));
+  const src = [{ x: 0, y: p, d: 0 }, { x: p, y: 0, d: 1 }, { x: N - 1, y: p, d: 2 }, { x: p, y: N - 1, d: 3 }][side];
+  const seen = new Set(), cells = [], turns = [];
+  let { x, y, d } = src;
+  const inb = (a, c) => a >= 0 && c >= 0 && a < N && c < N;
+  for (let s = 0; s < N * N; s++) {
+    const i = y * N + x; seen.add(i);
+    const cell = { i, din: d }; cells.push(cell);
+    const left = need - turns.length;
+    if (left > 0 && s > 0) {
+      const opts = [(d + 1) % 4, (d + 3) % 4].filter((nd) => inb(x + DX[nd], y + DY[nd]) && !seen.has((y + DY[nd]) * N + x + DX[nd]));
+      const ahead = inb(x + DX[d], y + DY[d]) && !seen.has((y + DY[d]) * N + x + DX[d]);
+      if (opts.length && (!ahead || R() < 0.55)) { const nd = opts[Math.floor(R() * opts.length)]; cell.turn = nd; turns.push(cell); d = nd; }
+    }
+    const nx = x + DX[d], ny = y + DY[d];
+    if (!inb(nx, ny)) return turns.length === need ? { src, cells, turns, end: null } : null;
+    if (seen.has(ny * N + nx)) return null;
+    if (turns.length === need && cells.length > need + 1 && R() < 0.25) return { src, cells, turns, end: ny * N + nx };
+    x = nx; y = ny;
+  }
+  return null;
+}
+const ri = (R, [a, b]) => a + Math.floor(R() * (b - a + 1));
+
+function build(N, wp, k, lampsN, R) {
+  const type = new Array(N * N).fill(EMPTY), fixedState = {};
+  for (const c of wp.turns) { type[c.i] = MIRROR; fixedState[c.i] = BOUNCE[0][c.din] === c.turn ? 0 : 1; }
+  if (wp.end != null) type[wp.end] = WALL;
+  // lamps: straight path cells, preferring cells after the last turn
+  const straight = wp.cells.filter((c, j) => j > 0 && type[c.i] === EMPTY);
+  const lastTurn = wp.cells.indexOf(wp.turns[wp.turns.length - 1]);
+  const late = straight.filter((c) => wp.cells.indexOf(c) > lastTurn), early = straight.filter((c) => wp.cells.indexOf(c) <= lastTurn && wp.cells.indexOf(c) > wp.cells.indexOf(wp.turns[0]));
+  if (!late.length) return null;
+  const lamps = [late[late.length - 1 - Math.floor(R() * Math.min(2, late.length))].i];
+  const pool = [...early, ...late].map((c) => c.i).filter((i) => !lamps.includes(i));
+  while (lamps.length < lampsN && pool.length) lamps.push(pool.splice(Math.floor(R() * pool.length), 1)[0]);
+  if (lamps.length < lampsN) return null;
+  for (const l of lamps) type[l] = LAMP;
+  // decoration walls off the path (1 + N/3), never the source cell
+  const onPath = new Set(wp.cells.map((c) => c.i)); const free = [];
+  for (let i = 0; i < N * N; i++) if (!onPath.has(i) && type[i] === EMPTY) free.push(i);
+  for (let w = 0, nw = 1 + Math.floor(N / 3); w < nw && free.length; w++) type[free.splice(Math.floor(R() * free.length), 1)[0]] = WALL;
+  // k rotatable among turns (path order), the rest fixed
+  const idx = wp.turns.map((_, j) => j); const pick = [];
+  while (pick.length < k) pick.push(idx.splice(Math.floor(R() * idx.length), 1)[0]);
+  pick.sort((a, b) => a - b);
+  const rot = pick.map((j) => wp.turns[j].i);
+  let sol = 0; rot.forEach((i, r) => { sol |= fixedState[i] << r; delete fixedState[i]; });
+  return { N, src: wp.src, type, rot, fixedState, sol, lamps };
+}
+const fin = (b, start, n, how, tries) => { b.start = start; const s = solve(b); return Object.assign(b, { par: s.par, sols: s.sols, k: b.rot.length, n, how, tries, limit: s.par + LW.EXTRA }); };
+const okPar = (b, start, t) => { if (solved(b, start)) return false; const p = solve(b, start).par; return p >= t.par[0] && p <= t.par[1]; };
+
+// GDD 2.1: tries i = 0..31 with rng(hash(seed,n,i)); then deterministic flip fallback on try 31; then FALLBACK table.
+function genBoard(seed, n, opt = {}) {
+  const t = TIERS[tierOf(n)]; const N = t.N; let last = null;
+  const tries = opt.forceFallback ? 0 : LW.TRIES;
+  for (let i = 0; i < LW.TRIES; i++) {
+    const R = rng(hash(`${seed}|${n}|${i}`));
+    const k = ri(R, t.k), fx = ri(R, t.fixed), lampsN = ri(R, t.lamps);
+    let b = null;
+    for (let w = 0; w < 40 && !b; w++) { const wp = walk(N, R, k + fx); if (wp) b = build(N, wp, k, lampsN, R); }
+    if (!b) continue;
+    last = b;
+    if (i >= tries) continue;
+    const f = 1 + Math.floor(R() * k); const idx = b.rot.map((_, r) => r); let start = b.sol;
+    for (let j = 0; j < f; j++) start ^= 1 << idx.splice(Math.floor(R() * idx.length), 1)[0];
+    if (okPar(b, start, t)) return fin(b, start, n, 'gen', i + 1);
+  }
+  if (last && !opt.forceTable) { // deterministic: flip rotatable mirrors in path order (closest to source first)
+    let start = last.sol;
+    for (let r = 0; r < last.rot.length; r++) { start ^= 1 << r; if (okPar(last, start, t)) return fin(last, start, n, 'flip', LW.TRIES + 1); }
+  }
+  const tb = FALLBACK[tierOf(n)]; return fin(decode(tb[n % tb.length]), decode(tb[n % tb.length]).start, n, 'table', LW.TRIES + 1);
+}
+// built-in boards per tier (4 each). rows: . empty  # wall  / \ fixed mirror  a b rotatable (start '/' '\')  L lamp ; src "x,y,d"
+const FALLBACK = [
+  ["0,2,0|....|#...|..a#|..L.","2,0,1|....|#...|...#|#Lb.","3,1,2|....|.#b.|..L#|..#.","1,0,1|...#|Lb..|....|#..."],
+  ["3,2,2|..#.|/.L.|L#b.|b.b.","0,1,0|#.L.|.a..|.\\b.|...#","0,1,0|....|.a.#|a/.#|aL.L","0,2,0|aL.L|\\..a|...b|#..#"],
+  ["3,4,3|./\\..|.L...|..aLa|##.ba|....#","2,0,1|.#.#.|..aa.|..a/.|bL/..|L....","3,4,3|..L..|.aa..|bb.#.|\\L.\\#|.....","2,4,3|...L.|...L.|...aa|.#b\\.|#..b/"],
+  ["0,1,0|.a\\.bL|.bLb/.|..aa..|.....#|......|#....#","0,4,0|/L...a|b.ba.a|La....|.aaL.#|.../..|.#.#..","0,2,0|b..L.b|\\a.#..|./....|.#..ab|.aL#..|.\\..b#","1,0,1|..a..b|.aa..L|...#..|.#.#ab|L..ab\\|...\\./"],
+];
+function decode(s) {
+  const [src, ...rows] = s.split('|'); const N = rows.length; const [x, y, d] = src.split(',').map(Number);
+  const type = [], fixedState = {}, rot = [], lamps = []; let start = 0;
+  rows.forEach((row, yy) => [...row].forEach((ch, xx) => { const i = yy * N + xx; type[i] = EMPTY;
+    if (ch === '#') type[i] = WALL; else if (ch === 'L') { type[i] = LAMP; lamps.push(i); } else if (ch === '/' || ch === '\\') { type[i] = MIRROR; fixedState[i] = ch === '/' ? 0 : 1; } else if (ch === 'a' || ch === 'b') { type[i] = MIRROR; rot.push(i); } }));
+  // rotatable in beam order of the all-'/' trace is not needed; keep row order and set start bits
+  rot.forEach((i, r) => { const ch = rows[Math.floor(i / N)][i % N]; if (ch === 'b') start |= 1 << r; });
+  return { N, src: { x, y, d }, type, rot, fixedState, lamps, start, sol: null };
+}
+
+// ---- game state machine (GDD 2.0) ----
+function createGame(seed, opt = {}) {
+  const g = { seed: String(seed), phase: 'ready', tick: 0, left: LW.ACTIVE, n: 0, board: null, mask: 0, used: 0, boards: 0, score: 0, parSolves: 0, mult: 1,
+    resets: 0, skips: 0, log: [], ev: [], lock: {}, trans: 0, fallback: 0, opt };
+  return g;
+}
+function nextBoard(g) {
+  g.n++; g.board = genBoard(g.seed, g.n, g.opt); g.mask = g.board.start; g.used = 0; g.lock = {};
+  if (g.board.how !== 'gen') { g.fallback++; g.ev.push({ t: g.tick, k: 'fallback', n: g.n, how: g.board.how }); }
+  const b = g.board, fixed = b.type.filter((t, i) => t === MIRROR && !b.rot.includes(i)).length;
+  g.ev.push({ t: g.tick, k: 'board', n: g.n, N: b.N, k_: b.k, par: b.par, lamps: b.lamps.length, fixed });
+}
+function start(g) { if (g.phase !== 'ready') return false; g.phase = 'play'; g.log.push({ t: g.tick, a: 'start' }); nextBoard(g); return true; }
+function over(g) { if (g.left <= 0) { g.left = 0; g.phase = 'result'; g.ev.push({ t: g.tick, k: 'end' }); return true; } return false; }
+// tap rotatable mirror at cell index c. Returns what happened (for UI feedback). Ignored inputs never change state.
+function tap(g, c) {
+  if (g.phase !== 'play') return { r: 'ignored' };
+  const b = g.board, r = b.rot.indexOf(c);
+  if (r < 0) return { r: 'inert' };                                   // fixed mirror / wall / empty / lamp
+  if ((g.lock[c] || 0) > g.tick) return { r: 'locked' };              // rotating
+  g.log.push({ t: g.tick, a: 'tap', c });
+  g.mask ^= 1 << r; g.used++; g.lock[c] = g.tick + LW.ROT;
+  const tr = trace(b, g.mask);
+  if (tr.all) {
+    const S = LW.SCORE, isPar = g.used === b.par;
+    const bonus = isPar ? S.bonus * g.mult : 0, pts = S.base + (b.limit - g.used) * S.left + bonus;
+    g.score += pts; g.boards++; if (isPar) g.parSolves++;
+    g.ev.push({ t: g.tick, k: 'solve', n: g.n, used: g.used, par: b.par, pts, bonus, mult: isPar ? g.mult : 0 });
+    g.mult = isPar ? Math.min(S.multMax, g.mult + 1) : 1;
+    g.phase = 'trans'; g.trans = LW.TRANS; return { r: 'solve', pts, bonus, lit: tr.lit };
+  }
+  if (g.used >= b.limit) {
+    g.mask = b.start; g.used = 0; g.mult = 1; g.resets++; g.left -= LW.RESET_PEN; g.lock = {};
+    g.ev.push({ t: g.tick, k: 'reset', n: g.n }); over(g); return { r: 'reset', lit: tr.lit };
+  }
+  if (b.limit - g.used === 1) g.ev.push({ t: g.tick, k: 'warn', n: g.n });
+  return { r: 'turn', lit: tr.lit };
+}
+function skip(g) {
+  if (g.phase !== 'play') return false;
+  g.log.push({ t: g.tick, a: 'skip' }); g.skips++; g.mult = 1; g.left -= LW.SKIP_PEN; g.ev.push({ t: g.tick, k: 'skip', n: g.n });
+  if (!over(g)) nextBoard(g); return true;
+}
+// one fixed tick (only while playing / transitioning; ready, pause, result are input-wait states → caller doesn't step)
+function step(g) {
+  if (g.phase !== 'play' && g.phase !== 'trans') return;
+  g.tick++; g.left--;
+  if (g.phase === 'trans' && --g.trans <= 0) { g.phase = 'play'; nextBoard(g); }
+  over(g);
+}
+const record = (g) => ({ boards: g.boards, score: g.score, parSolves: g.parSolves });
+const better = (a, b) => !b || a.boards > b.boards || (a.boards === b.boards && a.score > b.score);
+
+// ---- replay & bot policies (evidence only) ----
+function replay(seed, log, opt) {
+  const g = createGame(seed, opt); let j = 0;
+  const apply = () => { while (j < log.length && log[j].t === g.tick) { const e = log[j++]; if (e.a === 'start') start(g); else if (e.a === 'tap') tap(g, e.c); else if (e.a === 'skip') skip(g); } };
+  apply(); while (g.phase !== 'result' && g.tick < 100000) { step(g); apply(); }
+  return g;
+}
+const nearest = (b, mask) => { let best = null, bd = 99; for (const s of b.sols) { const d = pop(s ^ mask); if (d < bd) { bd = d; best = s; } } return best; };
+const POLICIES = {
+  idle: () => null,
+  sameMirror: (g) => (g.tick % 10 === 0 ? { a: 'tap', c: g.board.rot[0] } : null),
+  skipSpam: (g) => (g.tick % 10 === 0 ? { a: 'skip' } : null),
+  random: (g, R) => (g.tick % 10 === 0 ? { a: 'tap', c: g.board.rot[Math.floor(R() * g.board.rot.length)] } : null),
+  // oracle: knows the nearest solution, taps one differing mirror every 10 ticks (0.17 s)
+  safe: (g) => { if (g.tick % 10) return null; const s = nearest(g.board, g.mask); const diff = s ^ g.mask; for (let r = 0; r < g.board.rot.length; r++) if ((diff >> r) & 1) return { a: 'tap', c: g.board.rot[r] }; return null; },
+};
+function simulate(seed, policy, opt) {
+  const g = createGame(seed, opt); const R = rng(hash('pol|' + seed + '|' + policy)); start(g);
+  while (g.phase !== 'result') {
+    if (g.phase === 'play') { const a = POLICIES[policy](g, R); if (a) { if (a.a === 'tap') tap(g, a.c); else skip(g); } }
+    if (g.phase === 'result') break; step(g);
+  }
+  return g;
+}
+function encode(b, start = b.start) {
+  const N = b.N; const rows = [];
+  for (let y = 0; y < N; y++) { let s = ''; for (let x = 0; x < N; x++) { const i = y * N + x, t = b.type[i], r = b.rot.indexOf(i);
+    s += t === WALL ? '#' : t === LAMP ? 'L' : t === MIRROR ? (r >= 0 ? ((start >> r) & 1 ? 'b' : 'a') : b.fixedState[i] ? '\\' : '/') : '.'; } rows.push(s); }
+  return `${b.src.x},${b.src.y},${b.src.d}|${rows.join('|')}`;
+}
+
+// Light Workshop UI (prototype, t_b8fb1a93). Inlined after light-core.js by scripts/build-light.mjs. No /api, no analytics.
+const D = JSON.parse(document.getElementById('lt').textContent);
+const $ = (id) => document.getElementById(id);
+const loadLS = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k) || 'null') || {}); } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const q = new URLSearchParams(location.search);
+const today = (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; })();
+const seed = (q.get('seed') || today).replace(/[^A-Za-z0-9-]/g, '').slice(0, 64) || today;
+const mq = matchMedia('(prefers-reduced-motion: reduce)');
+const set = loadLS('lw-set', { sound: true, haptic: true, motion: !mq.matches });
+const canVib = typeof navigator.vibrate === 'function';
+const W = { snd: [], vib: 0, frames: 0, ft: [] };
+// ---- audio (WebAudio synth, no files; silent until first input) ----
+let ac = null;
+const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+function tone(f, dur, type = 'sine', vol = 0.12, at = 0) {
+  if (!set.sound || !ac) return; const t = ac.currentTime + at, o = ac.createOscillator(), gn = ac.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t); gn.gain.setValueAtTime(vol, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + dur + 0.02);
+}
+const SND = {
+  tick: () => tone(1800, 0.04, 'square', 0.05),
+  tuk: () => tone(180, 0.05, 'sine', 0.06),
+  lamp: (j) => tone([660, 784, 988][j % 3], 0.18, 'triangle', 0.09),
+  solve: () => [523, 659, 784, 1047].forEach((f, j) => tone(f, 0.35, 'triangle', 0.08, j * 0.04)),
+  reset: () => { if (!set.sound || !ac) return; const t = ac.currentTime, o = ac.createOscillator(), gn = ac.createGain(); o.type = 'sawtooth'; o.frequency.setValueAtTime(600, t); o.frequency.exponentialRampToValueAtTime(80, t + 0.3); gn.gain.setValueAtTime(0.07, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + 0.32); o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + 0.35); },
+};
+const play = (k, a) => { W.snd.push(k); if (set.sound) SND[k](a); };
+const buzz = (ms) => { if (set.haptic && canVib) try { navigator.vibrate(ms); W.vib++; } catch {} };
+// ---- state ----
+let g = createGame(seed), paused = false, count = 0, best = loadLS('lw-best', { rec: null }).rec, cur = -1, prevLit = new Set(), lastSolved = null, flash = 0, shake = 0, pending = null, trans = null;
+const cv = $('cv'), cx = cv.getContext('2d');
+const S = window.__lw = { ready: false, E: { LW, createGame, start, tap, skip, step, replay, simulate, genBoard, solve, trace, POLICIES }, W, seed, set, evlog: [], get g() { return g; }, get paused() { return paused || count > 0; } };
+const motion = () => set.motion && !mq.matches;
+function applySet() {
+  document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, on = !!set[k]; b.setAttribute('aria-pressed', on); b.classList.toggle('off', !on); if (b.dataset.icon) b.textContent = k === 'sound' ? (on ? '🔊' : '🔇') : on ? '📳' : '📴'; });
+  document.querySelectorAll('[data-set="haptic"]').forEach((b) => (b.hidden = !canVib));
+  document.body.classList.toggle('rm', !motion());
+}
+document.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save('lw-set', set); if (k === 'sound' && set.sound) unlock(); applySet(); }));
+applySet();
+// ---- geometry ----
+function fit() { const r = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== Math.round(w * r) || cv.height !== Math.round(h * r)) { cv.width = Math.round(w * r); cv.height = Math.round(h * r); } cx.setTransform(r, 0, 0, r, 0, 0); return [w, h]; }
+function geo() { const w = cv.clientWidth, h = cv.clientHeight, N = g.board ? g.board.N : 4; const size = Math.min(w * 0.92, h * 0.92, 600); return { N, size, cs: size / N, ox: (w - size) / 2, oy: (h - size) / 2 }; }
+function cellAt(px, py) { const r = cv.getBoundingClientRect(), G = geo(); const x = Math.floor((px - r.left - G.ox) / G.cs), y = Math.floor((py - r.top - G.oy) / G.cs); return x >= 0 && y >= 0 && x < G.N && y < G.N ? y * G.N + x : -1; }
+S.cellCenter = (i) => { const r = cv.getBoundingClientRect(), G = geo(); return { x: r.left + G.ox + ((i % G.N) + 0.5) * G.cs, y: r.top + G.oy + (Math.floor(i / G.N) + 0.5) * G.cs, cs: G.cs }; };
+// ---- actions ----
+function doStart() { if (g.phase !== 'ready') return; unlock(); start(g); $('ready').hidden = true; onBoard(); S.evlog.push({ k: 'start', at: performance.now() }); hud(); }
+function onBoard() { cur = g.board.rot[0]; prevLit = trace(g.board, g.mask).lit; }
+function doTap(c) {
+  if (paused || count) return; unlock();
+  const was = g.n, res = tap(g, c); S.evlog.push({ k: 'tap', c, r: res.r, tick: g.tick });
+  if (res.r === 'inert') { play('tuk'); shake = performance.now(); return; }
+  if (res.r === 'locked' || res.r === 'ignored') return;
+  if (res.r === 'turn' || res.r === 'solve') { play('tick'); buzz(8); let j = 0; for (const l of res.lit) if (!prevLit.has(l)) play('lamp', j++); prevLit = res.lit; }
+  if (res.r === 'solve') { play('solve'); buzz(25); flash = performance.now(); lastSolved = { b: g.board, mask: g.mask }; trans = { b: g.board, mask: g.mask, at: performance.now() }; toast(`+${res.pts}${res.bonus ? ` (${D.bonus} +${res.bonus})` : ''}`); }
+  if (res.r === 'reset') { play('reset'); buzz(50); toast(D.resetMsg); prevLit = trace(g.board, g.mask).lit; }
+  if (g.phase === 'result') showResult(); hud(); void was;
+}
+function doSkip() { if (paused || count || g.phase !== 'play') return; unlock(); skip(g); play('reset'); if (g.phase === 'result') showResult(); else onBoard(); hud(); }
+// pointer: rotate only when pointerup happens on the same cell as pointerdown; pointercancel drops it
+cv.addEventListener('pointerdown', (e) => { if (!e.isPrimary) return; pending = { id: e.pointerId, c: cellAt(e.clientX, e.clientY) }; });
+cv.addEventListener('pointerup', (e) => { if (!pending || pending.id !== e.pointerId) return; const c = cellAt(e.clientX, e.clientY), p = pending; pending = null; if (g.phase === 'ready' || c < 0 || c !== p.c) return; cur = c; doTap(c); });
+cv.addEventListener('pointercancel', () => { pending = null; S.evlog.push({ k: 'cancel' }); });
+cv.addEventListener('lostpointercapture', () => { pending = null; });
+addEventListener('keydown', (e) => {
+  if (e.target.closest && e.target.closest('button,summary,a') && (e.key === ' ' || e.key === 'Enter') && g.phase !== 'ready') return;
+  if (e.repeat) { if (e.key === ' ' || e.key.startsWith('Arrow') || e.key === 'Enter') e.preventDefault(); S.evlog.push({ k: 'repeat' }); return; }
+  if (g.phase === 'ready') { if (e.key === 'Enter') { e.preventDefault(); doStart(); } return; }
+  if (g.phase === 'result') { if (e.key === 'Enter') { e.preventDefault(); again(); } return; }
+  if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') { pause(); return; }
+  const N = g.board.N; const mv = { ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowDown: [0, 1], ArrowUp: [0, -1] }[e.key];
+  if (mv) { e.preventDefault(); if (cur < 0) cur = 0; const x = Math.min(N - 1, Math.max(0, (cur % N) + mv[0])), y = Math.min(N - 1, Math.max(0, Math.floor(cur / N) + mv[1])); cur = y * N + x; return; }
+  if (e.key === ' ') { e.preventDefault(); if (cur >= 0) doTap(cur); }
+});
+$('b-start').addEventListener('click', (e) => { e.stopPropagation(); doStart(); });
+$('b-skip').addEventListener('click', (e) => { e.stopPropagation(); doSkip(); });
+// pause (button, P, hidden tab) → resume tap → 3 s count
+function pause() { if (g.phase !== 'play' && g.phase !== 'trans') return; paused = true; count = 0; $('pz').hidden = false; $('pz-n').textContent = ''; S.evlog.push({ k: 'pause', tick: g.tick }); }
+$('b-pause').addEventListener('click', (e) => { e.stopPropagation(); pause(); });
+$('pz').addEventListener('click', (e) => { if (e.target.closest('[data-set]') || !paused) return; paused = false; count = 3 * 60; });
+document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+// ---- result ----
+function showResult() {
+  const rec = record(g), was = best, nb = better(rec, was); if (nb) { best = rec; save('lw-best', { rec }); }
+  $('r-boards').textContent = D.boardsN.replace('{n}', rec.boards); $('r-score').textContent = rec.score; $('r-par').textContent = '★'.repeat(Math.min(rec.parSolves, 10)) + ` ${rec.parSolves}`;
+  $('r-best').textContent = was ? `${D.boardsN.replace('{n}', was.boards)} · ${was.score}` : '—';
+  $('r-diff').textContent = was ? `${rec.boards - was.boards >= 0 ? '+' : ''}${rec.boards - was.boards} · ${rec.score - was.score >= 0 ? '+' : ''}${rec.score - was.score}` : '—';
+  $('r-new').hidden = !(nb && was); $('r-first').hidden = !!was; $('seed').textContent = seed;
+  $('r-stat').textContent = D.stat.replace('{r}', g.resets).replace('{s}', g.skips);
+  $('res').hidden = false; S.evlog.push({ k: 'result', at: performance.now(), rec }); $('b-again').focus({ preventScroll: true });
+}
+function again() { g = createGame(seed); paused = false; count = 0; lastSolved = null; trans = null; cur = -1; $('res').hidden = true; $('pz').hidden = true; $('ready').hidden = false; hud(); S.evlog.push({ k: 'again', at: performance.now() }); }
+$('b-again').addEventListener('click', (e) => { e.stopPropagation(); again(); });
+const shareUrl = () => `${location.origin}${location.pathname}?seed=${encodeURIComponent(seed)}`;
+$('b-link').addEventListener('click', async (e) => { e.stopPropagation(); const t = D.shareText.replace('{boards}', g.boards).replace('{url}', shareUrl()); try { await navigator.clipboard.writeText(t); toast(D.copied); } catch { toast(t); } S.evlog.push({ k: 'copy', t }); });
+$('b-png').addEventListener('click', (e) => { e.stopPropagation(); const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
+  const gr = x.createLinearGradient(0, 0, 0, 1350); gr.addColorStop(0, '#11132a'); gr.addColorStop(1, '#07080c'); x.fillStyle = gr; x.fillRect(0, 0, 1080, 1350);
+  if (lastSolved) drawBoard(x, lastSolved.b, lastSolved.mask, 190, 140, 700, { silhouette: true });
+  x.fillStyle = '#e8eaf0'; x.textAlign = 'center'; x.font = '800 120px system-ui,sans-serif'; x.fillText(D.boardsN.replace('{n}', g.boards), 540, 1000);
+  x.font = '600 44px system-ui,sans-serif'; x.fillStyle = 'rgba(214,219,232,.8)'; x.fillText(`${D.score} ${g.score} · ★ ${g.parSolves}`, 540, 1080); x.fillText(D.name, 540, 1160); x.font = '500 34px system-ui,sans-serif'; x.fillText('playtoday.cloud', 540, 1290);
+  c.toBlob((bl) => { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = `light-workshop-${seed}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.evlog.push({ k: 'png' }); }, 'image/png'); });
+let tt = 0; function toast(s) { const t = $('toast'); t.textContent = s; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 1300); }
+// ---- HUD ----
+function hud() {
+  $('h-time').textContent = Math.ceil(g.left / 60); $('h-boards').textContent = g.boards; $('h-score').textContent = g.score;
+  const b = g.board, left = b ? b.limit - g.used : 0; $('h-taps').textContent = b ? `💡${left}` : '—';
+  $('h-taps').parentElement.classList.toggle('warn', !!b && left === 1 && g.phase === 'play');
+  $('h-mult').textContent = `×${g.mult}`;
+}
+// ---- render ----
+function drawBoard(x, b, mask, ox, oy, size, o = {}) {
+  const N = b.N, cs = size / N, now = performance.now(), mo = motion() && !o.silhouette;
+  x.save(); x.translate(ox, oy);
+  x.fillStyle = 'rgba(255,255,255,.035)'; x.strokeStyle = 'rgba(255,255,255,.08)'; x.lineWidth = 1;
+  for (let i = 0; i < N * N; i++) { const cx0 = (i % N) * cs, cy0 = Math.floor(i / N) * cs; x.fillRect(cx0 + 2, cy0 + 2, cs - 4, cs - 4); }
+  const tr = trace(b, mask);
+  // beam
+  const sx = (b.src.x + 0.5) * cs, sy = (b.src.y + 0.5) * cs; const pts = [[sx, sy]];
+  for (const i of tr.path) pts.push([((i % N) + 0.5) * cs, (Math.floor(i / N) + 0.5) * cs]);
+  const lastI = tr.path[tr.path.length - 1]; let ex = 0, ey = 0;
+  { let xx = b.src.x, yy = b.src.y, d = b.src.d; for (const i of tr.path) { xx = i % N; yy = Math.floor(i / N); if (b.type[i] === MIRROR) { const r = b.rot.indexOf(i); d = [[3, 2, 1, 0], [1, 0, 3, 2]][r >= 0 ? (mask >> r) & 1 : b.fixedState[i]][d]; } } void lastI; const nx = xx + [1, 0, -1, 0][d], ny = yy + [0, 1, 0, -1][d]; ex = (xx + 0.5 + [1, 0, -1, 0][d] * (nx < 0 || ny < 0 || nx >= N || ny >= N ? 0.5 : 0.45)) * cs; ey = (yy + 0.5 + [0, 1, 0, -1][d] * (nx < 0 || ny < 0 || nx >= N || ny >= N ? 0.5 : 0.45)) * cs; }
+  pts.push([ex, ey]);
+  x.lineCap = 'round'; x.lineJoin = 'round';
+  for (const [w, c] of [[cs * 0.32, 'rgba(250,204,21,.16)'], [cs * 0.1, 'rgba(253,224,71,.95)']]) { x.strokeStyle = c; x.lineWidth = w; x.beginPath(); pts.forEach(([a, bb], j) => (j ? x.lineTo(a, bb) : x.moveTo(a, bb))); x.stroke(); }
+  if (mo) { x.setLineDash([cs * 0.12, cs * 0.3]); x.lineDashOffset = -((now / 12) % (cs * 0.42)); x.strokeStyle = 'rgba(255,255,255,.9)'; x.lineWidth = cs * 0.05; x.beginPath(); pts.forEach(([a, bb], j) => (j ? x.lineTo(a, bb) : x.moveTo(a, bb))); x.stroke(); x.setLineDash([]); }
+  // source
+  x.fillStyle = '#facc15'; x.beginPath(); x.arc(sx, sy, cs * 0.24, 0, 7); x.fill(); x.fillStyle = '#07080c'; x.font = `800 ${cs * 0.28}px system-ui`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('→↓←↑'[b.src.d], sx, sy + 1);
+  for (let i = 0; i < N * N; i++) {
+    const t = b.type[i], px = ((i % N) + 0.5) * cs, py = (Math.floor(i / N) + 0.5) * cs;
+    if (t === WALL) { x.fillStyle = 'rgba(148,163,184,.35)'; x.fillRect(px - cs * 0.42, py - cs * 0.42, cs * 0.84, cs * 0.84); x.strokeStyle = 'rgba(148,163,184,.6)'; x.lineWidth = 2; x.beginPath(); x.moveTo(px - cs * 0.42, py); x.lineTo(px + cs * 0.42, py); x.stroke(); }
+    if (t === LAMP) { const on = tr.lit.has(i); x.lineWidth = 3; x.strokeStyle = on ? '#fde047' : 'rgba(214,219,232,.6)'; x.fillStyle = on ? '#fde047' : 'rgba(7,8,12,.9)'; x.beginPath(); x.arc(px, py, cs * 0.22, 0, 7); x.fill(); x.stroke(); if (on) { x.strokeStyle = '#fde047'; for (let a = 0; a < 8; a++) { const an = (a * Math.PI) / 4; x.beginPath(); x.moveTo(px + Math.cos(an) * cs * 0.29, py + Math.sin(an) * cs * 0.29); x.lineTo(px + Math.cos(an) * cs * 0.38, py + Math.sin(an) * cs * 0.38); x.stroke(); } } }
+    if (t === MIRROR) {
+      const r = b.rot.indexOf(i), st = r >= 0 ? (mask >> r) & 1 : b.fixedState[i];
+      let ang = st ? Math.PI / 4 : -Math.PI / 4;
+      if (r >= 0 && mo && b === g.board && g.lock[i] > g.tick) ang -= (Math.PI / 2) * ((g.lock[i] - g.tick) / LW.ROT) * (st ? 1 : -1);
+      if (r >= 0) { x.strokeStyle = 'rgba(34,211,238,.9)'; x.lineWidth = 3; x.strokeRect(px - cs * 0.44, py - cs * 0.44, cs * 0.88, cs * 0.88); }
+      x.save(); x.translate(px, py); x.rotate(ang); x.strokeStyle = r >= 0 ? '#e0f2fe' : 'rgba(148,163,184,.85)'; x.lineWidth = cs * (r >= 0 ? 0.1 : 0.08); x.beginPath(); x.moveTo(-cs * 0.4, 0); x.lineTo(cs * 0.4, 0); x.stroke(); x.restore();
+    }
+  }
+  if (!o.silhouette && b === g.board && g.phase === 'play' && cur >= 0) { const px = (cur % N) * cs, py = Math.floor(cur / N) * cs; x.strokeStyle = '#a78bfa'; x.lineWidth = 3; x.setLineDash([6, 4]); x.strokeRect(px + 3, py + 3, cs - 6, cs - 6); x.setLineDash([]); }
+  if (!o.silhouette && b === g.board && g.n === 1 && g.used === 0 && g.phase === 'play') { const i = b.rot[0], px = ((i % N) + 0.75) * cs, py = (Math.floor(i / N) + 0.8) * cs + (mo ? Math.sin(now / 180) * 5 : 0); x.font = `${cs * 0.45}px system-ui`; x.fillText('👆', px, py); }
+  x.restore();
+}
+function frame(now) {
+  const [w, h] = fit(); cx.clearRect(0, 0, w, h);
+  const G = geo();
+  if (g.board) {
+    let ox = G.ox; const sh = motion() && now - shake < 150 ? Math.sin((now - shake) / 15) * 4 : 0;
+    if (trans && g.phase === 'trans') { drawBoard(cx, trans.b, trans.mask, ox + sh, G.oy, G.size); }
+    else { if (trans && motion() && now - trans.at < 900) { const k = Math.min(1, (now - trans.at - 600) / 200); if (k > 0 && k < 1) ox += (1 - k) * w * 0.3; } drawBoard(cx, g.board, g.mask, ox + sh, G.oy, G.size); }
+    if (now - flash < 600) { cx.fillStyle = `rgba(253,224,71,${0.18 * (1 - (now - flash) / 600)})`; cx.fillRect(0, 0, w, h); }
+  } else { cx.strokeStyle = 'rgba(255,255,255,.08)'; for (let i = 0; i < 16; i++) cx.strokeRect(G.ox + (i % 4) * G.cs + 2, G.oy + Math.floor(i / 4) * G.cs + 2, G.cs - 4, G.cs - 4); }
+  W.drawn = g.board ? { n: g.n, mask: g.mask, at: now } : null;
+  if (count > 0) { cx.fillStyle = 'rgba(7,8,12,.5)'; cx.fillRect(0, 0, w, h); cx.fillStyle = '#fff'; cx.font = '800 72px system-ui'; cx.textAlign = 'center'; cx.textBaseline = 'middle'; cx.fillText(Math.ceil(count / 60), w / 2, h / 2); }
+}
+// ---- loop: fixed 1/60 s steps while playing (ready / pause / result do not step) ----
+let last = performance.now(), acc = 0;
+function loop(now) {
+  const dt = Math.min(0.25, (now - last) / 1000); last = now; W.frames++; W.ft.push(now); if (W.ft.length > 600) W.ft.shift();
+  if (paused) acc = 0;
+  else if (count > 0) { count -= dt * 60; if (count <= 0) { count = 0; $('pz').hidden = true; } acc = 0; }
+  else if (g.phase === 'play' || g.phase === 'trans') {
+    acc += dt; while (acc >= 1 / 60 && (g.phase === 'play' || g.phase === 'trans')) { const n0 = g.n; step(g); acc -= 1 / 60; if (g.n !== n0) { onBoard(); trans = trans && { ...trans, at: now - 600 }; } }
+    if (g.phase === 'result' && $('res').hidden) showResult();
+  } else acc = 0;
+  $('pz').hidden = !(paused || count > 0) ; if (count > 0) $('pz-n').textContent = Math.ceil(count / 60);
+  hud(); frame(now); requestAnimationFrame(loop);
+}
+$('pz').hidden = true;
+requestAnimationFrame(loop);
+S.ready = true;
+})()</script>
+</body></html>
