@@ -3,6 +3,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { CODES, COLORS, bestBuddy } from '../public/js/logic.js';
 import { HEAD_SNIPPET } from '../public/js/theme.js';
+import { buildMagnet } from './build-magnet.mjs'; // magnet-harbor preview (noindex, not in sitemap) [t_1c491685]
 
 const ROOT = new URL('..', import.meta.url).pathname;
 export const SITE = 'https://www.playtoday.cloud';
@@ -202,6 +203,7 @@ export function build() {
   for (const l of LANGS) for (const [, suf] of PAGES) urls.push(`  <url><loc>${url(l, suf)}</loc>${LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, suf)}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/></url>`);
   writeFileSync(`${ROOT}public/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);
   writeFileSync(`${ROOT}public/robots.txt`, `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /*/r/\nDisallow: /*/i/\nDisallow: /*/c/\n\nSitemap: ${SITE}/sitemap.xml\n`);
+  buildMagnet();
   console.log(`built ${n} index pages + ${LANGS.length * SHELLS.length} noindex shells + / ; sitemap ${urls.length} urls`);
   return { pages: n, sitemap: urls.length };
 }
