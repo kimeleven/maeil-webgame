@@ -73,14 +73,14 @@ test('rate limit: 11th create in a minute → 429', async () => {
 });
 
 test('static: rewrites for r/c/i shells, sitemap, robots', async () => {
-  for (const p of ['/ko/r/abc/', '/en/c/2026-10-18-1', '/ja/i/AAAAAAAAAAAAAAAAAAAAAA/']) {
+  for (const p of ['/ko/r/abc/', '/en/c/2026-10-18-1', '/ja/i/AAAAAAAAAAAAAAAAAAAAAA/', '/es/c/mh-2026-10-23']) {
     const r = await fetch(U + p); assert.equal(r.status, 200, p);
     const t = await r.text(); assert.match(t, /noindex/); assert.equal(r.headers.get('referrer-policy'), 'no-referrer');
   }
   const rb = await (await fetch(U + '/robots.txt')).text();
   for (const d of ['/api/', '/*/r/', '/*/i/', '/*/c/']) assert.ok(rb.includes('Disallow: ' + d));
   const sm = await (await fetch(U + '/sitemap.xml')).text();
-  assert.equal((sm.match(/<url>/g) || []).length, 97);
+  assert.equal((sm.match(/<url>/g) || []).length, 103); assert.equal((sm.match(/play\/magnet-harbor\/<\/loc>/g) || []).length, 6);
 });
 
 test('stats: token required, aggregates only', async () => {

@@ -5,6 +5,13 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 const ROOT = new URL('..', import.meta.url).pathname;
 export const MAGNET_LANGS = ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br'];
 const HTML_LANG = { ko: 'ko', en: 'en', ja: 'ja', 'zh-hans': 'zh-Hans', es: 'es', 'pt-br': 'pt-BR' };
+const SITE = 'https://www.playtoday.cloud';
+// public head (t_45f1a325): indexable, canonical + hreflang, OG image per language (public/og/magnet-harbor-{lang}.png)
+function head(l, D) {
+  const u = (x) => `${SITE}/${x}/play/magnet-harbor/`;
+  const alt = MAGNET_LANGS.map((x) => `<link rel="alternate" hreflang="${HTML_LANG[x]}" href="${u(x)}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${u('en')}">`;
+  return `<link rel="canonical" href="${u(l)}">${alt}<meta property="og:type" content="website"><meta property="og:site_name" content="playtoday"><meta property="og:title" content="${esc(D.name)}"><meta property="og:description" content="${esc(D.desc)}"><meta property="og:url" content="${u(l)}"><meta property="og:image" content="${SITE}/og/magnet-harbor-${l}.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${SITE}/og/magnet-harbor-${l}.png">`;
+}
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const CSS = `:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
@@ -54,10 +61,10 @@ export function buildMagnet() {
     const langs = MAGNET_LANGS.map((x) => `<a href="/${x}/play/magnet-harbor/" hreflang="${HTML_LANG[x]}"${x === l ? ' aria-current="true"' : ''}>${x}</a>`).join('');
     const tg = (k) => `<button class="tg" type="button" data-ui data-set="${k}" aria-pressed="true">${esc(D[k])}</button>`;
     const html = `<!doctype html><html lang="${HTML_LANG[l]}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
-<title>${esc(D.title)}</title><meta name="description" content="${esc(D.desc)}"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><link rel="icon" href="data:,">
+<title>${esc(D.name)} | playtoday</title><meta name="description" content="${esc(D.desc)}">${head(l, D)}<link rel="icon" href="data:,">
 <style>${CSS}</style></head>
 <body data-page="magnet-harbor" data-lang="${l}">
-<header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.back)}</a><span class="tag">${esc(D.preview)}</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="${esc(D.sound)}" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="${esc(D.haptic)}" aria-pressed="true">📳</button><details class="langs" data-ui><summary aria-label="Language">${l} ▾</summary><nav>${langs}</nav></details></div></header>
+<header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.back)}</a><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="${esc(D.sound)}" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="${esc(D.haptic)}" aria-pressed="true">📳</button><details class="langs" data-ui><summary aria-label="Language">${l} ▾</summary><nav>${langs}</nav></details></div></header>
 <main class="stage" id="stage">
 <div class="hud"><div><span>${esc(D.time)}</span><b id="h-time">90</b></div><div><span>${esc(D.ships)}</span><b id="h-ships">0</b></div><div><span>${esc(D.target)}</span><b id="h-tgt">0/6</b></div><div><span>${esc(D.cols)}</span><b id="h-cols">0/4</b></div><div><span>${esc(D.lives)}</span><b id="h-lives">⚓⚓⚓</b></div></div>
 <div id="play" role="application" aria-label="${esc(D.name)}"><canvas id="cv"></canvas>
@@ -85,8 +92,18 @@ ${ui}})()</script>
 </body></html>`;
     mkdirSync(`${ROOT}public/${l}/play/magnet-harbor`, { recursive: true });
     writeFileSync(`${ROOT}public/${l}/play/magnet-harbor/index.html`, html);
+    // /{lang}/c/mh-{seed} share landing (vercel.json rewrite → this file): Magnet OG for link previews, noindex,
+    // keeps the seed and sends the visitor to the game with from=c. Gate-rush /c/ shell is untouched.
+    mkdirSync(`${ROOT}public/${l}/c/mh`, { recursive: true });
+    writeFileSync(`${ROOT}public/${l}/c/mh/index.html`, `<!doctype html><html lang="${HTML_LANG[l]}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07080c">
+<title>${esc(D.name)} | playtoday</title><meta name="description" content="${esc(D.desc)}"><meta name="robots" content="noindex,follow"><meta name="referrer" content="no-referrer">
+<meta property="og:type" content="website"><meta property="og:site_name" content="playtoday"><meta property="og:title" content="${esc(D.name)}"><meta property="og:description" content="${esc(D.desc)}"><meta property="og:image" content="${SITE}/og/magnet-harbor-${l}.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${SITE}/og/magnet-harbor-${l}.png">
+<style>html,body{margin:0;background:#07080c;color:#e8eaf0;font:16px system-ui,sans-serif}a{color:#22d3ee}main{padding:24px;text-align:center}</style></head>
+<body data-page="c-magnet"><main><p><a id="go" href="/${l}/play/magnet-harbor/?from=c">${esc(D.name)} →</a></p></main>
+<script>(function(){var m=location.pathname.match(/[/]c[/]mh-([A-Za-z0-9-]{1,64})[/]?$/);var u='/${l}/play/magnet-harbor/?from=c'+(m?'&seed='+m[1]:'');document.getElementById('go').href=u;location.replace(u);})()</script>
+</body></html>`);
   }
-  console.log(`magnet-harbor preview: ${MAGNET_LANGS.length} pages (noindex, not in sitemap)`);
+  console.log(`magnet-harbor: ${MAGNET_LANGS.length} public pages + ${MAGNET_LANGS.length} /c/mh share shells`);
   return MAGNET_LANGS.length;
 }
 

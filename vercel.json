@@ -18,6 +18,8 @@
     { "source": "/api/invite/:token/join", "destination": "/api/invite?token=:token&op=join" },
     { "source": "/api/invite/:token/member", "destination": "/api/invite?token=:token&op=member" },
     { "source": "/api/invite/:token", "destination": "/api/invite?token=:token" },
+    { "source": "/:lang(ko|en|ja|zh-hans|es|pt-br)/c/mh-:seed", "destination": "/:lang/c/mh/index.html" },
+    { "source": "/:lang(ko|en|ja|zh-hans|es|pt-br)/c/mh-:seed/", "destination": "/:lang/c/mh/index.html" },
     { "source": "/:lang(ko|en|ja|zh-hans|es|pt-br)/:kind(r|c|i)/:id", "destination": "/:lang/:kind/index.html" },
     { "source": "/:lang(ko|en|ja|zh-hans|es|pt-br)/:kind(r|c|i)/:id/", "destination": "/:lang/:kind/index.html" }
   ],

@@ -13,6 +13,18 @@
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
   const seed = (q.get('seed') || today()).slice(0, 64);
   const W = { sfx: 0, vib: 0, frames: 0, steps: 0 };
+  // ---- launch metrics (t_45f1a325): existing Vercel Web Analytics custom events, prop g=magnet. No ids/seeds/scores.
+  // QA traffic: ?qa=1 once sets localStorage 'pt-qa'=1 -> every event carries qa='1' (filter it out; ?qa=0 clears).
+  if (q.get('qa') === '1') save('pt-qa', 1); else if (q.get('qa') === '0') { try { localStorage.removeItem('pt-qa'); } catch {} }
+  const qa = (() => { try { return localStorage.getItem('pt-qa') === '1'; } catch { return false; } })();
+  const from = q.get('from') === 'c' ? 'c' : 'direct';
+  const ev = (name, data = {}) => {
+    const d = { g: 'magnet', from, ...data }; if (qa) d.qa = '1';
+    (window.__trackLog = window.__trackLog || []).push({ name, ...d });
+    try { if (window.va) window.va('event', { name, data: d }); } catch {}
+  };
+  if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
+  let runs = 0;
   const canVib = typeof navigator.vibrate === 'function';
 
   // ---- audio: WebAudio synth only, created on the first explicit input ----
@@ -64,7 +76,7 @@
     S.armed = false; S.evlog = []; S.blinkSeen = false;
   }
   function begin() { // explicit start only: [start] button, Space, Enter
-    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; lastT = performance.now(); acc = 0; S.tStart = lastT;
+    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; runs++; ev(runs > 1 ? 'play_again' : 'play_start'); lastT = performance.now(); acc = 0; S.tStart = lastT;
   }
   $('#b-start').addEventListener('click', (e) => { e.stopPropagation(); begin(); });
 
@@ -234,14 +246,18 @@
     $('#r-why').textContent = g.overWhy === 'time' ? T.endTime : T.endLives;
     $('#seed').textContent = seed;
     res.hidden = false; S.result = { ...r, at: performance.now() };
+    ev('play_end', { end: g.overWhy === 'time' ? 'time' : 'lives' }); // complete = 'time' (90 s timer); 'lives' = early end after 3 falls
     setTimeout(() => $('#b-again').focus({ preventScroll: true }), 30);
   }
   function again() { reset(); S.againAt = performance.now(); }
   $('#b-again').addEventListener('click', (e) => { e.stopPropagation(); again(); });
-  const link = () => `${location.origin}${location.pathname}?seed=${encodeURIComponent(seed)}`;
+  // share link -> /{lang}/c/mh-{seed}: own static shell with Magnet OG, redirects to the game with the same seed
+  const link = () => `${location.origin}/${document.body.dataset.lang}/c/mh-${seed.replace(/[^A-Za-z0-9-]/g, '-')}`;
   $('#b-link').addEventListener('click', async (e) => {
     e.stopPropagation(); const txt = fmt(T.shareText, { ships: g.ships, url: link() });
-    try { await navigator.clipboard.writeText(txt); } catch { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch {} ta.remove(); }
+    ev('share_click', { via: 'link' }); let ok = false;
+    try { await navigator.clipboard.writeText(txt); ok = true; } catch { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { ok = document.execCommand('copy'); } catch {} ta.remove(); }
+    ev(ok ? 'share_done' : 'share_fail', { via: 'link' });
     S.copied = txt; say(T.copied);
   });
   // 1080×1350 card, local download only (no network)
@@ -256,7 +272,7 @@
     k.fillStyle = 'rgba(214,219,232,.8)'; k.font = '500 34px system-ui'; k.fillText(`seed ${seed}`, 540, 1200); k.font = '700 40px system-ui'; k.fillText('playtoday.cloud', 540, 1280);
     return c;
   }
-  $('#b-png').addEventListener('click', (e) => { e.stopPropagation(); card().toBlob((b) => { if (!b) return; const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `magnet-harbor-${seed}.png`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.png = (S.png || 0) + 1; }, 'image/png'); });
+  $('#b-png').addEventListener('click', (e) => { e.stopPropagation(); ev('share_click', { via: 'png' }); card().toBlob((b) => { if (!b) return; const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `magnet-harbor-${seed}.png`; document.body.appendChild(a); a.click(); a.remove(); ev('share_done', { via: 'png' }); setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.png = (S.png || 0) + 1; }, 'image/png'); });
 
   S.finish = finish; // test hook (layout checks)
   reset(); S.ready = true; requestAnimationFrame(frame);
