@@ -1,32 +1,34 @@
 ✔ R0 ready 10 s + screen tap + Space: still ready, time 90 — {"phase":"ready","now":0,"score":0,"wilts":0,"combo":0,"ev":0,"judged":0,"log":0,"hud":"90","act":0}
-✔ R1 412 touch tap (top-left, away from lane) → exactly 1 judgement; position not used — {"a":"perfect","k":0,"d":-26,"pts":20,"part":"seed","c":1308}
-✔ R2 412 first plant success ≤ 5 s after start (real touch) — c=1308 d=-26
+✔ R1 412 touch tap (top-left, away from lane) → exactly 1 judgement; position not used — {"a":"perfect","k":0,"d":-13,"pts":20,"part":"seed","c":1321}
+✔ R2 412 first plant success ≤ 5 s after start (real touch) — c=1321 d=-13
 ✔ R10 two simultaneous touches → 1 judgement (second pointer ignored) — judged +1, second-pointer logs 1
 ✔ R10 pointercancel after down: cancel is not an extra tap (down judged once, cancel outside vine = no effect) — judged +1
 ✔ R10 UI button taps (sound ×2) are not game input — log 6→6
-✔ R10 hidden tab pauses; active time excludes pause + 3 s count (P ≈ pause length) — P=5602ms, act 3532→3790
-✔ R10 after resume beat phase not shifted (auto player hits with small Δ) — deltas 4,6,5,5,6,2
+✔ R10 hidden tab pauses; active time excludes pause + 3 s count (P ≈ pause length) — P=5586ms, act 3531→3795
+✔ R10 after resume beat phase not shifted (auto player hits with small Δ) — deltas 1,3,5,6,6,5
 ✔ no page errors (412 touch run)
 ✔ R10 offset + sound setting persist after reload — {"off":30,"sound":false,"label":"+30"}
 ✔ R0 Enter starts — play
 ✔ R1 1440 click → exactly 1 judgement — 0→1
 ✔ R1 Space → 1 judgement; R10 5 auto-repeat keydowns ignored — judged +1, repeats logged 5
-✔ R2 browser auto-player to 40 s: no wilt after warm-up, rest passes <30 s, first vine head 30–36 s and tail judged — wilts 0, passes 6, head 30951, tail perfect/tail/32050/10, max|Δ| 13ms, mean|Δ| 5.5ms
+✔ R2 browser auto-player to 40 s: no wilt after warm-up, rest passes <30 s, first vine head 30–36 s and tail judged — wilts 0, passes 6, head 30954, tail perfect/tail/32051/11, max|Δ| 14ms, mean|Δ| 5.5ms
 ✔ R1 sound played after first input (WebAudio synth, recorded calls) — perfect,tick,tick,wilt,perfect,tick
 ✔ no page errors (1440 run)
-✔ R6 render throttled to 20 fps: auto player 15 s → no wilts, Δ stays small (judging uses event timeStamp) — hits 21, max|Δ| 24ms, wilts 0
+✔ R6 render throttled to 20 fps: auto player 15 s → no wilts, Δ stays small (judging uses event timeStamp) — hits 21, max|Δ| 14ms, wilts 0
 ✔ R3 same seed + log: node = Chromium = Chromium(muted, reduced-motion) = WebKit — node 40/3/0/5 9480/131/131/0 940/13/42/5 | chromium 40/3/0/5 9480/131/131/0 940/13/42/5 | muted+rm 40/3/0/5 9480/131/131/0 940/13/42/5 | webkit 40/3/0/5 9480/131/131/0 940/13/42/5 
-✔ R5 idle after start → result < 6 s, score 0 — wall 4311 ms, end c=4162
-✔ R8 again → ready within 0.5 s — 39 ms
-✔ R8 result: this vs best + diff, new best flag, accuracy bar + mean line, seed shown — {"score":"400","best":"0 · 최대 연속 0","diff":"+400 · +15","nb":true,"acc":["0%","100%","0%"],"stat":"잎 5장이 모두 시들었어요 · 평균 정확(±10ms)","seed":"r5"}
+✔ R5 idle after start → result < 6 s, score 0 — wall 4317 ms, end c=4162
+✔ C1 idle result: causes chip "놓침 5" (top) = engine counts, tip for miss, accuracy sample n=0 hides bar — {"chips":[["miss","top","⌛ 놓침 5"]],"tip":"화분이 선에 닿을 때마다 한 번씩, 쉬지 말고 톡","accn":"성공한 0번의 타이밍","accHidden":true,"eng":{"n":{"miss":5,"stray":0,"double":0,"rest":0,"early":0,"late":0},"total":5,"top":"miss"}}
+✔ R8 again → ready within 0.5 s — 24 ms
+✔ R8 result: this vs best + diff, new best flag, accuracy bar + mean line, seed shown — {"score":"400","best":"0 · 최대 연속 0","diff":"+400 · +15","nb":true,"acc":["0%","100%","0%"],"stat":"잎 5장이 모두 시들었어요","seed":"r5","mean":"평균 정확(±10ms)"}
+✔ C2 played result: every non-zero engine cause shown with its count, top highlighted, "성공한 n번" = hits n, tip = top cause — {"C":{"n":{"miss":5,"stray":0,"double":0,"rest":0,"early":0,"late":0},"total":5,"top":"miss"},"n":15,"chips":[["miss","top","⌛ 놓침 5"]],"accn":"성공한 15번의 타이밍","tip":"화분이 선에 닿을 때마다 한 번씩, 쉬지 말고 톡","over":[752,722]}
 ✔ R8 PNG saved locally 1080×1350 (no upload) — rhythm-garden-r5.png
 ✔ R9 ?seed= chart used; network: no /api, no external requests — requests 2, api 0, external 
 ✔ no page errors (result run)
-✔ R12 first input ready ≤ 2 s (4× CPU + Fast 3G emulation, headed Chromium) — ready+start actionable 507 ms, DCL 449 ms, transfer 18262 B
-✔ R12 gzip ≤ 40 KB, 0 images/fonts/audio files — 16764 B gzip (47378 B raw)
+✔ R12 first input ready ≤ 2 s (4× CPU + Fast 3G emulation, headed Chromium) — ready+start actionable 499 ms, DCL 422 ms, transfer 19453 B
+✔ R12 gzip ≤ 40 KB, 0 images/fonts/audio files — 17970 B gzip (50622 B raw)
 ✔ R12 fps (measured, emulation): 4× CPU / 1× CPU — 4× 72 fps, 1× 72 fps
 ✔ R12 6 langs × 360/412/1440: no horizontal overflow, touch targets ≥ 44px, meta noindex — 18 screens
-✔ R9 diff: no api/db/lib/middleware/vercel.json/manifest/sw/sitemap/robots//c//lobby changes — 15 files
+✔ R9 diff: no api/db/lib/middleware/vercel.json/manifest/sw/sitemap/robots//c//lobby changes — 51 files
 ✔ R9 sitemap has no rhythm-garden (103 urls) — 103 urls
 
-ALL PASS 30/30
+ALL PASS 32/32
