@@ -38,7 +38,9 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .hud .warn{border-color:#f87171;animation:bl .5s steps(2) infinite}@keyframes bl{50%{background:rgba(248,113,113,.25)}}.rm .hud .warn{animation:none;background:rgba(248,113,113,.25)}
 .skip{min-height:44px}@media (min-width:900px){.stage{width:min(760px,100vw);height:min(calc(100dvh - 64px),860px)}}
 .ofs{display:flex;align-items:center;justify-content:center;gap:10px}.ofs b{min-width:84px;text-align:center;font-size:22px;font-variant-numeric:tabular-nums}.lnk{background:none;border:0;color:var(--cyan);font:600 14px/1.2 inherit;min-height:44px;cursor:pointer;text-decoration:underline}
-.acc{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}.acc i{display:block;height:100%}.acc .e{background:#60a5fa}.acc .o{background:#4ade80}.acc .l{background:#f59e0b}.accl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}</style></head>
+.acc{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}.acc i{display:block;height:100%}.acc .e{background:#60a5fa}.acc .o{background:#4ade80}.acc .l{background:#f59e0b}.accl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.cz{display:flex;flex-direction:column;gap:4px}.czt{font-size:12px;color:var(--muted);font-weight:700}.czl{display:flex;flex-wrap:wrap;gap:4px}.czl i{font-style:normal;font-size:13px;padding:3px 8px;border-radius:99px;border:1px solid rgba(248,113,113,.35);background:rgba(248,113,113,.10);color:#fecaca;white-space:nowrap}.czl i.top{border-color:#f87171;background:rgba(248,113,113,.22);font-weight:800}.czl i.zero{border-color:rgba(74,222,128,.35);background:rgba(74,222,128,.08);color:#bbf7d0}
+.accn{font-size:12px;color:var(--muted);font-weight:700}#res .panel>*{flex-shrink:0}.czl{align-self:flex-start}</style></head>
 <body data-page="rhythm-garden" data-lang="ko">
 <header class="top"><a class="logo" href="/ko/"><i></i>매일웹겜</a><span class="tag">프리뷰</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="소리" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="진동" aria-pressed="true">📳</button><button class="ic" id="b-pause" type="button" data-ui aria-label="일시정지">⏸</button><details class="langs" data-ui><summary aria-label="Language">ko ▾</summary><nav><a href="/ko/play/rhythm-garden/" hreflang="ko" aria-current="true">ko</a><a href="/en/play/rhythm-garden/" hreflang="en">en</a><a href="/ja/play/rhythm-garden/" hreflang="ja">ja</a><a href="/zh-hans/play/rhythm-garden/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/rhythm-garden/" hreflang="es">es</a><a href="/pt-br/play/rhythm-garden/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
 <main class="stage" id="stage">
@@ -56,8 +58,11 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 <div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">정원 마감!</h2><div class="new" id="r-new" hidden>최고 기록!</div><div class="new" id="r-first" hidden>첫 기록</div>
 <div class="nums"><span>이번</span><b class="big" id="r-score"></b><span>최대 연속</span><b id="r-combo"></b><span>PERFECT</span><b id="r-perf"></b><span>내 최고</span><b id="r-best"></b><span>차이</span><b id="r-diff"></b></div>
-<div class="acc" id="r-acc" aria-hidden="true"><i class="e"></i><i class="o"></i><i class="l"></i></div><div class="accl"><span id="r-ae"></span><span id="r-ao"></span><span id="r-al"></span></div>
 <div class="why" id="r-stat"></div>
+<div class="cz" id="r-cz"><span class="czt">시든 이유</span><span class="czl" id="r-czl"></span></div>
+<div class="tip" id="r-tip"><span class="tipk">다음 판 팁</span><b id="r-tipt"></b></div>
+<div class="accn" id="r-accn"></div><div class="acc" id="r-acc" aria-hidden="true"><i class="e"></i><i class="o"></i><i class="l"></i></div><div class="accl"><span id="r-ae"></span><span id="r-ao"></span><span id="r-al"></span></div>
+<div class="why" id="r-mean"></div>
 <button class="btn main" id="b-again" type="button">다시 하기</button>
 <div class="row"><button class="btn" id="b-png" type="button">PNG 저장</button><button class="btn" id="b-link" type="button">도전 링크 복사</button></div>
 <div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">소리</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">진동</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">움직임 효과</button></div><div class="seed">seed <span id="seed"></span> <span id="r-chart"></span></div>
@@ -65,7 +70,7 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 </div>
 <div class="bar"><span class="hint">박자에 맞춰 화면 탭 / Space</span></div>
 </main><div class="toast" id="toast" role="status"></div>
-<script id="rt" type="application/json">{"name":"리듬 정원","desc":"흘러오는 화분이 심기 선에 닿는 박자에 톡! 끊김 없이 심어 정원을 꽃으로 채우는 90초 리듬 게임.","back":"매일웹겜","preview":"프리뷰","time":"남은","score":"점수","combo":"연속","leaves":"잎","goal":"화분이 선에 닿을 때 톡 · 90초","how":"빈 화분(점선)은 참고, 덩굴은 누른 채 끝에서 떼요","start":"시작","keys":"Enter로 시작 · Space/탭으로 심기","hint":"박자에 맞춰 화면 탭 / Space","pause":"일시정지","paused":"일시정지","resume":"탭해서 계속 (3초 뒤 재개)","over":"정원 마감!","now":"이번","best":"내 최고","diff":"차이","first":"첫 기록","newBest":"최고 기록!","maxCombo":"최대 연속","perfect":"PERFECT","again":"다시 하기","png":"PNG 저장","link":"도전 링크 복사","copied":"복사했어요","sound":"소리","haptic":"진동","motion":"움직임 효과","offset":"판정 보정","offsetHelp":"늦게 찍히면 +, 빨리 찍히면 −","close":"닫기","early":"빠름","ok":"정확","late":"느림","meanEarly":"평균 {n}ms 빠름","meanLate":"평균 {n}ms 느림","meanOk":"평균 정확(±{n}ms)","finish":"완주 보너스 +{n}","wilted":"잎 5장이 모두 시들었어요","fallback":"기본 악보","shareText":"리듬 정원에서 꽃 {combo}송이를 끊김 없이 피웠어요! 같은 정원에서 해 볼래요? → {url}"}</script>
+<script id="rt" type="application/json">{"name":"리듬 정원","desc":"흘러오는 화분이 심기 선에 닿는 박자에 톡! 끊김 없이 심어 정원을 꽃으로 채우는 90초 리듬 게임.","back":"매일웹겜","preview":"프리뷰","time":"남은","score":"점수","combo":"연속","leaves":"잎","goal":"화분이 선에 닿을 때 톡 · 90초","how":"빈 화분(점선)은 참고, 덩굴은 누른 채 끝에서 떼요","start":"시작","keys":"Enter로 시작 · Space/탭으로 심기","hint":"박자에 맞춰 화면 탭 / Space","pause":"일시정지","paused":"일시정지","resume":"탭해서 계속 (3초 뒤 재개)","over":"정원 마감!","now":"이번","best":"내 최고","diff":"차이","first":"첫 기록","newBest":"최고 기록!","maxCombo":"최대 연속","perfect":"PERFECT","again":"다시 하기","png":"PNG 저장","link":"도전 링크 복사","copied":"복사했어요","sound":"소리","haptic":"진동","motion":"움직임 효과","offset":"판정 보정","offsetHelp":"늦게 찍히면 +, 빨리 찍히면 −","close":"닫기","early":"빠름","ok":"정확","late":"느림","meanEarly":"평균 {n}ms 빠름","meanLate":"평균 {n}ms 느림","meanOk":"평균 정확(±{n}ms)","finish":"완주 보너스 +{n}","wilted":"잎 5장이 모두 시들었어요","fallback":"기본 악보","shareText":"리듬 정원에서 꽃 {combo}송이를 끊김 없이 피웠어요! 같은 정원에서 해 볼래요? → {url}","whyT":"시든 이유","c_miss":"놓침","c_stray":"헛손질","c_double":"두 번 탭","c_rest":"빈 화분 탭","c_early":"덩굴 일찍 뗌","c_late":"덩굴 늦게 뗌","tipK":"다음 판 팁","tip_miss":"화분이 선에 닿을 때마다 한 번씩, 쉬지 말고 톡","tip_stray":"화분이 선 근처에 올 때만 누르세요","tip_double":"화분 하나에 한 번만 톡","tip_rest":"점선 빈 화분은 그냥 보내세요","tip_early":"덩굴은 끝 동그라미가 선에 닿을 때까지 누르고 있기","tip_late":"덩굴 끝이 선에 닿는 순간 손 떼기","tip_none":"잎을 하나도 안 잃었어요! 이제 PERFECT를 노려 보세요","accN":"성공한 {n}번의 타이밍","noWilt":"시든 잎 0"}</script>
 <script>(()=>{// Rhythm Garden rule engine (prototype, t_177308a9). DOM-free, deterministic, integer ms on the ACTIVE clock.
 // GDD r2: workspace/maeil-arcade-local/games/rhythm-garden/GDD.md (2.0 time, 2.1 judge, 2.2 vine, 6/6.1 chart, 7 score, 8 abuse).
 // Same seed → same chart. Same input log (kind, raw active ms, offset) → same result. No wall clock, no frames.
@@ -238,6 +243,16 @@ function accuracy(g) {
   const bins = { early: d.filter((x) => x < -RG.PERFECT).length, ok: d.filter((x) => Math.abs(x) <= RG.PERFECT).length, late: d.filter((x) => x > RG.PERFECT).length };
   return { n, mean, bins };
 }
+// failure causes (t_552009cf): counts per engine wilt reason, in fixed order; top = most frequent (ties → this order).
+// miss=seed/vine head not tapped, stray=tap with no pot in reach, double=second tap on one pot, rest=tap on an empty pot,
+// early=vine released too soon, late=vine held past its end. Display only — scoring/judging unchanged.
+const CAUSES = ['miss', 'stray', 'double', 'rest', 'early', 'late'];
+function causes(g) {
+  const n = Object.fromEntries(CAUSES.map((k) => [k, 0]));
+  for (const e of g.events) if (e.a === 'wilt' && e.why in n) n[e.why]++;
+  let top = null; for (const k of CAUSES) if (n[k] > 0 && (!top || n[k] > n[top])) top = k;
+  return { n, total: CAUSES.reduce((s, k) => s + n[k], 0), top };
+}
 // replay a log [[kind, raw, o, id], ...] — o comes from the log, so changing the setting later does not change a replay
 function replay(seed, log, opts = {}) {
   const g = createGame(seed, opts); start(g);
@@ -280,6 +295,7 @@ const canVib = typeof navigator.vibrate === 'function';
 const W = { snd: [], vib: 0, frames: 0, ft: [], drawn: 0 };
 const LAG = 40;           // frame driver closes windows 40 ms behind "now" so queued input events (earlier timeStamp) are judged first
 const LEAD = 2000;        // a pot travels from the left edge to the line in 2 s (constant speed)
+const CZ_ICON = { miss: '⌛', stray: '✋', double: '✌', rest: '◌✕', early: '⤴', late: '⏳' };
 // ---- audio (WebAudio synth, no files; silent until the first input = Start) ----
 let ac = null;
 const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
@@ -302,7 +318,7 @@ let best = loadLS('rg-best', { rec: null }).rec, lastTick = -1, fx = [];
 const cv = $('cv'), cx = cv.getContext('2d');
 const grid = (() => { const a = []; let t = RG.FIRST; while (t <= RG.DUR) { a.push(t); t += segOf(t).p; } return a; })();
 const act = (ts) => Math.round(ts - T0 - P);
-const S = window.__rg = { ready: false, E: { RG, createGame, start, input, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy }, W, seed, set, evlog: [], act, grid,
+const S = window.__rg = { ready: false, E: { RG, createGame, start, input, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy, causes, CAUSES }, W, seed, set, evlog: [], act, grid, LAG,
   get g() { return g; }, get paused() { return paused || countEnd > 0; }, get T0() { return T0; }, get P() { return P; }, get off() { return off; } };
 const motion = () => set.motion && !mq.matches;
 function applySet() {
@@ -378,8 +394,14 @@ function showResult() {
   const A = accuracy(g), tot = Math.max(1, A.n), bars = $('r-acc').children;
   bars[0].style.width = (100 * A.bins.early) / tot + '%'; bars[1].style.width = (100 * A.bins.ok) / tot + '%'; bars[2].style.width = (100 * A.bins.late) / tot + '%';
   $('r-ae').textContent = `◀ ${D.early} ${A.bins.early}`; $('r-ao').textContent = `${D.ok} ${A.bins.ok}`; $('r-al').textContent = `${D.late} ${A.bins.late} ▶`;
+  $('r-accn').textContent = D.accN.replace('{n}', A.n); $('r-acc').hidden = !A.n; $('r-acc').nextElementSibling.hidden = !A.n;
   const mean = !A.n ? '' : Math.abs(A.mean) <= 10 ? D.meanOk.replace('{n}', 10) : (A.mean < 0 ? D.meanEarly : D.meanLate).replace('{n}', Math.abs(A.mean));
-  $('r-stat').textContent = [g.end.survived ? D.finish.replace('{n}', g.end.bonus) : D.wilted, mean].filter(Boolean).join(' · ');
+  $('r-stat').textContent = g.end.survived ? D.finish.replace('{n}', g.end.bonus) : D.wilted; $('r-mean').textContent = mean;
+  // failure causes (t_552009cf): count per engine reason, most frequent first-highlighted, tip for the top cause
+  const C = causes(g), czl = $('r-czl'); czl.textContent = '';
+  if (!C.total) { const i = document.createElement('i'); i.className = 'zero'; i.textContent = D.noWilt; czl.append(i); }
+  for (const k of CAUSES) if (C.n[k]) { const i = document.createElement('i'); i.className = k === C.top ? 'top' : ''; i.dataset.k = k; i.textContent = `${CZ_ICON[k]} ${D['c_' + k]} ${C.n[k]}`; czl.append(i); }
+  $('r-tipt').textContent = C.top ? D['tip_' + C.top] : D.tip_none;
   if (g.end.survived) play('finish');
   $('res').hidden = false; S.evlog.push({ k: 'result', at: performance.now(), rec, acc: A }); $('b-again').focus({ preventScroll: true });
 }
@@ -463,7 +485,8 @@ function frame(now) {
   // judgement fx (0.6 s): early/late arrows (shape, not colour), wilt cause icon
   fx = fx.filter((f) => now - f.at < 600);
   for (const f of fx) { const a = 1 - (now - f.at) / 600, yy = laneY - s * 2.2 - (mo ? (1 - a) * 20 : 0); cx.globalAlpha = a; cx.textAlign = 'center';
-    if (f.k === 'wilt') { cx.font = `800 ${s * 0.55}px system-ui`; cx.fillStyle = '#fca5a5'; cx.fillText({ miss: '⌛', stray: '✋', double: '✌', rest: '◌✕', early: '⤴', late: '⏳' }[f.why] || '✕', lineX, yy); }
+    if (f.k === 'wilt') { cx.font = `800 ${s * 0.55}px system-ui`; cx.fillStyle = '#fca5a5'; cx.fillText(CZ_ICON[f.why] || '✕', lineX, yy);
+      if (D['c_' + f.why]) { cx.font = `700 ${Math.max(12, s * 0.32)}px system-ui`; cx.fillText(D['c_' + f.why], Math.min(lineX, w - 60), yy + s * 0.5); } }
     else { cx.font = `800 ${s * 0.5}px system-ui`; cx.fillStyle = f.k === 'perfect' ? '#facc15' : '#e8eaf0'; cx.fillText((f.k === 'good' && f.d < -RG.PERFECT ? '◀ ' : '') + (f.k === 'perfect' ? 'PERFECT' : 'GOOD') + (f.k === 'good' && f.d > RG.PERFECT ? ' ▶' : ''), lineX, yy); }
     cx.globalAlpha = 1; }
   if (mo && fx.some((f) => f.k === 'wilt' && now - f.at < 120)) { cv.style.transform = `translateX(${Math.sin(now / 15) * 3}px)`; } else cv.style.transform = '';

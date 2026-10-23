@@ -108,3 +108,47 @@ test('R11b (measured, not guaranteed): random 1 tap/beat — seeds with mean sur
   console.log(`R11b random: ${okSeeds}/20 seeds mean survival ≤ 10 s; means(ms) ${means.join(',')}`);
   assert.ok(okSeeds >= 0);
 });
+
+// ---- t_552009cf: failure causes + 40 ms frame-lag boundary ----
+test('causes: per-reason counts match engine wilt reasons; top = most frequent, ties → fixed order', () => {
+  const g = game(mk([{ t: 20000, kind: 'seed' }, { t: 20600, kind: 'rest' }, { t: 21200, kind: 'seed' }, { t: 21800, kind: 'seed' }]));
+  E.input(g, 'down', 20000); E.input(g, 'down', 20030);   // double
+  E.input(g, 'down', 20600);                              // rest
+  E.input(g, 'down', 20400);                              // stray (between windows)
+  E.advance(g, 22000);                                    // 21200 and 21800(not yet: 21920<22000 → closed) miss
+  const C = E.causes(g);
+  assert.deepEqual(C.n, { miss: 2, stray: 1, double: 1, rest: 1, early: 0, late: 0 });
+  assert.equal(C.total, g.wilts); assert.equal(C.top, 'miss');
+  const t = game(mk([{ t: 20000, kind: 'seed' }])); E.input(t, 'down', 19000); E.input(t, 'down', 20000); E.input(t, 'down', 20010);
+  assert.equal(E.causes(t).top, 'stray');                 // stray 1 = double 1 → order picks stray
+  assert.equal(E.causes(game(mk([{ t: 20000, kind: 'seed' }]))).top, null);
+});
+test('causes: PO session shape — 1 hit + 5 misses → hits n=1 is the accuracy sample, top cause miss', () => {
+  const B = [20000, 20600, 21200, 21800, 22400, 23000].map((t) => ({ t, kind: 'seed' }));
+  const g = game(mk(B)); E.input(g, 'down', 19968); E.advance(g, 30000);
+  assert.equal(g.phase, 'result'); assert.equal(g.end.survived, false);
+  const A = E.accuracy(g), C = E.causes(g);
+  assert.equal(A.n, 1); assert.equal(A.mean, -32); assert.equal(C.n.miss, 5); assert.equal(C.top, 'miss');
+});
+// UI model: each frame at receive time r calls advance(r - LAG); an input stamped ts is fed with raw=ts when delivered at ts+d.
+// Worst case = a frame runs right before the queued input is delivered.
+const LAG = 40;
+const lagged = (bt, ts, d, o = 0) => { const g = game(mk([{ t: bt, kind: 'seed' }, { t: bt + 500, kind: 'seed' }]), o); E.advance(g, ts + d - LAG); return { g, e: E.input(g, 'down', ts) }; };
+test('LAG 40: window-edge input (ts = t+w) delivered 39/40 ms late is judged; 41 ms late is misjudged as miss+stray', () => {
+  for (const d of [0, 39, 40]) { const { g, e } = lagged(70000, 70120, d); assert.equal(e.a, 'good', `d=${d}`); assert.equal(g.wilts, 0); }
+  { const { g, e } = lagged(70000, 70120, 41); assert.equal(e.why, 'stray'); assert.equal(g.wilts, 2); }
+  // early-phase window (w=160) same edge rule
+  { const { e } = lagged(5000, 5160, 40); assert.equal(e.a, 'good'); } { const { g } = lagged(5000, 5160, 41); assert.equal(g.wilts, 2); }
+});
+test('LAG 40: on-beat input survives delivery delay up to w+40 (120 BPM: 160 ms); CPU stall beyond → misjudge', () => {
+  for (const d of [100, 160]) { const { e } = lagged(70000, 70000, d); assert.equal(e.a, 'perfect', `d=${d}`); }
+  { const { g, e } = lagged(70000, 70000, 161); assert.equal(e.why, 'stray'); assert.equal(g.wilts, 2); }
+  { const { g } = lagged(70000, 70000, 250); assert.equal(g.wilts, 2); }   // 250 ms main-thread stall + frame first
+  // if the browser delivers the queued input BEFORE the next frame (usual ordering), any stall is safe
+  { const g = game(mk([{ t: 70000, kind: 'seed' }])); assert.equal(E.input(g, 'down', 70000).a, 'perfect'); E.advance(g, 70250 - LAG); assert.equal(g.wilts, 0); }
+});
+test('LAG 40: vine release at tail edge (120 BPM) — 40 ms ok, 41 ms → late wilt (≤1 per vine kept)', () => {
+  const V2 = () => game(mk([{ t: 61000, kind: 'head', v: 0 }, { t: 62000, kind: 'tail', v: 0 }], [{ h: 0, e: 1 }]));
+  { const g = V2(); E.input(g, 'down', 61000); E.advance(g, 62120 + 40 - LAG); assert.equal(E.input(g, 'up', 62120).a, 'good'); assert.equal(g.wilts, 0); }
+  { const g = V2(); E.input(g, 'down', 61000); E.advance(g, 62120 + 41 - LAG); assert.equal(E.input(g, 'up', 62120).a, 'ignored'); assert.equal(g.wilts, 1); assert.equal(E.causes(g).n.late, 1); }
+});

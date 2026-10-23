@@ -15,6 +15,7 @@ const canVib = typeof navigator.vibrate === 'function';
 const W = { snd: [], vib: 0, frames: 0, ft: [], drawn: 0 };
 const LAG = 40;           // frame driver closes windows 40 ms behind "now" so queued input events (earlier timeStamp) are judged first
 const LEAD = 2000;        // a pot travels from the left edge to the line in 2 s (constant speed)
+const CZ_ICON = { miss: '⌛', stray: '✋', double: '✌', rest: '◌✕', early: '⤴', late: '⏳' };
 // ---- audio (WebAudio synth, no files; silent until the first input = Start) ----
 let ac = null;
 const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
@@ -37,7 +38,7 @@ let best = loadLS('rg-best', { rec: null }).rec, lastTick = -1, fx = [];
 const cv = $('cv'), cx = cv.getContext('2d');
 const grid = (() => { const a = []; let t = RG.FIRST; while (t <= RG.DUR) { a.push(t); t += segOf(t).p; } return a; })();
 const act = (ts) => Math.round(ts - T0 - P);
-const S = window.__rg = { ready: false, E: { RG, createGame, start, input, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy }, W, seed, set, evlog: [], act, grid,
+const S = window.__rg = { ready: false, E: { RG, createGame, start, input, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy, causes, CAUSES }, W, seed, set, evlog: [], act, grid, LAG,
   get g() { return g; }, get paused() { return paused || countEnd > 0; }, get T0() { return T0; }, get P() { return P; }, get off() { return off; } };
 const motion = () => set.motion && !mq.matches;
 function applySet() {
@@ -113,8 +114,14 @@ function showResult() {
   const A = accuracy(g), tot = Math.max(1, A.n), bars = $('r-acc').children;
   bars[0].style.width = (100 * A.bins.early) / tot + '%'; bars[1].style.width = (100 * A.bins.ok) / tot + '%'; bars[2].style.width = (100 * A.bins.late) / tot + '%';
   $('r-ae').textContent = `◀ ${D.early} ${A.bins.early}`; $('r-ao').textContent = `${D.ok} ${A.bins.ok}`; $('r-al').textContent = `${D.late} ${A.bins.late} ▶`;
+  $('r-accn').textContent = D.accN.replace('{n}', A.n); $('r-acc').hidden = !A.n; $('r-acc').nextElementSibling.hidden = !A.n;
   const mean = !A.n ? '' : Math.abs(A.mean) <= 10 ? D.meanOk.replace('{n}', 10) : (A.mean < 0 ? D.meanEarly : D.meanLate).replace('{n}', Math.abs(A.mean));
-  $('r-stat').textContent = [g.end.survived ? D.finish.replace('{n}', g.end.bonus) : D.wilted, mean].filter(Boolean).join(' · ');
+  $('r-stat').textContent = g.end.survived ? D.finish.replace('{n}', g.end.bonus) : D.wilted; $('r-mean').textContent = mean;
+  // failure causes (t_552009cf): count per engine reason, most frequent first-highlighted, tip for the top cause
+  const C = causes(g), czl = $('r-czl'); czl.textContent = '';
+  if (!C.total) { const i = document.createElement('i'); i.className = 'zero'; i.textContent = D.noWilt; czl.append(i); }
+  for (const k of CAUSES) if (C.n[k]) { const i = document.createElement('i'); i.className = k === C.top ? 'top' : ''; i.dataset.k = k; i.textContent = `${CZ_ICON[k]} ${D['c_' + k]} ${C.n[k]}`; czl.append(i); }
+  $('r-tipt').textContent = C.top ? D['tip_' + C.top] : D.tip_none;
   if (g.end.survived) play('finish');
   $('res').hidden = false; S.evlog.push({ k: 'result', at: performance.now(), rec, acc: A }); $('b-again').focus({ preventScroll: true });
 }
@@ -198,7 +205,8 @@ function frame(now) {
   // judgement fx (0.6 s): early/late arrows (shape, not colour), wilt cause icon
   fx = fx.filter((f) => now - f.at < 600);
   for (const f of fx) { const a = 1 - (now - f.at) / 600, yy = laneY - s * 2.2 - (mo ? (1 - a) * 20 : 0); cx.globalAlpha = a; cx.textAlign = 'center';
-    if (f.k === 'wilt') { cx.font = `800 ${s * 0.55}px system-ui`; cx.fillStyle = '#fca5a5'; cx.fillText({ miss: '⌛', stray: '✋', double: '✌', rest: '◌✕', early: '⤴', late: '⏳' }[f.why] || '✕', lineX, yy); }
+    if (f.k === 'wilt') { cx.font = `800 ${s * 0.55}px system-ui`; cx.fillStyle = '#fca5a5'; cx.fillText(CZ_ICON[f.why] || '✕', lineX, yy);
+      if (D['c_' + f.why]) { cx.font = `700 ${Math.max(12, s * 0.32)}px system-ui`; cx.fillText(D['c_' + f.why], Math.min(lineX, w - 60), yy + s * 0.5); } }
     else { cx.font = `800 ${s * 0.5}px system-ui`; cx.fillStyle = f.k === 'perfect' ? '#facc15' : '#e8eaf0'; cx.fillText((f.k === 'good' && f.d < -RG.PERFECT ? '◀ ' : '') + (f.k === 'perfect' ? 'PERFECT' : 'GOOD') + (f.k === 'good' && f.d > RG.PERFECT ? ' ▶' : ''), lineX, yy); }
     cx.globalAlpha = 1; }
   if (mo && fx.some((f) => f.k === 'wilt' && now - f.at < 120)) { cv.style.transform = `translateX(${Math.sin(now / 15) * 3}px)`; } else cv.style.transform = '';

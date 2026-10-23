@@ -44,7 +44,9 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .hud .warn{border-color:#f87171;animation:bl .5s steps(2) infinite}@keyframes bl{50%{background:rgba(248,113,113,.25)}}.rm .hud .warn{animation:none;background:rgba(248,113,113,.25)}
 .skip{min-height:44px}@media (min-width:900px){.stage{width:min(760px,100vw);height:min(calc(100dvh - 64px),860px)}}
 .ofs{display:flex;align-items:center;justify-content:center;gap:10px}.ofs b{min-width:84px;text-align:center;font-size:22px;font-variant-numeric:tabular-nums}.lnk{background:none;border:0;color:var(--cyan);font:600 14px/1.2 inherit;min-height:44px;cursor:pointer;text-decoration:underline}
-.acc{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}.acc i{display:block;height:100%}.acc .e{background:#60a5fa}.acc .o{background:#4ade80}.acc .l{background:#f59e0b}.accl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}`;
+.acc{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}.acc i{display:block;height:100%}.acc .e{background:#60a5fa}.acc .o{background:#4ade80}.acc .l{background:#f59e0b}.accl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.cz{display:flex;flex-direction:column;gap:4px}.czt{font-size:12px;color:var(--muted);font-weight:700}.czl{display:flex;flex-wrap:wrap;gap:4px}.czl i{font-style:normal;font-size:13px;padding:3px 8px;border-radius:99px;border:1px solid rgba(248,113,113,.35);background:rgba(248,113,113,.10);color:#fecaca;white-space:nowrap}.czl i.top{border-color:#f87171;background:rgba(248,113,113,.22);font-weight:800}.czl i.zero{border-color:rgba(74,222,128,.35);background:rgba(74,222,128,.08);color:#bbf7d0}
+.accn{font-size:12px;color:var(--muted);font-weight:700}#res .panel>*{flex-shrink:0}.czl{align-self:flex-start}`;
 export function buildRhythm() {
   const T = JSON.parse(readFileSync(`${ROOT}i18n/rhythm-garden.json`, 'utf8'));
   const core = readFileSync(`${ROOT}public/js/rhythm-core.js`, 'utf8').replace(/^export /gm, '');
@@ -75,8 +77,11 @@ export function buildRhythm() {
 <div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">${esc(D.over)}</h2><div class="new" id="r-new" hidden>${esc(D.newBest)}</div><div class="new" id="r-first" hidden>${esc(D.first)}</div>
 <div class="nums"><span>${esc(D.now)}</span><b class="big" id="r-score"></b><span>${esc(D.maxCombo)}</span><b id="r-combo"></b><span>${esc(D.perfect)}</span><b id="r-perf"></b><span>${esc(D.best)}</span><b id="r-best"></b><span>${esc(D.diff)}</span><b id="r-diff"></b></div>
-<div class="acc" id="r-acc" aria-hidden="true"><i class="e"></i><i class="o"></i><i class="l"></i></div><div class="accl"><span id="r-ae"></span><span id="r-ao"></span><span id="r-al"></span></div>
 <div class="why" id="r-stat"></div>
+<div class="cz" id="r-cz"><span class="czt">${esc(D.whyT)}</span><span class="czl" id="r-czl"></span></div>
+<div class="tip" id="r-tip"><span class="tipk">${esc(D.tipK)}</span><b id="r-tipt"></b></div>
+<div class="accn" id="r-accn"></div><div class="acc" id="r-acc" aria-hidden="true"><i class="e"></i><i class="o"></i><i class="l"></i></div><div class="accl"><span id="r-ae"></span><span id="r-ao"></span><span id="r-al"></span></div>
+<div class="why" id="r-mean"></div>
 <button class="btn main" id="b-again" type="button">${esc(D.again)}</button>
 <div class="row"><button class="btn" id="b-png" type="button">${esc(D.png)}</button><button class="btn" id="b-link" type="button">${esc(D.link)}</button></div>
 <div class="tgs">${tg('sound')}${tg('haptic')}${tg('motion')}</div><div class="seed">seed <span id="seed"></span> <span id="r-chart"></span></div>

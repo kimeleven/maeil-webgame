@@ -38,7 +38,9 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .hud .warn{border-color:#f87171;animation:bl .5s steps(2) infinite}@keyframes bl{50%{background:rgba(248,113,113,.25)}}.rm .hud .warn{animation:none;background:rgba(248,113,113,.25)}
 .skip{min-height:44px}@media (min-width:900px){.stage{width:min(760px,100vw);height:min(calc(100dvh - 64px),860px)}}
 .ofs{display:flex;align-items:center;justify-content:center;gap:10px}.ofs b{min-width:84px;text-align:center;font-size:22px;font-variant-numeric:tabular-nums}.lnk{background:none;border:0;color:var(--cyan);font:600 14px/1.2 inherit;min-height:44px;cursor:pointer;text-decoration:underline}
-.acc{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}.acc i{display:block;height:100%}.acc .e{background:#60a5fa}.acc .o{background:#4ade80}.acc .l{background:#f59e0b}.accl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}</style></head>
+.acc{display:flex;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--edge)}.acc i{display:block;height:100%}.acc .e{background:#60a5fa}.acc .o{background:#4ade80}.acc .l{background:#f59e0b}.accl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.cz{display:flex;flex-direction:column;gap:4px}.czt{font-size:12px;color:var(--muted);font-weight:700}.czl{display:flex;flex-wrap:wrap;gap:4px}.czl i{font-style:normal;font-size:13px;padding:3px 8px;border-radius:99px;border:1px solid rgba(248,113,113,.35);background:rgba(248,113,113,.10);color:#fecaca;white-space:nowrap}.czl i.top{border-color:#f87171;background:rgba(248,113,113,.22);font-weight:800}.czl i.zero{border-color:rgba(74,222,128,.35);background:rgba(74,222,128,.08);color:#bbf7d0}
+.accn{font-size:12px;color:var(--muted);font-weight:700}#res .panel>*{flex-shrink:0}.czl{align-self:flex-start}</style></head>
 <body data-page="rhythm-garden" data-lang="ja">
 <header class="top"><a class="logo" href="/ja/"><i></i>playtoday</a><span class="tag">プレビュー</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="音" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="振動" aria-pressed="true">📳</button><button class="ic" id="b-pause" type="button" data-ui aria-label="一時停止">⏸</button><details class="langs" data-ui><summary aria-label="Language">ja ▾</summary><nav><a href="/ko/play/rhythm-garden/" hreflang="ko">ko</a><a href="/en/play/rhythm-garden/" hreflang="en">en</a><a href="/ja/play/rhythm-garden/" hreflang="ja" aria-current="true">ja</a><a href="/zh-hans/play/rhythm-garden/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/rhythm-garden/" hreflang="es">es</a><a href="/pt-br/play/rhythm-garden/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
 <main class="stage" id="stage">
@@ -56,8 +58,11 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 <div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">庭じまい!</h2><div class="new" id="r-new" hidden>ベスト更新!</div><div class="new" id="r-first" hidden>初記録</div>
 <div class="nums"><span>今回</span><b class="big" id="r-score"></b><span>最大連続</span><b id="r-combo"></b><span>PERFECT</span><b id="r-perf"></b><span>自己ベスト</span><b id="r-best"></b><span>差</span><b id="r-diff"></b></div>
-<div class="acc" id="r-acc" aria-hidden="true"><i class="e"></i><i class="o"></i><i class="l"></i></div><div class="accl"><span id="r-ae"></span><span id="r-ao"></span><span id="r-al"></span></div>
 <div class="why" id="r-stat"></div>
+<div class="cz" id="r-cz"><span class="czt">枯れた理由</span><span class="czl" id="r-czl"></span></div>
+<div class="tip" id="r-tip"><span class="tipk">次のコツ</span><b id="r-tipt"></b></div>
+<div class="accn" id="r-accn"></div><div class="acc" id="r-acc" aria-hidden="true"><i class="e"></i><i class="o"></i><i class="l"></i></div><div class="accl"><span id="r-ae"></span><span id="r-ao"></span><span id="r-al"></span></div>
+<div class="why" id="r-mean"></div>
 <button class="btn main" id="b-again" type="button">もう一度</button>
 <div class="row"><button class="btn" id="b-png" type="button">PNG保存</button><button class="btn" id="b-link" type="button">挑戦リンクをコピー</button></div>
 <div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">音</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">振動</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">動きの効果</button></div><div class="seed">seed <span id="seed"></span> <span id="r-chart"></span></div>
@@ -65,7 +70,7 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 </div>
 <div class="bar"><span class="hint">拍に合わせてタップ / Space</span></div>
 </main><div class="toast" id="toast" role="status"></div>
-<script id="rt" type="application/json">{"name":"リズムガーデン","desc":"流れてくる鉢が線に届く拍でタップ。途切れず植えて庭を花でいっぱいにする90秒のリズムゲーム。","back":"playtoday","preview":"プレビュー","time":"残り","score":"スコア","combo":"連続","leaves":"葉","goal":"鉢が線に届いたらタップ · 90秒","how":"空の鉢(点線)は我慢、つるは押したまま端で離す","start":"スタート","keys":"Enterで開始 · Space/タップで植える","hint":"拍に合わせてタップ / Space","pause":"一時停止","paused":"一時停止","resume":"タップで再開 (3秒後)","over":"庭じまい!","now":"今回","best":"自己ベスト","diff":"差","first":"初記録","newBest":"ベスト更新!","maxCombo":"最大連続","perfect":"PERFECT","again":"もう一度","png":"PNG保存","link":"挑戦リンクをコピー","copied":"コピーしました","sound":"音","haptic":"振動","motion":"動きの効果","offset":"判定補正","offsetHelp":"遅れて入るなら+、早いなら−","close":"閉じる","early":"早い","ok":"正確","late":"遅い","meanEarly":"平均 {n}ms 早い","meanLate":"平均 {n}ms 遅い","meanOk":"平均 正確(±{n}ms)","finish":"完走ボーナス +{n}","wilted":"葉が5枚とも枯れました","fallback":"標準譜面","shareText":"リズムガーデンで花を{combo}輪連続で咲かせました!同じ庭で挑戦してみる? → {url}"}</script>
+<script id="rt" type="application/json">{"name":"リズムガーデン","desc":"流れてくる鉢が線に届く拍でタップ。途切れず植えて庭を花でいっぱいにする90秒のリズムゲーム。","back":"playtoday","preview":"プレビュー","time":"残り","score":"スコア","combo":"連続","leaves":"葉","goal":"鉢が線に届いたらタップ · 90秒","how":"空の鉢(点線)は我慢、つるは押したまま端で離す","start":"スタート","keys":"Enterで開始 · Space/タップで植える","hint":"拍に合わせてタップ / Space","pause":"一時停止","paused":"一時停止","resume":"タップで再開 (3秒後)","over":"庭じまい!","now":"今回","best":"自己ベスト","diff":"差","first":"初記録","newBest":"ベスト更新!","maxCombo":"最大連続","perfect":"PERFECT","again":"もう一度","png":"PNG保存","link":"挑戦リンクをコピー","copied":"コピーしました","sound":"音","haptic":"振動","motion":"動きの効果","offset":"判定補正","offsetHelp":"遅れて入るなら+、早いなら−","close":"閉じる","early":"早い","ok":"正確","late":"遅い","meanEarly":"平均 {n}ms 早い","meanLate":"平均 {n}ms 遅い","meanOk":"平均 正確(±{n}ms)","finish":"完走ボーナス +{n}","wilted":"葉が5枚とも枯れました","fallback":"標準譜面","shareText":"リズムガーデンで花を{combo}輪連続で咲かせました!同じ庭で挑戦してみる? → {url}","whyT":"枯れた理由","c_miss":"見逃し","c_stray":"空振り","c_double":"二度押し","c_rest":"空の鉢をタップ","c_early":"つるを早く離した","c_late":"つるを離し遅れ","tipK":"次のコツ","tip_miss":"鉢が線に届くたびに1回タップ、休まずに","tip_stray":"鉢が線の近くに来た時だけ押そう","tip_double":"鉢1つに1回だけ","tip_rest":"点線の空の鉢は見送ろう","tip_early":"つるは端の丸が線に届くまで押し続けよう","tip_late":"つるの端が線に届いた瞬間に離そう","tip_none":"葉を1枚も失っていません!次はPERFECTを狙おう","accN":"成功した{n}回のタイミング","noWilt":"枯れ 0"}</script>
 <script>(()=>{// Rhythm Garden rule engine (prototype, t_177308a9). DOM-free, deterministic, integer ms on the ACTIVE clock.
 // GDD r2: workspace/maeil-arcade-local/games/rhythm-garden/GDD.md (2.0 time, 2.1 judge, 2.2 vine, 6/6.1 chart, 7 score, 8 abuse).
 // Same seed → same chart. Same input log (kind, raw active ms, offset) → same result. No wall clock, no frames.
@@ -238,6 +243,16 @@ function accuracy(g) {
   const bins = { early: d.filter((x) => x < -RG.PERFECT).length, ok: d.filter((x) => Math.abs(x) <= RG.PERFECT).length, late: d.filter((x) => x > RG.PERFECT).length };
   return { n, mean, bins };
 }
+// failure causes (t_552009cf): counts per engine wilt reason, in fixed order; top = most frequent (ties → this order).
+// miss=seed/vine head not tapped, stray=tap with no pot in reach, double=second tap on one pot, rest=tap on an empty pot,
+// early=vine released too soon, late=vine held past its end. Display only — scoring/judging unchanged.
+const CAUSES = ['miss', 'stray', 'double', 'rest', 'early', 'late'];
+function causes(g) {
+  const n = Object.fromEntries(CAUSES.map((k) => [k, 0]));
+  for (const e of g.events) if (e.a === 'wilt' && e.why in n) n[e.why]++;
+  let top = null; for (const k of CAUSES) if (n[k] > 0 && (!top || n[k] > n[top])) top = k;
+  return { n, total: CAUSES.reduce((s, k) => s + n[k], 0), top };
+}
 // replay a log [[kind, raw, o, id], ...] — o comes from the log, so changing the setting later does not change a replay
 function replay(seed, log, opts = {}) {
   const g = createGame(seed, opts); start(g);
@@ -280,6 +295,7 @@ const canVib = typeof navigator.vibrate === 'function';
 const W = { snd: [], vib: 0, frames: 0, ft: [], drawn: 0 };
 const LAG = 40;           // frame driver closes windows 40 ms behind "now" so queued input events (earlier timeStamp) are judged first
 const LEAD = 2000;        // a pot travels from the left edge to the line in 2 s (constant speed)
+const CZ_ICON = { miss: '⌛', stray: '✋', double: '✌', rest: '◌✕', early: '⤴', late: '⏳' };
 // ---- audio (WebAudio synth, no files; silent until the first input = Start) ----
 let ac = null;
 const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
@@ -302,7 +318,7 @@ let best = loadLS('rg-best', { rec: null }).rec, lastTick = -1, fx = [];
 const cv = $('cv'), cx = cv.getContext('2d');
 const grid = (() => { const a = []; let t = RG.FIRST; while (t <= RG.DUR) { a.push(t); t += segOf(t).p; } return a; })();
 const act = (ts) => Math.round(ts - T0 - P);
-const S = window.__rg = { ready: false, E: { RG, createGame, start, input, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy }, W, seed, set, evlog: [], act, grid,
+const S = window.__rg = { ready: false, E: { RG, createGame, start, input, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy, causes, CAUSES }, W, seed, set, evlog: [], act, grid, LAG,
   get g() { return g; }, get paused() { return paused || countEnd > 0; }, get T0() { return T0; }, get P() { return P; }, get off() { return off; } };
 const motion = () => set.motion && !mq.matches;
 function applySet() {
@@ -378,8 +394,14 @@ function showResult() {
   const A = accuracy(g), tot = Math.max(1, A.n), bars = $('r-acc').children;
   bars[0].style.width = (100 * A.bins.early) / tot + '%'; bars[1].style.width = (100 * A.bins.ok) / tot + '%'; bars[2].style.width = (100 * A.bins.late) / tot + '%';
   $('r-ae').textContent = `◀ ${D.early} ${A.bins.early}`; $('r-ao').textContent = `${D.ok} ${A.bins.ok}`; $('r-al').textContent = `${D.late} ${A.bins.late} ▶`;
+  $('r-accn').textContent = D.accN.replace('{n}', A.n); $('r-acc').hidden = !A.n; $('r-acc').nextElementSibling.hidden = !A.n;
   const mean = !A.n ? '' : Math.abs(A.mean) <= 10 ? D.meanOk.replace('{n}', 10) : (A.mean < 0 ? D.meanEarly : D.meanLate).replace('{n}', Math.abs(A.mean));
-  $('r-stat').textContent = [g.end.survived ? D.finish.replace('{n}', g.end.bonus) : D.wilted, mean].filter(Boolean).join(' · ');
+  $('r-stat').textContent = g.end.survived ? D.finish.replace('{n}', g.end.bonus) : D.wilted; $('r-mean').textContent = mean;
+  // failure causes (t_552009cf): count per engine reason, most frequent first-highlighted, tip for the top cause
+  const C = causes(g), czl = $('r-czl'); czl.textContent = '';
+  if (!C.total) { const i = document.createElement('i'); i.className = 'zero'; i.textContent = D.noWilt; czl.append(i); }
+  for (const k of CAUSES) if (C.n[k]) { const i = document.createElement('i'); i.className = k === C.top ? 'top' : ''; i.dataset.k = k; i.textContent = `${CZ_ICON[k]} ${D['c_' + k]} ${C.n[k]}`; czl.append(i); }
+  $('r-tipt').textContent = C.top ? D['tip_' + C.top] : D.tip_none;
   if (g.end.survived) play('finish');
   $('res').hidden = false; S.evlog.push({ k: 'result', at: performance.now(), rec, acc: A }); $('b-again').focus({ preventScroll: true });
 }
@@ -463,7 +485,8 @@ function frame(now) {
   // judgement fx (0.6 s): early/late arrows (shape, not colour), wilt cause icon
   fx = fx.filter((f) => now - f.at < 600);
   for (const f of fx) { const a = 1 - (now - f.at) / 600, yy = laneY - s * 2.2 - (mo ? (1 - a) * 20 : 0); cx.globalAlpha = a; cx.textAlign = 'center';
-    if (f.k === 'wilt') { cx.font = `800 ${s * 0.55}px system-ui`; cx.fillStyle = '#fca5a5'; cx.fillText({ miss: '⌛', stray: '✋', double: '✌', rest: '◌✕', early: '⤴', late: '⏳' }[f.why] || '✕', lineX, yy); }
+    if (f.k === 'wilt') { cx.font = `800 ${s * 0.55}px system-ui`; cx.fillStyle = '#fca5a5'; cx.fillText(CZ_ICON[f.why] || '✕', lineX, yy);
+      if (D['c_' + f.why]) { cx.font = `700 ${Math.max(12, s * 0.32)}px system-ui`; cx.fillText(D['c_' + f.why], Math.min(lineX, w - 60), yy + s * 0.5); } }
     else { cx.font = `800 ${s * 0.5}px system-ui`; cx.fillStyle = f.k === 'perfect' ? '#facc15' : '#e8eaf0'; cx.fillText((f.k === 'good' && f.d < -RG.PERFECT ? '◀ ' : '') + (f.k === 'perfect' ? 'PERFECT' : 'GOOD') + (f.k === 'good' && f.d > RG.PERFECT ? ' ▶' : ''), lineX, yy); }
     cx.globalAlpha = 1; }
   if (mo && fx.some((f) => f.k === 'wilt' && now - f.at < 120)) { cv.style.transform = `translateX(${Math.sin(now / 15) * 3}px)`; } else cv.style.transform = '';

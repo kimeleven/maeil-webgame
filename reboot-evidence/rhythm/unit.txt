@@ -1,24 +1,65 @@
+
+> test
+> node --test tests/*.test.mjs
+
+✔ schema: only CREATE TABLE IF NOT EXISTS, no answer/ip columns (D5) (3.022959ms)
+✔ share: create + read + validation (1118.31875ms)
+✔ invite: full flow, privacy, 9th join 409, delete (20.765667ms)
+✔ invite: default nick per lang, expiry → 404 (2.595625ms)
+✔ rate limit: 11th create in a minute → 429 (7.753333ms)
+✔ static: rewrites for r/c/i shells, sitemap, robots (4.593625ms)
+✔ stats: token required, aggregates only (6.842125ms)
+✔ schema: additive only, no PII columns (2.777334ms)
+✔ stats before any collection: games observed=false, byGame null (not 0), existing fields kept (1112.627708ms)
+✔ schema validation: unknown field / name / game / reason / lang / via → 400, nothing stored (9.677667ms)
+✔ size: 21 events → 400, >16KB → 413 (1.111625ms)
+✔ content-type: form → 415 (0.533ms)
+✔ origin: missing / forged → 403 (1.687584ms)
+✔ qa=1 and bot/automation UA are dropped server side (2.384875ms)
+✔ store → aggregate: start/end/again/share incl. cancel, resend de-dup, numbers match (14.791667ms)
+✔ rate limit: 61st request in a minute → 429 (14.752291ms)
+✔ non-production without isolated store never writes (preview/local with prod DATABASE_URL) (0.193708ms)
+✔ validateBatch drops qa and in-batch duplicates without touching others (0.053709ms)
+✔ cutoff is 2026-11-01 00:00 KST and the same in both places (0.311958ms)
+✔ theme on before cutoff, off after, query overrides (0.079583ms)
+✔ og rewrite only for known OG names, only before cutoff (0.134875ms)
+✔ quiz: all-a → SPH, all-b → CIT, tie broken by last question of axis (0.433125ms)
+✔ quiz: every code reachable (1024 combos) (1.657ms)
+✔ chemistry: 8 patterns, symmetric pattern, best buddy opposite (0.203708ms)
+✔ rush: deterministic course & attacks; no attack impact within 0.7s of gates (5.145667ms)
+✔ rush: sim evidence passes spec targets (0.661208ms)
+✔ i18n: 6 languages share ko key structure; MBTI only in disclaimer (1.160042ms)
+✔ core has no DOM / Math.random (0.201583ms)
+✔ magnet M5: idle after start → auto drop 360 ticks after ready, result < 30 s, 0 ships (13.326333ms)
+✔ magnet M3: replay of the input log is identical (21.750959ms)
+✔ magnet M11a: one column / stay-tap policies never ship (2.3105ms)
+✔ magnet snap: column from ship-relative x, err ≥0.5 → sea (0.098542ms)
 R11b random: 20/20 seeds mean survival ≤ 10 s; means(ms) 4404,4539,3712,4489,5171,3906,4137,4760,5072,4477,3990,5135,5184,3971,3927,4086,4402,4472,4074,4560
-✔ R4 judge boundaries t>=10000: ±50 PERFECT, ±51/±120 GOOD, ±121 stray wilt (0.619083ms)
-✔ R4 t<10000: ±160 GOOD, ±161 wilt; t=9999 → w160, t=10000 → w120 (0.106208ms)
-✔ R4 second tap in the same window wilts; tap inside a rest window wilts (0.0675ms)
-✔ R4 offset: o=+30, input at t+30 → Δ0 PERFECT; storage normalisation (0.05975ms)
-✔ boundary priority: input exactly at window close counts before the miss (±w inclusive) (0.075292ms)
-✔ R4/R10 active time: pause is outside the engine (UI subtracts P); inputs outside play ignored (0.047875ms)
-✔ R5 idle: 100 seeds → result before 6 s, score 0 (4.824458ms)
-✔ R7 100 seeds pass ①~⑧; same seed twice → same chart; validator forced to fail → 8 tries then fallback (valid) (7.140958ms)
-✔ R2 perfect bot: first success < 5 s; PERFECT, rest pass, combo 10 before 30 s; no vine < 30 s, first vine success 30–36 s (3.114875ms)
-✔ R3 replay: same seed + log → identical results (also through the policy logs) (1.594416ms)
-✔ R6 frame rate independence: advancing at 60 / 20 / 7 fps between inputs gives the same judgements (0.178875ms)
-✔ R11a 20 seeds × idle / double tap / every-beat tap: all end by 5 wilts (every-beat within 30 s), 0 finishes (1.652208ms)
-✔ R13 vine contract (0.151375ms)
-✔ R13 fuzz: any random input log → wilts per vine ≤ 1 (0.814ms)
-✔ R11b (measured, not guaranteed): random 1 tap/beat — seeds with mean survival ≤ 10 s (4.058791ms)
-ℹ tests 15
+✔ R4 judge boundaries t>=10000: ±50 PERFECT, ±51/±120 GOOD, ±121 stray wilt (1.433458ms)
+✔ R4 t<10000: ±160 GOOD, ±161 wilt; t=9999 → w160, t=10000 → w120 (0.243166ms)
+✔ R4 second tap in the same window wilts; tap inside a rest window wilts (0.1725ms)
+✔ R4 offset: o=+30, input at t+30 → Δ0 PERFECT; storage normalisation (0.112333ms)
+✔ boundary priority: input exactly at window close counts before the miss (±w inclusive) (0.085792ms)
+✔ R4/R10 active time: pause is outside the engine (UI subtracts P); inputs outside play ignored (0.060833ms)
+✔ R5 idle: 100 seeds → result before 6 s, score 0 (6.091667ms)
+✔ R7 100 seeds pass ①~⑧; same seed twice → same chart; validator forced to fail → 8 tries then fallback (valid) (10.185333ms)
+✔ R2 perfect bot: first success < 5 s; PERFECT, rest pass, combo 10 before 30 s; no vine < 30 s, first vine success 30–36 s (4.684041ms)
+✔ R3 replay: same seed + log → identical results (also through the policy logs) (2.3915ms)
+✔ R6 frame rate independence: advancing at 60 / 20 / 7 fps between inputs gives the same judgements (0.391ms)
+✔ R11a 20 seeds × idle / double tap / every-beat tap: all end by 5 wilts (every-beat within 30 s), 0 finishes (1.508459ms)
+✔ R13 vine contract (0.3205ms)
+✔ R13 fuzz: any random input log → wilts per vine ≤ 1 (1.809625ms)
+✔ R11b (measured, not guaranteed): random 1 tap/beat — seeds with mean survival ≤ 10 s (6.743542ms)
+✔ causes: per-reason counts match engine wilt reasons; top = most frequent, ties → fixed order (0.14125ms)
+✔ causes: PO session shape — 1 hit + 5 misses → hits n=1 is the accuracy sample, top cause miss (0.114833ms)
+✔ LAG 40: window-edge input (ts = t+w) delivered 39/40 ms late is judged; 41 ms late is misjudged as miss+stray (0.069792ms)
+✔ LAG 40: on-beat input survives delivery delay up to w+40 (120 BPM: 160 ms); CPU stall beyond → misjudge (0.141125ms)
+✔ LAG 40: vine release at tail edge (120 BPM) — 40 ms ok, 41 ms → late wilt (≤1 per vine kept) (0.068666ms)
+ℹ tests 52
 ℹ suites 0
-ℹ pass 15
+ℹ pass 52
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 65.30025
+ℹ duration_ms 11214.990833

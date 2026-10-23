@@ -170,6 +170,16 @@ export function accuracy(g) {
   const bins = { early: d.filter((x) => x < -RG.PERFECT).length, ok: d.filter((x) => Math.abs(x) <= RG.PERFECT).length, late: d.filter((x) => x > RG.PERFECT).length };
   return { n, mean, bins };
 }
+// failure causes (t_552009cf): counts per engine wilt reason, in fixed order; top = most frequent (ties → this order).
+// miss=seed/vine head not tapped, stray=tap with no pot in reach, double=second tap on one pot, rest=tap on an empty pot,
+// early=vine released too soon, late=vine held past its end. Display only — scoring/judging unchanged.
+export const CAUSES = ['miss', 'stray', 'double', 'rest', 'early', 'late'];
+export function causes(g) {
+  const n = Object.fromEntries(CAUSES.map((k) => [k, 0]));
+  for (const e of g.events) if (e.a === 'wilt' && e.why in n) n[e.why]++;
+  let top = null; for (const k of CAUSES) if (n[k] > 0 && (!top || n[k] > n[top])) top = k;
+  return { n, total: CAUSES.reduce((s, k) => s + n[k], 0), top };
+}
 // replay a log [[kind, raw, o, id], ...] — o comes from the log, so changing the setting later does not change a replay
 export function replay(seed, log, opts = {}) {
   const g = createGame(seed, opts); start(g);
