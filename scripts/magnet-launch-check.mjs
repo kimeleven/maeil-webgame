@@ -18,7 +18,7 @@ const FIX = {
 };
 for (const l of LANGS) {
   const p = await get(`/${l}/play/magnet-harbor/`);
-  ok(`${l} page 200 indexable`, p.s === 200 && !/noindex/.test(p.t) && !(p.h.get('x-robots-tag') || '').includes('noindex'));
+  ok(`${l} page 200 indexable`, p.s === 200 && !/noindex/.test(p.t) && (/vercel\.app/.test(U) || !(p.h.get('x-robots-tag') || '').includes('noindex'))); // Vercel adds noindex header on every preview URL
   ok(`${l} canonical+hreflang`, p.t.includes(`rel="canonical" href="https://www.playtoday.cloud/${l}/play/magnet-harbor/"`) && (p.t.match(/hreflang=/g) || []).length >= 13);
   ok(`${l} no preview tag`, !p.t.includes('class="tag"'));
   const og = await fetch(`${U}/og/magnet-harbor-${l}.png`); ok(`${l} og image 200`, og.status === 200 && p.t.includes(`/og/magnet-harbor-${l}.png`));

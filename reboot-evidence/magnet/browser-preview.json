@@ -1,6 +1,6 @@
 {
- "base": "https://maeil-webgame-fp0nauzsz-sanghunkims-projects.vercel.app",
- "at": "2026-10-23T03:16:24.239Z",
+ "base": "https://maeil-webgame-gkcg3hnvw-sanghunkims-projects.vercel.app",
+ "at": "2026-10-23T04:38:57.719Z",
  "M0 ready 10 s: time 90, gauge untouched, drag does not start": {
   "pass": true,
   "detail": "{\"tick\":0,\"phase\":\"ready\",\"auto\":null,\"x\":0.5,\"ships\":0,\"fails\":0,\"score\":0,\"hud\":\"90\",\"armed\":false,\"rel\":0,\"lands\":0}"
@@ -11,7 +11,7 @@
  },
  "M2 412 first landing within 5 s of start": {
   "pass": true,
-  "detail": "lands 1 at ~2.44 s wall, game 2.43 s"
+  "detail": "lands 1 at ~2.42 s wall, game 2.42 s"
  },
  "M10 pointercancel ends drag without release": {
   "pass": true,
@@ -19,11 +19,11 @@
  },
  "M10 pause tap: no release, time & auto drop frozen": {
   "pass": true,
-  "detail": "ticks 233→235, auto 272"
+  "detail": "ticks 232→234, auto 272"
  },
  "M10 resume: 3 s countdown before time flows": {
   "pass": true,
-  "detail": "during countdown +0 ticks, after +35"
+  "detail": "during countdown +0 ticks, after +36"
  },
  "M1 1440 mouse drag moves crane, mouse-up = 1 release": {
   "pass": true,
@@ -47,7 +47,7 @@
  },
  "M10 hidden tab stops active time and auto drop": {
   "pass": true,
-  "detail": "ticks 301→301"
+  "detail": "ticks 298→298"
  },
  "M5 idle: auto drop 360 ticks after ready, blink seen, result <30 s": {
   "pass": true,
@@ -59,7 +59,7 @@
  },
  "M8 again → ready within 0.5 s": {
   "pass": true,
-  "detail": "24 ms"
+  "detail": "19 ms"
  },
  "M8 result shows this run, best and diff without sharing": {
   "pass": true,
@@ -67,7 +67,7 @@
  },
  "M4 seed query + no /api requests": {
   "pass": true,
-  "detail": "requests 2: /ko/play/magnet-harbor/ /ko/play/magnet-harbor/"
+  "detail": "requests 3: /ko/play/magnet-harbor/ /_vercel/insights/script.js /ko/play/magnet-harbor/"
  },
  "no page errors (M5/M8 run)": {
   "pass": true,
@@ -87,15 +87,15 @@
  },
  "M12 first input usable ≤2 s (4× CPU, Fast 3G)": {
   "pass": true,
-  "detail": "1017 ms"
+  "detail": "915 ms"
  },
  "M12 gzip ≤60 KB, 1 request": {
   "pass": true,
-  "detail": "17.8 KB"
+  "detail": "18.6 KB"
  },
  "M12 average fps ≥50 (headed Chromium, this Mac)": {
   "pass": true,
-  "detail": "72.2 fps"
+  "detail": "71.8 fps"
  },
  "M12 6 langs × 360/412/1440: no horizontal overflow, targets ≥44px": {
   "pass": true,
