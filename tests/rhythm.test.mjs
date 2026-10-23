@@ -152,3 +152,59 @@ test('LAG 40: vine release at tail edge (120 BPM) — 40 ms ok, 41 ms → late w
   { const g = V2(); E.input(g, 'down', 61000); E.advance(g, 62120 + 40 - LAG); assert.equal(E.input(g, 'up', 62120).a, 'good'); assert.equal(g.wilts, 0); }
   { const g = V2(); E.input(g, 'down', 61000); E.advance(g, 62120 + 41 - LAG); assert.equal(E.input(g, 'up', 62120).a, 'ignored'); assert.equal(g.wilts, 1); assert.equal(E.causes(g).n.late, 1); }
 });
+// ---- t_2b703714: deliver() — frame-first ordering no longer double-penalises a timestamp-valid input (≤ HORIZON old) ----
+const dl = (bt, ts, d, kind = 'down', o = 0) => { const g = game(mk([{ t: bt, kind: 'seed' }, { t: bt + 500, kind: 'seed' }]), o); E.advance(g, ts + d - LAG); return { g, r: E.deliver(g, kind, ts, 'p', ts + d) }; };
+test('deliver: window-edge input 39/40/41/160/161/250 ms late, frame first → judged at its timestamp, 0 wilts', () => {
+  for (const d of [0, 39, 40, 41, 160, 161, 250]) { const { g, r } = dl(70000, 70120, d); assert.equal(r.e.a, 'good', `d=${d}`); assert.equal(g.wilts, 0, `d=${d}`); assert.equal(g.res[0], 'good'); }
+  for (const d of [41, 161, 250]) { const { g, r } = dl(5000, 5160, d); assert.equal(r.e.a, 'good'); assert.equal(g.wilts, 0); }
+  for (const d of [160, 161, 250]) { const { g, r } = dl(70000, 70000, d); assert.equal(r.e.a, 'perfect', `on-beat d=${d}`); assert.equal(g.wilts, 0); assert.equal(r.path, 'rebuild'); }
+});
+test('deliver: windows unchanged — a tap really outside the window (t+121) is still miss+stray, same as direct delivery', () => {
+  // out-of-window tap at t+121 delivered 41 ms late: miss (beat really missed) + stray (tap really hit nothing) — same as direct
+  const { g: a } = dl(70000, 70121, 41); const b = game(mk([{ t: 70000, kind: 'seed' }, { t: 70500, kind: 'seed' }])); E.input(b, 'down', 70121);
+  assert.equal(a.wilts, b.wilts); assert.equal(a.wilts, 2); assert.deepEqual(E.causes(a).n, E.causes(b).n);
+});
+test('deliver: beyond HORIZON (251 ms) the closed miss is final and the stale tap is discarded (single penalty, never double)', () => {
+  const { g, r } = dl(70000, 70000, 251); assert.equal(r.path, 'stale'); assert.equal(r.e.why, 'stale'); assert.equal(g.wilts, 1); assert.equal(E.causes(g).n.stray, 0);
+  // stale but the beat is still open at its timestamp (no frame closed it) → judged normally
+  const h = game(mk([{ t: 70000, kind: 'seed' }])); h.now = 69990; const r2 = E.deliver(h, 'down', 70010, 'p', 70400); assert.equal(r2.e.a, 'perfect');
+});
+test('deliver: vine tail release 41/250 ms late after frame → good, no late wilt; down/up boundary order kept', () => {
+  const V2 = () => game(mk([{ t: 61000, kind: 'head', v: 0 }, { t: 62000, kind: 'tail', v: 0 }], [{ h: 0, e: 1 }]));
+  for (const d of [41, 250]) { const g = V2(); E.input(g, 'down', 61000); E.advance(g, 62120 + d - LAG); const r = E.deliver(g, 'up', 62120, 'p', 62120 + d); assert.equal(r.e.a, 'good', `d=${d}`); assert.equal(g.wilts, 0); assert.equal(g.vine[0], 'done'); }
+  // head down delivered late after the head window closed → held, then up on time
+  { const g = V2(); E.advance(g, 61120 + 41 - LAG); const r = E.deliver(g, 'down', 61120, 'p', 61161); assert.equal(r.e.a, 'good'); assert.equal(g.vine[0], 'held'); assert.equal(E.deliver(g, 'up', 62000, 'p', 62000).e.a, 'perfect'); assert.equal(g.wilts, 0); }
+  // cancel (pointercancel) late = up
+  { const g = V2(); E.input(g, 'down', 61000); E.advance(g, 62100); assert.equal(E.deliver(g, 'cancel', 62050, 'p', 62141).e.a, 'perfect'); assert.equal(g.wilts, 0); }
+});
+test('deliver: duplicate tap stays a double wilt; order inside the log is by timestamp', () => {
+  const g = game(mk([{ t: 20000, kind: 'seed' }, { t: 20600, kind: 'seed' }])); E.deliver(g, 'down', 20000, 'p', 20000); E.deliver(g, 'up', 20010, 'p', 20010);
+  E.advance(g, 20200); const r = E.deliver(g, 'down', 20030, 'p', 20241); assert.equal(r.e.why, 'double'); assert.equal(g.wilts, 1); assert.equal(g.score, 20);
+});
+test('deliver: 5th provisional miss ended the game → late valid tap within HORIZON reopens it (4 wilts, still playing)', () => {
+  const B = [20000, 20600, 21200, 21800, 22400, 23000].map((t) => ({ t, kind: 'seed' })); const g = game(mk(B));
+  E.advance(g, 22521 + 41 - LAG); assert.equal(g.phase, 'result'); assert.equal(g.wilts, 5);   // 4 real misses + provisional 5th
+  const r = E.deliver(g, 'down', 22520, 'p', 22561); assert.equal(r.path, 'rebuild'); assert.equal(r.e.a, 'good');
+  assert.equal(g.phase, 'play'); assert.equal(g.wilts, 4); assert.equal(r.revoked.filter((x) => x.a === 'wilt').length, 1);
+});
+test('deliver: 90 s end — last beat hit delivered 41 ms after the final frame still counts; result stays survived', () => {
+  const ch = E.genChart('end'), B = ch.beats; const k = B.map((b) => b.kind).lastIndexOf('seed'), b = B[k];
+  const ins = E.policyInputs(ch, 'perfect').filter(([, raw]) => raw !== b.t);
+  const g = E.createGame('end', { chart: ch }); E.start(g); for (const [kk, raw, id] of ins) E.input(g, kk, raw, id);
+  const recv = Math.max(RG.DUR, b.t + b.w + 41); E.advance(g, recv - LAG); if (recv >= RG.DUR) E.advance(g, recv);
+  assert.equal(g.res[k], 'miss'); const w0 = g.wilts, s0 = g.score;
+  const r = E.deliver(g, 'down', b.t + b.w, 'p', b.t + b.w + 41); assert.equal(r.path, 'rebuild'); assert.equal(r.e.a, 'good');
+  assert.equal(g.res[k], 'good'); assert.equal(g.wilts, w0 - 1); assert.ok(g.score > s0); assert.equal(g.phase, recv >= RG.DUR ? 'result' : 'play');
+  // ended game: input older than HORIZON is final
+  const g2 = E.simulate('end', 'perfect'); assert.equal(E.deliver(g2, 'down', RG.DUR - 300, 'p', RG.DUR + 400).path, 'final');
+});
+test('deliver: pause release (pauseRelease up) then the real up arriving late → ignored, no extra wilt', () => {
+  const g = game(mk([{ t: 61000, kind: 'head', v: 0 }, { t: 62000, kind: 'tail', v: 0 }], [{ h: 0, e: 1 }]));
+  E.input(g, 'down', 61000); E.pauseRelease(g, 61500); const w = g.wilts; assert.equal(E.deliver(g, 'up', 61600, 'p', 61600).e.a, 'ignored'); assert.equal(g.wilts, w);
+});
+test('deliver: replay determinism — rebuilt game equals a game that received the same inputs in timestamp order', () => {
+  const ch = E.genChart('det'); const ins = E.policyInputs(ch, 'perfect');
+  const a = E.createGame('det', { chart: ch }); E.start(a); const b = E.createGame('det', { chart: ch }); E.start(b);
+  for (const [k, raw, id] of ins) { E.advance(a, raw + 60 - LAG); E.deliver(a, k, raw, id, raw + 60); E.input(b, k, raw, id); }
+  E.advance(a, RG.DUR); E.advance(b, RG.DUR); assert.equal(a.score, b.score); assert.equal(a.wilts, 0); assert.equal(a.perfect, b.perfect);
+});

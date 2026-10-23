@@ -38,7 +38,7 @@ let best = loadLS('rg-best', { rec: null }).rec, lastTick = -1, fx = [];
 const cv = $('cv'), cx = cv.getContext('2d');
 const grid = (() => { const a = []; let t = RG.FIRST; while (t <= RG.DUR) { a.push(t); t += segOf(t).p; } return a; })();
 const act = (ts) => Math.round(ts - T0 - P);
-const S = window.__rg = { ready: false, E: { RG, createGame, start, input, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy, causes, CAUSES }, W, seed, set, evlog: [], act, grid, LAG,
+const S = window.__rg = { ready: false, E: { RG, createGame, start, input, deliver, HORIZON, advance, replay, simulate, genChart, validate, policyInputs, normOffset, winOf, segOf, accuracy, causes, CAUSES }, W, seed, set, evlog: [], act, grid, LAG,
   get g() { return g; }, get paused() { return paused || countEnd > 0; }, get T0() { return T0; }, get P() { return P; }, get off() { return off; } };
 const motion = () => set.motion && !mq.matches;
 function applySet() {
@@ -56,23 +56,33 @@ $('o-x').addEventListener('click', (e) => { e.stopPropagation(); $('ofs').hidden
 applySet();
 // ---- actions ----
 function doStart(ts) { if (g.phase !== 'ready') return; unlock(); g.o = off; start(g); T0 = ts; P = 0; lastTick = -1; fx = []; $('ready').hidden = true; $('ofs').hidden = true; S.evlog.push({ k: 'start', at: ts }); hud(); }
+// t_2b703714: inputs go through deliver() — judged at their event timeStamp even if a frame already closed that window
+// (bounded by HORIZON ms between timeStamp and delivery). Log keeps raw ts / receive time / frame point / path for evidence.
 function feed(kind, ts, id) {
-  if (g.phase !== 'play' || paused || countEnd) { S.evlog.push({ k: 'drop', kind }); return; }
-  const n0 = g.events.length; const r = input(g, kind, act(ts), id); S.evlog.push({ k: kind, id, raw: act(ts), r: r.a, why: r.why });
+  const shown = !$('res').hidden;
+  if (!(g.phase === 'play' || (g.phase === 'result' && !shown)) || paused || countEnd) { S.evlog.push({ k: 'drop', kind }); return; }
+  const raw = act(ts), recv = act(performance.now()), frameAt = g.now, n0 = g.events.length;
+  const r = deliver(g, kind, raw, id, recv);
+  S.evlog.push({ k: kind, id, raw, recv, frameAt, path: r.path, r: r.e.a, why: r.e.why, revoked: r.revoked ? r.revoked.map((x) => `${x.a}:${x.why || ''}:${x.k}`) : undefined });
+  if (r.path === 'rebuild') {
+    const gone = new Set((r.revoked || []).filter((x) => x.a === 'wilt').map((x) => x.k)); fx = fx.filter((f) => !(f.k === 'wilt' && gone.has(f.bk)));
+    const i = g.events.indexOf(r.e); react(i >= 0 ? i : g.events.length, i >= 0); return;
+  }
   react(n0);
 }
-function react(n0) {
-  for (let i = n0; i < g.events.length; i++) {
+function react(n0, one) {
+  for (let i = n0; i < (one ? n0 + 1 : g.events.length); i++) {
     const e = g.events[i]; if (e.a === 'perfect' || e.a === 'good') { play(e.a); buzz(10); fx.push({ k: e.a, d: e.d, at: performance.now() }); }
-    if (e.a === 'wilt') { play('wilt'); buzz(40); fx.push({ k: 'wilt', why: e.why, at: performance.now() }); }
+    if (e.a === 'wilt') { play('wilt'); buzz(40); fx.push({ k: 'wilt', why: e.why, bk: e.k, at: performance.now() }); }
   }
-  if (g.phase === 'result' && $('res').hidden) showResult();
+  // result appears only once no in-flight input (≤ HORIZON old) can still revise it
+  if (g.phase === 'result' && $('res').hidden && act(performance.now()) - g.now > HORIZON) showResult();
 }
 // pointer: anywhere in the play area (not on UI). First pointer only; cancel/lost capture = up.
 const pa = $('play');
 pa.addEventListener('pointerdown', (e) => {
   if (e.target.closest('[data-ui]')) return; e.preventDefault(); unlock();
-  if (g.phase !== 'play') return;
+  if (g.phase !== 'play' && !(g.phase === 'result' && $('res').hidden)) return;
   if (ptr !== null) { S.evlog.push({ k: 'second-pointer', id: e.pointerId }); return; }
   ptr = e.pointerId; try { pa.setPointerCapture(e.pointerId); } catch {}
   feed('down', e.timeStamp, e.pointerId);
@@ -83,7 +93,7 @@ pa.addEventListener('pointercancel', endPtr('cancel'));
 pa.addEventListener('lostpointercapture', endPtr('cancel'));
 addEventListener('keydown', (e) => {
   if (g.phase === 'ready') { if (e.key === 'Enter' && $('ofs').hidden) { e.preventDefault(); doStart(e.timeStamp); } return; }
-  if (g.phase === 'result') { if (e.key === 'Enter') { e.preventDefault(); again(); } return; }
+  if (g.phase === 'result' && !$('res').hidden) { if (e.key === 'Enter') { e.preventDefault(); again(); } return; }
   if (e.key === ' ' || e.code === 'Space') {
     e.preventDefault(); if (e.repeat) { S.evlog.push({ k: 'repeat' }); return; }
     if (keyDown) return; keyDown = true; unlock(); feed('down', e.timeStamp, 'key'); return;
@@ -229,6 +239,7 @@ function loop(now) {
       const gi = grid.findIndex((t) => t > raw - g.o) - 1; if (gi > lastTick) { lastTick = gi; if (gi >= 0) play('tick'); }
       react(n0);
     }
+    if (g.phase === 'result' && $('res').hidden && act(now) - g.now > HORIZON) showResult();
     $('pz').hidden = !(paused || countEnd > 0); if (countEnd > 0) $('pz-n').textContent = Math.ceil((countEnd - now) / 1000);
     const raw = frame(now); hud(raw);
   }

@@ -1,17 +1,17 @@
 {
   "base": "http://localhost:5197",
-  "at": "2026-10-23T13:18:14.045Z",
+  "at": "2026-10-23T14:16:07.150Z",
   "R0 ready 10 s + screen tap + Space: still ready, time 90": {
     "pass": true,
     "detail": "{\"phase\":\"ready\",\"now\":0,\"score\":0,\"wilts\":0,\"combo\":0,\"ev\":0,\"judged\":0,\"log\":0,\"hud\":\"90\",\"act\":0}"
   },
   "R1 412 touch tap (top-left, away from lane) → exactly 1 judgement; position not used": {
     "pass": true,
-    "detail": "{\"a\":\"perfect\",\"k\":0,\"d\":-21,\"pts\":20,\"part\":\"seed\",\"c\":1313}"
+    "detail": "{\"a\":\"perfect\",\"k\":0,\"d\":-23,\"pts\":20,\"part\":\"seed\",\"c\":1311}"
   },
   "R2 412 first plant success ≤ 5 s after start (real touch)": {
     "pass": true,
-    "detail": "c=1313 d=-21"
+    "detail": "c=1311 d=-23"
   },
   "R10 two simultaneous touches → 1 judgement (second pointer ignored)": {
     "pass": true,
@@ -27,11 +27,11 @@
   },
   "R10 hidden tab pauses; active time excludes pause + 3 s count (P ≈ pause length)": {
     "pass": true,
-    "detail": "P=5584ms, act 3553→3822"
+    "detail": "P=5585ms, act 3549→3807"
   },
   "R10 after resume beat phase not shifted (auto player hits with small Δ)": {
     "pass": true,
-    "detail": "deltas 12,12,13,14,0,1"
+    "detail": "deltas 7,10,8,9,11,10"
   },
   "no page errors (412 touch run)": {
     "pass": true,
@@ -55,10 +55,10 @@
   },
   "R2 browser auto-player to 40 s: no wilt after warm-up, rest passes <30 s, first vine head 30–36 s and tail judged": {
     "pass": true,
-    "detail": "wilts 0, passes 6, head 30955, tail perfect/tail/32042/2, max|Δ| 13ms, mean|Δ| 6.3ms"
+    "detail": "wilts 0, passes 6, head 30955, tail perfect/tail/32051/11, max|Δ| 15ms, mean|Δ| 5.4ms"
   },
   "autoplayDeltas60fps": {
-    "max": 13,
+    "max": 15,
     "n": 52
   },
   "R1 sound played after first input (WebAudio synth, recorded calls)": {
@@ -71,7 +71,7 @@
   },
   "R6 render throttled to 20 fps: auto player 15 s → no wilts, Δ stays small (judging uses event timeStamp)": {
     "pass": true,
-    "detail": "hits 21, max|Δ| 15ms, wilts 0"
+    "detail": "hits 21, max|Δ| 25ms, wilts 0"
   },
   "R3 same seed + log: node = Chromium = Chromium(muted, reduced-motion) = WebKit": {
     "pass": true,
@@ -79,7 +79,7 @@
   },
   "R5 idle after start → result < 6 s, score 0": {
     "pass": true,
-    "detail": "wall 4320 ms, end c=4162"
+    "detail": "wall 4825 ms, end c=4162"
   },
   "C1 idle result: causes chip \"놓침 5\" (top) = engine counts, tip for miss, accuracy sample n=0 hides bar": {
     "pass": true,
@@ -87,7 +87,7 @@
   },
   "R8 again → ready within 0.5 s": {
     "pass": true,
-    "detail": "34 ms"
+    "detail": "29 ms"
   },
   "R8 result: this vs best + diff, new best flag, accuracy bar + mean line, seed shown": {
     "pass": true,
@@ -111,11 +111,11 @@
   },
   "R12 first input ready ≤ 2 s (4× CPU + Fast 3G emulation, headed Chromium)": {
     "pass": true,
-    "detail": "ready+start actionable 621 ms, DCL 553 ms, transfer 50922 B"
+    "detail": "ready+start actionable 631 ms, DCL 563 ms, transfer 54366 B"
   },
   "R12 gzip ≤ 40 KB, 0 images/fonts/audio files": {
     "pass": true,
-    "detail": "17970 B gzip (50622 B raw)"
+    "detail": "19242 B gzip (54066 B raw)"
   },
   "R12 fps (measured, emulation): 4× CPU / 1× CPU": {
     "pass": true,
@@ -131,7 +131,7 @@
   },
   "R9 diff: no api/db/lib/middleware/vercel.json/manifest/sw/sitemap/robots//c//lobby changes": {
     "pass": true,
-    "detail": "57 files"
+    "detail": "62 files"
   },
   "R9 sitemap has no rhythm-garden (103 urls)": {
     "pass": true,

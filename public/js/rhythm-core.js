@@ -161,6 +161,35 @@ export function input(g, kind, raw, id = 'p') {
   if (c < e.t - e.w) { g.res[ek] = 'early'; return wilt(g, c, 'early', ek); }
   const r = hit(g, ek, c, 'tail'); g.res[ek] = r.a; return r;
 }
+// Late delivery (t_2b703714). The frame driver closes windows at receive−LAG; an input whose event timeStamp is EARLIER than
+// that point (delivered after a frame because of delivery delay / main-thread stall) used to be judged against an already
+// closed window → miss + stray (double penalty). Closings are provisional: if the input's timeStamp is not older than
+// HORIZON ms at delivery, the game is rebuilt from the timestamp-ordered input log (deterministic: same rules, windows,
+// chart, score) and advanced back to where it was. Older than HORIZON: the closed beats are final; a down with no open
+// beat at its timestamp is discarded as 'stale' (no second penalty). Windows are never widened; no unbounded wait.
+export const HORIZON = 250;
+export function deliver(g, kind, raw, id = 'p', recv = raw, H = HORIZON) {
+  raw = Math.round(raw); recv = Math.round(recv);
+  const ended = g.phase === 'result';
+  if (raw >= g.now && !ended) return { e: input(g, kind, raw, id), path: 'direct' };
+  if (recv - raw > H || (ended && raw >= g.now)) {
+    if (ended) return { e: { a: 'ignored', why: 'ended' }, path: 'final' };
+    if (kind === 'down' && !g.held && beatAt(g, raw - g.o) < 0) { (g.stale = g.stale || []).push([kind, raw, recv, id]); return { e: { a: 'ignored', why: 'stale', c: raw - g.o }, path: 'stale' }; }
+    return { e: input(g, kind, raw, id), path: 'final' };
+  }
+  // rebuild: insert into the log by timestamp (stable), replay, advance back to the frame point
+  const log = g.log.slice(); let at = log.length; while (at > 0 && log[at - 1][1] > raw) at--;
+  log.splice(at, 0, [kind, raw, g.o, id]);
+  const h = createGame(g.seed, { chart: g.chart, offset: g.o }); start(h); let e = null;
+  log.forEach(([k, r, o, i], j) => { h.o = o; const x = input(h, k, r, i); if (j === at) e = x; });
+  h.o = g.o; const before = g.events, now = g.now; advance(h, now); h.now = Math.max(h.now, now);
+  if (g.stale) h.stale = g.stale;
+  // revoked = provisional events of the old timeline that no longer exist (UI drops their effects)
+  const sig = (x) => `${x.a}|${x.why || ''}|${x.k}|${x.c}`, keep = new Set(h.events.map(sig));
+  const revoked = before.filter((x) => !keep.has(sig(x)));
+  for (const key of Object.keys(g)) delete g[key]; Object.assign(g, h);
+  return { e: e || { a: 'ignored' }, path: 'rebuild', revoked };
+}
 // pause while holding a vine: treat as up at the last active time before the pause; buttons/keys still down after resume are not "held".
 export function pauseRelease(g, raw) { if (g.held) return input(g, 'up', raw, g.held.id); return null; }
 export function record(g) { return { score: g.score, maxCombo: g.maxCombo, perfect: g.perfect }; }
