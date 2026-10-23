@@ -1,6 +1,6 @@
 {
- "base": "http://localhost:56456",
- "at": "2026-10-23T05:57:27.202Z",
+ "base": "http://localhost:62979",
+ "at": "2026-10-23T06:14:32.917Z",
  "checks": {
   "ko page 200 indexable": {
    "pass": true,
@@ -200,15 +200,19 @@
   },
   "c → game redirect keeps seed + from=c": {
    "pass": true,
-   "d": "http://localhost:56456/ko/play/magnet-harbor/?from=c&seed=qa-seed-1"
+   "d": "http://localhost:62979/ko/play/magnet-harbor/?from=c&seed=qa-seed-1"
   },
   "share link is /ko/c/mh-<seed>": {
    "pass": true,
-   "d": "요! 같은 항구에서 해 볼래요? → http://localhost:56456/ko/c/mh-qa-seed-1"
+   "d": "요! 같은 항구에서 해 볼래요? → http://localhost:62979/ko/c/mh-qa-seed-1"
   },
   "events: start, end, share try/success, again": {
    "pass": true,
-   "d": "play_start,play_end:time,share_click:link,share_done:link,play_again"
+   "d": "play_start,play_end:time,share_click:link,share_done:link,play_again,play_start"
+  },
+  "restart = play_again 1 + play_start 1 (t_287677ef)": {
+   "pass": true,
+   "d": "play_start,play_end:time,share_click:link,share_done:link,play_again,play_start"
   },
   "events tagged g=magnet from=c qa=1, no seed/score": {
    "pass": true,

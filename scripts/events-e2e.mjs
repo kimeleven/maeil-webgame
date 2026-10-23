@@ -48,6 +48,7 @@ async function play(kind) {
   const want = log.filter((n) => !n.startsWith('share_fail'));
   ok(`${kind} sent = trackLog minus share_fail`, JSON.stringify(sent.map((e) => e.name + (e.end ? ':' + e.end : '') + (e.via ? ':' + e.via : ''))) === JSON.stringify(want), { log, sent: sent.length });
   const keys = new Set(sent.flatMap(Object.keys));
+  ok(`${kind} restart = play_again 1 + play_start 1 (2 runs → start 2, again 1)`, sent.filter((e) => e.name === 'play_start').length === 2 && sent.filter((e) => e.name === 'play_again').length === 1);
   ok(`${kind} only contract keys sent`, [...keys].every((k) => ['id', 'name', 'lang', 'g', 'from', 'end', 'via'].includes(k)), [...keys]);
   ok(`${kind} g=magnet lang=ko from=c`, sent.every((e) => e.g === 'magnet' && e.lang === 'ko' && e.from === 'c'));
   ok(`${kind} unique ids`, new Set(sent.map((e) => e.id)).size === sent.length);

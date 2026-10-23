@@ -4,6 +4,7 @@
 // Sends only the allowlisted contract fields; no ids that outlive the event, no seed/score/name/URL/referrer.
 (function () {
   if (window.gev) return;
+  // share_fail is diagnostic only (not in the v1 allowlist): ignored here, never sent.
   var NAMES = ['play_start', 'play_again', 'play_end', 'share_click', 'share_done'];
   var KEYS = ['g', 'from', 'end', 'via'];
   var MAX_Q = 60, BATCH = 20, WAIT = 3000;

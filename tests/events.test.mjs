@@ -104,15 +104,15 @@ test('store → aggregate: start/end/again/share incl. cancel, resend de-dup, nu
   assert.equal(r.body.stored, 0); assert.equal(r.body.duplicate, 5);
   r = await post({ v: 1, events: [...batch2, batch2[0]] }); // in-batch duplicate too
   assert.equal(r.body.stored, 5);
-  // magnet: restart sends only play_again; echo: time only
+  // magnet: restart = play_again + play_start (unified, t_287677ef); echo: time only
   r = await post({ v: 1, events: [
     { ...ev('play_start'), g: 'magnet', lang: 'en' }, { ...ev('play_end', { end: 'lives' }), g: 'magnet', lang: 'en' },
-    { ...ev('play_again'), g: 'magnet', lang: 'en' }, { ...ev('play_end', { end: 'time' }), g: 'magnet', lang: 'en' },
+    { ...ev('play_again'), g: 'magnet', lang: 'en' }, { ...ev('play_start'), g: 'magnet', lang: 'en' }, { ...ev('play_end', { end: 'time' }), g: 'magnet', lang: 'en' },
     { ...ev('share_click', { via: 'png' }), g: 'magnet', lang: 'ja' }, { ...ev('share_done', { via: 'png' }), g: 'magnet', lang: 'ja' },
     { ...ev('play_start'), g: 'echo', lang: 'pt-br' }, { ...ev('play_end', { end: 'time' }), g: 'echo', lang: 'zh-hans' },
   ] });
-  assert.equal(r.body.stored, 8);
-  assert.equal(await rows(), 18);
+  assert.equal(r.body.stored, 9);
+  assert.equal(await rows(), 19);
   // stored row has only contract columns
   const cols = (await srv.sql`SELECT column_name FROM information_schema.columns WHERE table_name = 'game_events' ORDER BY ordinal_position`).map((c) => c.column_name);
   assert.deepEqual(cols, ['event_id', 'g', 'name', 'lang', 'src', 'reason', 'method', 'received_at']);
