@@ -117,6 +117,8 @@ try {
       for (const b of sb) { const tx = await b.textContent(); if (tx.includes('공유') || tx.includes('Share')) { await b.click(); break; } }
       await tg.waitForTimeout(800);
       ok('track_share_click', (await names()).includes('share_click'));
+      ok('track_share_result_rush', (await names()).includes('share_result'));
+      ok('rush_share_hint_ko', (await tg.textContent('.gmodal [data-share-hint]')).includes('공유는 자유예요'));
     } else { ok('challenge_native_share', true, 'stage cleared (skipped, state ' + lost + ')'); }
     const cp2 = await page(sctx, '/en/c/trk-1');
     ok('track_challenge_land', (await cp2.evaluate(() => window.__trackLog || [])).includes('challenge_land'));
