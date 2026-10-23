@@ -1,6 +1,6 @@
 {
- "base": "https://maeil-webgame-o52q4237y-sanghunkims-projects.vercel.app",
- "at": "2026-10-23T05:32:22.239Z",
+ "base": "https://maeil-webgame-7y592uci6-sanghunkims-projects.vercel.app",
+ "at": "2026-10-23T06:38:08.451Z",
  "checks": {
   "412 no event before first input": {
    "pass": true,
