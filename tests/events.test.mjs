@@ -73,6 +73,12 @@ test('size: 21 events → 400, >16KB → 413', async () => {
   assert.equal((await post(null, { raw: JSON.stringify({ v: 1, events: [ev('play_start')], pad: 'x'.repeat(17000) }) })).status, 413);
 });
 
+test('content-type: form → 415', async () => {
+  __resetEventsLimiter();
+  const r = await fetch(U + '/api/events', { method: 'POST', headers: { origin: U, 'user-agent': UA, 'content-type': 'application/x-www-form-urlencoded' }, body: 'a=1' });
+  assert.equal(r.status, 415);
+});
+
 test('origin: missing / forged → 403', async () => {
   __resetEventsLimiter();
   assert.equal((await post({ v: 1, events: [ev('play_start')] }, { origin: null })).status, 403);
