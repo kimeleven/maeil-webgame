@@ -1,7 +1,7 @@
 ✔ R0 ready: 10 s + screen tap + Space → still ready, 60.0, no grid — {"state":"ready","k":null,"found":null,"score":null,"log":[],"cells":0,"time":"60.0"}
 ✔ R9 ?seed= grid order equals node makeDeck(seed) (k1–60)
 ✔ R1 412 touch tap → exactly one judgement — ["hit"]
-✔ R2 [start] → bottom-right tap → grid 1 hit within 5 s — 431 ms wall
+✔ R2 [start] → bottom-right tap → grid 1 hit within 5 s — 311 ms wall
 ✔ R6 pointercancel after confirm no change; anim-time tap not carried to grid 2 — ["hit"]
 ✔ R6 t0 + 15 ms other cell → void, still waiting (not miss) — ["hit","void"]
 ✔ R6 t0 + 16 ms other cell → t0 confirmed — ["hit","void","hit"]
@@ -30,17 +30,17 @@
 ✔ R7d renderer: every O combo ≥ 3% at 44/78/88 px × DPR 1/2/3 — O 30, min O 3.49%, X R1/rot/circle=0% R1/rot/square=0% R2/rot/circle=0% R2/round/circle=0% R3/rot/circle=0% R3/round/circle=0%
 ✔ R7d X combos generated 0 (seed 100 × blocks 0–15)
 ✔ R7d injected render-check failure → glyph=fallback:k (size attr), answer cell unchanged — {"glyph":"fallback:4","attr":"size","ans":8,"rawAns":8,"ev":["fallback:4"]}
-✔ R8 result: score, found, accuracy, max combo, per-grid line, first record (no share needed) — {"score":"3434","found":"71","acc":"100%","combo":"71","line":"●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●","best":"{\"score\":3434,\"found\":71}","first":true}
+✔ R8 result: score, found, accuracy, max combo, per-grid line, first record (no share needed) — {"score":"3606","found":"74","acc":"100%","combo":"74","line":"●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●","best":"{\"score\":3606,\"found\":74}","first":true}
 ✔ R8 PNG local download 1080×1350 — odd-tile-res.png
-✔ R8 [again] → ready within 0.5 s — 69 ms
+✔ R8 [again] → ready within 0.5 s — 67 ms
 ✔ R8 pause → [restart] → ready, best unchanged
 ✔ R10 sound toggle persists after reload
 ✔ R9 network: /api 0, external 0
-✔ R10 hidden → clock frozen, grid covered by blur sheet, resumes; reduced motion → no breathe animation — {"anim":"none","frozen":true,"covered":true,"after":253}
+✔ R10 hidden → clock frozen, grid covered by blur sheet, resumes; reduced motion → no breathe animation — {"anim":"none","frozen":true,"covered":true,"after":226}
 ✔ R3 replay: page log == node replay of its admitted inputs in Chromium+WebKit × 360/412/1440; same script → same kinds — {"chromium-360":{"kinds":"hit,hit,wrong,hit","same":true},"chromium-412":{"kinds":"hit,hit,wrong,hit","same":true},"chromium-1440":{"kinds":"hit,hit,wrong,hit","same":true},"webkit-360":{"kinds":"hit,hit,wrong,hit","same":true},"webkit-412":{"kinds":"hit,hit,wrong,hit","same":true},"webkit-1440":{"kinds":"hit,hit,wrong,hit","same":true}}
-✔ R12 4×CPU + Fast3G: [start] usable < 2 s, gzip ≤ 30 KB — ready 909 ms, gzip 16.8 KB, raf 12.8 fps (headless, not device), worst block gen 0.50 ms @4×CPU
+✔ R12 4×CPU + Fast3G: [start] usable < 2 s, gzip ≤ 30 KB — ready 861 ms, gzip 16.8 KB, raf 14.4 fps (headless, not device), worst block gen 0.40 ms @4×CPU
 ✔ R12 6 langs × 360/412/1440: overflow 0, targets ≥ 44 px, noindex — 18 layouts
 ✔ R9 sitemap has no odd-tile, 109 urls
-✔ R5 idle: logical end 60000, 0/0, result display ≥ T+G and < T+G+frame gap — {"at":60120,"endLogical":60000,"resultAt":60050,"found":0,"score":0,"maxGap":131.10000002384186}
+✔ R5 idle: logical end 60000, 0/0, result display ≥ T+G and < T+G+frame gap — {"at":60115,"endLogical":60000,"resultAt":60050,"found":0,"score":0,"maxGap":93.20000004768372}
 
 44/44 pass (preview)

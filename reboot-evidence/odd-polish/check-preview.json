@@ -1,6 +1,6 @@
 {
- "base": "https://maeil-webgame-1mk5tpl9f-sanghunkims-projects.vercel.app",
- "at": "2026-10-24T05:39:33.796Z",
+ "base": "https://maeil-webgame-nh2pq2r1i-sanghunkims-projects.vercel.app",
+ "at": "2026-10-24T06:20:54.028Z",
  "R0 ready: 10 s + screen tap + Space → still ready, 60.0, no grid": {
   "pass": true,
   "detail": "{\"state\":\"ready\",\"k\":null,\"found\":null,\"score\":null,\"log\":[],\"cells\":0,\"time\":\"60.0\"}"
@@ -15,7 +15,7 @@
  },
  "R2 [start] → bottom-right tap → grid 1 hit within 5 s": {
   "pass": true,
-  "detail": "431 ms wall"
+  "detail": "311 ms wall"
  },
  "R6 pointercancel after confirm no change; anim-time tap not carried to grid 2": {
   "pass": true,
@@ -232,7 +232,7 @@
  ],
  "R8 result: score, found, accuracy, max combo, per-grid line, first record (no share needed)": {
   "pass": true,
-  "detail": "{\"score\":\"3434\",\"found\":\"71\",\"acc\":\"100%\",\"combo\":\"71\",\"line\":\"●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●\",\"best\":\"{\\\"score\\\":3434,\\\"found\\\":71}\",\"first\":true}"
+  "detail": "{\"score\":\"3606\",\"found\":\"74\",\"acc\":\"100%\",\"combo\":\"74\",\"line\":\"●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●\",\"best\":\"{\\\"score\\\":3606,\\\"found\\\":74}\",\"first\":true}"
  },
  "R8 PNG local download 1080×1350": {
   "pass": true,
@@ -240,7 +240,7 @@
  },
  "R8 [again] → ready within 0.5 s": {
   "pass": true,
-  "detail": "69 ms"
+  "detail": "67 ms"
  },
  "R8 pause → [restart] → ready, best unchanged": {
   "pass": true,
@@ -256,7 +256,7 @@
  },
  "R10 hidden → clock frozen, grid covered by blur sheet, resumes; reduced motion → no breathe animation": {
   "pass": true,
-  "detail": "{\"anim\":\"none\",\"frozen\":true,\"covered\":true,\"after\":253}"
+  "detail": "{\"anim\":\"none\",\"frozen\":true,\"covered\":true,\"after\":226}"
  },
  "R3 replay: page log == node replay of its admitted inputs in Chromium+WebKit × 360/412/1440; same script → same kinds": {
   "pass": true,
@@ -264,13 +264,13 @@
  },
  "R12 4×CPU + Fast3G: [start] usable < 2 s, gzip ≤ 30 KB": {
   "pass": true,
-  "detail": "ready 909 ms, gzip 16.8 KB, raf 12.8 fps (headless, not device), worst block gen 0.50 ms @4×CPU"
+  "detail": "ready 861 ms, gzip 16.8 KB, raf 14.4 fps (headless, not device), worst block gen 0.40 ms @4×CPU"
  },
  "R12": {
-  "tReady": 909,
+  "tReady": 861,
   "gz": 17218,
-  "fps": 12.768747627218533,
-  "gen": 0.5
+  "fps": 14.424937550817239,
+  "gen": 0.3999999761581421
  },
  "R12 6 langs × 360/412/1440: overflow 0, targets ≥ 44 px, noindex": {
   "pass": true,
@@ -282,7 +282,7 @@
  },
  "R5 idle: logical end 60000, 0/0, result display ≥ T+G and < T+G+frame gap": {
   "pass": true,
-  "detail": "{\"at\":60120,\"endLogical\":60000,\"resultAt\":60050,\"found\":0,\"score\":0,\"maxGap\":131.10000002384186}"
+  "detail": "{\"at\":60115,\"endLogical\":60000,\"resultAt\":60050,\"found\":0,\"score\":0,\"maxGap\":93.20000004768372}"
  },
  "fails": []
 }

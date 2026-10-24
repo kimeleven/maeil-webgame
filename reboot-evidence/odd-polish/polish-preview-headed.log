@@ -15,8 +15,8 @@
 ✔ B4 game4 lower: diff −score, no new best, best stays — {"score":0,"best":"5297 (102)","diff":"-5297","newBest":false,"first":false,"stored":"{\"score\":5297,\"found\":102}"}
 ✔ B5 mid-game [처음부터] → ready, best unchanged — {"before":"{\"score\":5297,\"found\":102}","after":["{\"score\":5297,\"found\":102}","ready"]}
 ✔ B6 pageerror 0 over 5 games
-perf 4xCPU {"frames":1441,"avgFps":71.93921136648108,"worstGap":23.600000023841858,"p99":17.5,"over50":0,"over100":0,"blocks":[0.4,3,0.1,0,0.1],"shows":35,"k":35}
-✔ P1 4×CPU measured (report only; headless rAF is not device fps) — avgFps 71.9, worst frame gap 23.6 ms, p99 17.5 ms, block gen ms 0.4/3/0.1/0/0.1
+perf 4xCPU {"frames":1438,"avgFps":71.91616286975444,"worstGap":18.799999952316284,"p99":17.40000009536743,"over50":0,"over100":0,"blocks":[0.4,0.1,0.1,0,0],"shows":35,"k":35}
+✔ P1 4×CPU measured (report only; headless rAF is not device fps) — avgFps 71.9, worst frame gap 18.8 ms, p99 17.4 ms, block gen ms 0.4/0.1/0.1/0/0
 ✔ P2 pageerror 0 (perf)
 
 19/19 pass (preview-headed)

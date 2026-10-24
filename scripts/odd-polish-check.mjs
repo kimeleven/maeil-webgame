@@ -12,16 +12,17 @@ const ok = (n, c, d = '') => { console[c ? 'log' : 'error'](`${c ? '✔' : '✘'
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const b = await chromium.launch({ headless: !process.env.HEADED, channel: "chrome" });
 async function open(vp, touch, path = '/ko/play/odd-tile/?seed=polish', dpr, cpu) {
-  const ctx = await b.newContext({ viewport: vp, hasTouch: touch, isMobile: touch, deviceScaleFactor: dpr, acceptDownloads: true, extraHTTPHeaders: SKIP });
+  const ctx = await b.newContext({ viewport: vp, hasTouch: touch, isMobile: touch, deviceScaleFactor: dpr, acceptDownloads: true });
   const p = await ctx.newPage(); p.errs = []; p.on('pageerror', (e) => p.errs.push(String(e)));
   if (cpu) { const c = await ctx.newCDPSession(p); await c.send('Emulation.setCPUThrottlingRate', { rate: cpu }); }
+  if (process.env.SKIP_TOOLBAR) await p.setExtraHTTPHeaders({ 'x-vercel-skip-toolbar': '1' });
   await p.goto(U + path); await p.waitForFunction(() => window.__ot && __ot.ready); p.ctx = ctx; return p;
 }
 const tapSel = async (p, sel, touch) => { const r = await p.locator(sel).boundingBox(); const x = r.x + r.width / 2, y = r.y + r.height / 2; if (touch) await p.touchscreen.tap(x, y); else await p.mouse.click(x, y); };
 
 // ---- 1. tutorial glyphs: inside cell, ×2, one odd canvas, render difference (new canvas) ----
 for (const [vp, touch, dpr] of [[{ width: 360, height: 780 }, true, 3], [{ width: 412, height: 915 }, true, 2.625], [{ width: 1440, height: 1000 }, false, 1]]) {
-  const p = await open(vp, touch, undefined, dpr); await tapSel(p, '#b-start', touch);
+  const p = await open(vp, touch, undefined, dpr); await p.waitForFunction(() => __ot.acState && __ot.acState !== 'none', null, { timeout: 8000 }).catch(() => {}); await tapSel(p, '#b-start', touch);
   const rows = [];
   for (let k = 1; k <= 3; k++) {
     await p.waitForFunction((k) => __ot.shownK === k && document.querySelectorAll('#grid .cell').length === 4, k);

@@ -1,7 +1,7 @@
 {
- "base": "https://maeil-webgame-pfs42uqtv-sanghunkims-projects.vercel.app",
+ "base": "https://maeil-webgame-nh2pq2r1i-sanghunkims-projects.vercel.app",
  "tag": "preview-headed",
- "at": "2026-10-24T05:03:11.287Z",
+ "at": "2026-10-24T06:23:32.901Z",
  "skipToolbarHeader": true,
  "tut-360": [
   {
@@ -272,25 +272,25 @@
   "detail": ""
  },
  "perf4x": {
-  "frames": 1441,
-  "avgFps": 71.93921136648108,
-  "worstGap": 23.600000023841858,
-  "p99": 17.5,
+  "frames": 1438,
+  "avgFps": 71.91616286975444,
+  "worstGap": 18.799999952316284,
+  "p99": 17.40000009536743,
   "over50": 0,
   "over100": 0,
   "blocks": [
    0.4,
-   3,
+   0.1,
    0.1,
    0,
-   0.1
+   0
   ],
   "shows": 35,
   "k": 35
  },
  "P1 4×CPU measured (report only; headless rAF is not device fps)": {
   "pass": true,
-  "detail": "avgFps 71.9, worst frame gap 23.6 ms, p99 17.5 ms, block gen ms 0.4/3/0.1/0/0.1"
+  "detail": "avgFps 71.9, worst frame gap 18.8 ms, p99 17.4 ms, block gen ms 0.4/0.1/0.1/0/0"
  },
  "P2 pageerror 0 (perf)": {
   "pass": true,

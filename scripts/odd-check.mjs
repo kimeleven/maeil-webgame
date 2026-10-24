@@ -20,6 +20,7 @@ async function open(vp, { touch = false, path = PATH + '?seed=check', motion, br
   const p = await ctx.newPage(); p.errs = []; p.reqs = []; p.ctx = ctx;
   p.on('pageerror', (e) => p.errs.push(e.message)); p.on('console', (m) => m.type() === 'error' && p.errs.push(m.text()));
   p.on('request', (r) => p.reqs.push(r.url()));
+  if (process.env.SKIP_TOOLBAR) await p.setExtraHTTPHeaders({ 'x-vercel-skip-toolbar': '1' });
   await p.goto(U + path); await p.waitForFunction(() => window.__ot && __ot.ready);
   return p;
 }
@@ -44,8 +45,9 @@ const r5 = p5.waitForFunction(() => __ot.state === 'result', null, { timeout: 75
   ok('R0 ready: 10 s + screen tap + Space → still ready, 60.0, no grid', s0.state === 'ready' && s0.cells === 0 && s0.time === '60.0' && !s0.k, JSON.stringify(s0));
   const deck = await p.evaluate(() => { const d = __ot.E.makeDeck('check'); return Array.from({ length: 60 }, (_, i) => d.grid(i + 1)).map((g) => [g.n, g.ans, g.attr, g.base.shape]); });
   const nd = E.makeDeck('check'); ok('R9 ?seed= grid order equals node makeDeck(seed) (k1–60)', JSON.stringify(deck) === JSON.stringify(Array.from({ length: 60 }, (_, i) => nd.grid(i + 1)).map((g) => [g.n, g.ans, g.attr, g.base.shape])));
+  await p.waitForFunction(() => __ot.acState && __ot.acState !== 'none', null, { timeout: 8000 }).catch(() => {});
   const t0 = Date.now(); await tapBtn(p, '#b-start', true); await waitGrid(p, 1); await p.screenshot({ path: EV + 'grid1-412.png' });
-  const [x, y] = await cellXY(p, 3); await p.touchscreen.tap(x, y); await sleep(150); const s1 = await st(p); const dt = Date.now() - t0;
+  const [x, y] = await cellXY(p, 3); await p.touchscreen.tap(x, y); await p.waitForFunction(() => __ot.game.S.log.length > 0, null, { timeout: 3000 }).catch(() => {}); const s1 = await st(p); const dt = Date.now() - t0;
   ok('R1 412 touch tap → exactly one judgement', s1.log.filter((k) => k !== 'void').length === 1, JSON.stringify(s1.log));
   ok('R2 [start] → bottom-right tap → grid 1 hit within 5 s', s1.log[0] === 'hit' && dt < 5000, `${dt} ms wall`);
   // R6: confirmed then pointercancel / pointerup: unchanged; tapping during feedback anim not carried
@@ -75,7 +77,7 @@ const r5 = p5.waitForFunction(() => __ot.state === 'result', null, { timeout: 75
   await p.keyboard.down(' '); for (let i = 0; i < 30; i++) { await p.evaluate(() => dispatchEvent(new KeyboardEvent('keydown', { key: ' ', repeat: true, bubbles: true }))); await sleep(100); } await p.keyboard.up(' ');
   const sC = await st(p); const ins = await p.evaluate(() => __ot.W.ev.filter((e) => e.k === 'in'));
   ok('R1b Space held 3 s → only grid 1 gets one selection (keyboard, same judge)', ins.length === 1 && sC.log[0] === 'hit' && ins[0].src === 'key', JSON.stringify({ log: sC.log, n: ins.length }));
-  await waitGrid(p, 2); const a2 = await ans(p); const [x, y] = await cellXY(p, a2); await p.mouse.click(x, y); await sleep(150);
+  await waitGrid(p, 2); await p.waitForFunction(() => __ot.acState && __ot.acState !== 'none', null, { timeout: 8000 }).catch(() => {}); const a2 = await ans(p); const [x, y] = await cellXY(p, a2); await p.mouse.click(x, y); await sleep(150);
   ok('R1 1440 mouse click → one judgement (hit)', (await st(p)).log[1] === 'hit');
   await p.screenshot({ path: EV + 'play-1440.png' });
   ok('page errors 0 (1440)', p.errs.length === 0, p.errs.join(' | '));
@@ -204,7 +206,7 @@ const r5 = p5.waitForFunction(() => __ot.state === 'result', null, { timeout: 75
 // ---- R10 hidden tab: clock freezes + grid hidden; reduced motion: no breathing animation ----
 {
   const p = await open({ width: 412, height: 915 }, { motion: 'reduce' });
-  await p.click('#b-start'); await waitGrid(p, 1);
+  await p.waitForFunction(() => __ot.acState && __ot.acState !== 'none', null, { timeout: 8000 }).catch(() => {}); await p.click('#b-start'); await waitGrid(p, 1);
   const r = await p.evaluate(async () => { const anim = getComputedStyle(document.querySelector('#grid .cell.breathe')).animationName; Object.defineProperty(document, 'hidden', { configurable: true, get: () => true }); document.dispatchEvent(new Event('visibilitychange')); delete document.hidden;
     const a = __ot.activeNow(); await new Promise((r) => setTimeout(r, 1000)); const b = __ot.activeNow(); const pz = document.getElementById('pz'); const covered = !pz.hidden && getComputedStyle(pz).backdropFilter.includes('blur');
     document.getElementById('b-resume').click(); await new Promise((r) => setTimeout(r, 200)); return { anim, frozen: a === b, covered, after: __ot.activeNow() - b }; });
@@ -215,8 +217,8 @@ const r5 = p5.waitForFunction(() => __ot.state === 'result', null, { timeout: 75
 {
   const logs = {}; const script = [[300, 'ans'], [1500, 'ans'], [900, 'wrong'], [200, 'ans']];
   for (const [bn, br] of [['chromium', b], ['webkit', wk]]) for (const w of [360, 412, 1440]) {
-    const p = await open({ width: w, height: w === 1440 ? 1000 : 800 }, { browser: br, path: PATH + '?seed=r3' }); await p.click('#b-start');
-    for (const [wait, kind] of script) { const k = await p.evaluate(() => __ot.game.S.k); try { await p.waitForFunction((k) => { const S = __ot.game && __ot.game.S; return S && S.k === k && __ot.activeNow() >= S.start && __ot.shownK === k && document.querySelectorAll('#grid .cell').length === S.grid.n * S.grid.n; }, k, { timeout: 15000, polling: 'raf' }); } catch (e) { console.error('R3 wait fail', bn, w, JSON.stringify(await p.evaluate(() => ({ k: __ot.game.S.k, st: __ot.state, now: __ot.activeNow(), start: __ot.game.S.start, n: document.querySelectorAll('#grid .cell').length, cls: [...document.querySelectorAll('#grid .cell')].map((c) => c.className).join('|') })))); throw e; } await sleep(wait); await p.evaluate(async (kind) => { while (__ot.shownK !== __ot.game.S.k || __ot.activeNow() < __ot.game.S.start) await new Promise((r) => setTimeout(r, 5)); const g = __ot.game.S.grid; const i = kind === 'ans' ? g.ans : (g.ans + 1) % (g.n * g.n); document.querySelectorAll('#grid .cell')[i].dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })); }, kind); await sleep(120); }
+    const p = await open({ width: w, height: w === 1440 ? 1000 : 800 }, { browser: br, path: PATH + '?seed=r3' }); await p.waitForFunction(() => __ot.acState && __ot.acState !== 'none', null, { timeout: 8000 }).catch(() => {}); await p.click('#b-start');
+    for (const [wait, kind] of script) { const k = await p.evaluate(() => __ot.game.S.k); try { await p.waitForFunction((k) => { const S = __ot.game && __ot.game.S; return S && S.k === k && __ot.activeNow() >= S.start && __ot.shownK === k && document.querySelectorAll('#grid .cell').length === S.grid.n * S.grid.n && !document.querySelector('#grid .cell.ok,#grid .cell.bad,#grid .cell.show'); }, k, { timeout: 15000, polling: 'raf' }); } catch (e) { console.error('R3 wait fail', bn, w, JSON.stringify(await p.evaluate(() => ({ k: __ot.game.S.k, st: __ot.state, now: __ot.activeNow(), start: __ot.game.S.start, n: document.querySelectorAll('#grid .cell').length, cls: [...document.querySelectorAll('#grid .cell')].map((c) => c.className).join('|') })))); throw e; } await p.waitForTimeout(wait); const before = await p.evaluate(() => __ot.game.S.log.length); await p.evaluate(async (kind) => { while (__ot.shownK !== __ot.game.S.k || __ot.activeNow() < __ot.game.S.start) await new Promise((r) => setTimeout(r, 5)); const g = __ot.game.S.grid; const i = kind === 'ans' ? g.ans : (g.ans + 1) % (g.n * g.n); document.querySelectorAll('#grid .cell')[i].dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })); }, kind); await p.waitForFunction((n) => __ot.game.S.log.length > n, before, { timeout: 4000 }); }
     await p.waitForFunction((n) => __ot.game.S.log.filter((e) => e.kind !== 'void').length >= n, script.length, { timeout: 8000 }).catch(() => {});
     const L = await logOf(p), ins = await inputsOf(p); const node = E.replay('r3', ins).game.replayLog().slice(0, L.length);
     logs[`${bn}-${w}`] = { kinds: L.map((e) => e.kind).join(','), same: JSON.stringify(node) === JSON.stringify(L) };
@@ -232,7 +234,7 @@ const r5 = p5.waitForFunction(() => __ot.state === 'result', null, { timeout: 75
   const p = await open({ width: 412, height: 915 }, { touch: true }); const cdp = await p.ctx.newCDPSession(p);
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); await cdp.send('Network.enable'); await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: 562.5, downloadThroughput: (1.6 * 1024 * 1024) / 8 * 0.9, uploadThroughput: (750 * 1024) / 8 * 0.9 });
   const t0 = Date.now(); await p.goto(U + PATH + '?seed=load', { waitUntil: 'commit' }); await p.waitForFunction(() => window.__ot && __ot.ready); const tReady = Date.now() - t0;
-  await p.click('#b-start'); await waitGrid(p, 1);
+  await p.waitForFunction(() => __ot.acState && __ot.acState !== 'none', null, { timeout: 8000 }).catch(() => {}); await p.click('#b-start'); await waitGrid(p, 1);
   const fps = await p.evaluate(async () => { const s = __ot.W.ft.length; await new Promise((r) => setTimeout(r, 3000)); const ft = __ot.W.ft.slice(s); return ft.length / ((ft.at(-1) - ft[0]) / 1000); });
   const gen = await p.evaluate(() => { const d = __ot.E.makeDeck('perf'); d.ensure(15); return Math.max(...d.blocks.map((x) => x.ms)); });
   ok('R12 4×CPU + Fast3G: [start] usable < 2 s, gzip ≤ 30 KB', tReady < 2000 && gz <= 30 * 1024, `ready ${tReady} ms, gzip ${(gz / 1024).toFixed(1)} KB, raf ${fps.toFixed(1)} fps (headless, not device), worst block gen ${gen.toFixed(2)} ms @4×CPU`);
@@ -256,7 +258,7 @@ const r5 = p5.waitForFunction(() => __ot.state === 'result', null, { timeout: 75
 const v5 = await r5; ok('R5 idle: logical end 60000, 0/0, result display ≥ T+G and < T+G+frame gap', v5.endLogical === 60000 && v5.found === 0 && v5.score === 0 && v5.at >= 60050 && v5.at < 60050 + v5.maxGap + 1, JSON.stringify(v5));
 await p5.ctx.close();
 // larger screenshots for PO
-{ const p = await open({ width: 1440, height: 1000 }, { path: '/en/play/odd-tile/?seed=check' }); await p.screenshot({ path: EV + 'ready-1440.png' }); await p.click('#b-start'); await waitGrid(p, 1); await p.screenshot({ path: EV + 'grid1-1440.png' }); await p.ctx.close(); }
+{ const p = await open({ width: 1440, height: 1000 }, { path: '/en/play/odd-tile/?seed=check' }); await p.screenshot({ path: EV + 'ready-1440.png' }); await p.waitForFunction(() => __ot.acState && __ot.acState !== 'none', null, { timeout: 8000 }).catch(() => {}); await p.click('#b-start'); await waitGrid(p, 1); await p.screenshot({ path: EV + 'grid1-1440.png' }); await p.ctx.close(); }
 await b.close(); await wk.close();
 out.fails = fails; writeFileSync(EV + `check-${tag0}.json`, JSON.stringify(out, null, 1));
 console.log(`\n${Object.keys(out).filter((k) => out[k] && out[k].pass !== undefined).length - fails.length}/${Object.keys(out).filter((k) => out[k] && out[k].pass !== undefined).length} pass (${tag0})`);
