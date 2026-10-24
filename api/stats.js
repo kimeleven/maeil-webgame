@@ -4,7 +4,7 @@ import { getSql } from '../lib/db.js';
 import { send } from '../lib/http.js';
 import { ensureSchema } from '../lib/reboot.js';
 import { queryOf } from '../lib/http.js';
-import { gameStats, parseWindow, ensureEventsSchema } from '../lib/events.js';
+import { gameStats, funnelStats, parseWindow, ensureEventsSchema } from '../lib/events.js';
 
 function authorized(req, token) {
   if (!token) return false;
@@ -17,8 +17,8 @@ const n = (v) => Number(v || 0);
 
 // Share funnel baseline (t_11d5fd4b). Only anonymous game_events are stored server-side (magnet/orbit/echo:
 // share_click, share_done by method). Rush/quiz/challenge share_click·share_result·challenge_land·play_start(challenge)
-// go to Vercel Analytics only (client track.js), so they are reported as unobserved, never 0.
-export function funnelOf(games) {
+// are now also sent to game_events (1024-21); before collection starts (or with no events) they stay unobserved, never 0.
+export function funnelOf(games, fs) {
   const unobserved = (what) => ({ observed: false, reason: `${what} is client-side (Vercel Analytics) only; not stored server-side` });
   const out = {
     rush: { shareClick: unobserved('rush share_click'), shareResult: unobserved('rush share_result (shared|copied|failed|cancel)') },
@@ -27,6 +27,11 @@ export function funnelOf(games) {
     testSeparation: 'qa=1 events are dropped before storage and bot UAs are excluded (best effort); no separate test counts are stored',
     pii: 'none (aggregate counts only)',
   };
+  if (fs?.observed) {
+    const { rush, quiz, challenge } = fs;
+    out.rush = { observed: true, ...rush }; out.quiz = { observed: true, ...quiz }; out.challenge = { observed: true, ...challenge };
+    out.since = { availableSince: fs.availableSince, window: fs.window, unobserved: fs.unobserved };
+  }
   if (games?.observed && games.byGame) {
     out.games = { window: games.window, availableSince: games.availableSince, byGame: Object.fromEntries(Object.entries(games.byGame).map(([g, x]) => [g, { shareClick: x.counts.share_click, shareDone: x.counts.share_done, byMethod: x.shareMethods, plays: x.plays }])) };
   } else out.games = { observed: false, reason: games?.error || 'no game_events in window', unobserved: games?.unobserved ?? null };
@@ -57,8 +62,10 @@ export default async function handler(req, res, deps = {}) {
     let games;
     try { await ensureEventsSchema(sql); games = await gameStats(sql, win); }
     catch (e) { games = { observed: false, byGame: null, error: e?.code === '42P01' ? 'events table not created yet' : 'events unavailable' }; }
+    let fs;
+    try { fs = await funnelStats(sql, win); } catch { fs = null; }
     return send(res, 200, {
-      funnel: funnelOf(games),
+      funnel: funnelOf(games, fs),
       generatedAt: new Date().toISOString(),
       shares: { total: n(s.total), last24h: n(s.d1), last7d: n(s.d7),
         byKindLang: byKind.map((r) => ({ kind: r.kind, lang: r.lang, count: n(r.c) })),

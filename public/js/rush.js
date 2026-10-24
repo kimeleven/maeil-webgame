@@ -3,6 +3,8 @@ import * as G from './rush-core.js';
 import { rushCard, saveCanvas, shareOrCopy, copyText } from './card.js';
 import { api } from './net.js';
 import { track, stageBucket } from './track.js';
+// 1024-21: anonymous server-side funnel (gev.js, game_events); never throws
+const gv = (n, d) => { try { window.gev && window.gev(n, Object.assign({ g: 'rush' }, d)); } catch (e) {} };
 
 const KEY = 'gate-rush-v3';
 const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
@@ -100,14 +102,14 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     const buttons = [
       btn(D.cta.save, '', async () => saveCanvas(await rushCard(D, rec), `gate-rush-${rec.stage}.png`)),
       btn(D.cta.share, 'ghost', async () => {
-        track('share_click', { from: 'rush' });
+        track('share_click', { from: 'rush' }); gv('share_click');
         if (busy) return; busy = true;
         try {
           const url = await shareUrl();
           // show the link right away: the native share sheet (desktop Chrome/macOS) can stay pending indefinitely
           showUrl(url);
           const r = await shareOrCopy({ title: g.name, text: fmt(g.shareText, { stage: rec.cleared, url }), canvas: await rushCard(D, rec), name: 'gate-rush.png' });
-          track('share_result', { from: 'rush', r: r === 'shared' ? 'shared' : r === 'copied' ? 'copied' : r === 'failed' ? 'failed' : 'cancel' });
+          { const rr = r === 'shared' ? 'shared' : r === 'copied' ? 'copied' : r === 'failed' ? 'failed' : 'cancel'; track('share_result', { from: 'rush', r: rr }); gv('share_result', { via: rr }); }
           showUrl(url, r === 'failed' ? D.common.error : r === 'copied' ? D.common.copied : '');
         } finally { busy = false; }
       }),
@@ -122,12 +124,12 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
           try {
             track('challenge_copy', { method: 'native' });
             await navigator.share({ title: g.challengeTitle, text: fmt(g.challengeShareText, { stage: rec.cleared, score: rec.score.toLocaleString(), url }) });
-            track('share_result', { from: 'rush', r: 'shared', k: 'challenge' });
+            track('share_result', { from: 'rush', r: 'shared', k: 'challenge' }); gv('share_result', { via: 'shared', k: 'challenge' });
             return;
-          } catch (e) { if (e.name === 'AbortError') { track('share_result', { from: 'rush', r: 'cancel', k: 'challenge' }); return; } }
+          } catch (e) { if (e.name === 'AbortError') { track('share_result', { from: 'rush', r: 'cancel', k: 'challenge' }); gv('share_result', { via: 'cancel', k: 'challenge' }); return; } }
         } else track('challenge_copy', { method: 'copy' });
         const okc = await copyText(url);
-        track('share_result', { from: 'rush', r: okc ? 'copied' : 'failed', k: 'challenge' });
+        track('share_result', { from: 'rush', r: okc ? 'copied' : 'failed', k: 'challenge' }); gv('share_result', { via: okc ? 'copied' : 'failed', k: 'challenge' });
         showUrl(url, okc ? D.common.copied : '');
       } finally { busy = false; }
     }));
@@ -135,7 +137,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     show(`<span class="tag">${rec.assist ? 'ASSIST' : 'GAME OVER'}</span><h2>${g.lostTitle}</h2><p style="font-size:30px;font-weight:800;margin:6px 0">${g.sector} ${rec.stage}</p><p>${fmt(g.lostDesc, { stage: rec.cleared, score: rec.score.toLocaleString() })}</p>${beat ? `<p class="tag">${g.beat}</p>` : ''}<p class="muted">${g.best}: ${save.bestStage} · ${save.best.toLocaleString()}</p><p class="muted" data-share-hint>${g.shareHint}</p>`, buttons);
     modal.append(status);
   }
-  function start() { if (run.stage === 1) track('play_start', { mode: challenge ? 'challenge' : 'daily' }); G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
+  function start() { if (run.stage === 1) { track('play_start', { mode: challenge ? 'challenge' : 'daily' }); gv('play_start', { from: challenge ? 'c' : 'direct' }); } G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
 
   // ---------- input ----------
   const keys = {};

@@ -3,6 +3,8 @@ import { scoreQuiz, bestBuddy, COLORS } from './logic.js';
 import { quizCard, saveCanvas, shareOrCopy } from './card.js';
 import { api } from './net.js';
 import { track } from './track.js';
+// 1024-21: anonymous server-side funnel (gev.js, game_events); never throws
+const gv = (n, d) => { try { window.gev && window.gev(n, Object.assign({ g: 'quiz' }, d)); } catch (e) {} };
 
 const fmt = (s, v) => String(s).replace(/\{(\w+)\}/g, (_, k) => (k in v ? v[k] : ''));
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -44,11 +46,11 @@ export function showResult(el, D, code, pct, retry) {
   const st = el.querySelector('.status');
   el.querySelector('[data-save]').onclick = async () => saveCanvas(await quizCard(D, code, pct), `play-character-${code}.png`);
   el.querySelector('[data-share]').onclick = async () => {
-    track('share_click', { from: 'quiz' });
+    track('share_click', { from: 'quiz' }); gv('share_click');
     let url = `${location.origin}/${D.lang}/me/play-character/`;
     try { const r = await api('/api/share', { method: 'POST', body: { kind: 'quiz', lang: D.lang, payload: { code } } }); url = `${location.origin}/${D.lang}/r/${r.id}`; } catch {}
     const r = await shareOrCopy({ title: D.quiz.title, text: fmt(D.quiz.shareText, { name: D.types[code].name, url }), canvas: await quizCard(D, code, pct), name: 'play-character.png' });
-    track('share_result', { from: 'quiz', r: r === 'shared' ? 'shared' : r === 'copied' ? 'copied' : r === 'failed' ? 'failed' : 'cancel' });
+    { const rr = r === 'shared' ? 'shared' : r === 'copied' ? 'copied' : r === 'failed' ? 'failed' : 'cancel'; track('share_result', { from: 'quiz', r: rr }); gv('share_result', { via: rr }); }
     st.textContent = r === 'copied' ? D.common.copied : r === 'failed' ? D.common.error : '';
   };
   el.querySelector('[data-retry]').onclick = retry || (() => location.reload());

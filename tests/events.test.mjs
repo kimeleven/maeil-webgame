@@ -53,7 +53,7 @@ test('schema validation: unknown field / name / game / reason / lang / via → 4
     { v: 1, events: [ev('play_start', { score: 10 })] },
     { v: 1, events: [ev('play_start', { seed: '2026-10-23' })] },
     { v: 1, events: [ev('share_fail', { via: 'link' })] },
-    { v: 1, events: [ev('play_start', { g: 'rush' })] },
+    { v: 1, events: [ev('play_start', { g: 'zzz' })] },
     { v: 1, events: [ev('play_end', { end: 'lives' })] }, // orbit allows time|hit only
     { v: 1, events: [ev('play_end', { g: 'echo', end: 'hit' })] }, // echo allows time only
     { v: 1, events: [ev('play_end')] },
@@ -174,4 +174,28 @@ test('validateBatch drops qa and in-batch duplicates without touching others', (
   const a = ev('play_start');
   const v = validateBatch({ v: 1, events: [a, a, ev('play_start', { qa: '1' })] });
   assert.equal(v.rows.length, 1); assert.equal(v.qa, 1);
+});
+
+test('1024-21 rush/quiz funnel: contract + aggregate in /api/stats', async () => {
+  __resetEventsLimiter();
+  const ok = [
+    ev('share_click', { g: 'rush', via: undefined }), ev('share_result', { g: 'rush', via: 'copied' }),
+    ev('share_result', { g: 'rush', via: 'shared', k: 'challenge' }), ev('challenge_land', { g: 'rush' }),
+    ev('play_start', { g: 'rush', from: 'c' }), ev('share_click', { g: 'quiz', via: undefined }), ev('share_result', { g: 'quiz', via: 'cancel' }),
+  ];
+  const bad = [
+    [ev('challenge_land', { g: 'magnet' })], [ev('share_result', { g: 'magnet', via: 'copied' })],
+    [ev('share_result', { g: 'rush', via: 'link' })], [ev('share_click', { g: 'rush', via: 'link' })],
+    [ev('challenge_land', { g: 'quiz' })], [ev('share_result', { g: 'quiz', via: 'copied', k: 'x' })],
+    [ev('share_click', { g: 'rush', via: undefined, k: 'challenge' })], [ev('play_end', { g: 'rush', end: 'time' })],
+  ];
+  for (const b of bad) assert.equal((await post({ v: 1, events: b })).status, 400, JSON.stringify(b));
+  assert.equal((await post({ v: 1, events: ok })).status, 202);
+  const f = (await stats()).body.funnel;
+  assert.equal(f.rush.observed, true);
+  assert.equal(f.rush.shareClick, 1); assert.equal(f.rush.shareResult.copied, 1); assert.equal(f.rush.challengeShareResult.shared, 1);
+  assert.equal(f.challenge.challengeLand, 1); assert.equal(f.challenge.playStartFromChallenge, 1);
+  assert.equal(f.quiz.shareClick, 1); assert.equal(f.quiz.shareResult.cancel, 1);
+  assert.ok(/표본부족/.test(f.rush.sample));
+  assert.ok(!/ip|agent|referrer/i.test(JSON.stringify(f)));
 });
