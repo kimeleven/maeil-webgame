@@ -1,0 +1,147 @@
+{
+  "at": "2026-10-23T06:37:50.478Z",
+  "base": "https://<preview>.vercel.app",
+  "pass": 19,
+  "fail": 0,
+  "res": [
+    {
+      "name": "412 no event before first input",
+      "pass": true
+    },
+    {
+      "name": "412 sent = trackLog minus share_fail",
+      "pass": true,
+      "extra": {
+        "log": [
+          "play_start",
+          "play_end:time",
+          "share_click:link",
+          "share_done:link",
+          "play_again",
+          "play_start",
+          "play_end:time"
+        ],
+        "sent": 7
+      }
+    },
+    {
+      "name": "412 restart = play_again 1 + play_start 1 (2 runs → start 2, again 1)",
+      "pass": true
+    },
+    {
+      "name": "412 only contract keys sent",
+      "pass": true,
+      "extra": [
+        "id",
+        "name",
+        "lang",
+        "g",
+        "from",
+        "end",
+        "via"
+      ]
+    },
+    {
+      "name": "412 g=magnet lang=ko from=c",
+      "pass": true
+    },
+    {
+      "name": "412 unique ids",
+      "pass": true
+    },
+    {
+      "name": "412 batches ≤20 and 202",
+      "pass": true,
+      "extra": [
+        [
+          7,
+          202,
+          null
+        ]
+      ]
+    },
+    {
+      "name": "412 no page errors",
+      "pass": true,
+      "extra": []
+    },
+    {
+      "name": "1440 no event before first input",
+      "pass": true
+    },
+    {
+      "name": "1440 sent = trackLog minus share_fail",
+      "pass": true,
+      "extra": {
+        "log": [
+          "play_start",
+          "play_end:time",
+          "share_click:link",
+          "share_done:link",
+          "play_again",
+          "play_start",
+          "play_end:time"
+        ],
+        "sent": 7
+      }
+    },
+    {
+      "name": "1440 restart = play_again 1 + play_start 1 (2 runs → start 2, again 1)",
+      "pass": true
+    },
+    {
+      "name": "1440 only contract keys sent",
+      "pass": true,
+      "extra": [
+        "id",
+        "name",
+        "lang",
+        "g",
+        "from",
+        "end",
+        "via"
+      ]
+    },
+    {
+      "name": "1440 g=magnet lang=ko from=c",
+      "pass": true
+    },
+    {
+      "name": "1440 unique ids",
+      "pass": true
+    },
+    {
+      "name": "1440 batches ≤20 and 202",
+      "pass": true,
+      "extra": [
+        [
+          7,
+          202,
+          null
+        ]
+      ]
+    },
+    {
+      "name": "1440 no page errors",
+      "pass": true,
+      "extra": []
+    },
+    {
+      "name": "qa=1: 0 POST /api/events",
+      "pass": true
+    },
+    {
+      "name": "automation(webdriver): 0 POST /api/events",
+      "pass": true
+    },
+    {
+      "name": "network down: game still finishes runs, nothing sent, no page errors",
+      "pass": true,
+      "extra": {
+        "phase": true,
+        "again": true,
+        "sent": 0
+      }
+    }
+  ]
+}

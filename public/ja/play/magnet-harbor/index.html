@@ -1,0 +1,565 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+<title>マグネットハーバー | playtoday</title><meta name="description" content="揺れる荷物を磁石クレーンで運び、揺れる船に積んで、90秒で何隻出港させられるか挑戦。"><link rel="canonical" href="https://www.playtoday.cloud/ja/play/magnet-harbor/"><link rel="alternate" hreflang="ko" href="https://www.playtoday.cloud/ko/play/magnet-harbor/"><link rel="alternate" hreflang="en" href="https://www.playtoday.cloud/en/play/magnet-harbor/"><link rel="alternate" hreflang="ja" href="https://www.playtoday.cloud/ja/play/magnet-harbor/"><link rel="alternate" hreflang="zh-Hans" href="https://www.playtoday.cloud/zh-hans/play/magnet-harbor/"><link rel="alternate" hreflang="es" href="https://www.playtoday.cloud/es/play/magnet-harbor/"><link rel="alternate" hreflang="pt-BR" href="https://www.playtoday.cloud/pt-br/play/magnet-harbor/"><link rel="alternate" hreflang="x-default" href="https://www.playtoday.cloud/en/play/magnet-harbor/"><meta property="og:type" content="website"><meta property="og:site_name" content="playtoday"><meta property="og:title" content="マグネットハーバー"><meta property="og:description" content="揺れる荷物を磁石クレーンで運び、揺れる船に積んで、90秒で何隻出港させられるか挑戦。"><meta property="og:url" content="https://www.playtoday.cloud/ja/play/magnet-harbor/"><meta property="og:image" content="https://www.playtoday.cloud/og/magnet-harbor-ja.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://www.playtoday.cloud/og/magnet-harbor-ja.png"><link rel="icon" href="data:,">
+<style>:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;overscroll-behavior:contain}
+body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;gap:6px}
+.logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:var(--gold)}.tr{display:flex;gap:6px;align-items:center}
+.langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--cyan)}
+.stage{position:relative;width:min(100vw,calc((100dvh - 64px)*9/16),540px);height:min(calc(100dvh - 64px),960px);display:flex;flex-direction:column;padding:0 10px 8px}
+.hud{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:4px 0 6px;font-variant-numeric:tabular-nums}.hud div{display:flex;flex-direction:column;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:4px 2px;backdrop-filter:blur(18px)}
+.hud span{font-size:11px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud b{font-size:17px;white-space:nowrap}
+#play{position:relative;flex:1;min-height:0;border-radius:20px;overflow:hidden;border:1px solid var(--edge);touch-action:none;cursor:grab}#play:active{cursor:grabbing}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:6px}.hint{color:var(--muted);font-size:13px}
+.ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
+.ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
+.sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
+.panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}
+.sheet.ready{align-items:flex-start;padding-top:10px;background:linear-gradient(rgba(7,8,12,.55) 60%,rgba(7,8,12,0) 78%)}.ready .panel{gap:8px;padding:14px}.goal{margin:0;font-size:16px;font-weight:600}.how{margin:0;font-size:15px;color:var(--muted)}
+.icon{font-size:34px;letter-spacing:6px}.t90{font-size:13px;color:var(--muted)}
+.btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.btn.main{min-height:64px;width:100%;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
+.nums{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:14px}.nums span{color:var(--muted)}.nums b{font-size:18px}.nums b.big{font-size:34px;color:var(--cyan)}
+.new{color:#4ade80;font-weight:800}.cmp{font-size:13px;color:var(--muted)}.why{font-size:14px;color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
+.seed{color:var(--muted);font-size:12px;text-align:center}
+.guide{margin:0;font-size:14px;font-weight:600;color:#4ade80;padding:8px 10px;border-radius:12px;border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.08)}
+.tip{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;border:1px solid rgba(250,204,21,.35);background:rgba(250,204,21,.08)}.tip b{font-size:15px;line-height:1.35}.tipk{font-size:12px;color:var(--gold);font-weight:700}
+.near{font-size:15px;font-weight:700;color:var(--cyan)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+@media (min-width:900px){body{background:radial-gradient(900px 600px at 15% 30%,rgba(34,211,238,.10),transparent),radial-gradient(900px 600px at 85% 70%,rgba(99,102,241,.16),transparent),var(--bg)}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.sheet .panel{max-height:100%;overflow-y:auto}
+@media (max-height:860px){.ready .icon{display:none}.ready .panel{gap:6px;padding:12px}.ready .how,.ready .guide{font-size:13px}.ready .goal{font-size:15px}.btn.main{min-height:54px;font-size:20px}
+#res{padding:8px}#res .panel{gap:5px;padding:12px}.panel h2{font-size:19px}.nums b.big{font-size:26px}.nums{font-size:13px}.nums b{font-size:16px}.tip{padding:7px 10px}.tip b{font-size:14px}.near{font-size:14px}.tgs .tg,.row .btn{min-height:44px}}</style></head>
+<body data-page="magnet-harbor" data-lang="ja">
+<header class="top"><a class="logo" href="/ja/"><i></i>毎日ウェブゲーム</a><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="サウンド" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="振動" aria-pressed="true">📳</button><details class="langs" data-ui><summary aria-label="Language">ja ▾</summary><nav><a href="/ko/play/magnet-harbor/" hreflang="ko">ko</a><a href="/en/play/magnet-harbor/" hreflang="en">en</a><a href="/ja/play/magnet-harbor/" hreflang="ja" aria-current="true">ja</a><a href="/zh-hans/play/magnet-harbor/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/magnet-harbor/" hreflang="es">es</a><a href="/pt-br/play/magnet-harbor/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
+<main class="stage" id="stage">
+<div class="hud"><div><span>残り</span><b id="h-time">90</b></div><div><span>船</span><b id="h-ships">0</b></div><div><span>積荷</span><b id="h-tgt">0/6</b></div><div><span>列</span><b id="h-cols">0/4</b></div><div><span>ライフ</span><b id="h-lives">⚓⚓⚓</b></div></div>
+<div id="play" role="application" aria-label="マグネットハーバー"><canvas id="cv"></canvas>
+<div class="sheet ready" id="ready" data-ui><div class="panel">
+<h2>マグネットハーバー</h2><p class="goal">揺れる荷物を船の上で放して積み、出港させよう · 90秒</p><div class="icon" aria-hidden="true">👆↔️✋⬇️</div><p class="how" id="r-how">ドラッグで移動、離して投下 · ←/→ 移動 + Space 投下</p>
+<button class="btn main" id="b-start" type="button">スタート</button><div class="t90">残り 90 · Space / Enter</div>
+<p class="guide" id="r-guide">緑のマス＝船上の着地点 · 影が緑のマスに来たら手を離そう</p><div class="t90" id="r-combo">PERFECTを続けると×2・×3、通常着地や落下で×1に戻る</div>
+</div></div>
+<div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>一時停止中</h2><p class="how">タップで再開 (3秒後)</p><span id="pz-n"></span><div class="tgs"><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">モーション効果</button></div></div></div>
+<div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
+<h2 id="r-title">港じまい!</h2><div class="why" id="r-why"></div><div class="new" id="r-new" hidden>ベスト更新!</div><div class="new" id="r-first" hidden>初記録</div>
+<div class="nums"><span>今回</span><b class="big" id="r-ships"></b><span>スコア</span><b id="r-score"></b><span>PERFECT</span><b id="r-perf"></b><span>自己ベスト</span><b id="r-best"></b><span>差</span><b id="r-diff"></b></div>
+<div class="tip" id="r-tipbox"><span class="tipk" id="r-tipk"></span><b id="r-tip"></b></div>
+<div class="cmp near" id="r-near" hidden></div>
+<button class="btn main" id="b-again" type="button">もう一度</button>
+<div class="row"><button class="btn" id="b-png" type="button">PNG保存</button><button class="btn" id="b-link" type="button">挑戦リンクをコピー</button></div>
+<div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">サウンド</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">振動</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">モーション効果</button></div><div class="seed">seed <span id="seed"></span></div>
+</div></div>
+</div>
+<div class="bar"><span class="hint">Drag &amp; release / ←→ Space</span><button class="ic" id="b-pause" type="button" data-ui aria-label="一時停止">⏸</button></div>
+</main><div class="toast" id="toast" role="status"></div>
+<script id="mt" type="application/json">{"name":"マグネットハーバー","title":"マグネットハーバー (プレビュー)","desc":"揺れる荷物を磁石クレーンで運び、揺れる船に積んで、90秒で何隻出港させられるか挑戦。","preview":"プレビュー","back":"毎日ウェブゲーム","time":"残り","ships":"船","target":"積荷","cols":"列","lives":"ライフ","goal":"揺れる荷物を船の上で放して積み、出港させよう · 90秒","howMobile":"どこでもドラッグでクレーン移動、指を離すと投下","howDesktop":"ドラッグで移動、離して投下 · ←/→ 移動 + Space 投下","start":"スタート","hint":"Drag & release / ←→ Space","pause":"一時停止","paused":"一時停止中","resume":"タップで再開 (3秒後)","over":"港じまい!","endTime":"90秒終了","endLives":"荷物が3つ海に落ちました","shipsN":"船 {n}隻","now":"今回","best":"自己ベスト","diff":"差","first":"初記録","newBest":"ベスト更新!","near":"あと{n}マスでもう1隻でした","score":"スコア","perfect":"PERFECT","again":"もう一度","png":"PNG保存","link":"挑戦リンクをコピー","copied":"コピーしました","sound":"サウンド","haptic":"振動","motion":"モーション効果","shareText":"マグネットハーバーで船を{ships}隻出港させた! 同じ港で挑戦してみる? → {url}","lastFall":"直前の落下","tipSea":"船の外に落ちました → 紫の影が緑のマス（船の上）に来たら手を離そう","tipHigh":"積みすぎました → 3段を超えないよう、低い列から横に広く積もう","tipTilt":"船が傾いて落ちました → 反対側にも積み、重心を中央に寄せよう","tipTime":"時間切れ → 揺れが止まってから離すとPERFECTが出やすい","left":"次の船まで{n}マス · あと{c}列","leftCells":"次の船まであと{n}マス","leftCols":"次の船まであと{c}列(4列以上必要)","guide":"緑のマス＝船上の着地点 · 影が緑のマスに来たら手を離そう","combo":"連続PERFECT ×{n}","comboRule":"PERFECTを続けると×2・×3、通常着地や落下で×1に戻る"}</script>
+<script src="/js/gev.js"></script>
+<script>(()=>{// Magnet Harbor rule engine (prototype, t_1c491685). DOM-free, deterministic, fixed step 1/60 s.
+// GDD r2: workspace/maeil-arcade-local/games/magnet-harbor/GDD.md (2.0 time, 2.1 stacking/departure, 2.2 coords).
+// All tunables live in MH. Same seed + same input log → same result (state quantized every tick).
+const MH = {
+  HZ: 60, ACTIVE: 5400,            // 90 s of active time
+  AUTO: 360, BLINK: 120,           // auto drop 6 s from cargo-ready tick, blink last 2 s
+  COOL: 36, FALL: 21, DEPART: 120, // 0.6 s cooldown, 0.35 s fall, 2 s departure
+  LIVES: 3,
+  W: 9, SHIP_CX: 4.5, COLS: 6, MAXH: 3, CRANE0: 0.5, // world in cell widths; ship covers 1.5..7.5
+  VMAX: 10.8 / 60,                 // 1.2 screen widths per second
+  ROPE: 2.5, G: 30,                // pendulum length (cells), gravity (cells/s²)
+  PERFECT: 0.15, LAND: 0.5,
+  L: 10,                           // tilt limit |roll°| × |CoM offset (cols)|
+  DROP_GAP: 30,                    // ≤1 rule drop per 0.5 s
+  SEG: [ // from (s), roll amp (deg), period (s), damping, 2-cell share, target cells, heave, wind
+    { t: 0, amp: 0, per: 3, damp: 6, two: 0, target: 6, heave: 0 },
+    { t: 10, amp: 4, per: 3.0, damp: 1.6, two: 0, target: 8, heave: 0 },
+    { t: 20, amp: 4, per: 3.0, damp: 1.6, two: 0.3, target: 8, heave: 0 },
+    { t: 30, amp: 7, per: 2.4, damp: 0.7, two: 0.5, target: 8, heave: 0 },
+    { t: 60, amp: 10, per: 2.0, damp: 0.7, two: 0.5, target: 10, heave: 0.12, wind: true },
+  ],
+  WIND_F: 9, WIND_LEN: 180, WIND_WARN: 60,
+  SCORE: { land: 10, perfect: 25, multMax: 3, depart: 50, balance: 20 },
+};
+const q3 = (v) => Math.round(v * 1000) / 1000;   // 1/1000 quantization (angle in rad, x in cells)
+const q2 = (v) => Math.round(v * 100) / 100;
+function hash(s) { let h = 2166136261 >>> 0; for (const c of String(s)) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
+function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const u = (seed, ...k) => rng(hash(seed + '|' + k.join('|')))();
+const segAt = (tick) => { const s = tick / MH.HZ; let r = MH.SEG[0]; for (const x of MH.SEG) if (s >= x.t) r = x; return r; };
+const colCenter = (c, w = 1) => c - 2.5 + (w - 1) / 2; // ship-relative x of a box's centre
+
+function createGame(seed) {
+  const s = String(seed);
+  const w0 = 61 + Math.floor(u(s, 'w0') * 4), w1 = 75 + Math.floor(u(s, 'w1') * 6);
+  return {
+    seed: s, phase: 'ready', tick: 0, ftick: 0,
+    phi: u(s, 'phi') * Math.PI * 2,
+    winds: [w0 * 60, w1 * 60].map((at, i) => ({ at, dir: u(s, 'wd', i) < 0.5 ? -1 : 1 })),
+    crane: { x: MH.CRANE0, v: 0 }, th: 0, om: 0, roll: 0, heave: 0,
+    cargo: null, cargoN: 0, cool: 0, falling: null, depart: 0,
+    cols: Array.from({ length: MH.COLS }, () => []), boxN: 0, ship: null, ships: 0,
+    fails: 0, score: 0, mult: 1, perfects: 0, dropGap: 0, over: false, overWhy: '',
+    events: [], log: [], placed: [], last: { tx: null, dir: 0 },
+  };
+}
+// cargo i: size depends on the segment at its ready tick, but the draw is fixed per (seed, i)
+function nextCargo(g) {
+  const sg = segAt(g.tick), i = g.cargoN++;
+  // GDD 3: the 2-cell box must show up by 30 s → the first cargo after 20 s is always 2-cell
+  const w = sg.two && !g.twoSeen ? 2 : u(g.seed, 'c', i) < sg.two ? 2 : 1; if (w === 2) g.twoSeen = true;
+  const th = g.ftick > 0 && sg.damp < 6 && !g.lastPerfect ? q3((u(g.seed, 'th', i) - 0.5) * 0.3) : 0;
+  g.cargo = { i, w, ready: g.tick, auto: MH.AUTO }; g.th = th; g.om = 0;
+  ev(g, 'ready', { i, w });
+}
+function newShip(g) { g.ship = { n: g.ships + 1, target: segAt(g.tick).target, at: g.tick }; g.cols = Array.from({ length: MH.COLS }, () => []); ev(g, 'ship', { target: g.ship.target }); }
+const ev = (g, k, d = {}) => g.events.push({ k, tick: g.tick, ...d });
+const heights = (g) => g.cols.map((c) => c.length);
+function load(g) { let n = 0; const seen = new Set(); for (const col of g.cols) for (const b of col) if (b.k === 'box' && !seen.has(b.id)) { seen.add(b.id); n += b.w; } return n; }
+const usedCols = (g) => g.cols.filter((c) => c.some((b) => b.k === 'box')).length;
+function com(g) { let m = 0, s = 0; const seen = new Set(); for (const col of g.cols) for (const b of col) if (b.k === 'box' && !seen.has(b.id)) { seen.add(b.id); m += b.w; s += b.w * colCenter(b.c, b.w); } return m ? s / m : 0; }
+
+function start(g) { if (g.phase !== 'ready') return false; g.phase = 'play'; newShip(g); nextCargo(g); ev(g, 'start'); return true; }
+
+// ship motion: function of active time only (deterministic)
+function shipMotion(g) {
+  const sg = segAt(g.tick), t = g.tick / MH.HZ;
+  g.roll = sg.amp ? q2(sg.amp * Math.sin((2 * Math.PI * t) / sg.per + g.phi)) : 0;
+  g.heave = sg.heave ? q3(sg.heave * Math.sin((2 * Math.PI * t) / (sg.per * 1.7) + g.phi * 0.5)) : 0;
+}
+function windAt(g, tick = g.tick) { for (const w of g.winds) { if (tick >= w.at && tick < w.at + MH.WIND_LEN) return { on: true, dir: w.dir }; if (tick >= w.at - MH.WIND_WARN && tick < w.at) return { warn: true, dir: w.dir }; } return {}; }
+
+// input: { tx: target world x | null, dir: -1|0|1, release: bool } — applied this tick
+function step(g, inp = {}) {
+  if (g.over || g.phase === 'ready' || g.phase === 'result') return;
+  const rec = inp.tx != null ? q3(inp.tx) : null;
+  if (rec !== g.last.tx || (inp.dir | 0) !== g.last.dir || inp.release) { g.log.push([g.tick, rec, inp.dir | 0, inp.release ? 1 : 0]); g.last = { tx: rec, dir: inp.dir | 0 }; }
+  shipMotion(g);
+  const departing = g.phase === 'depart';
+  // crane (kinematic, capped speed). Input is ignored during departure.
+  const c = g.crane; let v = 0;
+  if (!departing) { if (inp.dir) v = inp.dir * MH.VMAX; else if (rec != null) v = Math.max(-MH.VMAX, Math.min(MH.VMAX, rec - c.x)); }
+  const nx = q3(Math.max(0, Math.min(MH.W, c.x + v))); const vel = (nx - c.x) * MH.HZ; const acc = (vel - c.v) * MH.HZ;
+  c.x = nx; c.v = q3(vel);
+  // damped pendulum on the cargo (state θ, ω), crane acceleration + wind push it
+  if (g.cargo) {
+    const sg = segAt(g.tick), dt = 1 / MH.HZ, wd = windAt(g);
+    const f = wd.on ? wd.dir * MH.WIND_F : 0;
+    const a = -(MH.G / MH.ROPE) * Math.sin(g.th) - ((acc - f) / MH.ROPE) * Math.cos(g.th) - sg.damp * g.om;
+    g.om = q3(g.om + a * dt); g.th = q3(Math.max(-1.2, Math.min(1.2, g.th + g.om * dt)));
+  }
+  if (!departing) {
+    if (g.cool > 0 && --g.cool === 0 && !g.cargo) nextCargo(g);
+    if (g.cargo) {
+      if (inp.release) release(g, 'tap');
+      else if (g.cargo.ready !== g.tick && --g.cargo.auto <= 0) release(g, 'auto');
+    }
+  }
+  // falling cargo: straight line, fixed 21 ticks, landing x fixed at release
+  if (g.falling && g.tick >= g.falling.land) land(g);
+  // rule drops: step rule first, then tilt; at most one per 0.5 s, never during departure
+  if (g.dropGap > 0) g.dropGap--;
+  if (!departing && !g.over && g.dropGap === 0) ruleDrop(g);
+  if (departing && --g.depart <= 0) { g.phase = 'play'; newShip(g); if (!g.cargo && g.cool === 0) nextCargo(g); }
+  g.tick++; g.ftick++;
+  if (g.tick >= MH.ACTIVE && !g.over) end(g, 'time');
+}
+const cargoX = (g) => q3(g.crane.x + MH.ROPE * Math.sin(g.th));
+const cargoVx = (g) => g.crane.v + MH.ROPE * Math.cos(g.th) * g.om;
+const landX = (g) => q3(cargoX(g) + cargoVx(g) * (MH.FALL / MH.HZ));
+function release(g, why) {
+  const cg = g.cargo; if (!cg) return;
+  const x0 = cargoX(g), xl = landX(g);
+  g.falling = { ...cg, x0, xl, at: g.tick, land: g.tick + MH.FALL, why };
+  g.cargo = null; g.cool = MH.COOL; ev(g, 'release', { i: cg.i, why, x: x0, xl });
+}
+function fail(g, why, d = {}) { g.fails++; g.mult = 1; g.lastFail = why; ev(g, 'fall', { why, ...d }); if (g.fails >= MH.LIVES) end(g, 'lives'); }
+// snap: landing x → ship-relative x → column (roll/heave not used for snapping, GDD 2.2)
+function snap(xl, w) {
+  const rel = xl - MH.SHIP_CX, c = Math.max(0, Math.min(MH.COLS - w, Math.round(rel + 2.5 - (w - 1) / 2)));
+  return { c, err: Math.abs(rel - colCenter(c, w)), rel };
+}
+function land(g) {
+  const f = g.falling; g.falling = null; g.lastPerfect = false;
+  const { c, err } = snap(f.xl, f.w);
+  if (err >= MH.LAND) return fail(g, 'sea', { i: f.i, xl: f.xl });
+  const span = Array.from({ length: f.w }, (_, k) => c + k);
+  const seat = Math.max(...span.map((k) => g.cols[k].length)) + 1;
+  if (seat > MH.MAXH) return fail(g, 'over', { i: f.i, c });
+  const id = ++g.boxN;
+  for (const k of span) { while (g.cols[k].length < seat - 1) g.cols[k].push({ k: 'block' }); g.cols[k].push({ k: 'box', id, w: f.w, c, lv: seat }); }
+  const perfect = err < MH.PERFECT, mult = perfect ? g.mult : 1; // streak multiplier applied to this landing
+  if (perfect) { g.score += MH.SCORE.perfect * g.mult; g.mult = Math.min(MH.SCORE.multMax, g.mult + 1); g.perfects++; g.lastPerfect = true; }
+  else { g.score += MH.SCORE.land; g.mult = 1; }
+  g.placed.push({ id, ship: g.ship.n, c, lv: seat, w: f.w, tick: g.tick });
+  ev(g, 'land', { i: f.i, id, c, lv: seat, w: f.w, perfect, mult, err: q3(err) });
+  // step rule is applied in the same tick (landing-caused violation drops immediately)
+  if (stepViolation(g) >= 0) { g.dropGap = 0; ruleDrop(g); }
+  if (!g.over && load(g) >= g.ship.target && usedCols(g) >= 4) departShip(g);
+}
+function departShip(g) {
+  const sg = segAt(g.tick), maxRoll = sg.amp;
+  const margin = 1 - (Math.abs(com(g)) * maxRoll) / MH.L;
+  g.score += MH.SCORE.depart + (margin >= 0.5 ? MH.SCORE.balance : 0);
+  g.ships++; g.phase = 'depart'; g.depart = MH.DEPART;
+  ev(g, 'depart', { n: g.ships, load: load(g), cols: usedCols(g), margin: q3(margin), shape: heights(g) });
+  g.lastShape = g.cols.map((col) => col.map((b) => b.k + (b.w || '')));
+}
+// index of a column that is ≥3 higher than its lower neighbour (deck edge: one neighbour), else -1
+function stepViolation(g) {
+  const h = heights(g); let best = -1, gap = 2;
+  for (let c = 0; c < MH.COLS; c++) { const nb = Math.min(c > 0 ? h[c - 1] : Infinity, c < MH.COLS - 1 ? h[c + 1] : Infinity); if (h[c] - nb > gap && topBox(g, c)) { gap = h[c] - nb; best = c; } }
+  return best;
+}
+const topBox = (g, c) => { const t = g.cols[c][g.cols[c].length - 1]; return t && t.k === 'box' ? t : null; };
+function removeTop(g, c, why) {
+  const b = topBox(g, c); if (!b) return false;
+  for (let k = b.c; k < b.c + b.w; k++) { const col = g.cols[k]; if (col[col.length - 1] && col[col.length - 1].id === b.id) col.pop(); }
+  // a 2-cell box can leave blocks under it; trailing blocks with nothing above stay (they mark the column)
+  g.dropGap = MH.DROP_GAP; ev(g, 'drop', { why, id: b.id, c: b.c, w: b.w });
+  fail(g, why, { id: b.id }); return true;
+}
+function ruleDrop(g) {
+  const sv = stepViolation(g); if (sv >= 0) return removeTop(g, sv, 'step');
+  const m = com(g);
+  if (Math.abs(g.roll) * Math.abs(m) > MH.L) {
+    // CoM side: tallest column with a box on top (ties → outermost) — lowering the tallest never creates a new step violation
+    const side = m > 0 ? [5, 4, 3] : [0, 1, 2]; let pick = -1;
+    for (const c of side) if (topBox(g, c) && (pick < 0 || g.cols[c].length > g.cols[pick].length)) pick = c;
+    if (pick >= 0) return removeTop(g, pick, 'tilt');
+  }
+  return false;
+}
+function end(g, why) { g.over = true; g.overWhy = why; g.phase = 'result'; g.cargo = null; ev(g, 'end', { why, ships: g.ships, score: g.score }); }
+const record = (g) => ({ ships: g.ships, score: g.score, perfects: g.perfects });
+const better = (a, b) => !b || a.ships > b.ships || (a.ships === b.ships && a.score > b.score);
+const activeSec = (g) => g.tick / MH.HZ;
+
+// ---- replay & policies (shared by node tests/sim and browser checks) ----
+function replay(seed, log, maxTicks = MH.ACTIVE + 2000) {
+  const g = createGame(seed); start(g); let i = 0, cur = { tx: null, dir: 0 };
+  for (let n = 0; n < maxTicks && !g.over; n++) {
+    let rel = false;
+    while (i < log.length && log[i][0] === g.tick) { cur = { tx: log[i][1], dir: log[i][2] }; rel = rel || !!log[i][3]; i++; }
+    step(g, { ...cur, release: rel });
+  }
+  return g;
+}
+function simulate(seed, policy, maxTicks = MH.ACTIVE + 2000) {
+  const g = createGame(seed); start(g); const P = typeof policy === 'function' ? policy : POLICIES[policy](seed);
+  for (let n = 0; n < maxTicks && !g.over; n++) step(g, P(g) || {});
+  return g;
+}
+const worldCol = (c, w = 1) => MH.SHIP_CX + colCenter(c, w);
+const POLICIES = {
+  idle: () => () => ({}),
+  // stay put and hammer release every tick
+  stayTap: () => () => ({ release: true }),
+  // park over one column and release as soon as possible
+  oneCol: (seed) => { const c = hash(seed) % 6; return (g) => ({ tx: worldCol(c, 1), release: !!g.cargo && Math.abs(g.crane.x - worldCol(c)) < 0.01 }); },
+  // move to random x and release asap
+  randomTap: (seed) => { const r = rng(hash(seed + 'rnd')); let tx = 4.5; return (g) => { if (g.tick % 18 === 0) tx = 1 + r() * 7; return { tx, release: !!g.cargo }; }; },
+  // wait for the swing to settle, aim the lowest legal column (spreading across ≥4 cols), compensate landing x
+  safe: () => (g) => {
+    if (!g.cargo) return { tx: g.crane.x };
+    const w = g.cargo.w, h = heights(g); let best = null;
+    for (let c = 0; c <= 6 - w; c++) {
+      const span = Array.from({ length: w }, (_, k) => c + k), seat = Math.max(...span.map((k) => h[k])) + 1; if (seat > 3) continue;
+      const hh = h.slice(); for (const k of span) hh[k] = seat;
+      const bad = hh.some((x, k) => x - Math.min(k > 0 ? hh[k - 1] : 9, k < 5 ? hh[k + 1] : 9) >= 3); if (bad) continue;
+      const waste = span.reduce((a, k) => a + (seat - 1 - h[k]), 0);
+      const cost = seat * 10 + waste * 6 + Math.abs(colCenter(c, w) + com(g) * 0.5) * 2;
+      if (!best || cost < best.cost) best = { c, cost };
+    }
+    if (!best) best = { c: 0 };
+    const tx = worldCol(best.c, w), settled = Math.abs(g.th) < 0.02 && Math.abs(g.om) < 0.05;
+    const near = Math.abs(landX(g) - tx) < 0.08 && Math.abs(g.crane.x - tx) < 0.02;
+    return { tx, release: settled && near || (g.cargo.auto < 20 && Math.abs(landX(g) - tx) < 0.45) };
+  },
+};
+
+// Magnet Harbor UI (prototype, t_1c491685). Inlined after magnet-core.js by scripts/build-magnet.mjs.
+/* global MH, createGame, start, step, heights, load, usedCols, cargoX, landX, segAt, windAt, colCenter, record, better, activeSec, replay, simulate, POLICIES, snap */
+(() => {
+  const T = JSON.parse(document.getElementById('mt').textContent);
+  const $ = (s) => document.querySelector(s);
+  const LS_SET = 'magnet-harbor-settings', LS_BEST = 'magnet-harbor-best';
+  const loadLS = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k) || 'null') || {}); } catch { return d; } };
+  const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  const set = loadLS(LS_SET, { sound: true, haptic: true, motion: true });
+  const mq = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = () => mq.matches || !set.motion;
+  const q = new URLSearchParams(location.search);
+  const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+  const seed = (q.get('seed') || today()).slice(0, 64);
+  const W = { sfx: 0, vib: 0, frames: 0, steps: 0 };
+  // ---- launch metrics (t_45f1a325): existing Vercel Web Analytics custom events, prop g=magnet. No ids/seeds/scores.
+  // QA traffic: ?qa=1 once sets localStorage 'pt-qa'=1 -> every event carries qa='1' (filter it out; ?qa=0 clears).
+  if (q.get('qa') === '1') save('pt-qa', 1); else if (q.get('qa') === '0') { try { localStorage.removeItem('pt-qa'); } catch {} }
+  const qa = (() => { try { return localStorage.getItem('pt-qa') === '1'; } catch { return false; } })();
+  const from = q.get('from') === 'c' ? 'c' : 'direct';
+  const ev = (name, data = {}) => {
+    const d = { g: 'magnet', from, ...data }; if (qa) d.qa = '1';
+    (window.__trackLog = window.__trackLog || []).push({ name, ...d });
+    try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (t_287677ef); share_fail is not in v1 and is dropped
+  };
+  if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
+  let runs = 0;
+  const canVib = typeof navigator.vibrate === 'function';
+
+  // ---- audio: WebAudio synth only, created on the first explicit input ----
+  let ac = null, hum = null;
+  const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+  const tone = (f, d, type = 'triangle', v = 0.14, at = 0, f2) => {
+    if (!ac || !set.sound) return; const t = ac.currentTime + at, o = ac.createOscillator(), gn = ac.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d);
+    gn.gain.setValueAtTime(v, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + d + 0.02); W.sfx++;
+  };
+  const splash = () => { if (!ac || !set.sound) return; const n = ac.sampleRate * 0.4, b = ac.createBuffer(1, n, ac.sampleRate), d = b.getChannelData(0); for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n) ** 2; const s = ac.createBufferSource(), f = ac.createBiquadFilter(), gn = ac.createGain(); f.type = 'lowpass'; f.frequency.value = 900; gn.gain.value = 0.25; s.buffer = b; s.connect(f).connect(gn).connect(ac.destination); s.start(); W.sfx++; };
+  const humOn = (on) => {
+    if (!ac || !set.sound) on = false;
+    if (on && !hum) { const o = ac.createOscillator(), gn = ac.createGain(); o.type = 'sine'; o.frequency.value = 72; gn.gain.value = 0.035; o.connect(gn).connect(ac.destination); o.start(); hum = { o, gn }; W.sfx++; }
+    if (!on && hum) { try { hum.o.stop(); } catch {} hum = null; }
+  };
+  const SFX = {
+    release: () => tone(1800, 0.05, 'square', 0.06),
+    land: () => tone(110, 0.22, 'sine', 0.3, 0, 60),
+    perfect: () => { tone(523.25, 0.3, 'triangle', 0.12); tone(659.25, 0.3, 'triangle', 0.1, 0.03); tone(783.99, 0.35, 'triangle', 0.1, 0.06); },
+    fall: () => splash(),
+    depart: () => { tone(147, 0.9, 'sawtooth', 0.07); tone(220, 0.9, 'sawtooth', 0.05); },
+    tick: () => tone(1200, 0.04, 'square', 0.04),
+  };
+  const buzz = (ms) => { if (set.haptic && canVib) try { navigator.vibrate(ms); W.vib++; } catch {} };
+
+  // ---- DOM ----
+  const cv = $('#cv'), cx = cv.getContext('2d'), play = $('#play');
+  const hud = { time: $('#h-time'), ships: $('#h-ships'), tgt: $('#h-tgt'), cols: $('#h-cols'), lives: $('#h-lives') };
+  const ready = $('#ready'), res = $('#res'), pz = $('#pz'), toast = $('#toast');
+  const touchUi = matchMedia('(hover: none) and (pointer: coarse)').matches;
+  $('#r-how').textContent = touchUi ? T.howMobile : T.howDesktop;
+  if (!canVib) for (const b of document.querySelectorAll('[data-set="haptic"]')) b.hidden = true; // GDD 9: hide on unsupported devices
+  const syncToggles = () => { for (const b of document.querySelectorAll('[data-set]')) { const k = b.dataset.set; b.setAttribute('aria-pressed', String(!!set[k])); b.classList.toggle('off', !set[k]); if (b.dataset.icon) b.textContent = k === 'sound' ? (set[k] ? '🔊' : '🔇') : set[k] ? '📳' : '📴'; } document.body.classList.toggle('rm', reduced()); };
+  for (const b of document.querySelectorAll('[data-set]')) b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save(LS_SET, set); if (k === 'sound') { if (set.sound) unlock(); else { humOn(false); if (ac) ac.suspend(); } } syncToggles(); });
+  mq.addEventListener && mq.addEventListener('change', syncToggles);
+  syncToggles();
+  const say = (m) => { toast.textContent = m; toast.classList.add('show'); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove('show'), 1600); };
+  const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
+
+  // ---- game state ----
+  let g, fx, held = 0, keys = { l: 0, r: 0 }, drag = null, tx = null, pendRel = false, paused = false, countdown = 0, acc = 0, lastT = 0;
+  const S = window.__mh = { ready: false, E: { MH, createGame, start, step, replay, simulate, POLICIES, snap, heights, load, usedCols, landX }, W, seed, set, get g() { return g; } };
+  function reset() {
+    g = createGame(seed); fx = { parts: [], icons: [], shake: 0, flash: 0, departX: 0, lastBlink: -1 };
+    tx = null; pendRel = false; drag = null; keys = { l: 0, r: 0 }; held = 0; paused = false; countdown = 0;
+    res.hidden = true; pz.hidden = true; ready.hidden = false; humOn(false); renderHud(); draw();
+    S.armed = false; S.evlog = []; S.blinkSeen = false;
+  }
+  function begin() { // explicit start only: [start] button, Space, Enter
+    if (g.phase !== 'ready') return; unlock(); start(g); ready.hidden = true; S.armed = true; runs++; if (runs > 1) ev('play_again'); ev('play_start'); // again1+start1 per restart, same as orbit/echo (PO t_287677ef) lastT = performance.now(); acc = 0; S.tStart = lastT;
+  }
+  $('#b-start').addEventListener('click', (e) => { e.stopPropagation(); begin(); });
+
+  // ---- input: drag anywhere (relative), release = drop; ←/→ + Space ----
+  const cellPx = () => cv.clientWidth / MH.W;
+  const live = () => g.phase === 'play' || g.phase === 'depart';
+  play.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('[data-ui]') || !live() || paused || countdown) return;
+    unlock(); drag = { id: e.pointerId, x0: e.clientX, c0: g.crane.x }; tx = g.crane.x;
+    try { play.setPointerCapture(e.pointerId); } catch {}
+    e.preventDefault();
+  });
+  play.addEventListener('pointermove', (e) => { if (!drag || e.pointerId !== drag.id) return; tx = Math.max(0, Math.min(MH.W, drag.c0 + (e.clientX - drag.x0) / cellPx())); });
+  play.addEventListener('pointerup', (e) => { if (!drag || e.pointerId !== drag.id) return; drag = null; pendRel = true; S.lastInput = 'pointerup'; });
+  const cancel = (e) => { if (drag && e.pointerId === drag.id) { drag = null; S.cancels = (S.cancels || 0) + 1; } }; // drag ends, cargo stays (GDD 8)
+  play.addEventListener('pointercancel', cancel); play.addEventListener('lostpointercapture', cancel);
+  addEventListener('keydown', (e) => {
+    if (e.repeat) { if (e.code === 'Space' || e.code === 'Enter') e.preventDefault(); return; } // auto-repeat ignored
+    if (e.code === 'Space' || e.code === 'Enter') {
+      e.preventDefault();
+      if (g.phase === 'ready') return begin();
+      if (g.phase === 'result') return e.code === 'Enter' && again();
+      if (paused) return resume();
+      if (e.code === 'Space' && live() && !countdown) { pendRel = true; S.lastInput = 'space'; }
+      return;
+    }
+    if (e.code === 'ArrowLeft') { keys.l = 1; e.preventDefault(); } else if (e.code === 'ArrowRight') { keys.r = 1; e.preventDefault(); } else if (e.code === 'KeyP' || e.code === 'Escape') { if (live()) paused ? resume() : pause(); }
+  });
+  addEventListener('keyup', (e) => { if (e.code === 'ArrowLeft') keys.l = 0; if (e.code === 'ArrowRight') keys.r = 0; });
+
+  // ---- pause (button, hidden tab) — active time and auto drop stop; resume with a 3 s countdown ----
+  function pause() { if (!live() || paused) return; paused = true; countdown = 0; drag = null; humOn(false); pz.hidden = false; $('#pz-n').textContent = ''; S.pauses = (S.pauses || 0) + 1; }
+  function resume() { if (!paused) return; paused = false; pz.hidden = true; countdown = 3 * 60; lastT = performance.now(); }
+  $('#b-pause').addEventListener('click', (e) => { e.stopPropagation(); paused ? resume() : pause(); });
+  $('#pz').addEventListener('click', (e) => { e.stopPropagation(); resume(); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+
+  // ---- events from the core → sound / haptic / fx ----
+  function onEvents() {
+    for (const e of g.events.splice(0)) {
+      S.evlog.push(e);
+      if (e.k === 'release') { SFX.release(); }
+      else if (e.k === 'land') { if (e.perfect) { SFX.perfect(); buzz(25); fx.flash = e.mult > 1 ? 40 : 20; fx.flashText = e.mult > 1 ? fmt(T.combo, { n: e.mult }) : T.perfect; } else { SFX.land(); buzz(15); } if (!reduced()) fx.shake = e.perfect ? 4 : 6; }
+      else if (e.k === 'fall') { SFX.fall(); buzz(50); const x = e.xl != null ? e.xl : MH.SHIP_CX; fx.icons.push({ why: e.why, x: e.why === 'sea' ? x : MH.SHIP_CX, t: 36 }); if (!reduced()) for (let i = 0; i < 14; i++) fx.parts.push({ x, y: 0, vx: (Math.random() - 0.5) * 0.12, vy: -Math.random() * 0.18, t: 40 }); }
+      else if (e.k === 'drop') { fx.icons.push({ why: e.why, x: MH.SHIP_CX + colCenter(e.c, e.w), t: 36 }); }
+      else if (e.k === 'depart') { SFX.depart(); fx.departShape = g.cols.map((c) => c.slice()); fx.departT = MH.DEPART; }
+      else if (e.k === 'end') finish();
+    }
+  }
+  // ---- main loop: fixed 1/60 s steps ----
+  function frame(now) {
+    W.frames++;
+    const dt = Math.min(250, now - (lastT || now)); lastT = now;
+    if (S.armed && !paused && !g.over) {
+      if (countdown) { countdown = Math.max(0, countdown - dt * 0.06); }
+      else {
+        acc += dt; let n = 0;
+        while (acc >= 1000 / 60 && n < 8 && !g.over) {
+          acc -= 1000 / 60; n++;
+          const dir = keys.r - keys.l, inp = { tx: dir ? null : tx, dir, release: pendRel };
+          if (dir) tx = null;
+          pendRel = false; step(g, inp); W.steps++; onEvents();
+        }
+        if (n >= 8) acc = 0;
+        // blink + tick during last 2 s of the auto-drop gauge
+        if (g.cargo && g.phase === 'play' && g.cargo.auto <= MH.BLINK) { const s = Math.ceil(g.cargo.auto / 30); if (s !== fx.lastBlink) { fx.lastBlink = s; SFX.tick(); } S.blinkSeen = true; }
+        humOn(!!(g.cargo && drag));
+      }
+    }
+    renderHud(); draw();
+    requestAnimationFrame(frame);
+  }
+  function renderHud() {
+    hud.time.textContent = Math.max(0, Math.ceil(90 - activeSec(g)));
+    hud.ships.textContent = g.ships;
+    const tg = g.ship ? g.ship.target : 6; hud.tgt.textContent = `${Math.min(load(g), tg)}/${tg}`;
+    hud.cols.textContent = `${Math.min(usedCols(g), 4)}/4`;
+    hud.lives.textContent = '⚓'.repeat(MH.LIVES - g.fails) + '·'.repeat(g.fails);
+    hud.lives.setAttribute('aria-label', `${MH.LIVES - g.fails}/${MH.LIVES}`);
+  }
+
+  // ---- drawing ----
+  const C = { sea: '#0b2a4a', sea2: '#0e3a63', rail: '#9aa4b8', box1: '#22d3ee', box2: '#facc15', block: 'rgba(255,255,255,.18)', ship: '#e8eaf0', hull: '#ff4d5e', mag: '#a78bfa' };
+  function fit() { const r = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== Math.round(w * r) || cv.height !== Math.round(h * r)) { cv.width = Math.round(w * r); cv.height = Math.round(h * r); } cx.setTransform(r, 0, 0, r, 0, 0); return [w, h]; }
+  function boxRect(x, y, w, k, s) { cx.fillStyle = k === 'block' ? C.block : w === 2 ? C.box2 : C.box1; cx.fillRect(x + 1, y + 1, w * s - 2, s - 2); if (k !== 'block') { cx.strokeStyle = 'rgba(0,0,0,.35)'; cx.lineWidth = 2; cx.strokeRect(x + 3, y + 3, w * s - 6, s - 6); } else { cx.strokeStyle = 'rgba(255,255,255,.35)'; cx.setLineDash([4, 4]); cx.strokeRect(x + 3, y + 3, w * s - 6, s - 6); cx.setLineDash([]); } }
+  function draw() {
+    const [Wd, H] = fit(), s = Wd / MH.W, rm = reduced();
+    const railY = H * 0.13, seaY = H * 0.6, deckY = H * 0.8;
+    let sh = 0; if (fx.shake && !rm) { sh = (Math.random() - 0.5) * fx.shake; fx.shake = Math.max(0, fx.shake - 0.5); }
+    cx.save(); cx.translate(sh, 0);
+    cx.clearRect(-10, 0, Wd + 20, H);
+    // sky / dock
+    const sk = cx.createLinearGradient(0, 0, 0, seaY); sk.addColorStop(0, '#0d0f1c'); sk.addColorStop(1, '#141a33'); cx.fillStyle = sk; cx.fillRect(-10, 0, Wd + 20, seaY);
+    cx.fillStyle = C.rail; cx.fillRect(0, railY - 3, Wd, 6);
+    // sea (waves are decoration → off in reduced motion)
+    cx.fillStyle = C.sea; cx.fillRect(-10, seaY, Wd + 20, H - seaY);
+    if (!rm) { cx.strokeStyle = C.sea2; cx.lineWidth = 2; const ph = performance.now() / 700; for (let r = 0; r < 4; r++) { cx.beginPath(); for (let x = 0; x <= Wd; x += 8) cx.lineTo(x, seaY + 14 + r * 28 + Math.sin(x / 30 + ph + r) * 4); cx.stroke(); } }
+    // wind arrow (warn 1 s before, on while active)
+    const wd = g.phase !== 'ready' ? windAt(g) : {};
+    if (wd.on || wd.warn) { cx.fillStyle = wd.on ? 'rgba(250,204,21,.9)' : 'rgba(250,204,21,.45)'; cx.font = `700 ${Math.round(s * 0.7)}px system-ui`; cx.textAlign = 'center'; cx.fillText(wd.dir > 0 ? '➜ ➜' : '⬅ ⬅', Wd / 2, railY + s * 1.1); }
+    // ship (roll + heave transform; departure slides it away unless reduced motion)
+    let dx = 0, alpha = 1; if (g.phase === 'depart') { const k = 1 - g.depart / MH.DEPART; if (rm) alpha = 1 - k; else dx = k * Wd; }
+    const shipX = MH.SHIP_CX * s;
+    cx.save(); cx.globalAlpha = alpha; cx.translate(shipX + dx, deckY + g.heave * s); cx.rotate((g.roll * Math.PI) / 180);
+    cx.fillStyle = C.hull; cx.beginPath(); cx.moveTo(-3.3 * s, 0); cx.lineTo(3.3 * s, 0); cx.lineTo(2.7 * s, 0.9 * s); cx.lineTo(-2.7 * s, 0.9 * s); cx.closePath(); cx.fill();
+    cx.fillStyle = 'rgba(255,255,255,.12)'; for (let c = 0; c < 6; c++) cx.fillRect((c - 3) * s + 2, -3, s - 4, 3);
+    // first-landing guide: ready screen + until the first box lands, the 6 deck cells glow green (valid landing width)
+    if (g.phase === 'ready' || (g.phase === 'play' && !g.placed.length)) {
+      const pulse = rm ? 0.3 : 0.22 + 0.12 * Math.sin(performance.now() / 260);
+      cx.fillStyle = `rgba(74,222,128,${pulse})`; cx.strokeStyle = 'rgba(74,222,128,.85)'; cx.lineWidth = 2;
+      for (let c = 0; c < 6; c++) { cx.fillRect((c - 3) * s + 2, -s + 2, s - 4, s - 4); cx.strokeRect((c - 3) * s + 2, -s + 2, s - 4, s - 4); }
+      if (g.phase === 'ready') { cx.fillStyle = 'rgba(74,222,128,.95)'; cx.font = `800 ${Math.round(s * 0.8)}px system-ui`; cx.textAlign = 'center'; cx.fillText('⬇', colCenter(2) * s, -s * 1.4); } // aim a cell centre, not the ship centre (a column boundary)
+    }
+    const seen = new Set();
+    g.cols.forEach((col, c) => col.forEach((b, lv) => { const y = -(lv + 1) * s; if (b.k === 'block') boxRect((c - 3) * s, y, 1, 'block', s); else if (!seen.has(b.id)) { seen.add(b.id); boxRect((b.c - 3) * s, y, b.w, 'box', s); } }));
+    cx.restore();
+    // landing shadow on the waterline (x_land), helps when the finger covers the ship
+    const live = g.cargo && (g.phase === 'play');
+    if (live) {
+      const lx = landX(g), xl = lx * s, w = g.cargo.w * s, sn = snap(lx, g.cargo.w), okLand = sn.err < MH.LAND;
+      cx.fillStyle = 'rgba(167,139,250,.28)'; cx.fillRect(xl - w / 2, deckY - 6, w, 6);
+      // landing marker over the snapped cell: green ✓ near the cell centre, amber ✓ at the edge (still lands), red ✕ = sea
+      const tier = sn.err < 0.25 ? 'good' : okLand ? 'edge' : 'miss';
+      cx.font = `800 ${Math.round(s * 0.55)}px system-ui`; cx.textAlign = 'center';
+      cx.fillStyle = { good: 'rgba(74,222,128,.95)', edge: 'rgba(250,204,21,.95)', miss: 'rgba(255,77,94,.95)' }[tier]; cx.fillText(okLand ? '✓' : '✕', xl, deckY - (okLand ? Math.max(...g.cols.slice(sn.c, sn.c + g.cargo.w).map((c) => c.length)) : 0) * s - s * 0.15 - 10); // above the stack it would land on
+      S.aim = okLand; S.aimTier = tier;
+    }
+    // crane trolley + rope + cargo
+    const crX = g.crane.x * s; cx.fillStyle = C.mag; cx.fillRect(crX - s * 0.45, railY - s * 0.25, s * 0.9, s * 0.4);
+    if (g.cargo) {
+      const px = cargoX(g) * s, py = railY + MH.ROPE * Math.cos(g.th) * s;
+      cx.strokeStyle = 'rgba(232,234,240,.7)'; cx.lineWidth = 2; cx.beginPath(); cx.moveTo(crX, railY); cx.lineTo(px, py); cx.stroke();
+      cx.fillStyle = C.mag; cx.fillRect(px - s * 0.35, py - s * 0.12, s * 0.7, s * 0.12);
+      boxRect(px - (g.cargo.w * s) / 2, py, g.cargo.w, 'box', s);
+      // auto-drop gauge: small ring above cargo, blinks in the last 2 s
+      const f = g.cargo.auto / MH.AUTO, blink = g.cargo.auto <= MH.BLINK && Math.floor(g.cargo.auto / 10) % 2 === 0;
+      cx.strokeStyle = blink ? '#ff4d5e' : 'rgba(255,255,255,.85)'; cx.lineWidth = 3; cx.beginPath(); cx.arc(px, py - s * 0.45, s * 0.22, -Math.PI / 2, -Math.PI / 2 + f * Math.PI * 2); cx.stroke();
+    } else { cx.strokeStyle = 'rgba(232,234,240,.4)'; cx.lineWidth = 2; cx.beginPath(); cx.moveTo(crX, railY); cx.lineTo(crX, railY + MH.ROPE * s * 0.6); cx.stroke(); }
+    if (g.falling) { const f = g.falling, k = Math.min(1, (g.tick - f.at) / MH.FALL), x = (f.x0 + (f.xl - f.x0) * k) * s, y0 = railY + MH.ROPE * s, y1 = deckY - s * 1.2; boxRect(x - (f.w * s) / 2, y0 + (y1 - y0) * k, f.w, 'box', s); }
+    // splash particles + cause icons
+    fx.parts = fx.parts.filter((p) => p.t-- > 0); cx.fillStyle = 'rgba(180,220,255,.8)'; for (const p of fx.parts) { p.x += p.vx; p.y += p.vy; p.vy += 0.012; cx.fillRect(p.x * s, seaY + p.y * s, 3, 3); }
+    fx.icons = fx.icons.filter((i) => i.t-- > 0); cx.font = `${Math.round(s * 0.8)}px system-ui`; cx.textAlign = 'center';
+    for (const i of fx.icons) { cx.fillText({ sea: '🌊', over: '⬆', step: '⬆', tilt: '⚖' }[i.why] || '!', i.x * s, deckY - s * 3.8); }
+    if (fx.flash) { fx.flash--; cx.fillStyle = '#facc15'; cx.font = `800 ${Math.round(s * 0.75)}px system-ui`; cx.fillText(fx.flashText || T.perfect, Wd / 2, H * 0.47); }
+    if (countdown) { cx.fillStyle = '#fff'; cx.font = `800 ${Math.round(s * 2)}px system-ui`; cx.fillText(String(Math.ceil(countdown / 60)), Wd / 2, H * 0.45); }
+    // first-play hint 0–2 s after start: finger drag → release icon (no text)
+    if (g.phase === 'play' && g.tick < 120 && !g.placed.length) { cx.font = `${Math.round(s * 0.9)}px system-ui`; cx.globalAlpha = 0.9; const k = (g.tick % 60) / 60; cx.fillText('👆', (1 + k * 3) * s, H * 0.5); cx.fillText('→', 2.5 * s, H * 0.44); cx.globalAlpha = 1; }
+    cx.restore();
+  }
+
+  // ---- result ----
+  function finish() {
+    humOn(false); drag = null;
+    const r = record(g), prev = loadLS(LS_BEST, {}); const had = prev.ships != null; const nb = better(r, had ? prev : null);
+    if (nb) save(LS_BEST, r);
+    $('#r-ships').textContent = fmt(T.shipsN, { n: r.ships }); $('#r-score').textContent = r.score; $('#r-perf').textContent = r.perfects;
+    $('#r-best').textContent = had ? `${fmt(T.shipsN, { n: prev.ships })} · ${prev.score}` : '—';
+    $('#r-diff').textContent = had ? `${r.ships - prev.ships >= 0 ? '+' : ''}${r.ships - prev.ships} · ${r.score - prev.score >= 0 ? '+' : ''}${r.score - prev.score}` : '';
+    $('#r-new').hidden = !(nb && had); $('#r-first').hidden = had;
+    // what to do next: cells / columns left for the next boat + a short tip for the last drop cause
+    const left = g.ship ? Math.max(0, g.ship.target - load(g)) : 0, colsLeft = Math.max(0, 4 - usedCols(g));
+    $('#r-near').hidden = !(left > 0 || colsLeft > 0);
+    $('#r-near').textContent = left > 0 && colsLeft > 0 ? fmt(T.left, { n: left, c: colsLeft }) : left > 0 ? fmt(T.leftCells, { n: left }) : fmt(T.leftCols, { c: colsLeft });
+    const lf = g.lastFail, tip = !lf ? T.tipTime : lf === 'sea' ? T.tipSea : lf === 'tilt' ? T.tipTilt : T.tipHigh;
+    $('#r-tip').textContent = tip; $('#r-tipk').textContent = lf ? `${T.lastFall} ${{ sea: '🌊', over: '⬆', step: '⬆', tilt: '⚖' }[lf] || ''}` : '⏱';
+    S.tip = { why: lf || 'time', text: tip, near: $('#r-near').textContent };
+    $('#r-why').textContent = g.overWhy === 'time' ? T.endTime : T.endLives;
+    $('#seed').textContent = seed;
+    res.hidden = false; S.result = { ...r, at: performance.now() };
+    ev('play_end', { end: g.overWhy === 'time' ? 'time' : 'lives' }); // complete = 'time' (90 s timer); 'lives' = early end after 3 falls
+    setTimeout(() => $('#b-again').focus({ preventScroll: true }), 30);
+  }
+  function again() { reset(); S.againAt = performance.now(); }
+  $('#b-again').addEventListener('click', (e) => { e.stopPropagation(); again(); });
+  // share link -> /{lang}/c/mh-{seed}: own static shell with Magnet OG, redirects to the game with the same seed
+  const link = () => `${location.origin}/${document.body.dataset.lang}/c/mh-${seed.replace(/[^A-Za-z0-9-]/g, '-')}`;
+  $('#b-link').addEventListener('click', async (e) => {
+    e.stopPropagation(); const txt = fmt(T.shareText, { ships: g.ships, url: link() });
+    ev('share_click', { via: 'link' }); let ok = false;
+    try { await navigator.clipboard.writeText(txt); ok = true; } catch { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { ok = document.execCommand('copy'); } catch {} ta.remove(); }
+    ev(ok ? 'share_done' : 'share_fail', { via: 'link' });
+    S.copied = txt; say(T.copied);
+  });
+  // 1080×1350 card, local download only (no network)
+  function card() {
+    const c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const k = c.getContext('2d');
+    const bg = k.createLinearGradient(0, 0, 0, 1350); bg.addColorStop(0, '#0d0f1c'); bg.addColorStop(1, '#0b2a4a'); k.fillStyle = bg; k.fillRect(0, 0, 1080, 1350);
+    k.fillStyle = '#e8eaf0'; k.textAlign = 'center'; k.font = '800 64px system-ui'; k.fillText(T.name, 540, 150);
+    k.fillStyle = '#22d3ee'; k.font = '900 180px system-ui'; k.fillText(fmt(T.shipsN, { n: g.ships }), 540, 380);
+    k.fillStyle = '#e8eaf0'; k.font = '700 52px system-ui'; k.fillText(`${T.score} ${g.score} · PERFECT ${g.perfects}`, 540, 480);
+    const shape = fx.departShape || g.cols, s = 110, ox = 540 - 3 * s, oy = 1050; k.fillStyle = '#ff4d5e'; k.fillRect(ox - 40, oy, 6 * s + 80, 70);
+    const seen = new Set(); shape.forEach((col, ci) => col.forEach((b, lv) => { const y = oy - (lv + 1) * s; if (b.k === 'block') { k.fillStyle = 'rgba(255,255,255,.2)'; k.fillRect(ox + ci * s + 3, y + 3, s - 6, s - 6); } else if (!seen.has(b.id)) { seen.add(b.id); k.fillStyle = b.w === 2 ? '#facc15' : '#22d3ee'; k.fillRect(ox + b.c * s + 3, y + 3, b.w * s - 6, s - 6); } }));
+    k.fillStyle = 'rgba(214,219,232,.8)'; k.font = '500 34px system-ui'; k.fillText(`seed ${seed}`, 540, 1200); k.font = '700 40px system-ui'; k.fillText('playtoday.cloud', 540, 1280);
+    return c;
+  }
+  $('#b-png').addEventListener('click', (e) => { e.stopPropagation(); ev('share_click', { via: 'png' }); card().toBlob((b) => { if (!b) return; const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `magnet-harbor-${seed}.png`; document.body.appendChild(a); a.click(); a.remove(); ev('share_done', { via: 'png' }); setTimeout(() => URL.revokeObjectURL(a.href), 2000); S.png = (S.png || 0) + 1; }, 'image/png'); });
+
+  S.finish = finish; // test hook (layout checks)
+  reset(); S.ready = true; requestAnimationFrame(frame);
+})();
+})()</script>
+</body></html>

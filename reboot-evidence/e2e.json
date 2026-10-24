@@ -17,6 +17,8 @@
     "challenge_native_share": true,
     "track_challenge_copy": true,
     "track_share_click": true,
+    "track_share_result_rush": true,
+    "rush_share_hint_ko": true,
     "track_challenge_land": true,
     "challenge_start_button_focused": true,
     "track_no_cookies": true,

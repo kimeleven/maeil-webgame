@@ -15,7 +15,8 @@
     "build:assets": "node scripts/build-chars.mjs && node scripts/build-i18n.mjs && node scripts/e2e.mjs --assets"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.2"
+    "@neondatabase/serverless": "^1.0.2",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.10",

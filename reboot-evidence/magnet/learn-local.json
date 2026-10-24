@@ -1,0 +1,75 @@
+{
+ "base": "http://localhost:5195",
+ "at": "2026-10-23T04:29:31.329Z",
+ "A1 412 ready screen shows landing-width guide + streak rule, panel leaves green deck cells visible": {
+  "pass": true,
+  "detail": "{\"text\":\"초록 칸 = 배 위 착지 자리 · 그림자가 초록 칸에 오면 손을 떼세요\",\"vis\":true,\"combo\":\"PERFECT를 이어 가면 점수 ×2·×3, 일반 착지나 낙하 땐 ×1로\",\"panelBottom\":527,\"greenCellsTop\":663}"
+ },
+ "A2 412 touch drag → aim ✓ over ship → lift → real landing": {
+  "pass": true,
+  "detail": "crane x 4, aim true/good, land {\"k\":\"land\",\"tick\":112,\"i\":0,\"id\":1,\"c\":2,\"lv\":1,\"w\":1,\"perfect\":true,\"mult\":1,\"err\":0.01}, score 25"
+ },
+ "A3 miss 0": {
+  "aim": false,
+  "x": 0.3
+ },
+ "A3 miss 1": {
+  "aim": false,
+  "x": 0.3
+ },
+ "A3 miss 2": {
+  "aim": false,
+  "x": 0.3
+ },
+ "A3 412 off-ship releases → 3 sea drops → result": {
+  "pass": true,
+  "detail": "falls sea,sea,sea, aim before miss false"
+ },
+ "A4 result tip = sea cause + cells/cols to next boat": {
+  "pass": true,
+  "detail": "{\"why\":\"sea\",\"text\":\"배 밖으로 떨어졌어요 → 보라색 그림자가 초록 칸(배 위)에 올 때 손을 떼세요\",\"near\":\"다음 배까지 5칸 · 3열 더\",\"k\":\"마지막 낙하 🌊\",\"nearShown\":true}"
+ },
+ "A5 412 [again] → ready screen (guide back)": {
+  "pass": true,
+  "detail": "{\"phase\":\"ready\",\"ready\":true,\"res\":false}"
+ },
+ "A no page errors": {
+  "pass": true,
+  "detail": ""
+ },
+ "B1 1440 ArrowRight/Left hold moves crane, Space drops, both land": {
+  "pass": true,
+  "detail": "[{\"key\":\"ArrowRight\",\"x\":4.1,\"aim\":true,\"tier\":\"good\",\"lands\":1,\"rel\":1,\"last\":{\"k\":\"land\",\"tick\":101,\"i\":0,\"id\":1,\"c\":2,\"lv\":1,\"w\":1,\"perfect\":true,\"mult\":1,\"err\":0.102}},{\"key\":\"ArrowRight\",\"x\":5,\"aim\":true,\"tier\":\"good\",\"lands\":2,\"rel\":2,\"last\":{\"k\":\"land\",\"tick\":214,\"i\":1,\"id\":2,\"c\":3,\"lv\":1,\"w\":1,\"perfect\":true,\"mult\":2,\"err\":0.008}}]"
+ },
+ "B no page errors": {
+  "pass": true,
+  "detail": ""
+ },
+ "C_seeds": {
+  "step": {
+   "seed": "tip0",
+   "pol": "oneCol"
+  }
+ },
+ "C result tip for 'step' (oneCol, seed tip0)": {
+  "pass": true,
+  "detail": "{\"why\":\"step\",\"text\":\"너무 높게 쌓였어요 → 3단을 넘기지 말고 낮은 열부터 옆으로 넓게\",\"near\":\"다음 배까지 3칸 · 2열 더\",\"k\":\"마지막 낙하 ⬆\"}"
+ },
+ "C result tip for time-out / last cause (safe policy)": {
+  "pass": true,
+  "detail": "{\"why\":\"time\",\"text\":\"시간이 끝났어요 → 흔들림이 멈춘 뒤 놓으면 PERFECT가 더 잘 나와요\",\"near\":\"다음 배까지 1칸 남았어요\",\"fails\":0,\"ships\":2}"
+ },
+ "D streak: PERFECT mult goes ×2/×3 and resets to ×1 after a normal landing or a drop": {
+  "pass": true,
+  "detail": "{\"seed\":\"pf0\",\"streak\":[2,3,3,3,3,3,3],\"resetAfterNormal\":true}"
+ },
+ "D streak label text": {
+  "pass": true,
+  "detail": "연속 PERFECT ×3"
+ },
+ "E 6 langs × 360/412: ready leaves deck visible, result fits": {
+  "pass": true,
+  "detail": "ko@360: ready 450<560 result 526/526 | ko@412: ready 527<663 result 631/631 | en@360: ready 469<560 result 526/526 | en@412: ready 568<663 result 631/631 | ja@360: ready 469<560 result 526/526 | ja@412: ready 568<663 result 631/631 | zh-hans@360: ready 431<560 result 526/526 | zh-hans@412: ready 503<663 result 631/631 | es@360: ready 506<560 result 565/565 | es@412: ready 607<663 result 673/673 | pt-br@360: ready 506<560 result 565/565 | pt-br@412: ready 588<663 result 673/673"
+ },
+ "fails": []
+}

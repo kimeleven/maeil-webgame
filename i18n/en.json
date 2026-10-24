@@ -27,11 +27,11 @@
  },
  "seo": {
   "lobby": {
-   "title": "Daily Arcade — 30-Second Game, Character Quiz, Friend Chemistry",
+   "title": "Daily Arcade — Free Browser Games, No Install, 30 Seconds",
    "desc": "Play Gate Rush in 30 seconds, find your play character in 10 questions, and check your chemistry with friends. Free, no sign-up."
   },
   "game": {
-   "title": "Gate Rush — 30-Second Crowd Runner Browser Game | Daily Arcade",
+   "title": "Gate Rush — 30-Second Crowd Runner Game | Daily Arcade",
    "desc": "Pick gates to grow your squad, dodge drones and lasers, and beat the boss. Free browser game that speeds up every sector. Challenge friends on the same run."
   },
   "quiz": {
@@ -153,7 +153,7 @@
   },
   "start": "Launch",
   "resume": "Keep running",
-  "newRun": "New run",
+  "shareHint": "Send it to a friend and they can take on the same run. Sharing is always optional.", "newRun": "New run",
   "restart": "Start over",
   "slow": "Slow (0.8×)",
   "assistNote": "Slow mode records get an ASSIST badge and can't create challenge links.",
@@ -411,5 +411,6 @@
  },
  "halloween": {"banner": "🎃 Halloween limited theme", "sub": "Until Oct 31 — result cards get a Halloween frame.", "frame": "HAPPY HALLOWEEN"},
  "quickbreak": {"title": "30-Second Browser Game for a Quick Break — No Sign-up", "desc": "Got 30 seconds? Play a free browser game with no install or sign-up, then try the 10-question character quiz or a friend chemistry check.", "h1": "Bored? Play a 30-second game", "p1": "You don't need to install an app for a short break. A round of Gate Rush lasts 30 seconds, so it's over before your coffee cools, and it starts right in your browser with no sign-up.", "p2": "If you still have a minute, take the 10-question character quiz to find your play character, or send a link to a friend to check your chemistry. All of it is free.", "link": "30-second game for a quick break"},
+ "commute": {"title": "Commute Browser Game — 30 Seconds, No Install | Daily Arcade", "desc": "A free browser game for your commute: one 30-second run, no install, and you can resume later. Try Gate Rush or the play character quiz right now.", "h1": "On the way home? Play one quick run", "p1": "No app to install. Open the link and a 30-second run starts right away. If you get interrupted on the move, you can pick up where you left off.", "p2": "After a quick run, you can also take the play character quiz or check your chemistry with a friend. Everything is free.", "link": "Commute game"},
  "friendplay": {"title": "Things to Do With Friends Online — Chemistry Test & 30s Game", "desc": "Not sure what to do with friends? Send one link to see your chemistry, then race in a 30-second browser game. No sign-up, all free.", "h1": "What to do with friends? One link is enough", "p1": "Distance is fine. Send one link and your friend answers 10 questions, then you both see your play-character chemistry right away. No sign-up or install.", "p2": "After the chemistry result, try a 30-second Gate Rush round and compare scores. Sharing a result is always optional.", "link": "Things to do with friends"}
 }

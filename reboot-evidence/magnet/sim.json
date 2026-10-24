@@ -1,0 +1,161 @@
+{
+ "M2 first landing ≤5 s with exactly one release (100 seeds)": {
+  "pass": true,
+  "detail": "100/100, slowest first landing 2.20 s"
+ },
+ "M2 land+PERFECT+roll+2-cell all within 30 s (100 seeds)": {
+  "pass": true,
+  "detail": "100/100"
+ },
+ "M3 replay identical (50 seeds × 2 policies)": {
+  "pass": true,
+  "detail": "100/100 "
+ },
+ "M5 idle: auto drop 360 ticks after ready, result < 30 s (100 seeds)": {
+  "pass": true,
+  "detail": "100/100, ready→drop ticks {360}, worst 19.57 s"
+ },
+ "M6 box (col, level) fixed until removed (100 seeds)": {
+  "pass": true,
+  "detail": "2152 box-cells tracked, moved 0, non-integer 0"
+ },
+ "M6b 4th level → over (sea fall)": {
+  "pass": true,
+  "detail": "[2,3,3,2,0,0]"
+ },
+ "M6b column 3 above neighbour → top box drops (only 1)": {
+  "pass": true,
+  "detail": "[2,0,0,0,0,0]"
+ },
+ "M6b load 6 ≥ target but 3 cols → no departure": {
+  "pass": true,
+  "detail": "load 6 cols 3 ships 0"
+ },
+ "M6b 4th column → departs": {
+  "pass": true,
+  "detail": "ships 1"
+ },
+ "M6b 2-cell box sits on max+1, low side blocked": {
+  "pass": true,
+  "detail": "[[],[],[\"b\",\"b\"],[\"b\",\"b\"],[],[]]2"
+ },
+ "M7 rule drops: one box at a time, tilt ≤1 per 0.5 s": {
+  "pass": true,
+  "detail": "multi 0, tilt<0.5s 0"
+ },
+ "M11a idle: 0 ships on all 20 seeds": {
+  "pass": true,
+  "detail": "ships 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 score 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
+ },
+ "M11a oneCol: 0 ships on all 20 seeds": {
+  "pass": true,
+  "detail": "ships 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 score 175,160,175,175,210,275,175,160,210,275,160,175,175,175,275,210,160,175,275,210"
+ },
+ "M11a stayTap: 0 ships on all 20 seeds": {
+  "pass": true,
+  "detail": "ships 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 score 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"
+ },
+ "M11a no column left 3 above a neighbour (all policies incl. first 10 s)": {
+  "pass": true,
+  "detail": "violations 0"
+ },
+ "M11b": {
+  "randomTap": {
+   "ships": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "score": [
+    20,
+    45,
+    0,
+    0,
+    10,
+    80,
+    35,
+    20,
+    0,
+    10,
+    0,
+    0,
+    55,
+    10,
+    20,
+    25,
+    0,
+    55,
+    10,
+    40
+   ]
+  },
+  "safe": {
+   "ships": [
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    3,
+    2,
+    3,
+    2,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    2,
+    2
+   ],
+   "score": [
+    1000,
+    795,
+    840,
+    740,
+    805,
+    770,
+    845,
+    780,
+    935,
+    805,
+    855,
+    870,
+    775,
+    800,
+    760,
+    800,
+    740,
+    825,
+    775,
+    820
+   ]
+  },
+  "lower": 20
+ },
+ "M11b target ≥18/20": {
+  "pass": true,
+  "detail": "20/20"
+ }
+}
