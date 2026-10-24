@@ -101,6 +101,15 @@ async function answer(p, wrong = false) { await waitShown(p); const a = await p.
   await p.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => false }); }); await p.click('#b-resume');
   await p.evaluate(() => dispatchEvent(new Event('blur'))); const bl = await p.evaluate(() => ({ paused: __sr.paused, why: __sr.evlog.filter((e) => e.k === 'pause').at(-1).why })); await p.click('#b-resume');
   ok('R10 hidden → pause (clock stops), blur → pause, resume continues', h.paused && h.why === 'hidden' && Math.abs(h2 - h.G) < 1 && bl.paused && bl.why === 'blur', JSON.stringify({ h, h2, bl }));
+  // t_4dc27e55 pause sheet legible: no blur on popup/ancestors, board stays blurred, buttons >=44px, at 360/412/1440
+  for (const vp of [{ width: 360, height: 740 }, { width: 412, height: 915 }, { width: 1440, height: 1000 }]) {
+    const q = await open(vp); await q.click('#b-start'); await sleep(400); await q.click('#b-pause');
+    const v = await q.evaluate(() => { const chain = []; for (let e = document.getElementById('b-resume'); e; e = e.parentElement) chain.push(getComputedStyle(e).filter); const r1 = document.getElementById('b-resume').getBoundingClientRect(), r2 = document.getElementById('b-restart').getBoundingClientRect(); const board = [...document.querySelectorAll('#play>:not(.sheet):not(.note)')].map((e) => getComputedStyle(e).filter); const bg = getComputedStyle(document.querySelector('#pz .panel')).backgroundColor; return { clean: chain.every((f) => f === 'none'), board: board.length > 0 && board.every((f) => f.includes('blur')), h: Math.min(r1.height, r2.height), bg }; });
+    await q.screenshot({ path: EV + `paused-legible-${vp.width}.png` });
+    const a = parseFloat((v.bg.match(/[\d.]+(?=\))/) || ['1'])[0]);
+    ok(`pause popup legible @${vp.width}: popup unblurred, board blurred, buttons ≥44px, panel opaque ≥.9`, v.clean && v.board && v.h >= 44 && (v.bg.startsWith('rgb(') || a >= 0.9), JSON.stringify(v));
+    await q.ctx.close();
+  }
   // R8 restart from pause → ready, best untouched
   await p.click('#b-pause'); await p.click('#b-restart'); const rs = await p.evaluate(() => ({ phase: __sr.g.phase, best: localStorage.getItem('sr-best') }));
   ok('R8 [처음부터] → ready, best not written', rs.phase === 'ready' && rs.best === null, JSON.stringify(rs));

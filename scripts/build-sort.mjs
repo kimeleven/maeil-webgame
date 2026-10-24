@@ -62,7 +62,7 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .rail.on{background:rgba(255,255,255,.22);transform:translateY(2px)}.rail.ok{border-color:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.35)}.rail.ok::after{content:"✓";color:#4ade80;font-size:22px;font-weight:900}.rail.bad{border-color:#f87171}.rail.bad::after{content:"✕";color:#f87171;font-size:22px;font-weight:900}
 #rails.flash .rail{border-color:#fff;border-width:4px}.rm .parcel.in{animation:none}
 .tut{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:28px;color:#4ade80;animation:bl .5s steps(2) infinite}.rm .tut{animation:none}
-.hid .parcel .sym,.hid .rail i{visibility:hidden}.hid #play{filter:blur(6px)}
+.hid .parcel .sym,.hid .rail i{visibility:hidden}.hid #play>:not(.sheet):not(.note){filter:blur(6px)}.sheet.pz{background:rgba(7,8,12,.78)}.pz .panel{background:rgba(18,20,28,.96)}.pz .panel h2,.pz .panel .how,.pz .btn{color:var(--fg)}.pz .btn{min-height:48px}
 .note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;background:rgba(7,8,12,.6)}.note .panel{align-items:center;text-align:center}.note .pic{font-size:44px;font-weight:900;letter-spacing:4px;color:var(--gold)}
 .dots{font-size:16px;letter-spacing:1px;word-break:break-all;color:var(--gold);line-height:1.25}.fbn{font-size:11px;color:var(--muted)}.cut{font-size:12px;color:var(--muted)}
 @media (min-width:900px){.stage{width:min(560px,100vw)}}
