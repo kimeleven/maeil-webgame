@@ -20,7 +20,7 @@ async function main() {
       seed = m ? m[1] : null;
       if (q.get('vs')) { try { const r = await (await fetch(`/api/share/${encodeURIComponent(q.get('vs'))}`)).json(); if (r && r.kind === 'rush' && !r.payload.assist) challenge = { stage: r.payload.stage, score: r.payload.score }; } catch {} }
     }
-    if (page === 'c') track('challenge_land');
+    if (page === 'c') { track('challenge_land'); try { window.gev && window.gev('challenge_land', { g: 'rush' }); } catch (e) {} }
     const capture = q.get('capture') === '1';
     if (capture) document.documentElement.classList.add('capture');
     mountRush(document.getElementById('game'), { D, lang, seed: q.get('seed') || seed, challenge, capture, landing: page === 'c' });
