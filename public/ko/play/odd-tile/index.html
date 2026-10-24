@@ -1,0 +1,482 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
+<title>다른 하나 (미리보기) | playtoday</title><meta name="description" content="같은 그림 사이에서 딱 하나 다른 칸을 찾아 누르세요. 60초 동안 몇 개 찾을까요?"><meta name="robots" content="noindex,nofollow"><link rel="icon" href="data:,">
+<style>:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;overscroll-behavior:contain}
+body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;gap:6px}
+.logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:var(--gold)}.tr{display:flex;gap:6px;align-items:center}
+.langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--cyan)}
+.stage{position:relative;width:min(100vw,calc((100dvh - 64px)*9/16),540px);min-width:min(100vw,360px);min-height:min(calc(100dvh - 64px),960px);display:flex;flex-direction:column;align-items:center;padding:0 12px 8px}
+.hud{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:4px 0 6px;font-variant-numeric:tabular-nums}.hud>div{position:relative;display:flex;flex-direction:column;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:4px 2px;backdrop-filter:blur(18px);overflow:hidden}
+.hud span{font-size:11px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud b{font-size:17px;white-space:nowrap}
+.tbar{position:absolute;left:0;bottom:0;height:4px;width:100%;background:linear-gradient(90deg,#6366f1,#22d3ee)}.tbar.low{background:#f87171}
+.dl{width:min(100%,380px);height:6px;border-radius:3px;background:rgba(255,255,255,.06);margin:6px 0 8px;overflow:hidden}.dl i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22d3ee,#6366f1)}
+#grid{width:min(100%,380px);aspect-ratio:1/1;display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:6px;touch-action:manipulation}
+.cell{position:relative;min-width:44px;min-height:44px;padding:0;border-radius:14px;border:2px solid var(--edge);background:linear-gradient(rgba(255,255,255,.07),rgba(255,255,255,.03));cursor:pointer;overflow:hidden;touch-action:manipulation}
+.cell canvas{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.cell.focus{border:4px solid var(--cyan)}.cell.down{background:rgba(34,211,238,.18)}
+.cell.ok{border:4px solid #4ade80}.cell.ok::after{content:"✓";position:absolute;right:6px;top:2px;font:800 20px system-ui;color:#4ade80}
+.cell.bad{border:4px solid #f87171}.cell.bad::after{content:"✕";position:absolute;right:6px;top:2px;font:800 20px system-ui;color:#f87171}
+.cell.show{border:4px dashed #facc15}
+.cell.breathe{animation:br 1s ease-in-out 1}@keyframes br{50%{box-shadow:0 0 0 6px rgba(34,211,238,.45)}}
+.rm .cell.breathe{animation:none;border-width:5px;border-color:rgba(34,211,238,.7)}
+.under{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:10px;min-height:60px}
+.chip{font-size:14px;font-weight:700;padding:6px 12px;border-radius:99px;border:1px solid var(--edge);background:var(--panel);font-variant-numeric:tabular-nums}.chip.hit{color:#4ade80}.chip.wrong,.chip.miss{color:#fca5a5}
+.hint{color:var(--muted);font-size:13px;text-align:center}
+.ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
+.ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
+.sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
+.sheet.pz{backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:rgba(7,8,12,.86)}
+.panel{width:100%;max-width:420px;background:var(--glass);border:1px solid var(--edge);border-radius:20px;padding:18px;backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);display:flex;flex-direction:column;gap:10px;box-shadow:0 30px 60px -30px rgba(0,0,0,.8);max-height:100%;overflow-y:auto}
+.panel>*{flex-shrink:0}.panel h2{margin:0;font-size:22px}.ready .panel,.pz .panel{align-items:center;text-align:center}
+.goal{margin:0;font-size:17px;font-weight:700}.how{margin:0;font-size:15px;color:var(--muted)}.icon{font-size:30px;letter-spacing:4px}.small{font-size:13px;color:var(--muted)}
+.btn{min-height:46px;border-radius:14px;border:1px solid var(--edge);font:700 15px/1.2 inherit;color:var(--fg);cursor:pointer;padding:6px 10px;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05))}
+.btn.main{min-height:64px;width:100%;font-size:22px;border:0;color:#fff;background:linear-gradient(135deg,#6366f1,#0ea5c6);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 24px -12px rgba(99,102,241,.9)}
+.nums{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:14px;font-variant-numeric:tabular-nums}.nums span{color:var(--muted)}.nums b{font-size:18px}.nums b.big{font-size:34px;color:var(--cyan)}
+.new{color:#4ade80;font-weight:800}.warn{color:#fca5a5;font-size:13px;font-weight:700}
+.line{font-size:14px;letter-spacing:2px;word-break:break-all;color:var(--fg)}.lineT{font-size:12px;color:var(--muted);font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 120px}.tgs{display:flex;gap:6px;flex-wrap:wrap;width:100%}.tgs .tg{flex:1 1 80px}
+.seed{color:var(--muted);font-size:12px;text-align:center;word-break:break-all}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+@media (min-width:900px){body{background:radial-gradient(900px 600px at 15% 30%,rgba(34,211,238,.10),transparent),radial-gradient(900px 600px at 85% 70%,rgba(99,102,241,.16),transparent),var(--bg)}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}.cell.breathe{animation:none;border-width:5px;border-color:rgba(34,211,238,.7)}}
+@media (max-height:860px){.ready .icon{display:none}.panel{gap:6px;padding:12px}.btn.main{min-height:54px;font-size:20px}.nums b.big{font-size:26px}.tgs .tg,.row .btn{min-height:44px}}</style></head>
+<body data-page="odd-tile" data-lang="ko">
+<header class="top"><a class="logo" href="/ko/"><i></i>playtoday</a><span class="tag">미리보기</span><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="소리" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="진동" aria-pressed="true">📳</button><button class="ic" id="b-pause" type="button" data-ui aria-label="일시정지">⏸</button><details class="langs" data-ui><summary aria-label="Language">ko ▾</summary><nav><a href="/ko/play/odd-tile/" hreflang="ko" aria-current="true">ko</a><a href="/en/play/odd-tile/" hreflang="en">en</a><a href="/ja/play/odd-tile/" hreflang="ja">ja</a><a href="/zh-hans/play/odd-tile/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/odd-tile/" hreflang="es">es</a><a href="/pt-br/play/odd-tile/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
+<main class="stage" id="stage">
+<div class="hud"><div><span>남은 초</span><b id="h-time">60.0</b><i class="tbar" id="h-bar"></i></div><div><span>찾음</span><b id="h-found">0</b></div><div><span>점수</span><b id="h-score">0</b></div><div><span>콤보</span><b id="h-combo">—</b></div></div>
+<div class="dl" aria-hidden="true"><i id="dbar"></i></div>
+<div id="grid" role="grid" aria-label="다른 하나"></div>
+<div class="under"><div class="chip" id="chip" hidden></div><span class="hint">방향키로 이동 · Space로 선택 · P 일시정지</span></div>
+<div class="sheet ready" id="ready" data-ui><div class="panel">
+<h2>다른 하나</h2><p class="goal">다른 하나를 누르세요</p><div class="icon" aria-hidden="true">● ● ● ◐ → !</div><p class="how">모든 칸이 같고 한 칸만 모양이 달라요. 60초 동안 많이 찾으세요.</p>
+<button class="btn main" id="b-start" type="button">시작</button><div class="small">방향키로 이동 · Space로 선택 · P 일시정지</div>
+</div></div>
+<div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>일시정지</h2><button class="btn main" id="b-resume" type="button">계속</button><button class="btn" id="b-restart" type="button">처음부터</button><div class="tgs"><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">모션</button></div></div></div>
+<div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
+<h2 id="r-title">시간 끝!</h2><div class="new" id="r-new" hidden>새 최고 기록!</div><div class="new" id="r-first" hidden>첫 기록!</div>
+<div class="nums"><span>이번</span><b class="big" id="r-score"></b><span>내 최고</span><b id="r-best"></b><span>최고와 차이</span><b id="r-diff"></b><span>찾음</span><b id="r-found"></b><span>정확도</span><b id="r-acc"></b><span>최장 콤보</span><b id="r-combo"></b></div>
+<div class="warn" id="r-cut" hidden>마지막 1판 시간 종료</div><span class="lineT">격자별 결과</span><div class="line" id="r-line" aria-hidden="true"></div>
+<button class="btn main" id="b-again" type="button">다시</button>
+<div class="row"><button class="btn" id="b-png" type="button">PNG 저장</button><button class="btn" id="b-link" type="button">도전 링크 복사</button></div>
+<div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">소리</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">진동</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">모션</button></div><div class="seed">seed <span id="seed"></span> <span id="r-fb"></span></div>
+</div></div>
+</main><div class="toast" id="toast" role="status"></div>
+<script id="ot" type="application/json">{"name":"다른 하나","preview":"미리보기","desc":"같은 그림 사이에서 딱 하나 다른 칸을 찾아 누르세요. 60초 동안 몇 개 찾을까요?","back":"playtoday","goal":"다른 하나를 누르세요","how":"모든 칸이 같고 한 칸만 모양이 달라요. 60초 동안 많이 찾으세요.","start":"시작","keys":"방향키로 이동 · Space로 선택 · P 일시정지","time":"남은 초","found":"찾음","score":"점수","combo":"콤보","pause":"일시정지","paused":"일시정지","resume":"계속","restart":"처음부터","over":"시간 끝!","now":"이번","best":"내 최고","diff":"최고와 차이","acc":"정확도","maxCombo":"최장 콤보","line":"격자별 결과","again":"다시","png":"PNG 저장","link":"도전 링크 복사","copied":"복사했어요","shareText":"오늘 '다른 하나'에서 {n}개 찾았어요! 같은 문제로 해 볼래요? → {url}","sound":"소리","haptic":"진동","motion":"모션","newBest":"새 최고 기록!","first":"첫 기록!","lastCut":"마지막 1판 시간 종료","fbNote":"일부 격자 대체됨"}</script>
+<script>(()=>{// Odd Tile (다른 하나) deterministic core — GDD r3 (games/odd-tile/GDD.md) [t_2964ede9]
+// DOM-free. All times are integer *active* ms relative to [start] (game clock). Grid model mirrors
+// projects/.../02_수행/odd-tile-r2-verify.py (shapes, dots, 3% pixel rule) so the validity table matches.
+const OT = { T: 60000, W: 16, G: 50, ANIM_OK: 300, ANIM_BAD: 600, TRIES: 8, MINDIFF: 0.03, BLOCK: 9 };
+const SHAPES = ['circle', 'triangle', 'square'];
+const BASE_SCALE = 0.8, DOT_R = 0.06;
+const DOT_LAYOUT = { 1: [[0, 0]], 2: [[-0.08, 0], [0.08, 0]], 3: [[-0.08, 0.05], [0.08, 0.05], [0, -0.07]], 4: [[-0.07, -0.07], [0.07, -0.07], [-0.07, 0.07], [0.07, 0.07]] };
+// rows of tableOf(k): attribute -> parameter
+const ROWS = {
+  T: { size: 2 },
+  R1: { rot: 90, dots: [1, 3], size: 1.5 },
+  R2: { rot: 45, dots: [2, 3], size: 1.3, round: true },
+  R3: { rot: 30, dots: [2, 4], size: 1.2, round: true },
+};
+// §4.2 validity table (X = never generated). Verified at runtime by the renderer (R7d).
+const ALL = ['circle', 'triangle', 'square'];
+const VALID = {
+  T: { size: ALL },
+  R1: { rot: ['triangle'], dots: ALL, size: ALL },
+  R2: { rot: ['triangle', 'square'], dots: ALL, size: ALL, round: ['triangle', 'square'] },
+  R3: { rot: ['triangle', 'square'], dots: ALL, size: ALL, round: ['triangle', 'square'] },
+};
+const isValid = (row, attr, shape) => !!(VALID[row] && VALID[row][attr] && VALID[row][attr].includes(shape));
+function tableOf(k) {
+  if (k <= 3) return { n: 2, dl: 5000, row: 'T' };
+  if (k <= 12) return { n: 3, dl: 3000, row: 'R1' };
+  if (k <= 24) return { n: 3, dl: 2500, row: 'R2' };
+  return { n: 4, dl: Math.max(1800, 2500 - 100 * Math.floor((k - 25) / 6)), row: 'R3' };
+}
+// ---- rng ----
+function fnv1a32(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
+function mulberry32(a) { return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+// ---- glyphs ----
+// glyph = {shape, scale, rot, round, dots}
+function glyphPair(shape, attr, param, bd) {
+  const base = { shape, scale: BASE_SCALE, rot: 0, round: false, dots: bd };
+  const odd = { ...base };
+  if (attr === 'rot') odd.rot = param;
+  else if (attr === 'size') odd.scale = BASE_SCALE * param;
+  else if (attr === 'round') odd.round = true;
+  else if (attr === 'dots') { base.dots = param[0]; odd.dots = param[1]; }
+  return [base, odd];
+}
+function diffAttrs(a, b) { return ['shape', 'scale', 'rot', 'round', 'dots'].filter((k) => a[k] !== b[k]); }
+// polygon in cell units centered at 0 (y down); null for circle
+function glyphPoly(g) {
+  let pts;
+  if (g.shape === 'circle') return null;
+  if (g.shape === 'square') { const h = 0.32 * g.scale; pts = [[-h, -h], [h, -h], [h, h], [-h, h]]; }
+  else { const R = 0.4 * g.scale; pts = [0, (2 * Math.PI) / 3, (4 * Math.PI) / 3].map((a) => [R * Math.sin(a), -R * Math.cos(a)]); }
+  if (g.round) {
+    const out = [], n = pts.length;
+    for (let i = 0; i < n; i++) { const p = pts[(i - 1 + n) % n], q = pts[i], r = pts[(i + 1) % n];
+      out.push([q[0] + (p[0] - q[0]) * 0.35, q[1] + (p[1] - q[1]) * 0.35]); out.push([q[0] + (r[0] - q[0]) * 0.35, q[1] + (r[1] - q[1]) * 0.35]); }
+    pts = out;
+  }
+  const t = (g.rot * Math.PI) / 180, c = Math.cos(t), s = Math.sin(t);
+  return pts.map(([x, y]) => [x * c - y * s, x * s + y * c]);
+}
+const circleR = (g) => 0.36 * g.scale;
+// ---- grid generation (§4.1) ----
+const TUTORIAL = [ // k = 1..3: 2x2, size x2, 5 s, fixed answer cells (BR, TL, TR)
+  { k: 1, n: 2, dl: 5000, row: 'T', ans: 3, attr: 'size', base: { shape: 'circle', scale: 0.8, rot: 0, round: false, dots: 1 } },
+  { k: 2, n: 2, dl: 5000, row: 'T', ans: 0, attr: 'size', base: { shape: 'triangle', scale: 0.8, rot: 0, round: false, dots: 2 } },
+  { k: 3, n: 2, dl: 5000, row: 'T', ans: 1, attr: 'size', base: { shape: 'square', scale: 0.8, rot: 0, round: false, dots: 1 } },
+].map((g) => ({ ...g, odd: { ...g.base, scale: g.base.scale * 2 }, glyph: 'tutorial' }));
+const P9 = [0, 7, 5, 3, 8, 1, 6, 2, 4];
+const P16 = [0, 10, 5, 15, 3, 9, 6, 12, 1, 14, 7, 11, 2, 8, 13, 4];
+const blockKs = (b) => Array.from({ length: OT.BLOCK }, (_, i) => 4 + OT.BLOCK * b + i);
+const centerOf = (n) => (n === 3 ? 4 : -1);
+const tailOf = (grids) => grids.slice(-2).map((g) => [g.n, g.ans]);
+const TUT_TAIL = tailOf(TUTORIAL);
+function makeGrid(k, ans, base, attr) {
+  const t = tableOf(k), param = ROWS[t.row][attr];
+  const [b, o] = glyphPair(base.shape, attr, param, base.dots);
+  return { k, n: t.n, dl: t.dl, row: t.row, ans, attr, base: b, odd: o, glyph: 'gen' };
+}
+function attempt(seed, b, n) {
+  const rng = mulberry32(fnv1a32(`${seed}#${b}#${n}`)), out = [], cnt = {}, ks = blockKs(b);
+  let prev = null;
+  for (const k of ks) {
+    const t = tableOf(k), cells = t.n * t.n;
+    // sample a cell with soft avoidance (validator still decides)
+    let ans = Math.floor(rng() * cells);
+    for (let i = 0; i < 6; i++) { const c = cnt[`${t.n}:${ans}`] || 0; const bad = (prev && prev[0] === t.n && prev[1] === ans) || (t.n === 3 ? c >= 2 || (ans === 4 && c >= 1) : c >= 1); if (!bad) break; ans = Math.floor(rng() * cells); }
+    cnt[`${t.n}:${ans}`] = (cnt[`${t.n}:${ans}`] || 0) + 1; prev = [t.n, ans];
+    const shape = SHAPES[Math.floor(rng() * 3)];
+    const attrs = Object.keys(ROWS[t.row]).filter((a) => isValid(t.row, a, shape));
+    const attr = attrs[Math.floor(rng() * attrs.length)];
+    const dots = 1 + Math.floor(rng() * 4);
+    out.push(makeGrid(k, ans, { shape, dots }, attr));
+  }
+  return out;
+}
+// returns list of failed condition ids ('' list = pass)
+function validateWhy(block, b, prevTail) {
+  const why = new Set(), ks = blockKs(b);
+  if (block.length !== ks.length) why.add('len');
+  block.forEach((g, i) => {
+    const t = tableOf(ks[i]);
+    if (g.k !== ks[i] || g.n !== t.n || g.dl !== t.dl || g.row !== t.row || !(g.attr in ROWS[t.row])) why.add('4');
+    if (g.ans < 0 || g.ans >= g.n * g.n || !Number.isInteger(g.ans)) why.add('1');
+    const d = diffAttrs(g.base, g.odd), want = { rot: 'rot', size: 'scale', round: 'round', dots: 'dots' }[g.attr];
+    if (d.length !== 1 || d[0] !== want || !isValid(g.row, g.attr, g.base.shape)) why.add('1');
+    const [eb, eo] = glyphPair(g.base.shape, g.attr, ROWS[t.row][g.attr], g.base.dots);
+    if (JSON.stringify(eb) !== JSON.stringify(g.base) || JSON.stringify(eo) !== JSON.stringify(g.odd)) why.add('1');
+  });
+  for (const n of [3, 4]) {
+    const cells = block.filter((g) => g.n === n).map((g) => g.ans), c = {};
+    cells.forEach((x) => (c[x] = (c[x] || 0) + 1));
+    const mx = Math.max(0, ...Object.values(c));
+    if (n === 3 && (mx > 2 || (c[4] || 0) > 1)) why.add('2');
+    if (n === 4 && mx > 1) why.add('2');
+  }
+  const full = [...(prevTail || []), ...block.map((g) => [g.n, g.ans])];
+  for (let i = 1; i < full.length; i++) if (full[i][0] === full[i - 1][0] && full[i][1] === full[i - 1][1]) why.add('3');
+  if (new Set(block.map((g) => g.base.shape)).size < 3) why.add('5');
+  return [...why];
+}
+const realValidate = (block, b, prevTail) => validateWhy(block, b, prevTail).length === 0;
+function fallbackBlock(b, prevTail) {
+  const ks = blockKs(b);
+  for (let r = 0; r < 16; r++) {
+    const block = ks.map((k, i) => { const t = tableOf(k), P = t.n === 3 ? P9 : P16; return makeGrid(k, P[(i + r) % P.length], { shape: SHAPES[i % 3], dots: 1 + (i % 4) }, 'size'); });
+    if (realValidate(block, b, prevTail)) return block.map((g) => ({ ...g, glyph: 'fallback-block', fbRot: r }));
+  }
+  throw new Error('fallback impossible'); // never (R7c)
+}
+function generate(seed, b, prevTail, validate = realValidate) {
+  for (let n = 0; n < OT.TRIES; n++) { const blk = attempt(seed, b, n); if (validate(blk, b, prevTail)) return { grids: blk, fallback: false, tries: n + 1 }; }
+  return { grids: fallbackBlock(b, prevTail), fallback: true, tries: OT.TRIES };
+}
+// lazily generated grid sequence for a seed
+function makeDeck(seed, validate = realValidate) {
+  const blocks = [], logs = [];
+  const ensure = (b) => { while (blocks.length <= b) { const i = blocks.length, tail = i === 0 ? TUT_TAIL : tailOf(blocks[i - 1].grids); const t0 = (globalThis.performance || Date).now(); const r = generate(seed, i, tail, validate); r.ms = (globalThis.performance || Date).now() - t0; blocks.push(r); if (r.fallback) logs.push(`block=fallback:${i}`); } };
+  return { blocks, logs, ensure, grid(k) { if (k <= 3) return TUTORIAL[k - 1]; const b = Math.floor((k - 4) / OT.BLOCK); ensure(b); return blocks[b].grids[(k - 4) % OT.BLOCK]; } };
+}
+// glyph fallback (render check failed): same shape, attribute = row size ratio, same answer cell
+function glyphFallback(g, last = false) {
+  if (last) { const [b, o] = glyphPair('square', 'size', 2, g.base.dots); return { ...g, attr: 'size', base: b, odd: o, glyph: `fallback2:${g.k}` }; }
+  const [b, o] = glyphPair(g.base.shape, 'size', ROWS[g.row].size, g.base.dots);
+  return { ...g, attr: 'size', base: b, odd: o, glyph: `fallback:${g.k}` };
+}
+// ---- scoring (§5) ----
+const comboMul = (c) => (c >= 10 ? 3 : c >= 5 ? 2 : 1);
+const speedBonus = (D, t0, dl) => Math.max(0, Math.min(10, Math.floor((10 * (D - t0)) / dl)));
+// ---- time engine (§2.0.1–2.0.4) ----
+// input(t, cell, arr): t = event active time, arr = active arrival time (during pause = tp). Paused-time events never reach here.
+// frame(now): resolve everything whose receive deadline <= now and return commits (sound/haptic/score/result) exactly once.
+function createGame(seed, opts = {}) {
+  const W = OT.W, G = OT.G, T = opts.T || OT.T;
+  const deck = opts.deck || makeDeck(seed, opts.validate);
+  const S = { seed, k: 1, start: 0, grid: deck.grid(1), cursor: 0, inbox: [], score: 0, combo: 0, maxCombo: 0, found: 0, judged: 0,
+    log: [], commits: [], over: false, endLogical: null, resultAt: null, resultShown: false, lastWin: null, drops: { late: 0, idle: 0, after: 0 }, voids: 0 };
+  const transform = opts.transform || ((g) => g); // UI hook: render check / glyph fallback before showing
+  S.grid = transform(S.grid);
+  const limitOf = () => Math.min(S.start + S.grid.dl, T);
+  function finish(entry, logical, commitAt, anim) {
+    S.log.push(entry); S.commits.push({ at: commitAt, entry, done: false });
+    S.lastWin = { start: S.start, limit: limitOf(), entry };
+    const next = logical + anim;
+    if (entry.kind === 'end' || next >= T) {
+      S.over = true; S.endLogical = T; const lastJ = entry.kind === 'end' ? T : Math.max(T, logical);
+      S.resultAt = lastJ + G; S.commits.push({ at: S.resultAt, entry: { kind: 'result' }, done: false }); S.inbox = []; return;
+    }
+    S.k++; S.start = next; S.cursor = next; S.inbox = []; S.grid = transform(deck.grid(S.k));
+    if (S.k >= 4 && (S.k - 4) % OT.BLOCK === 0) deck.ensure((S.k - 4) / OT.BLOCK + 1); // first grid of block b → generate b+1
+  }
+  function advance(now) {
+    for (let guard = 0; guard < 10000 && !S.over; guard++) {
+      if (now < S.start) return; // still in feedback animation of previous grid
+      const lim = limitOf(), D = S.start + S.grid.dl;
+      const ok = (x) => x.t >= S.cursor && x.t < lim;
+      // a candidate counts while nothing irreversible happened for this grid (arrival before the miss/end commit lim+G).
+      // Its receive deadline is t0+W+G, or just after its own arrival if the event was delivered late (nothing was committed yet).
+      const cand = S.inbox.filter((x) => ok(x) && x.arr < lim + G).sort((a, b) => a.t - b.t || a.seq - b.seq)[0];
+      if (!cand) {
+        if (now < lim + G) return;
+        S.drops.late += S.inbox.filter((x) => x.t >= S.cursor && x.t < lim && !x.used).length;
+        if (lim === T && T <= D) finish({ k: S.k, kind: 'end', ans: S.grid.ans, glyph: S.grid.glyph, late: S.drops.late }, T, T + G, 0);
+        else { S.combo = 0; S.judged++; finish({ k: S.k, kind: 'miss', ans: S.grid.ans, glyph: S.grid.glyph, at: D, late: S.drops.late }, D, D + G, OT.ANIM_BAD); }
+        continue;
+      }
+      const t0 = cand.t, rd = Math.max(t0 + W + G, cand.arr + 1);
+      if (now < rd) return;
+      const bundle = S.inbox.filter((x) => x.t >= t0 && x.t < t0 + W && x.t < lim && x.arr < rd);
+      S.inbox.filter((x) => x.t >= S.cursor && x.t < t0 && !x.used).forEach((x) => { x.used = true; S.drops.late++; });
+      bundle.forEach((x) => (x.used = true));
+      if (bundle.length >= 2) { S.voids++; const ve = { k: S.k, kind: 'void', t0, n: bundle.length, cells: bundle.map((x) => x.cell) }; S.log.push(ve); S.commits.push({ at: rd, entry: ve, done: false }); S.cursor = t0 + W; continue; }
+      const okc = cand.cell === S.grid.ans; S.judged++;
+      let pts = 0;
+      if (okc) { S.combo++; S.found++; S.maxCombo = Math.max(S.maxCombo, S.combo); pts = (10 + speedBonus(D, t0, S.grid.dl)) * comboMul(S.combo); S.score += pts; } else S.combo = 0;
+      finish({ k: S.k, kind: okc ? 'hit' : 'wrong', cell: cand.cell, ans: S.grid.ans, t0, pts, combo: S.combo, src: cand.src, glyph: S.grid.glyph, late: S.drops.late }, t0 + W, rd, okc ? OT.ANIM_OK : OT.ANIM_BAD);
+    }
+  }
+  let seq = 0;
+  return {
+    S, deck, T, W, G,
+    input(t, cell, arr = t, src = 'x') {
+      advance(arr);
+      if (S.over || t >= T) { S.drops.after++; return 'after'; }
+      if (t < S.start) { const w = S.lastWin; if (w && t >= w.start && t < w.limit) { S.drops.late++; if (w.entry) w.entry.lateAfter = (w.entry.lateAfter || 0) + 1; return 'late_drop'; } S.drops.idle++; return 'idle'; }
+      S.inbox.push({ t, cell, arr, src, seq: seq++ }); return 'queued';
+    },
+    advance,
+    frame(now) { advance(now); const out = []; for (const c of S.commits) if (!c.done && now >= c.at) { c.done = true; out.push(c.entry); } return out; },
+    phase(now) { if (S.over) return S.resultShown ? 'result' : 'ending'; return now < S.start ? 'anim' : 'wait'; },
+    get pending() { return S.inbox.length > 0; },
+    replayLog() { return S.log.map((e) => ({ k: e.k, kind: e.kind, cell: e.cell, t0: e.t0 ?? e.at, late: e.late, pts: e.pts })); },
+  };
+}
+// headless replay: inputs [{t, cell, arr}] sorted by arr, frames every f ms
+function replay(seed, inputs, f = 1000 / 60, opts = {}) {
+  const g = createGame(seed, opts), commits = []; let i = 0, now = 0;
+  const xs = [...inputs].sort((a, b) => a.arr - b.arr);
+  while (now <= OT.T + 2000) {
+    const nf = now + f;
+    while (i < xs.length && xs[i].arr < nf) { g.input(xs[i].t, xs[i].cell, xs[i].arr, xs[i].src); i++; }
+    now = nf; for (const e of g.frame(Math.floor(now))) commits.push({ at: Math.floor(now), ...e });
+    if (g.S.over && commits.some((c) => c.kind === 'result')) break;
+  }
+  const S = g.S;
+  return { score: S.score, found: S.found, judged: S.judged, maxCombo: S.maxCombo, voids: S.voids, drops: S.drops, log: S.log, endLogical: S.endLogical, resultAt: S.resultAt, resultShownAt: (commits.find((c) => c.kind === 'result') || {}).at, commits, game: g };
+}
+// skilled / unskilled sim policies used by R11 (needs grid start times → driven through the live game)
+function simPolicy(seed, policy, opts = {}) {
+  const g = createGame(seed, opts); const f = 1000 / 60; let now = 0, lastK = 0, nextTap = 0; const rng = mulberry32(fnv1a32(seed + '#sim'));
+  while (now < OT.T + 2000 && !(g.S.over && g.S.resultShown)) {
+    const S = g.S;
+    if (!S.over && now >= S.start) {
+      const n = S.grid.n * S.grid.n;
+      if (policy === 'skilled' && lastK !== S.k) { const t = S.start + Math.floor(S.grid.dl / 2); if (t < OT.T) { g.input(t, S.grid.ans, t); } lastK = S.k; }
+      if (policy.startsWith('fixed:') && lastK !== S.k) { g.input(S.start + 200, Math.min(+policy.slice(6), n - 1), S.start + 200); lastK = S.k; }
+      if (policy.startsWith('mash:')) { const gap = +policy.slice(5); if (now >= nextTap) { const t = Math.floor(now); g.input(t, Math.floor(rng() * n), t); nextTap = now + Math.max(gap, f); } }
+    }
+    now += f; for (const e of g.frame(Math.floor(now))) if (e.kind === 'result') g.S.resultShown = true;
+  }
+  const S = g.S; return { score: S.score, found: S.found, judged: S.judged, acc: S.judged ? S.found / S.judged : 0, log: S.log };
+}
+
+// Odd Tile UI (inlined after odd-core in a single noindex HTML) [t_2964ede9]
+const D = JSON.parse(document.getElementById('ot').textContent);
+const $ = (id) => document.getElementById(id);
+const loadLS = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k) || 'null') || {}); } catch { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const set = loadLS('ot-set', { sound: true, haptic: true, motion: !matchMedia('(prefers-reduced-motion: reduce)').matches });
+const canVib = typeof navigator.vibrate === 'function';
+const qs = new URLSearchParams(location.search);
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+const rawSeed = qs.get('seed'); const seed = rawSeed && /^[A-Za-z0-9-]{1,64}$/.test(rawSeed) ? rawSeed : today();
+// evidence hooks (headless checks read these): snd requested sounds, osc real oscillators, vibs vibrate calls, ev log, ft frame times
+const W8 = { snd: [], osc: 0, vibs: [], ev: [], ft: [], pausedDrop: 0, uiDrop: 0, renderFail: false, renderChecks: [] };
+let ac = null;
+const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+function tone(fr, d, type = 'sine', at = 0, vol = 0.12) { if (!ac || !set.sound) return; const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + at; o.type = type; o.frequency.value = fr; g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d); o.connect(g).connect(ac.destination); o.start(t); o.stop(t + d + 0.02); W8.osc++; }
+const sfx = (k) => { W8.snd.push(k); if (k === 'hit') tone(1320, 0.12); else if (k === 'bad') tone(150, 0.16, 'triangle', 0, 0.16); else if (k === 'combo') { tone(880, 0.09); tone(1175, 0.12, 'sine', 0.08); } };
+const buzz = (p) => { if (set.haptic && canVib) try { navigator.vibrate(p); W8.vibs.push(p); } catch {} };
+// ---- active clock (performance.now minus paused intervals) ----
+const pauses = []; // [startPerf, endPerf|null]
+let t0perf = 0; // perf time of [start]
+const pausedSum = (ts) => pauses.reduce((s, [a, b]) => s + (b !== null && b <= ts ? b - a : 0), 0);
+const inPause = (ts) => pauses.some(([a, b]) => ts >= a && (b === null || ts < b));
+const activeOf = (ts) => Math.floor(ts - t0perf - pausedSum(ts));
+const activeNow = () => { const p = pauses.length && pauses[pauses.length - 1][1] === null ? pauses[pauses.length - 1][0] : performance.now(); return Math.floor(p - t0perf - pausedSum(p)); };
+// ---- glyph render ----
+const FG = '#e8eaf0', HOLE = '#0d1020';
+function drawGlyph(ctx, g, px) {
+  ctx.clearRect(0, 0, px, px); ctx.save(); ctx.translate(px / 2, px / 2); ctx.scale(px, px);
+  ctx.fillStyle = FG; ctx.beginPath();
+  if (g.shape === 'circle') ctx.arc(0, 0, circleR(g), 0, Math.PI * 2); else { const P = glyphPoly(g); ctx.moveTo(P[0][0], P[0][1]); for (const p of P.slice(1)) ctx.lineTo(p[0], p[1]); ctx.closePath(); }
+  ctx.fill(); ctx.fillStyle = HOLE;
+  for (const [x, y] of DOT_LAYOUT[g.dots]) { ctx.beginPath(); ctx.arc(x, y, DOT_R, 0, Math.PI * 2); ctx.fill(); }
+  ctx.restore();
+}
+const bitmap = (g, px) => { const c = document.createElement('canvas'); c.width = c.height = px; drawGlyph(c.getContext('2d'), g, px); return c; };
+function diffRatio(a, b, px) { const A = bitmap(a, px).getContext('2d').getImageData(0, 0, px, px).data, B = bitmap(b, px).getContext('2d').getImageData(0, 0, px, px).data; let d = 0;
+  for (let i = 0; i < A.length; i += 4) if (Math.abs(A[i] - B[i]) + Math.abs(A[i + 1] - B[i + 1]) + Math.abs(A[i + 2] - B[i + 2]) + Math.abs(A[i + 3] - B[i + 3]) > 96) d++; return d / (px * px); }
+let cellPx = 88;
+// render check right before a grid is shown: base vs odd at real cell size × DPR, ≥ 3% differing pixels
+function renderCheck(g) {
+  if (g.glyph === 'tutorial') return g;
+  const px = Math.max(8, Math.round(cellPx * (devicePixelRatio || 1)));
+  const r = W8.renderFail ? 0 : diffRatio(g.base, g.odd, px);
+  W8.renderChecks.push({ k: g.k, r: Math.round(r * 1e4) / 1e4, px });
+  if (r >= OT.MINDIFF) return g;
+  let f = glyphFallback(g); if (W8.renderFail || diffRatio(f.base, f.odd, px) < OT.MINDIFF) { if (W8.renderFail === 'both') f = glyphFallback(g, true); }
+  W8.ev.push({ k: 'glyph', v: f.glyph }); return f;
+}
+// ---- DOM ----
+const gridEl = $('grid'), stage = $('stage');
+let game = null, state = 'ready', shownK = 0, focus = 0, held = new Set(), raf = 0, fbK = 0, best = loadLS('ot-best', { score: -1, found: 0 });
+const ui = { ready: $('ready'), pz: $('pz'), res: $('res') };
+const show = (k) => { for (const x of Object.keys(ui)) ui[x].hidden = x !== k; };
+const defFocus = (n) => (n === 2 ? 0 : n === 3 ? 4 : 5);
+function layoutGrid(g) {
+  gridEl.style.setProperty('--n', g.n); gridEl.innerHTML = '';
+  const r = gridEl.getBoundingClientRect(), gap = 6; cellPx = Math.floor((r.width - gap * (g.n - 1)) / g.n);
+  const px = Math.round(cellPx * (devicePixelRatio || 1)), baseBm = bitmap(g.base, px);
+  for (let i = 0; i < g.n * g.n; i++) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'cell'; b.dataset.i = i; b.tabIndex = -1; b.setAttribute('aria-label', String(i + 1));
+    const c = document.createElement('canvas'); c.width = c.height = px; const cx = c.getContext('2d');
+    if (i === g.ans) drawGlyph(cx, g.odd, px); else cx.drawImage(baseBm, 0, 0); // base cells: copies of one bitmap
+    b.appendChild(c); gridEl.appendChild(b);
+  }
+  if (g.k === 1) gridEl.children[g.ans].classList.add('breathe');
+  focus = defFocus(g.n); paintFocus();
+}
+function measureCell(n) { const r = gridEl.getBoundingClientRect(); cellPx = Math.floor((r.width - 6 * (n - 1)) / n); }
+const paintFocus = () => { [...gridEl.children].forEach((c, i) => c.classList.toggle('focus', i === focus && state === 'play')); };
+const cells = () => [...gridEl.children];
+function hud(now) {
+  const S = game ? game.S : null, left = S ? Math.max(0, OT.T - Math.min(now, OT.T)) : OT.T;
+  $('h-time').textContent = (Math.ceil(left / 100) / 10).toFixed(1); $('h-bar').style.width = `${(100 * left) / OT.T}%`; $('h-bar').classList.toggle('low', left < 10000);
+  $('h-found').textContent = S ? S.found : 0; $('h-score').textContent = S ? S.score : 0; $('h-combo').textContent = S && S.combo ? `×${comboMul(S.combo)} · ${S.combo}` : '—';
+  if (S && !S.over && now >= S.start) { const dl = S.grid.dl, rest = Math.max(0, S.start + dl - now); $('dbar').style.width = `${(100 * rest) / dl}%`; } else $('dbar').style.width = '0%';
+}
+// ---- game flow ----
+function start() {
+  unlock(); pauses.length = 0; t0perf = performance.now(); held.clear(); W8.pausedDrop = 0; W8.uiDrop = 0; W8.renderChecks = []; W8.ev.push({ k: 'start', at: 0 });
+  measureCell(2); game = createGame(seed, { transform: (g) => { measureCell(g.n); return renderCheck(g); } }); shownK = 0; fbK = 0; state = 'play'; show(null); stage.classList.add('playing');
+  window.__ot.game = game; loop();
+}
+function loop() {
+  cancelAnimationFrame(raf);
+  const tick = () => {
+    if (state !== 'play') return;
+    const now = activeNow(); W8.ft.push(performance.now());
+    for (const e of game.frame(now)) commit(e, now);
+    if (state !== 'play') return;
+    const S = game.S;
+    if (!S.over && now >= S.start && shownK !== S.k) { layoutGrid(S.grid); shownK = S.k; W8.ev.push({ k: 'show', grid: S.k, at: now, n: S.grid.n }); }
+    hud(now); raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
+}
+function commit(e, now) {
+  W8.ev.push({ k: 'commit', kind: e.kind, grid: e.k, at: now });
+  if (e.kind === 'result') return finishGame(now);
+  if (e.kind === 'void') { cells().forEach((c) => c.classList.remove('down')); return; }
+  if (e.kind === 'end') return;
+  const cs = cells(); cs.forEach((c) => c.classList.remove('down', 'breathe'));
+  if (e.kind === 'hit') { cs[e.ans] && cs[e.ans].classList.add('ok'); sfx(e.combo >= 5 && e.combo % 5 === 0 ? 'combo' : 'hit'); buzz(10); }
+  else { if (e.kind === 'wrong' && cs[e.cell]) cs[e.cell].classList.add('bad'); cs[e.ans] && cs[e.ans].classList.add('show'); sfx('bad'); buzz(25); }
+  chip(e);
+}
+function chip(e) { const c = $('chip'); c.hidden = false; c.className = `chip ${e.kind}`; c.textContent = e.kind === 'hit' ? `✓ +${e.pts}` : e.kind === 'wrong' ? '✕' : '…'; }
+function select(i, ev, src) {
+  // §2.0.4: an event stamped inside a pause interval is paused_drop; one stamped before tp but delivered during the
+  // pause is admitted with arrival = tp (activeNow() is frozen at tp while paused).
+  if (inPause(ev.timeStamp)) { W8.pausedDrop++; return; }
+  if (state !== 'play' && state !== 'paused') { W8.uiDrop++; return; }
+  const t = activeOf(ev.timeStamp), arr = activeNow();
+  if (game.S.over || arr < game.S.start) { W8.uiDrop++; return; }
+  const r = game.input(t, i, arr, src); W8.ev.push({ k: 'in', i, t, arr, src, r });
+  if (r === 'queued' && state === 'play' && cells()[i]) cells()[i].classList.add('down');
+}
+gridEl.addEventListener('pointerdown', (e) => { const c = e.target.closest('.cell'); if (!c) return; e.preventDefault(); held.add(`p${e.pointerId}`); select(+c.dataset.i, e, e.pointerType || 'ptr'); });
+addEventListener('pointerup', (e) => held.delete(`p${e.pointerId}`)); addEventListener('pointercancel', (e) => held.delete(`p${e.pointerId}`)); // never changes a judgement
+gridEl.addEventListener('contextmenu', (e) => e.preventDefault());
+function pause(why) {
+  if (state !== 'play') return; const tp = performance.now(); pauses.push([tp, null]); state = 'paused'; cancelAnimationFrame(raf);
+  held.clear(); cells().forEach((c) => c.classList.remove('down')); // DOM/physical state only; logical candidates kept in the engine
+  W8.ev.push({ k: 'pause', why, at: activeNow() }); show('pz');
+}
+function resume() { if (state !== 'paused') return; pauses[pauses.length - 1][1] = performance.now(); state = 'play'; show(null); W8.ev.push({ k: 'resume', at: activeNow() }); paintFocus(); loop(); }
+function toReady() { cancelAnimationFrame(raf); state = 'ready'; game = null; window.__ot.game = null; gridEl.innerHTML = ''; $('chip').hidden = true; stage.classList.remove('playing'); show('ready'); hud(0); }
+function finishGame(now) {
+  state = 'result'; cancelAnimationFrame(raf); const S = game.S; S.resultShown = true; W8.ev.push({ k: 'result', at: now });
+  const prev = best.score >= 0 ? { ...best } : null, isNew = !prev || S.score > prev.score || (S.score === prev.score && S.found > prev.found);
+  if (isNew) { best = { score: S.score, found: S.found }; save('ot-best', best); }
+  $('r-score').textContent = S.score; $('r-found').textContent = S.found; $('r-acc').textContent = `${S.judged ? Math.round((100 * S.found) / S.judged) : 0}%`; $('r-combo').textContent = S.maxCombo;
+  $('r-best').textContent = prev ? `${prev.score} (${prev.found})` : '—'; const d = prev ? S.score - prev.score : 0; $('r-diff').textContent = prev ? (d > 0 ? `+${d}` : String(d)) : '—';
+  $('r-new').hidden = !(isNew && prev); $('r-first').hidden = !!prev; $('r-cut').hidden = !S.log.some((e) => e.kind === 'end');
+  $('r-line').textContent = S.log.filter((e) => ['hit', 'wrong', 'miss'].includes(e.kind)).map((e) => (e.kind === 'hit' ? '●' : e.kind === 'wrong' ? '○' : '·')).join('');
+  const fbs = [...game.deck.logs, ...S.log.filter((e) => /^fallback/.test(e.glyph || '')).map((e) => `glyph=${e.glyph}`)]; $('r-fb').textContent = fbs.length ? `${D.fbNote} (${fbs.join(', ')})` : '';
+  $('seed').textContent = seed; show('res'); $('b-again').focus({ preventScroll: true });
+}
+// ---- keyboard: arrows move focus, Space selects, Enter per state, Esc/P pause ----
+addEventListener('keydown', (e) => {
+  if (e.repeat) { if ([' ', 'Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault(); return; }
+  const k = e.key;
+  if (k === 'Enter') { e.preventDefault(); if (state === 'ready') start(); else if (state === 'paused') resume(); else if (state === 'result') toReady(); return; }
+  if (k === 'Escape' || k === 'p' || k === 'P') { e.preventDefault(); if (state === 'play') pause('key'); else if (state === 'paused' && k === 'Escape') resume(); return; }
+  if (state !== 'play' && state !== 'paused') return;
+  if (k === ' ' || k === 'Spacebar') { e.preventDefault(); held.add('Space'); select(focus, e, 'key'); return; }
+  const mv = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[k];
+  if (mv && state === 'play' && game && shownK) { e.preventDefault(); const n = game.S.grid.n; let x = focus % n, y = Math.floor(focus / n); x = Math.max(0, Math.min(n - 1, x + mv[0])); y = Math.max(0, Math.min(n - 1, y + mv[1])); focus = y * n + x; paintFocus(); }
+});
+addEventListener('keyup', (e) => { if (e.key === ' ') held.delete('Space'); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) pause('hidden'); });
+addEventListener('blur', () => pause('blur'));
+// ---- buttons (outside the grid, stopPropagation) ----
+const on = (id, f) => $(id).addEventListener('click', (e) => { e.stopPropagation(); f(e); });
+on('b-start', () => start()); on('b-resume', () => resume()); on('b-pause', () => (state === 'play' ? pause('button') : resume()));
+on('b-restart', () => toReady()); on('b-again', () => toReady());
+document.querySelectorAll('[data-ui]').forEach((x) => x.addEventListener('pointerdown', (e) => e.stopPropagation()));
+const shareUrl = () => `${location.origin}${location.pathname}?seed=${encodeURIComponent(seed)}`;
+const toast = (t) => { const el = $('toast'); el.textContent = t; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 1800); };
+on('b-link', async () => { const t = D.shareText.replace('{n}', game ? game.S.found : 0).replace('{url}', shareUrl()); try { await navigator.clipboard.writeText(t); toast(D.copied); } catch { toast(t); } W8.ev.push({ k: 'copy', t }); });
+on('b-png', () => {
+  const S = game.S, c = document.createElement('canvas'); c.width = 1080; c.height = 1350; const x = c.getContext('2d');
+  const gr = x.createLinearGradient(0, 0, 1080, 1350); gr.addColorStop(0, '#0b0d1a'); gr.addColorStop(1, '#141a33'); x.fillStyle = gr; x.fillRect(0, 0, 1080, 1350);
+  x.fillStyle = 'rgba(255,255,255,.06)'; x.fillRect(80, 160, 920, 900); x.fillStyle = '#e8eaf0'; x.textAlign = 'center';
+  x.font = '800 64px system-ui,sans-serif'; x.fillText(D.name, 540, 270); x.font = '900 220px system-ui,sans-serif'; x.fillStyle = '#22d3ee'; x.fillText(String(S.found), 540, 560);
+  x.fillStyle = '#e8eaf0'; x.font = '700 54px system-ui,sans-serif'; x.fillText(`${D.score} ${S.score} · ${D.maxCombo} ${S.maxCombo}`, 540, 680);
+  const line = $('r-line').textContent; x.font = '40px system-ui,sans-serif'; for (let i = 0; i < line.length; i += 20) x.fillText(line.slice(i, i + 20).split('').join(' '), 540, 790 + (i / 20) * 56);
+  x.fillStyle = 'rgba(214,219,232,.72)'; x.font = '600 40px system-ui,sans-serif'; x.fillText(seed === today() ? seed : `${today()} · #${seed}`, 540, 1180); x.fillText('playtoday.cloud', 540, 1250);
+  c.toBlob((bl) => { const a = document.createElement('a'); a.href = URL.createObjectURL(bl); a.download = `odd-tile-${seed}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); W8.ev.push({ k: 'png', w: c.width, h: c.height }); }, 'image/png');
+});
+function paintSet() { document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, v = set[k]; b.setAttribute('aria-pressed', String(v)); b.classList.toggle('off', !v); if (b.dataset.icon) b.textContent = k === 'sound' ? (v ? '🔊' : '🔇') : v ? '📳' : '📴'; if (k === 'haptic' && !canVib) b.hidden = true; }); document.body.classList.toggle('rm', !set.motion); }
+document.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save('ot-set', set); if (k === 'sound') unlock(); paintSet(); }));
+paintSet(); hud(0); $('seed').textContent = seed;
+window.__ot = { ready: true, E: { OT, createGame, makeDeck, glyphPair, VALID, ROWS, SHAPES, isValid, glyphFallback }, W: W8, get state() { return state; }, get game() { return game; }, set game(v) {}, seed, activeNow, activeOf, diffRatio, renderCheck, bitmap, get focus() { return focus; }, get shownK() { return shownK; }, held };
+})()</script>
+</body></html>
