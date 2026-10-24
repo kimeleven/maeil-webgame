@@ -1,0 +1,297 @@
+{
+ "base": "http://localhost:5195",
+ "tag": "local",
+ "at": "2026-10-24T04:29:07.951Z",
+ "skipToolbarHeader": false,
+ "tut-360": [
+  {
+   "k": 1,
+   "ans": 3,
+   "odd": [
+    3
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 495,
+   "diff": 0.2061,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "k": 2,
+   "ans": 0,
+   "odd": [
+    0
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 495,
+   "diff": 0.1119,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "k": 3,
+   "ans": 1,
+   "odd": [
+    1
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 495,
+   "diff": 0.2083,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "T1 tutorial 360px DPR3: answers BR/TL/TR, ×2 (0.4→0.8), exactly one distinct canvas = answer, no pixel in 2px edge band, diff ≥3%": {
+  "pass": true,
+  "detail": "[[1,3,[3],0.2061,\"0/0/0/0\"],[2,0,[0],0.1119,\"0/0/0/0\"],[3,1,[1],0.2083,\"0/0/0/0\"]]"
+ },
+ "T2 hint 360px touch: tap hint visible only": {
+  "pass": true,
+  "detail": "[[\"k-kbd\",false,\"방향키로 이동 · Space로 선택 · P 일시정지\"],[\"k-tap\",true,\"다른 칸을 손가락으로 탭 · ⏸ 일시정지\"]]"
+ },
+ "T3 pageerror 0 (360)": {
+  "pass": true,
+  "detail": ""
+ },
+ "tut-412": [
+  {
+   "k": 1,
+   "ans": 3,
+   "odd": [
+    3
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 491,
+   "diff": 0.2062,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "k": 2,
+   "ans": 0,
+   "odd": [
+    0
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 491,
+   "diff": 0.1113,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "k": 3,
+   "ans": 1,
+   "odd": [
+    1
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 491,
+   "diff": 0.2094,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "T1 tutorial 412px DPR2.625: answers BR/TL/TR, ×2 (0.4→0.8), exactly one distinct canvas = answer, no pixel in 2px edge band, diff ≥3%": {
+  "pass": true,
+  "detail": "[[1,3,[3],0.2062,\"0/0/0/0\"],[2,0,[0],0.1113,\"0/0/0/0\"],[3,1,[1],0.2094,\"0/0/0/0\"]]"
+ },
+ "T2 hint 412px touch: tap hint visible only": {
+  "pass": true,
+  "detail": "[[\"k-kbd\",false,\"방향키로 이동 · Space로 선택 · P 일시정지\"],[\"k-tap\",true,\"다른 칸을 손가락으로 탭 · ⏸ 일시정지\"]]"
+ },
+ "T3 pageerror 0 (412)": {
+  "pass": true,
+  "detail": ""
+ },
+ "tut-1440": [
+  {
+   "k": 1,
+   "ans": 3,
+   "odd": [
+    3
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 187,
+   "diff": 0.2107,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "k": 2,
+   "ans": 0,
+   "odd": [
+    0
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 187,
+   "diff": 0.117,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "k": 3,
+   "ans": 1,
+   "odd": [
+    1
+   ],
+   "ratio": 2,
+   "base": 0.4,
+   "px": 187,
+   "diff": 0.2155,
+   "edge": [
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "T1 tutorial 1440px DPR1: answers BR/TL/TR, ×2 (0.4→0.8), exactly one distinct canvas = answer, no pixel in 2px edge band, diff ≥3%": {
+  "pass": true,
+  "detail": "[[1,3,[3],0.2107,\"0/0/0/0\"],[2,0,[0],0.117,\"0/0/0/0\"],[3,1,[1],0.2155,\"0/0/0/0\"]]"
+ },
+ "T2 hint 1440px mouse: keyboard hint visible only": {
+  "pass": true,
+  "detail": "[[\"k-kbd\",true,\"방향키로 이동 · Space로 선택 · P 일시정지\"],[\"k-tap\",false,\"다른 칸을 손가락으로 탭 · ⏸ 일시정지\"]]"
+ },
+ "T3 pageerror 0 (1440)": {
+  "pass": true,
+  "detail": ""
+ },
+ "T2b ready sheet (touch, before first touch): tap hint via media query": {
+  "pass": true,
+  "detail": "[[\"k-kbd\",false],[\"k-tap\",true]]"
+ },
+ "T4 no overlay covers any 3×3/4×4 cell centre (elementFromPoint), vercel-live elements count reported": {
+  "pass": true,
+  "detail": "{\"covers\":[],\"live\":0}"
+ },
+ "best": {
+  "games": [
+   {
+    "score": 0,
+    "best": "—",
+    "diff": "—",
+    "newBest": false,
+    "first": true,
+    "stored": "{\"score\":0,\"found\":0}"
+   },
+   {
+    "score": 0,
+    "best": "0 (0)",
+    "diff": "0",
+    "newBest": false,
+    "first": false,
+    "stored": "{\"score\":0,\"found\":0}"
+   },
+   {
+    "score": 5232,
+    "best": "0 (0)",
+    "diff": "+5232",
+    "newBest": true,
+    "first": false,
+    "stored": "{\"score\":5232,\"found\":101}"
+   },
+   {
+    "score": 0,
+    "best": "5232 (101)",
+    "diff": "-5232",
+    "newBest": false,
+    "first": false,
+    "stored": "{\"score\":5232,\"found\":101}"
+   }
+  ],
+  "before": "{\"score\":5232,\"found\":101}",
+  "after": [
+   "{\"score\":5232,\"found\":101}",
+   "ready"
+  ]
+ },
+ "B1 game1 first record: best —, diff —, first label": {
+  "pass": true,
+  "detail": "{\"score\":0,\"best\":\"—\",\"diff\":\"—\",\"newBest\":false,\"first\":true,\"stored\":\"{\\\"score\\\":0,\\\"found\\\":0}\"}"
+ },
+ "B2 game2 same score (0 vs 0): diff 0, not new best, best unchanged": {
+  "pass": true,
+  "detail": "{\"score\":0,\"best\":\"0 (0)\",\"diff\":\"0\",\"newBest\":false,\"first\":false,\"stored\":\"{\\\"score\\\":0,\\\"found\\\":0}\"}"
+ },
+ "B3 game3 higher: diff +score, new best label, stored": {
+  "pass": true,
+  "detail": "{\"score\":5232,\"best\":\"0 (0)\",\"diff\":\"+5232\",\"newBest\":true,\"first\":false,\"stored\":\"{\\\"score\\\":5232,\\\"found\\\":101}\"}"
+ },
+ "B4 game4 lower: diff −score, no new best, best stays": {
+  "pass": true,
+  "detail": "{\"score\":0,\"best\":\"5232 (101)\",\"diff\":\"-5232\",\"newBest\":false,\"first\":false,\"stored\":\"{\\\"score\\\":5232,\\\"found\\\":101}\"}"
+ },
+ "B5 mid-game [처음부터] → ready, best unchanged": {
+  "pass": true,
+  "detail": "{\"before\":\"{\\\"score\\\":5232,\\\"found\\\":101}\",\"after\":[\"{\\\"score\\\":5232,\\\"found\\\":101}\",\"ready\"]}"
+ },
+ "B6 pageerror 0 over 5 games": {
+  "pass": true,
+  "detail": ""
+ },
+ "perf4x": {
+  "frames": 460,
+  "avgFps": 22.954590918183637,
+  "worstGap": 85.20000004768372,
+  "p99": 84.70000004768372,
+  "blocks": [
+   3.6,
+   0.1,
+   0,
+   0,
+   0.1
+  ],
+  "shows": 35,
+  "k": 35
+ },
+ "P1 4×CPU measured (report only; headless rAF is not device fps)": {
+  "pass": true,
+  "detail": "avgFps 23.0, worst frame gap 85.2 ms, p99 84.7 ms, block gen ms 3.6/0.1/0/0/0.1"
+ },
+ "P2 pageerror 0 (perf)": {
+  "pass": true,
+  "detail": ""
+ }
+}

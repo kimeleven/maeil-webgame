@@ -1,4 +1,4 @@
-// Odd Tile core unit tests (GDD r3 R4–R7c, R6/R6b/R6c/R6d engine side) [t_2964ede9]
+// Odd Tile core unit tests (GDD r3 R4–R7c, R6/R6b/R6c/R6d engine side) [t_2964ede9, t_6b058523]
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as E from '../public/js/odd-core.js';
@@ -126,9 +126,42 @@ test('R11 policies (measured, seed 20)', () => {
   // fixed: per complete block ≤ 2/9 hits
   for (let s = 0; s < 20; s++) for (let c = 0; c < 9; c++) { const d = E.makeDeck(`r${s}`); d.ensure(3); for (const b of d.blocks) { const n3 = b.grids.filter((g) => g.n === 3 && g.ans === c).length; assert.ok(n3 <= 2 && (c !== 4 || n3 <= 1)); } }
 });
-test('late-delivered lone candidate (timeStamp lag > G, before any commit) is still judged; companions in the same delivery count', () => {
-  const r = run([I(27, 3, 198)]); assert.equal(first(r).kind, 'hit'); assert.equal(first(r).t0, 27);
-  assert.equal(first(run([I(27, 3, 198), I(30, 0, 198)])).kind, 'void');
-  assert.equal(first(run([I(27, 3, 198), I(30, 0, 199)])).kind, 'hit'); // arrives after the (late) commit point
-  assert.equal(first(run([I(4990, 3, 5049)])).kind, 'hit'); assert.equal(first(run([I(4990, 3, 5050)])).kind, 'miss');
+// t_6b058523: PO t_25646637 rejected the §36 max(t0+W+G, arr+1) extension. Fixed receive deadline t0+W+G for the first
+// candidate too; D+G is the miss-wait bound, not a per-candidate extension. Logical t / arrival kept in lateLog.
+test('fixed receive deadline: first candidate itself arriving ≥ t0+W+G is late_drop (no window extension)', () => {
+  for (const f of [1000 / 60, 50]) {
+    // t0=1000 arr=1171 + t1=1015 arr=1171.5 → both late_drop, no void/hit, grid 1 miss at D
+    const r = run([I(1000, 3, 1171), I(1015, 0, 1171.5)], f);
+    assert.equal(first(r).kind, 'miss', `f=${f}`); assert.equal(first(r).at, 5000); assert.equal(r.voids, 0); assert.equal(r.drops.late, 2);
+    assert.deepEqual(r.game.S.lateLog.map((x) => [x.t, x.arr, x.cell, x.k]), [[1000, 1171, 3, 1], [1015, 1171.5, 0, 1]]);
+    // first candidate arrival 1065 accepted, 1066 / 1067 late_drop
+    assert.equal(first(run([I(1000, 3, 1065)], f)).kind, 'hit');
+    for (const a of [1066, 1067]) { const q = run([I(1000, 3, a)], f); assert.equal(first(q).kind, 'miss', `arr ${a}`); assert.equal(q.game.S.lateLog[0].t, 1000); }
+    // companion t1=1015: 1065 void, 1066/1067 late_drop and t0 kept
+    assert.equal(first(run([I(1000, 3), I(1015, 0, 1065)], f)).kind, 'void');
+    for (const a of [1066, 1067]) assert.equal(first(run([I(1000, 3), I(1015, 0, a)], f)).kind, 'hit');
+    // late first candidate does not block a later on-time one (it is not in the inbox)
+    const s2 = run([I(1000, 0, 1171), I(1200, 3, 1200)], f); assert.equal(first(s2).kind, 'hit'); assert.equal(first(s2).t0, 1200);
+    // D/T bounds unchanged: t<D arriving D+G-1 judged (own deadline later), D+G late
+    assert.equal(first(run([I(4999, 3, 5049)], f)).kind, 'hit'); assert.equal(first(run([I(4999, 3, 5050)], f)).kind, 'miss');
+    assert.equal(first(run([I(4990, 3, 5049)], f)).kind, 'hit'); assert.equal(first(run([I(4950, 3, 5016)], f)).kind, 'miss');
+  }
+  // pause: event stamped before tp delivered during pause has arrival tp → tp=1065 admitted, 1066/1067 late_drop
+  for (const tp of [1065, 1066, 1067]) { const g = E.createGame('unit'); const rr = g.input(1000, 3, tp); g.frame(6000); assert.equal(rr, tp < 1066 ? 'queued' : 'late_drop', `tp ${tp}`); assert.equal(g.S.log[0].kind, tp < 1066 ? 'hit' : 'miss'); }
+  // determinism of the admitted log
+  const xs = [I(1000, 3, 1171), I(1015, 0, 1171.5), I(1300, 3, 1310)]; assert.deepEqual(run(xs).game.replayLog(), run(xs, 50).game.replayLog());
+});
+test('tutorial glyphs (t_6b058523): ×2 ratio, answers BR/TL/TR, 5 s; whole glyph inside the cell; dots inside the shape', () => {
+  const inPoly = (P, x, y) => { let c = false; for (let i = 0, j = P.length - 1; i < P.length; j = i++) if ((P[i][1] > y) !== (P[j][1] > y) && x < ((P[j][0] - P[i][0]) * (y - P[i][1])) / (P[j][1] - P[i][1]) + P[i][0]) c = !c; return c; };
+  const segD = (p, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy))); return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy); };
+  assert.deepEqual(E.TUTORIAL.map((g) => [g.ans, g.dl, g.n, g.odd.scale / g.base.scale, g.base.scale]), [[3, 5000, 2, 2, 0.4], [0, 5000, 2, 2, 0.4], [1, 5000, 2, 2, 0.4]]);
+  for (const g of E.TUTORIAL) for (const gl of [g.base, g.odd]) {
+    const P = E.glyphPoly(gl), ds = gl.ds, ext = P ? Math.max(...P.flat().map(Math.abs)) : E.circleR(gl);
+    assert.ok(ext <= 0.5 - 0.04, `${gl.shape} ${gl.scale} extent ${ext}`); // inside the cell with border margin
+    for (const [x, y] of E.DOT_LAYOUT[gl.dots]) { const c = [x * ds, y * ds], r = E.DOT_R * ds;
+      const inside = P ? inPoly(P, c[0], c[1]) && Math.min(...P.map((a, i) => segD(c, a, P[(i + 1) % P.length]))) >= r : Math.hypot(...c) + r <= E.circleR(gl);
+      assert.ok(inside, `dot outside ${gl.shape} scale ${gl.scale}`); }
+  }
+  // generated grids unchanged: no ds, base scale 0.8
+  const d = E.makeDeck('t'); d.ensure(2); for (const b of d.blocks) for (const g of b.grids) { assert.equal(g.base.scale, E.BASE_SCALE); assert.equal(g.base.ds, undefined); assert.equal(g.odd.ds, undefined); }
 });

@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import * as E from '../public/js/odd-core.js';
 const ROOT = new URL('..', import.meta.url).pathname;
-const EV = `${ROOT}reboot-evidence/odd/`; mkdirSync(EV, { recursive: true });
+const EV = process.env.OT_EV || `${ROOT}reboot-evidence/odd/`; mkdirSync(EV, { recursive: true });
 let U = process.argv[2]; const tag0 = U ? 'preview' : 'local';
 if (!U) { const { startServer } = await import('./dev.mjs'); await startServer(5198); U = 'http://localhost:5198'; }
 const out = { base: U, at: new Date().toISOString() }; const fails = [];
@@ -14,7 +14,7 @@ const PATH = '/ko/play/odd-tile/';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const site = (reqs) => reqs.filter((u) => !/vercel\.live|\/\.well-known\/vercel|_next-live/.test(u));
 const LANGS = ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br'];
-const b = await chromium.launch(); const wk = await webkit.launch();
+const b = await chromium.launch({ channel: "chrome" }); const wk = await chromium.launch({ channel: "chrome" }); // webkit build missing in this env; WebKit-emulation cases run on Chromium (noted in report) [t_6b058523]
 async function open(vp, { touch = false, path = PATH + '?seed=check', motion, browser = b, dpr } = {}) {
   const ctx = await browser.newContext({ viewport: vp, hasTouch: touch, isMobile: touch && browser === b, acceptDownloads: true, reducedMotion: motion || 'no-preference', deviceScaleFactor: dpr });
   const p = await ctx.newPage(); p.errs = []; p.reqs = []; p.ctx = ctx;

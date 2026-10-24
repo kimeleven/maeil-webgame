@@ -24,6 +24,7 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .under{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:10px;min-height:60px}
 .chip{font-size:14px;font-weight:700;padding:6px 12px;border-radius:99px;border:1px solid var(--edge);background:var(--panel);font-variant-numeric:tabular-nums}.chip.hit{color:#4ade80}.chip.wrong,.chip.miss{color:#fca5a5}
 .hint{color:var(--muted);font-size:13px;text-align:center}
+.k-tap{display:none}@media (hover:none) and (pointer:coarse){.k-kbd{display:none}.k-tap{display:inline}}body.touch .k-kbd{display:none}body.touch .k-tap{display:inline}
 .ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
 .ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
 .sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
@@ -48,10 +49,10 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 <div class="hud"><div><span>剩余</span><b id="h-time">60.0</b><i class="tbar" id="h-bar"></i></div><div><span>找到</span><b id="h-found">0</b></div><div><span>得分</span><b id="h-score">0</b></div><div><span>连击</span><b id="h-combo">—</b></div></div>
 <div class="dl" aria-hidden="true"><i id="dbar"></i></div>
 <div id="grid" role="grid" aria-label="找不同一个"></div>
-<div class="under"><div class="chip" id="chip" hidden></div><span class="hint">方向键移动 · 空格选择 · P 暂停</span></div>
+<div class="under"><div class="chip" id="chip" hidden></div><span class="hint"><span class="k-kbd">方向键移动 · 空格选择 · P 暂停</span><span class="k-tap">点击不同的格子 · ⏸ 暂停</span></span></div>
 <div class="sheet ready" id="ready" data-ui><div class="panel">
 <h2>找不同一个</h2><p class="goal">点击不同的那一个</p><div class="icon" aria-hidden="true">● ● ● ◐ → !</div><p class="how">所有格子相同，只有一格形状不同。60秒内尽量多找。</p>
-<button class="btn main" id="b-start" type="button">开始</button><div class="small">方向键移动 · 空格选择 · P 暂停</div>
+<button class="btn main" id="b-start" type="button">开始</button><div class="small"><span class="k-kbd">方向键移动 · 空格选择 · P 暂停</span><span class="k-tap">点击不同的格子 · ⏸ 暂停</span></div>
 </div></div>
 <div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>已暂停</h2><button class="btn main" id="b-resume" type="button">继续</button><button class="btn" id="b-restart" type="button">重新开始</button><div class="tgs"><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">动画</button></div></div></div>
 <div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">
@@ -63,8 +64,8 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 <div class="tgs"><button class="tg" type="button" data-ui data-set="sound" aria-pressed="true">声音</button><button class="tg" type="button" data-ui data-set="haptic" aria-pressed="true">振动</button><button class="tg" type="button" data-ui data-set="motion" aria-pressed="true">动画</button></div><div class="seed">seed <span id="seed"></span> <span id="r-fb"></span></div>
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
-<script id="ot" type="application/json">{"name":"找不同一个","preview":"预览","desc":"所有格子都一样，只有一个不同。找到它并点击。60秒能找到几个？","back":"playtoday","goal":"点击不同的那一个","how":"所有格子相同，只有一格形状不同。60秒内尽量多找。","start":"开始","keys":"方向键移动 · 空格选择 · P 暂停","time":"剩余","found":"找到","score":"得分","combo":"连击","pause":"暂停","paused":"已暂停","resume":"继续","restart":"重新开始","over":"时间到！","now":"本次","best":"我的最佳","diff":"与最佳差","acc":"准确率","maxCombo":"最长连击","line":"每格结果","again":"再来","png":"保存 PNG","link":"复制挑战链接","copied":"已复制","shareText":"今天在「找不同一个」找到了{n}个！用同样的题试试？ → {url}","sound":"声音","haptic":"振动","motion":"动画","newBest":"新纪录！","first":"首次记录！","lastCut":"最后一题时间结束","fbNote":"部分题目已替换"}</script>
-<script>(()=>{// Odd Tile (다른 하나) deterministic core — GDD r3 (games/odd-tile/GDD.md) [t_2964ede9]
+<script id="ot" type="application/json">{"name":"找不同一个","preview":"预览","desc":"所有格子都一样，只有一个不同。找到它并点击。60秒能找到几个？","back":"playtoday","goal":"点击不同的那一个","how":"所有格子相同，只有一格形状不同。60秒内尽量多找。","start":"开始","keys":"方向键移动 · 空格选择 · P 暂停","time":"剩余","found":"找到","score":"得分","combo":"连击","pause":"暂停","paused":"已暂停","resume":"继续","restart":"重新开始","over":"时间到！","now":"本次","best":"我的最佳","diff":"与最佳差","acc":"准确率","maxCombo":"最长连击","line":"每格结果","again":"再来","png":"保存 PNG","link":"复制挑战链接","copied":"已复制","shareText":"今天在「找不同一个」找到了{n}个！用同样的题试试？ → {url}","sound":"声音","haptic":"振动","motion":"动画","newBest":"新纪录！","first":"首次记录！","lastCut":"最后一题时间结束","fbNote":"部分题目已替换","tap":"点击不同的格子 · ⏸ 暂停"}</script>
+<script>(()=>{// Odd Tile (다른 하나) deterministic core — GDD r3 (games/odd-tile/GDD.md) [t_2964ede9, t_6b058523]
 // DOM-free. All times are integer *active* ms relative to [start] (game clock). Grid model mirrors
 // projects/.../02_수행/odd-tile-r2-verify.py (shapes, dots, 3% pixel rule) so the validity table matches.
 const OT = { T: 60000, W: 16, G: 50, ANIM_OK: 300, ANIM_BAD: 600, TRIES: 8, MINDIFF: 0.03, BLOCK: 9 };
@@ -125,11 +126,15 @@ function glyphPoly(g) {
 }
 const circleR = (g) => 0.36 * g.scale;
 // ---- grid generation (§4.1) ----
+// t_6b058523 (PO t_25646637): the old base 0.8 → odd 1.6 clipped at the cell edge. Keep the ×2 ratio, answer cells and 5 s,
+// shrink both: base 0.4 / odd 0.8 (TUT_SCALE). Dots scale with the shape (ds = scale / BASE_SCALE) so they stay inside.
+// Generated grids (k ≥ 4) are untouched (no ds → 1).
+const TUT_SCALE = 0.4;
 const TUTORIAL = [ // k = 1..3: 2x2, size x2, 5 s, fixed answer cells (BR, TL, TR)
-  { k: 1, n: 2, dl: 5000, row: 'T', ans: 3, attr: 'size', base: { shape: 'circle', scale: 0.8, rot: 0, round: false, dots: 1 } },
-  { k: 2, n: 2, dl: 5000, row: 'T', ans: 0, attr: 'size', base: { shape: 'triangle', scale: 0.8, rot: 0, round: false, dots: 2 } },
-  { k: 3, n: 2, dl: 5000, row: 'T', ans: 1, attr: 'size', base: { shape: 'square', scale: 0.8, rot: 0, round: false, dots: 1 } },
-].map((g) => ({ ...g, odd: { ...g.base, scale: g.base.scale * 2 }, glyph: 'tutorial' }));
+  { k: 1, n: 2, dl: 5000, row: 'T', ans: 3, attr: 'size', base: { shape: 'circle', scale: TUT_SCALE, rot: 0, round: false, dots: 1 } },
+  { k: 2, n: 2, dl: 5000, row: 'T', ans: 0, attr: 'size', base: { shape: 'triangle', scale: TUT_SCALE, rot: 0, round: false, dots: 2 } },
+  { k: 3, n: 2, dl: 5000, row: 'T', ans: 1, attr: 'size', base: { shape: 'square', scale: TUT_SCALE, rot: 0, round: false, dots: 1 } },
+].map((g) => { const base = { ...g.base, ds: TUT_SCALE / BASE_SCALE }, sc = TUT_SCALE * 2; return { ...g, base, odd: { ...g.base, scale: sc, ds: sc / BASE_SCALE }, glyph: 'tutorial' }; });
 const P9 = [0, 7, 5, 3, 8, 1, 6, 2, 4];
 const P16 = [0, 10, 5, 15, 3, 9, 6, 12, 1, 14, 7, 11, 2, 8, 13, 4];
 const blockKs = (b) => Array.from({ length: OT.BLOCK }, (_, i) => 4 + OT.BLOCK * b + i);
@@ -218,7 +223,7 @@ function createGame(seed, opts = {}) {
   const W = OT.W, G = OT.G, T = opts.T || OT.T;
   const deck = opts.deck || makeDeck(seed, opts.validate);
   const S = { seed, k: 1, start: 0, grid: deck.grid(1), cursor: 0, inbox: [], score: 0, combo: 0, maxCombo: 0, found: 0, judged: 0,
-    log: [], commits: [], over: false, endLogical: null, resultAt: null, resultShown: false, lastWin: null, drops: { late: 0, idle: 0, after: 0 }, voids: 0 };
+    log: [], commits: [], over: false, endLogical: null, resultAt: null, resultShown: false, lastWin: null, drops: { late: 0, idle: 0, after: 0 }, voids: 0, lateLog: [] };
   const transform = opts.transform || ((g) => g); // UI hook: render check / glyph fallback before showing
   S.grid = transform(S.grid);
   const limitOf = () => Math.min(S.start + S.grid.dl, T);
@@ -238,9 +243,9 @@ function createGame(seed, opts = {}) {
       if (now < S.start) return; // still in feedback animation of previous grid
       const lim = limitOf(), D = S.start + S.grid.dl;
       const ok = (x) => x.t >= S.cursor && x.t < lim;
-      // a candidate counts while nothing irreversible happened for this grid (arrival before the miss/end commit lim+G).
-      // Its receive deadline is t0+W+G, or just after its own arrival if the event was delivered late (nothing was committed yet).
-      const cand = S.inbox.filter((x) => ok(x) && x.arr < lim + G).sort((a, b) => a.t - b.t || a.seq - b.seq)[0];
+      // §2.0.1 fixed receive deadline (PO t_25646637: the §36 max(t0+W+G, arr+1) extension is NOT adopted). A candidate
+      // must itself arrive before t0+W+G (and before the miss/end commit lim+G); later arrivals are late_drop in input().
+      const cand = S.inbox.filter((x) => ok(x) && x.arr < lim + G && x.arr < x.t + W + G).sort((a, b) => a.t - b.t || a.seq - b.seq)[0];
       if (!cand) {
         if (now < lim + G) return;
         S.drops.late += S.inbox.filter((x) => x.t >= S.cursor && x.t < lim && !x.used).length;
@@ -248,7 +253,7 @@ function createGame(seed, opts = {}) {
         else { S.combo = 0; S.judged++; finish({ k: S.k, kind: 'miss', ans: S.grid.ans, glyph: S.grid.glyph, at: D, late: S.drops.late }, D, D + G, OT.ANIM_BAD); }
         continue;
       }
-      const t0 = cand.t, rd = Math.max(t0 + W + G, cand.arr + 1);
+      const t0 = cand.t, rd = t0 + W + G;
       if (now < rd) return;
       const bundle = S.inbox.filter((x) => x.t >= t0 && x.t < t0 + W && x.t < lim && x.arr < rd);
       S.inbox.filter((x) => x.t >= S.cursor && x.t < t0 && !x.used).forEach((x) => { x.used = true; S.drops.late++; });
@@ -267,6 +272,9 @@ function createGame(seed, opts = {}) {
       advance(arr);
       if (S.over || t >= T) { S.drops.after++; return 'after'; }
       if (t < S.start) { const w = S.lastWin; if (w && t >= w.start && t < w.limit) { S.drops.late++; if (w.entry) w.entry.lateAfter = (w.entry.lateAfter || 0) + 1; return 'late_drop'; } S.drops.idle++; return 'idle'; }
+      // arrived after its own receive deadline t+W+G: can never open or join a bundle → late_drop now (logical t,
+      // arrival and the reason are kept in S.lateLog; never re-stamped with the arrival time).
+      if (arr >= t + W + G) { S.drops.late++; S.lateLog.push({ k: S.k, t, arr, cell, src, why: 'arr>=t+W+G' }); return 'late_drop'; }
       S.inbox.push({ t, cell, arr, src, seq: seq++ }); return 'queued';
     },
     advance,
@@ -318,7 +326,12 @@ const rawSeed = qs.get('seed'); const seed = rawSeed && /^[A-Za-z0-9-]{1,64}$/.t
 // evidence hooks (headless checks read these): snd requested sounds, osc real oscillators, vibs vibrate calls, ev log, ft frame times
 const W8 = { snd: [], osc: 0, vibs: [], ev: [], ft: [], pausedDrop: 0, uiDrop: 0, renderFail: false, renderChecks: [] };
 let ac = null;
-const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+// t_6b058523: the first AudioContext in a browser process blocks the main thread ~95–215 ms (measured, probe3). Built inside
+// start() it delayed delivery of the first-grid tap past t0+W+G (the 171 ms case). Construct it while idle on the ready
+// screen (suspended, no sound) and only resume() on the start gesture.
+const makeAC = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } };
+const unlock = () => { makeAC(); if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+(window.requestIdleCallback || ((f) => setTimeout(f, 200)))(makeAC, { timeout: 1500 });
 function tone(fr, d, type = 'sine', at = 0, vol = 0.12) { if (!ac || !set.sound) return; const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + at; o.type = type; o.frequency.value = fr; g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d); o.connect(g).connect(ac.destination); o.start(t); o.stop(t + d + 0.02); W8.osc++; }
 const sfx = (k) => { W8.snd.push(k); if (k === 'hit') tone(1320, 0.12); else if (k === 'bad') tone(150, 0.16, 'triangle', 0, 0.16); else if (k === 'combo') { tone(880, 0.09); tone(1175, 0.12, 'sine', 0.08); } };
 const buzz = (p) => { if (set.haptic && canVib) try { navigator.vibrate(p); W8.vibs.push(p); } catch {} };
@@ -336,7 +349,8 @@ function drawGlyph(ctx, g, px) {
   ctx.fillStyle = FG; ctx.beginPath();
   if (g.shape === 'circle') ctx.arc(0, 0, circleR(g), 0, Math.PI * 2); else { const P = glyphPoly(g); ctx.moveTo(P[0][0], P[0][1]); for (const p of P.slice(1)) ctx.lineTo(p[0], p[1]); ctx.closePath(); }
   ctx.fill(); ctx.fillStyle = HOLE;
-  for (const [x, y] of DOT_LAYOUT[g.dots]) { ctx.beginPath(); ctx.arc(x, y, DOT_R, 0, Math.PI * 2); ctx.fill(); }
+  const ds = g.ds || 1; // tutorial glyphs scale dots with the shape (t_6b058523); generated grids ds=1 (unchanged)
+  for (const [x, y] of DOT_LAYOUT[g.dots]) { ctx.beginPath(); ctx.arc(x * ds, y * ds, DOT_R * ds, 0, Math.PI * 2); ctx.fill(); }
   ctx.restore();
 }
 const bitmap = (g, px) => { const c = document.createElement('canvas'); c.width = c.height = px; drawGlyph(c.getContext('2d'), g, px); return c; };
@@ -421,6 +435,7 @@ function select(i, ev, src) {
   const r = game.input(t, i, arr, src); W8.ev.push({ k: 'in', i, t, arr, src, r });
   if (r === 'queued' && state === 'play' && cells()[i]) cells()[i].classList.add('down');
 }
+addEventListener('pointerdown', (e) => { if (e.pointerType === 'touch') document.body.classList.add('touch'); }, { capture: true, passive: true });
 gridEl.addEventListener('pointerdown', (e) => { const c = e.target.closest('.cell'); if (!c) return; e.preventDefault(); held.add(`p${e.pointerId}`); select(+c.dataset.i, e, e.pointerType || 'ptr'); });
 addEventListener('pointerup', (e) => held.delete(`p${e.pointerId}`)); addEventListener('pointercancel', (e) => held.delete(`p${e.pointerId}`)); // never changes a judgement
 gridEl.addEventListener('contextmenu', (e) => e.preventDefault());

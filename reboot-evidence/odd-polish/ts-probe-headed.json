@@ -1,0 +1,785 @@
+{
+ "base": "http://localhost:5199",
+ "at": "2026-10-24T04:17:10.993Z",
+ "rows": [
+  {
+   "tag": "touch412",
+   "i": 0,
+   "phase": "start-btn",
+   "trusted": true,
+   "type": "touch",
+   "ts": 144.60000002384186,
+   "now": 192.5,
+   "lag": 47.89999997615814,
+   "a": null,
+   "t": null
+  },
+  {
+   "tag": "touch412",
+   "i": 1,
+   "phase": "A-first-grid",
+   "trusted": true,
+   "type": "touch",
+   "ts": 384.89999997615814,
+   "now": 406.8000000715256,
+   "lag": 21.90000009536743,
+   "a": 37,
+   "t": 15
+  },
+  {
+   "tag": "touch412",
+   "i": 2,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 1414.3000000715256,
+   "now": 1436.8000000715256,
+   "lag": 22.5,
+   "a": 1067,
+   "t": 1045
+  },
+  {
+   "tag": "touch412",
+   "i": 3,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 2143.2000000476837,
+   "now": 2159.2000000476837,
+   "lag": 16,
+   "a": 1790,
+   "t": 1774
+  },
+  {
+   "tag": "touch412",
+   "i": 4,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 2867.3000000715256,
+   "now": 2882.5,
+   "lag": 15.199999928474426,
+   "a": 2513,
+   "t": 2498
+  },
+  {
+   "tag": "touch412",
+   "i": 5,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 3590.8000000715256,
+   "now": 3620.2000000476837,
+   "lag": 29.399999976158142,
+   "a": 3251,
+   "t": 3221
+  },
+  {
+   "tag": "touch412",
+   "i": 6,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 4325.399999976158,
+   "now": 4341.899999976158,
+   "lag": 16.5,
+   "a": 3972,
+   "t": 3956
+  },
+  {
+   "tag": "touch412",
+   "i": 7,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 5046.100000023842,
+   "now": 5065.5,
+   "lag": 19.399999976158142,
+   "a": 4696,
+   "t": 4677
+  },
+  {
+   "tag": "touch412",
+   "i": 8,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "touch",
+   "ts": 5807,
+   "now": 5956.200000047684,
+   "lag": 149.20000004768372,
+   "a": 5587,
+   "t": 5438
+  },
+  {
+   "tag": "touch412",
+   "i": 9,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "touch",
+   "ts": 6678.600000023842,
+   "now": 6831.700000047684,
+   "lag": 153.10000002384186,
+   "a": 6462,
+   "t": 6309
+  },
+  {
+   "tag": "touch412",
+   "i": 10,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "touch",
+   "ts": 7549.600000023842,
+   "now": 7693.100000023842,
+   "lag": 143.5,
+   "a": 7324,
+   "t": 7180
+  },
+  {
+   "tag": "touch412",
+   "longtasks": [
+    {
+     "s": 197.60000002384186,
+     "d": 174
+    },
+    {
+     "s": 5794.600000023842,
+     "d": 153
+    },
+    {
+     "s": 6666.5,
+     "d": 150
+    },
+    {
+     "s": 7538.300000071526,
+     "d": 150
+    }
+   ],
+   "inputs": [
+    {
+     "k": "in",
+     "i": 3,
+     "t": 15,
+     "arr": 37,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 0,
+     "t": 1045,
+     "arr": 1067,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 1774,
+     "arr": 1790,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 2498,
+     "arr": 2513,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 5,
+     "t": 3221,
+     "arr": 3251,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 7,
+     "t": 3956,
+     "arr": 3973,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 4677,
+     "arr": 4696,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 5438,
+     "arr": 5587,
+     "src": "touch",
+     "r": "late_drop"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 6309,
+     "arr": 6462,
+     "src": "touch",
+     "r": "late_drop"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 7180,
+     "arr": 7324,
+     "src": "touch",
+     "r": "late_drop"
+    }
+   ],
+   "lateLog": [
+    {
+     "k": 8,
+     "t": 5438,
+     "arr": 5587,
+     "cell": 8,
+     "src": "touch",
+     "why": "arr>=t+W+G"
+    },
+    {
+     "k": 8,
+     "t": 6309,
+     "arr": 6462,
+     "cell": 8,
+     "src": "touch",
+     "why": "arr>=t+W+G"
+    },
+    {
+     "k": 8,
+     "t": 7180,
+     "arr": 7324,
+     "cell": 8,
+     "src": "touch",
+     "why": "arr>=t+W+G"
+    }
+   ]
+  },
+  {
+   "tag": "mouse1440",
+   "i": 0,
+   "phase": "start-btn",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 70,
+   "now": 71.20000004768372,
+   "lag": 1.2000000476837158,
+   "a": null,
+   "t": null
+  },
+  {
+   "tag": "mouse1440",
+   "i": 1,
+   "phase": "A-first-grid",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 96,
+   "now": 96.10000002384186,
+   "lag": 0.10000002384185791,
+   "a": 23,
+   "t": 23
+  },
+  {
+   "tag": "mouse1440",
+   "i": 2,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 1101.2000000476837,
+   "now": 1101.3999999761581,
+   "lag": 0.19999992847442627,
+   "a": 1028,
+   "t": 1028
+  },
+  {
+   "tag": "mouse1440",
+   "i": 3,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 1806.8999999761581,
+   "now": 1807.2000000476837,
+   "lag": 0.30000007152557373,
+   "a": 1734,
+   "t": 1734
+  },
+  {
+   "tag": "mouse1440",
+   "i": 4,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 2513.7000000476837,
+   "now": 2513.899999976158,
+   "lag": 0.19999992847442627,
+   "a": 2441,
+   "t": 2441
+  },
+  {
+   "tag": "mouse1440",
+   "i": 5,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 3241.5,
+   "now": 3241.899999976158,
+   "lag": 0.3999999761581421,
+   "a": 3169,
+   "t": 3168
+  },
+  {
+   "tag": "mouse1440",
+   "i": 6,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 3950,
+   "now": 3950.3000000715256,
+   "lag": 0.30000007152557373,
+   "a": 3877,
+   "t": 3877
+  },
+  {
+   "tag": "mouse1440",
+   "i": 7,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 4657.300000071526,
+   "now": 4657.5,
+   "lag": 0.19999992847442627,
+   "a": 4584,
+   "t": 4584
+  },
+  {
+   "tag": "mouse1440",
+   "i": 8,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 5376.700000047684,
+   "now": 5515.300000071526,
+   "lag": 138.60000002384186,
+   "a": 5442,
+   "t": 5304
+  },
+  {
+   "tag": "mouse1440",
+   "i": 9,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 6229.600000023842,
+   "now": 6368.600000023842,
+   "lag": 139,
+   "a": 6296,
+   "t": 6156
+  },
+  {
+   "tag": "mouse1440",
+   "i": 10,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "mouse",
+   "ts": 7085.800000071526,
+   "now": 7223.600000023842,
+   "lag": 137.79999995231628,
+   "a": 7150,
+   "t": 7013
+  },
+  {
+   "tag": "mouse1440",
+   "longtasks": [
+    {
+     "s": 5365.200000047684,
+     "d": 150
+    },
+    {
+     "s": 6218.5,
+     "d": 150
+    },
+    {
+     "s": 7073.5,
+     "d": 150
+    }
+   ],
+   "inputs": [
+    {
+     "k": "in",
+     "i": 3,
+     "t": 23,
+     "arr": 23,
+     "src": "mouse",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 0,
+     "t": 1028,
+     "arr": 1028,
+     "src": "mouse",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 1734,
+     "arr": 1734,
+     "src": "mouse",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 2441,
+     "arr": 2441,
+     "src": "mouse",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 5,
+     "t": 3168,
+     "arr": 3169,
+     "src": "mouse",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 7,
+     "t": 3877,
+     "arr": 3877,
+     "src": "mouse",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 4584,
+     "arr": 4585,
+     "src": "mouse",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 5304,
+     "arr": 5442,
+     "src": "mouse",
+     "r": "late_drop"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 6156,
+     "arr": 6296,
+     "src": "mouse",
+     "r": "late_drop"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 7013,
+     "arr": 7151,
+     "src": "mouse",
+     "r": "late_drop"
+    }
+   ],
+   "lateLog": [
+    {
+     "k": 8,
+     "t": 5304,
+     "arr": 5442,
+     "cell": 8,
+     "src": "mouse",
+     "why": "arr>=t+W+G"
+    },
+    {
+     "k": 8,
+     "t": 6156,
+     "arr": 6296,
+     "cell": 8,
+     "src": "mouse",
+     "why": "arr>=t+W+G"
+    },
+    {
+     "k": 8,
+     "t": 7013,
+     "arr": 7151,
+     "cell": 8,
+     "src": "mouse",
+     "why": "arr>=t+W+G"
+    }
+   ]
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 0,
+   "phase": "start-btn",
+   "trusted": true,
+   "type": "touch",
+   "ts": 218.79999995231628,
+   "now": 222.19999992847443,
+   "lag": 3.399999976158142,
+   "a": null,
+   "t": null
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 1,
+   "phase": "A-first-grid",
+   "trusted": true,
+   "type": "touch",
+   "ts": 243.09999990463257,
+   "now": 262.39999997615814,
+   "lag": 19.300000071525574,
+   "a": 35,
+   "t": 16
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 2,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 1269,
+   "now": 1272.7999999523163,
+   "lag": 3.799999952316284,
+   "a": 1046,
+   "t": 1042
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 3,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 1984.5999999046326,
+   "now": 1997.7999999523163,
+   "lag": 13.200000047683716,
+   "a": 1771,
+   "t": 1758
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 4,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 2707.5999999046326,
+   "now": 2723.399999976158,
+   "lag": 15.800000071525574,
+   "a": 2496,
+   "t": 2481
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 5,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 3433,
+   "now": 3444.5,
+   "lag": 11.5,
+   "a": 3217,
+   "t": 3206
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 6,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 4154,
+   "now": 4167,
+   "lag": 13,
+   "a": 3940,
+   "t": 3927
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 7,
+   "phase": "B-idle",
+   "trusted": true,
+   "type": "touch",
+   "ts": 4885.899999976158,
+   "now": 4906.299999952316,
+   "lag": 20.399999976158142,
+   "a": 4679,
+   "t": 4659
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 8,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "touch",
+   "ts": 5655.699999928474,
+   "now": 5805.599999904633,
+   "lag": 149.89999997615814,
+   "a": 5579,
+   "t": 5429
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 9,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "touch",
+   "ts": 6526.899999976158,
+   "now": 6670,
+   "lag": 143.10000002384186,
+   "a": 6443,
+   "t": 6300
+  },
+  {
+   "tag": "touch412-cpu4",
+   "i": 10,
+   "phase": "C-jank150",
+   "trusted": true,
+   "type": "touch",
+   "ts": 7393.399999976158,
+   "now": 7546,
+   "lag": 152.60000002384186,
+   "a": 7319,
+   "t": 7166
+  },
+  {
+   "tag": "touch412-cpu4",
+   "longtasks": [
+    {
+     "s": 42,
+     "d": 107
+    },
+    {
+     "s": 5644.299999952316,
+     "d": 150
+    },
+    {
+     "s": 6515.199999928474,
+     "d": 152
+    },
+    {
+     "s": 7382,
+     "d": 151
+    }
+   ],
+   "inputs": [
+    {
+     "k": "in",
+     "i": 3,
+     "t": 16,
+     "arr": 35,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 0,
+     "t": 1042,
+     "arr": 1046,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 1758,
+     "arr": 1771,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 2481,
+     "arr": 2496,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 5,
+     "t": 3206,
+     "arr": 3218,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 7,
+     "t": 3927,
+     "arr": 3940,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 1,
+     "t": 4659,
+     "arr": 4679,
+     "src": "touch",
+     "r": "queued"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 5429,
+     "arr": 5579,
+     "src": "touch",
+     "r": "late_drop"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 6300,
+     "arr": 6443,
+     "src": "touch",
+     "r": "late_drop"
+    },
+    {
+     "k": "in",
+     "i": 8,
+     "t": 7166,
+     "arr": 7319,
+     "src": "touch",
+     "r": "late_drop"
+    }
+   ],
+   "lateLog": [
+    {
+     "k": 8,
+     "t": 5429,
+     "arr": 5579,
+     "cell": 8,
+     "src": "touch",
+     "why": "arr>=t+W+G"
+    },
+    {
+     "k": 8,
+     "t": 6300,
+     "arr": 6443,
+     "cell": 8,
+     "src": "touch",
+     "why": "arr>=t+W+G"
+    },
+    {
+     "k": 8,
+     "t": 7166,
+     "arr": 7319,
+     "cell": 8,
+     "src": "touch",
+     "why": "arr>=t+W+G"
+    }
+   ]
+  }
+ ]
+}

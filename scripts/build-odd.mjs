@@ -29,6 +29,7 @@ body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:n
 .under{display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:10px;min-height:60px}
 .chip{font-size:14px;font-weight:700;padding:6px 12px;border-radius:99px;border:1px solid var(--edge);background:var(--panel);font-variant-numeric:tabular-nums}.chip.hit{color:#4ade80}.chip.wrong,.chip.miss{color:#fca5a5}
 .hint{color:var(--muted);font-size:13px;text-align:center}
+.k-tap{display:none}@media (hover:none) and (pointer:coarse){.k-kbd{display:none}.k-tap{display:inline}}body.touch .k-kbd{display:none}body.touch .k-tap{display:inline}
 .ic,.tg{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--edge);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--fg);font:600 14px/1.2 inherit;cursor:pointer;padding:0 12px}
 .ic.off,.tg.off{opacity:.55}.tg.off{text-decoration:line-through}[hidden]{display:none!important}
 .sheet{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(7,8,12,.55);z-index:3}
@@ -66,10 +67,10 @@ export function buildOdd() {
 <div class="hud"><div><span>${esc(D.time)}</span><b id="h-time">60.0</b><i class="tbar" id="h-bar"></i></div><div><span>${esc(D.found)}</span><b id="h-found">0</b></div><div><span>${esc(D.score)}</span><b id="h-score">0</b></div><div><span>${esc(D.combo)}</span><b id="h-combo">—</b></div></div>
 <div class="dl" aria-hidden="true"><i id="dbar"></i></div>
 <div id="grid" role="grid" aria-label="${esc(D.name)}"></div>
-<div class="under"><div class="chip" id="chip" hidden></div><span class="hint">${esc(D.keys)}</span></div>
+<div class="under"><div class="chip" id="chip" hidden></div><span class="hint"><span class="k-kbd">${esc(D.keys)}</span><span class="k-tap">${esc(D.tap)}</span></span></div>
 <div class="sheet ready" id="ready" data-ui><div class="panel">
 <h2>${esc(D.name)}</h2><p class="goal">${esc(D.goal)}</p><div class="icon" aria-hidden="true">● ● ● ◐ → !</div><p class="how">${esc(D.how)}</p>
-<button class="btn main" id="b-start" type="button">${esc(D.start)}</button><div class="small">${esc(D.keys)}</div>
+<button class="btn main" id="b-start" type="button">${esc(D.start)}</button><div class="small"><span class="k-kbd">${esc(D.keys)}</span><span class="k-tap">${esc(D.tap)}</span></div>
 </div></div>
 <div class="sheet pz" id="pz" data-ui hidden><div class="panel"><h2>${esc(D.paused)}</h2><button class="btn main" id="b-resume" type="button">${esc(D.resume)}</button><button class="btn" id="b-restart" type="button">${esc(D.restart)}</button><div class="tgs">${tg('motion')}</div></div></div>
 <div class="sheet" id="res" data-ui hidden><div class="panel" role="dialog" aria-labelledby="r-title">

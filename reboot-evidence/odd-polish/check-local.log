@@ -1,0 +1,46 @@
+✔ R0 ready: 10 s + screen tap + Space → still ready, 60.0, no grid — {"state":"ready","k":null,"found":null,"score":null,"log":[],"cells":0,"time":"60.0"}
+✔ R9 ?seed= grid order equals node makeDeck(seed) (k1–60)
+✔ R1 412 touch tap → exactly one judgement — ["hit"]
+✔ R2 [start] → bottom-right tap → grid 1 hit within 5 s — 294 ms wall
+✔ R6 pointercancel after confirm no change; anim-time tap not carried to grid 2 — ["hit"]
+✔ R6 t0 + 15 ms other cell → void, still waiting (not miss) — ["hit","void"]
+✔ R6 t0 + 16 ms other cell → t0 confirmed — ["hit","void","hit"]
+✔ R3a page log == node replay of the same admitted inputs
+✔ page errors 0 (412)
+✔ R1b Enter in ready → start only (no selection)
+✔ R1/R1b Enter during wait no-op; arrows move focus only, no judgement — focus 3
+✔ R1b Space held 3 s → only grid 1 gets one selection (keyboard, same judge) — {"log":["hit"],"n":1}
+✔ R1 1440 mouse click → one judgement (hit)
+✔ page errors 0 (1440)
+✔ R6d① E1 pause(button) in collect window: paused, pressed cleared, candidate kept, no commit during pause, one hit after resume — {"state":"paused","downAfter":0,"during":0,"kept":true,"lastKind":"hit","commits":1,"selAfter":true}
+✔ R6d② E3 pause(button) tp=t0+20: t1=t0+15 arriving in pause → void — {"kinds":["void"],"pausedDrop":0}
+✔ R6d② E3 pause(button) tp=t0+70: t1=t0+15 arriving in pause → late_drop, t0 hit — {"kinds":["hit"],"pausedDrop":0}
+✔ R6d① E1 pause(key) in collect window: paused, pressed cleared, candidate kept, no commit during pause, one hit after resume — {"state":"paused","downAfter":0,"during":0,"kept":true,"lastKind":"hit","commits":1,"selAfter":true}
+✔ R6d② E3 pause(key) tp=t0+20: t1=t0+15 arriving in pause → void — {"kinds":["void"],"pausedDrop":0}
+✔ R6d② E3 pause(key) tp=t0+70: t1=t0+15 arriving in pause → late_drop, t0 hit — {"kinds":["hit"],"pausedDrop":0}
+✔ R6d① E1 pause(hidden) in collect window: paused, pressed cleared, candidate kept, no commit during pause, one hit after resume — {"state":"paused","downAfter":0,"during":0,"kept":true,"lastKind":"hit","commits":1,"selAfter":true}
+✔ R6d② E3 pause(hidden) tp=t0+20: t1=t0+15 arriving in pause → void — {"kinds":["void"],"pausedDrop":0}
+✔ R6d② E3 pause(hidden) tp=t0+70: t1=t0+15 arriving in pause → late_drop, t0 hit — {"kinds":["hit"],"pausedDrop":0}
+✔ R6d① E1 pause(blur) in collect window: paused, pressed cleared, candidate kept, no commit during pause, one hit after resume — {"state":"paused","downAfter":0,"during":0,"kept":true,"lastKind":"hit","commits":1,"selAfter":true}
+✔ R6d② E3 pause(blur) tp=t0+20: t1=t0+15 arriving in pause → void — {"kinds":["void"],"pausedDrop":0}
+✔ R6d② E3 pause(blur) tp=t0+70: t1=t0+15 arriving in pause → late_drop, t0 hit — {"kinds":["hit"],"pausedDrop":0}
+✔ R6d③⑥ committed then pause: judgement/sound/score unchanged; taps+Space in pause = paused_drop; Enter resumes without selection — {"same":true,"sc":true,"snd":true,"pd":2,"newIn":0,"state":"play"}
+✔ R6d⑤ through DOM: D−1 tap judged (hit), D tap → miss — [{"off":-1,"kind":"hit","t":-1},{"off":0,"kind":"miss","t":0}]
+✔ page errors 0 (pause)
+✔ R7d renderer: every O combo ≥ 3% at 44/78/88 px × DPR 1/2/3 — O 30, min O 3.48%, X R1/rot/circle=0% R1/rot/square=0% R2/rot/circle=0% R2/round/circle=0% R3/rot/circle=0% R3/round/circle=0%
+✔ R7d X combos generated 0 (seed 100 × blocks 0–15)
+✔ R7d injected render-check failure → glyph=fallback:k (size attr), answer cell unchanged — {"glyph":"fallback:4","attr":"size","ans":8,"rawAns":8,"ev":["fallback:4"]}
+✔ R8 result: score, found, accuracy, max combo, per-grid line, first record (no share needed) — {"score":"3798","found":"77","acc":"100%","combo":"77","line":"●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●","best":"{\"score\":3798,\"found\":77}","first":true}
+✔ R8 PNG local download 1080×1350 — odd-tile-res.png
+✔ R8 [again] → ready within 0.5 s — 56 ms
+✔ R8 pause → [restart] → ready, best unchanged
+✔ R10 sound toggle persists after reload
+✔ R9 network: /api 0, external 0
+✔ R10 hidden → clock frozen, grid covered by blur sheet, resumes; reduced motion → no breathe animation — {"anim":"none","frozen":true,"covered":true,"after":209}
+✔ R3 replay: page log == node replay of its admitted inputs in Chromium+WebKit × 360/412/1440; same script → same kinds — {"chromium-360":{"kinds":"hit,hit,wrong,hit","same":true},"chromium-412":{"kinds":"hit,hit,wrong,hit","same":true},"chromium-1440":{"kinds":"hit,hit,wrong,hit","same":true},"webkit-360":{"kinds":"hit,hit,wrong,hit","same":true},"webkit-412":{"kinds":"hit,hit,wrong,hit","same":true},"webkit-1440":{"kinds":"hit,hit,wrong,hit","same":true}}
+✔ R12 4×CPU + Fast3G: [start] usable < 2 s, gzip ≤ 30 KB — ready 911 ms, gzip 16.5 KB, raf 23.8 fps (headless, not device), worst block gen 3.90 ms @4×CPU
+✔ R12 6 langs × 360/412/1440: overflow 0, targets ≥ 44 px, noindex — 18 layouts
+✔ R9 sitemap has no odd-tile, 109 urls
+✔ R5 idle: logical end 60000, 0/0, result display ≥ T+G and < T+G+frame gap — {"at":60093,"endLogical":60000,"resultAt":60050,"found":0,"score":0,"maxGap":58.60000002384186}
+
+44/44 pass (local)

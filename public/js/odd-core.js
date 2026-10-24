@@ -1,4 +1,4 @@
-// Odd Tile (다른 하나) deterministic core — GDD r3 (games/odd-tile/GDD.md) [t_2964ede9]
+// Odd Tile (다른 하나) deterministic core — GDD r3 (games/odd-tile/GDD.md) [t_2964ede9, t_6b058523]
 // DOM-free. All times are integer *active* ms relative to [start] (game clock). Grid model mirrors
 // projects/.../02_수행/odd-tile-r2-verify.py (shapes, dots, 3% pixel rule) so the validity table matches.
 export const OT = { T: 60000, W: 16, G: 50, ANIM_OK: 300, ANIM_BAD: 600, TRIES: 8, MINDIFF: 0.03, BLOCK: 9 };
@@ -59,11 +59,15 @@ export function glyphPoly(g) {
 }
 export const circleR = (g) => 0.36 * g.scale;
 // ---- grid generation (§4.1) ----
+// t_6b058523 (PO t_25646637): the old base 0.8 → odd 1.6 clipped at the cell edge. Keep the ×2 ratio, answer cells and 5 s,
+// shrink both: base 0.4 / odd 0.8 (TUT_SCALE). Dots scale with the shape (ds = scale / BASE_SCALE) so they stay inside.
+// Generated grids (k ≥ 4) are untouched (no ds → 1).
+export const TUT_SCALE = 0.4;
 export const TUTORIAL = [ // k = 1..3: 2x2, size x2, 5 s, fixed answer cells (BR, TL, TR)
-  { k: 1, n: 2, dl: 5000, row: 'T', ans: 3, attr: 'size', base: { shape: 'circle', scale: 0.8, rot: 0, round: false, dots: 1 } },
-  { k: 2, n: 2, dl: 5000, row: 'T', ans: 0, attr: 'size', base: { shape: 'triangle', scale: 0.8, rot: 0, round: false, dots: 2 } },
-  { k: 3, n: 2, dl: 5000, row: 'T', ans: 1, attr: 'size', base: { shape: 'square', scale: 0.8, rot: 0, round: false, dots: 1 } },
-].map((g) => ({ ...g, odd: { ...g.base, scale: g.base.scale * 2 }, glyph: 'tutorial' }));
+  { k: 1, n: 2, dl: 5000, row: 'T', ans: 3, attr: 'size', base: { shape: 'circle', scale: TUT_SCALE, rot: 0, round: false, dots: 1 } },
+  { k: 2, n: 2, dl: 5000, row: 'T', ans: 0, attr: 'size', base: { shape: 'triangle', scale: TUT_SCALE, rot: 0, round: false, dots: 2 } },
+  { k: 3, n: 2, dl: 5000, row: 'T', ans: 1, attr: 'size', base: { shape: 'square', scale: TUT_SCALE, rot: 0, round: false, dots: 1 } },
+].map((g) => { const base = { ...g.base, ds: TUT_SCALE / BASE_SCALE }, sc = TUT_SCALE * 2; return { ...g, base, odd: { ...g.base, scale: sc, ds: sc / BASE_SCALE }, glyph: 'tutorial' }; });
 export const P9 = [0, 7, 5, 3, 8, 1, 6, 2, 4];
 export const P16 = [0, 10, 5, 15, 3, 9, 6, 12, 1, 14, 7, 11, 2, 8, 13, 4];
 export const blockKs = (b) => Array.from({ length: OT.BLOCK }, (_, i) => 4 + OT.BLOCK * b + i);
@@ -152,7 +156,7 @@ export function createGame(seed, opts = {}) {
   const W = OT.W, G = OT.G, T = opts.T || OT.T;
   const deck = opts.deck || makeDeck(seed, opts.validate);
   const S = { seed, k: 1, start: 0, grid: deck.grid(1), cursor: 0, inbox: [], score: 0, combo: 0, maxCombo: 0, found: 0, judged: 0,
-    log: [], commits: [], over: false, endLogical: null, resultAt: null, resultShown: false, lastWin: null, drops: { late: 0, idle: 0, after: 0 }, voids: 0 };
+    log: [], commits: [], over: false, endLogical: null, resultAt: null, resultShown: false, lastWin: null, drops: { late: 0, idle: 0, after: 0 }, voids: 0, lateLog: [] };
   const transform = opts.transform || ((g) => g); // UI hook: render check / glyph fallback before showing
   S.grid = transform(S.grid);
   const limitOf = () => Math.min(S.start + S.grid.dl, T);
@@ -172,9 +176,9 @@ export function createGame(seed, opts = {}) {
       if (now < S.start) return; // still in feedback animation of previous grid
       const lim = limitOf(), D = S.start + S.grid.dl;
       const ok = (x) => x.t >= S.cursor && x.t < lim;
-      // a candidate counts while nothing irreversible happened for this grid (arrival before the miss/end commit lim+G).
-      // Its receive deadline is t0+W+G, or just after its own arrival if the event was delivered late (nothing was committed yet).
-      const cand = S.inbox.filter((x) => ok(x) && x.arr < lim + G).sort((a, b) => a.t - b.t || a.seq - b.seq)[0];
+      // §2.0.1 fixed receive deadline (PO t_25646637: the §36 max(t0+W+G, arr+1) extension is NOT adopted). A candidate
+      // must itself arrive before t0+W+G (and before the miss/end commit lim+G); later arrivals are late_drop in input().
+      const cand = S.inbox.filter((x) => ok(x) && x.arr < lim + G && x.arr < x.t + W + G).sort((a, b) => a.t - b.t || a.seq - b.seq)[0];
       if (!cand) {
         if (now < lim + G) return;
         S.drops.late += S.inbox.filter((x) => x.t >= S.cursor && x.t < lim && !x.used).length;
@@ -182,7 +186,7 @@ export function createGame(seed, opts = {}) {
         else { S.combo = 0; S.judged++; finish({ k: S.k, kind: 'miss', ans: S.grid.ans, glyph: S.grid.glyph, at: D, late: S.drops.late }, D, D + G, OT.ANIM_BAD); }
         continue;
       }
-      const t0 = cand.t, rd = Math.max(t0 + W + G, cand.arr + 1);
+      const t0 = cand.t, rd = t0 + W + G;
       if (now < rd) return;
       const bundle = S.inbox.filter((x) => x.t >= t0 && x.t < t0 + W && x.t < lim && x.arr < rd);
       S.inbox.filter((x) => x.t >= S.cursor && x.t < t0 && !x.used).forEach((x) => { x.used = true; S.drops.late++; });
@@ -201,6 +205,9 @@ export function createGame(seed, opts = {}) {
       advance(arr);
       if (S.over || t >= T) { S.drops.after++; return 'after'; }
       if (t < S.start) { const w = S.lastWin; if (w && t >= w.start && t < w.limit) { S.drops.late++; if (w.entry) w.entry.lateAfter = (w.entry.lateAfter || 0) + 1; return 'late_drop'; } S.drops.idle++; return 'idle'; }
+      // arrived after its own receive deadline t+W+G: can never open or join a bundle → late_drop now (logical t,
+      // arrival and the reason are kept in S.lateLog; never re-stamped with the arrival time).
+      if (arr >= t + W + G) { S.drops.late++; S.lateLog.push({ k: S.k, t, arr, cell, src, why: 'arr>=t+W+G' }); return 'late_drop'; }
       S.inbox.push({ t, cell, arr, src, seq: seq++ }); return 'queued';
     },
     advance,

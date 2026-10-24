@@ -1,0 +1,22 @@
+✔ T1 tutorial 360px DPR3: answers BR/TL/TR, ×2 (0.4→0.8), exactly one distinct canvas = answer, no pixel in 2px edge band, diff ≥3% — [[1,3,[3],0.2056,"0/0/0/0"],[2,0,[0],0.1113,"0/0/0/0"],[3,1,[1],0.2083,"0/0/0/0"]]
+✔ T2 hint 360px touch: tap hint visible only — [["k-kbd",false,"방향키로 이동 · Space로 선택 · P 일시정지"],["k-tap",true,"다른 칸을 손가락으로 탭 · ⏸ 일시정지"]]
+✔ T3 pageerror 0 (360)
+✔ T1 tutorial 412px DPR2.625: answers BR/TL/TR, ×2 (0.4→0.8), exactly one distinct canvas = answer, no pixel in 2px edge band, diff ≥3% — [[1,3,[3],0.2058,"0/0/0/0"],[2,0,[0],0.1108,"0/0/0/0"],[3,1,[1],0.2095,"0/0/0/0"]]
+✔ T2 hint 412px touch: tap hint visible only — [["k-kbd",false,"방향키로 이동 · Space로 선택 · P 일시정지"],["k-tap",true,"다른 칸을 손가락으로 탭 · ⏸ 일시정지"]]
+✔ T3 pageerror 0 (412)
+✔ T1 tutorial 1440px DPR1: answers BR/TL/TR, ×2 (0.4→0.8), exactly one distinct canvas = answer, no pixel in 2px edge band, diff ≥3% — [[1,3,[3],0.2096,"0/0/0/0"],[2,0,[0],0.1157,"0/0/0/0"],[3,1,[1],0.2154,"0/0/0/0"]]
+✔ T2 hint 1440px mouse: keyboard hint visible only — [["k-kbd",true,"방향키로 이동 · Space로 선택 · P 일시정지"],["k-tap",false,"다른 칸을 손가락으로 탭 · ⏸ 일시정지"]]
+✔ T3 pageerror 0 (1440)
+✔ T2b ready sheet (touch, before first touch): tap hint via media query — [["k-kbd",false],["k-tap",true]]
+✔ T4 no overlay covers any 3×3/4×4 cell centre (elementFromPoint), vercel-live elements count reported — {"covers":[],"live":0}
+✔ B1 game1 first record: best —, diff —, first label — {"score":0,"best":"—","diff":"—","newBest":false,"first":true,"stored":"{\"score\":0,\"found\":0}"}
+✔ B2 game2 same score (0 vs 0): diff 0, not new best, best unchanged — {"score":0,"best":"0 (0)","diff":"0","newBest":false,"first":false,"stored":"{\"score\":0,\"found\":0}"}
+✔ B3 game3 higher: diff +score, new best label, stored — {"score":5183,"best":"0 (0)","diff":"+5183","newBest":true,"first":false,"stored":"{\"score\":5183,\"found\":100}"}
+✔ B4 game4 lower: diff −score, no new best, best stays — {"score":0,"best":"5183 (100)","diff":"-5183","newBest":false,"first":false,"stored":"{\"score\":5183,\"found\":100}"}
+✔ B5 mid-game [처음부터] → ready, best unchanged — {"before":"{\"score\":5183,\"found\":100}","after":["{\"score\":5183,\"found\":100}","ready"]}
+✔ B6 pageerror 0 over 5 games
+perf 4xCPU {"frames":461,"avgFps":22.959247335978638,"worstGap":85.89999997615814,"p99":84.79999995231628,"over50":198,"over100":0,"blocks":[1.8,1,0.2,0,0],"shows":35,"k":35}
+✔ P1 4×CPU measured (report only; headless rAF is not device fps) — avgFps 23.0, worst frame gap 85.9 ms, p99 84.8 ms, block gen ms 1.8/1/0.2/0/0
+✔ P2 pageerror 0 (perf)
+
+19/19 pass (preview)

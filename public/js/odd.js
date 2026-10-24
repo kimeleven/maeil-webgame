@@ -11,7 +11,12 @@ const rawSeed = qs.get('seed'); const seed = rawSeed && /^[A-Za-z0-9-]{1,64}$/.t
 // evidence hooks (headless checks read these): snd requested sounds, osc real oscillators, vibs vibrate calls, ev log, ft frame times
 const W8 = { snd: [], osc: 0, vibs: [], ev: [], ft: [], pausedDrop: 0, uiDrop: 0, renderFail: false, renderChecks: [] };
 let ac = null;
-const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+// t_6b058523: the first AudioContext in a browser process blocks the main thread ~95–215 ms (measured, probe3). Built inside
+// start() it delayed delivery of the first-grid tap past t0+W+G (the 171 ms case). Construct it while idle on the ready
+// screen (suspended, no sound) and only resume() on the start gesture.
+const makeAC = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } };
+const unlock = () => { makeAC(); if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+(window.requestIdleCallback || ((f) => setTimeout(f, 200)))(makeAC, { timeout: 1500 });
 function tone(fr, d, type = 'sine', at = 0, vol = 0.12) { if (!ac || !set.sound) return; const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + at; o.type = type; o.frequency.value = fr; g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d); o.connect(g).connect(ac.destination); o.start(t); o.stop(t + d + 0.02); W8.osc++; }
 const sfx = (k) => { W8.snd.push(k); if (k === 'hit') tone(1320, 0.12); else if (k === 'bad') tone(150, 0.16, 'triangle', 0, 0.16); else if (k === 'combo') { tone(880, 0.09); tone(1175, 0.12, 'sine', 0.08); } };
 const buzz = (p) => { if (set.haptic && canVib) try { navigator.vibrate(p); W8.vibs.push(p); } catch {} };
@@ -29,7 +34,8 @@ function drawGlyph(ctx, g, px) {
   ctx.fillStyle = FG; ctx.beginPath();
   if (g.shape === 'circle') ctx.arc(0, 0, circleR(g), 0, Math.PI * 2); else { const P = glyphPoly(g); ctx.moveTo(P[0][0], P[0][1]); for (const p of P.slice(1)) ctx.lineTo(p[0], p[1]); ctx.closePath(); }
   ctx.fill(); ctx.fillStyle = HOLE;
-  for (const [x, y] of DOT_LAYOUT[g.dots]) { ctx.beginPath(); ctx.arc(x, y, DOT_R, 0, Math.PI * 2); ctx.fill(); }
+  const ds = g.ds || 1; // tutorial glyphs scale dots with the shape (t_6b058523); generated grids ds=1 (unchanged)
+  for (const [x, y] of DOT_LAYOUT[g.dots]) { ctx.beginPath(); ctx.arc(x * ds, y * ds, DOT_R * ds, 0, Math.PI * 2); ctx.fill(); }
   ctx.restore();
 }
 const bitmap = (g, px) => { const c = document.createElement('canvas'); c.width = c.height = px; drawGlyph(c.getContext('2d'), g, px); return c; };
@@ -114,6 +120,7 @@ function select(i, ev, src) {
   const r = game.input(t, i, arr, src); W8.ev.push({ k: 'in', i, t, arr, src, r });
   if (r === 'queued' && state === 'play' && cells()[i]) cells()[i].classList.add('down');
 }
+addEventListener('pointerdown', (e) => { if (e.pointerType === 'touch') document.body.classList.add('touch'); }, { capture: true, passive: true });
 gridEl.addEventListener('pointerdown', (e) => { const c = e.target.closest('.cell'); if (!c) return; e.preventDefault(); held.add(`p${e.pointerId}`); select(+c.dataset.i, e, e.pointerType || 'ptr'); });
 addEventListener('pointerup', (e) => held.delete(`p${e.pointerId}`)); addEventListener('pointercancel', (e) => held.delete(`p${e.pointerId}`)); // never changes a judgement
 gridEl.addEventListener('contextmenu', (e) => e.preventDefault());
