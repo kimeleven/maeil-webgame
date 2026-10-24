@@ -498,6 +498,6 @@ on('b-png', () => {
 function paintSet() { document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, v = set[k]; b.setAttribute('aria-pressed', String(v)); b.classList.toggle('off', !v); if (b.dataset.icon) b.textContent = k === 'sound' ? (v ? '🔊' : '🔇') : v ? '📳' : '📴'; if (k === 'haptic' && !canVib) b.hidden = true; }); document.body.classList.toggle('rm', !set.motion); }
 document.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save('ot-set', set); if (k === 'sound') unlock(); paintSet(); }));
 paintSet(); hud(0); $('seed').textContent = seed;
-window.__ot = { ready: true, get acState() { return ac ? ac.state : 'none'; }, // evidence hook (tests only read it) E: { OT, createGame, makeDeck, glyphPair, VALID, ROWS, SHAPES, isValid, glyphFallback }, W: W8, get state() { return state; }, get game() { return game; }, set game(v) {}, seed, activeNow, activeOf, diffRatio, renderCheck, bitmap, get focus() { return focus; }, get shownK() { return shownK; }, held };
+window.__ot = { ready: true, get acState() { return ac ? ac.state : 'none'; }, E: { OT, createGame, makeDeck, glyphPair, VALID, ROWS, SHAPES, isValid, glyphFallback }, W: W8, get state() { return state; }, get game() { return game; }, set game(v) {}, seed, activeNow, activeOf, diffRatio, renderCheck, bitmap, get focus() { return focus; }, get shownK() { return shownK; }, held };
 })()</script>
 </body></html>
