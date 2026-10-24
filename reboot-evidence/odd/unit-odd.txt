@@ -1,0 +1,29 @@
+R7a fallback 0/1600 = 0.00%, worst block gen 0.187 ms
+R7c fallback cases 3276, fail 0
+R11 {"idle":{"score":0,"found":0,"acc":0},"fixed:0":{"score":115.75,"found":6.15,"acc":0.08097432521395655},"fixed:1":{"score":117.9,"found":6.25,"acc":0.0821287779237845},"fixed:2":{"score":115.8,"found":6.15,"acc":0.08086785009861933},"fixed:3":{"score":123.6,"found":6.55,"acc":0.08595800524934383},"fixed:4":{"score":117.45,"found":6.25,"acc":0.0821287779237845},"fixed:5":{"score":116.75,"found":6.2,"acc":0.08157894736842106},"fixed:6":{"score":118.75,"found":6.3,"acc":0.08278580814717477},"fixed:7":{"score":132.3,"found":7,"acc":0.09174311926605505},"fixed:8":{"score":119.75,"found":6.35,"acc":0.08349769888231427},"mash:0":{"score":147.75,"found":7.6,"acc":0.07491375061606703},"mash:100":{"score":157.1,"found":8.1,"acc":0.07952871870397643},"skilled":{"score":1335,"found":34,"acc":1}} ratio 8.50
+✔ R4 judge: odd cell = hit, same-picture cell = wrong, D-1 hit with bonus 0, D exact = miss (4.937125ms)
+✔ R4 combo x2 at 5th, x3 at 10th, x1 after wrong; score non-decreasing (1.427458ms)
+✔ R4b tutorial constants 1–3 (2x2, no generate), 3x3 at k4, 4x4 at k25 (0.160542ms)
+✔ R5 idle: logical end exactly 60000, 0 found 0 score; result display T+G ≤ x < T+G+f (60/20fps) (0.693667ms)
+✔ R5 T-1 judged, T ignored; grid deadline == T → discard (not miss) (0.458167ms)
+✔ R5 t<D arriving D+G-1 accepted, D+G late_drop (0.909292ms)
+✔ R5/R6b fps independence: 60fps vs 20fps same log & score (1.523792ms)
+✔ R6 +15 ms other cell → both void, wait continues; +16 → t0 confirmed; same cell overlap void (1.7505ms)
+✔ R6b receive deadline: t1=1015 arriving 1030/1065 void, 1066 late_drop; t1=1016 → t0 (2.346375ms)
+✔ R6c after void: t2=t0+W new candidate, t0+W-1 same bundle; D unchanged; t2<D with t2+W>D judged, t2=D miss (21.819583ms)
+✔ R6d E1–E6 (engine side: pause = active clock frozen, arrival active = tp) (2.117667ms)
+✔ R3 determinism: same seed + log twice → same (0.636333ms)
+✔ R7a seed 100 × blocks 0–15 pass ①–⑤, deterministic, fallback rate (54.368875ms)
+✔ R7b always-false validate → exactly 8 calls per block then fallback, block=fallback:b logged (0.298458ms)
+✔ R7c fallback for every b 0–15 × every possible prevTail passes ①–⑤ (mixed b2, boundary k13) (37.55075ms)
+✔ R7 X combos never generated (seed 100 × blocks 0–15) (20.35075ms)
+✔ R11 policies (measured, seed 20) (108.8815ms)
+✔ late-delivered lone candidate (timeStamp lag > G, before any commit) is still judged; companions in the same delivery count (1.39325ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 301.679917

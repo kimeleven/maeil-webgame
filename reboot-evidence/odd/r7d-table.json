@@ -1,0 +1,254 @@
+[
+ {
+  "row": "T",
+  "attr": "size",
+  "shape": "circle",
+  "valid": true,
+  "min": 66.79
+ },
+ {
+  "row": "T",
+  "attr": "size",
+  "shape": "triangle",
+  "valid": true,
+  "min": 38.88
+ },
+ {
+  "row": "T",
+  "attr": "size",
+  "shape": "square",
+  "valid": true,
+  "min": 73.48
+ },
+ {
+  "row": "R1",
+  "attr": "rot",
+  "shape": "circle",
+  "valid": false,
+  "min": 0
+ },
+ {
+  "row": "R1",
+  "attr": "rot",
+  "shape": "triangle",
+  "valid": true,
+  "min": 7.73
+ },
+ {
+  "row": "R1",
+  "attr": "rot",
+  "shape": "square",
+  "valid": false,
+  "min": 0
+ },
+ {
+  "row": "R1",
+  "attr": "dots",
+  "shape": "circle",
+  "valid": true,
+  "min": 3.51
+ },
+ {
+  "row": "R1",
+  "attr": "dots",
+  "shape": "triangle",
+  "valid": true,
+  "min": 3.51
+ },
+ {
+  "row": "R1",
+  "attr": "dots",
+  "shape": "square",
+  "valid": true,
+  "min": 3.51
+ },
+ {
+  "row": "R1",
+  "attr": "size",
+  "shape": "circle",
+  "valid": true,
+  "min": 33.15
+ },
+ {
+  "row": "R1",
+  "attr": "size",
+  "shape": "triangle",
+  "valid": true,
+  "min": 17.33
+ },
+ {
+  "row": "R1",
+  "attr": "size",
+  "shape": "square",
+  "valid": true,
+  "min": 32.87
+ },
+ {
+  "row": "R2",
+  "attr": "rot",
+  "shape": "circle",
+  "valid": false,
+  "min": 0
+ },
+ {
+  "row": "R2",
+  "attr": "rot",
+  "shape": "triangle",
+  "valid": true,
+  "min": 9.01
+ },
+ {
+  "row": "R2",
+  "attr": "rot",
+  "shape": "square",
+  "valid": true,
+  "min": 9.35
+ },
+ {
+  "row": "R2",
+  "attr": "dots",
+  "shape": "circle",
+  "valid": true,
+  "min": 3.48
+ },
+ {
+  "row": "R2",
+  "attr": "dots",
+  "shape": "triangle",
+  "valid": true,
+  "min": 3.48
+ },
+ {
+  "row": "R2",
+  "attr": "dots",
+  "shape": "square",
+  "valid": true,
+  "min": 3.48
+ },
+ {
+  "row": "R2",
+  "attr": "size",
+  "shape": "circle",
+  "valid": true,
+  "min": 18.55
+ },
+ {
+  "row": "R2",
+  "attr": "size",
+  "shape": "triangle",
+  "valid": true,
+  "min": 9.61
+ },
+ {
+  "row": "R2",
+  "attr": "size",
+  "shape": "square",
+  "valid": true,
+  "min": 17.93
+ },
+ {
+  "row": "R2",
+  "attr": "round",
+  "shape": "circle",
+  "valid": false,
+  "min": 0
+ },
+ {
+  "row": "R2",
+  "attr": "round",
+  "shape": "triangle",
+  "valid": true,
+  "min": 5.18
+ },
+ {
+  "row": "R2",
+  "attr": "round",
+  "shape": "square",
+  "valid": true,
+  "min": 6.6
+ },
+ {
+  "row": "R3",
+  "attr": "rot",
+  "shape": "circle",
+  "valid": false,
+  "min": 0
+ },
+ {
+  "row": "R3",
+  "attr": "rot",
+  "shape": "triangle",
+  "valid": true,
+  "min": 7.73
+ },
+ {
+  "row": "R3",
+  "attr": "rot",
+  "shape": "square",
+  "valid": true,
+  "min": 8.47
+ },
+ {
+  "row": "R3",
+  "attr": "dots",
+  "shape": "circle",
+  "valid": true,
+  "min": 4.42
+ },
+ {
+  "row": "R3",
+  "attr": "dots",
+  "shape": "triangle",
+  "valid": true,
+  "min": 4.42
+ },
+ {
+  "row": "R3",
+  "attr": "dots",
+  "shape": "square",
+  "valid": true,
+  "min": 4.42
+ },
+ {
+  "row": "R3",
+  "attr": "size",
+  "shape": "circle",
+  "valid": true,
+  "min": 11.98
+ },
+ {
+  "row": "R3",
+  "attr": "size",
+  "shape": "triangle",
+  "valid": true,
+  "min": 6.34
+ },
+ {
+  "row": "R3",
+  "attr": "size",
+  "shape": "square",
+  "valid": true,
+  "min": 11.57
+ },
+ {
+  "row": "R3",
+  "attr": "round",
+  "shape": "circle",
+  "valid": false,
+  "min": 0
+ },
+ {
+  "row": "R3",
+  "attr": "round",
+  "shape": "triangle",
+  "valid": true,
+  "min": 5.18
+ },
+ {
+  "row": "R3",
+  "attr": "round",
+  "shape": "square",
+  "valid": true,
+  "min": 6.6
+ }
+]
