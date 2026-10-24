@@ -27,12 +27,12 @@
  },
  "seo": {
   "lobby": {
-   "title": "Arcade Diario — Juego de 30 s, test de personaje y química con amigos",
+   "title": "Arcade Diario — Juegos web gratis sin instalar, 30 s al día",
    "desc": "Juega Gate Rush en 30 segundos, descubre tu personaje en 10 preguntas y mide tu química con amigos. Gratis y sin registro."
   },
   "game": {
-   "title": "Gate Rush — Juego runner de 30 segundos en el navegador | Arcade Diario",
-   "desc": "Elige puertas para crecer tu escuadrón, esquiva drones y láseres y vence al jefe. Juego gratis que acelera en cada sector. Reta a tus amigos en la misma partida."
+   "title": "Gate Rush — Runner de 30 s en el navegador | Arcade Diario",
+   "desc": "Elige puertas para crecer tu escuadrón, esquiva drones y láseres y vence al jefe. Juego gratis que acelera en cada sector. Reta a amigos en la misma partida."
   },
   "quiz": {
    "title": "Test de personalidad gratis: 10 preguntas | Arcade Diario",

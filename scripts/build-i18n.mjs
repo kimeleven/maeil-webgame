@@ -67,7 +67,7 @@ function shell(l, page, suf, main, opts = {}) {
 <body data-page="${page}" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.brand)}</a>${langMenu(l, suf, opts.dyn)}</header>
 <main class="wrap">${main}</main>
-<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
+<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script type="module" src="/js/track.js"></script>
 <script type="module" src="/js/app.js"></script>
@@ -127,7 +127,7 @@ function pageBody(l, key) {
   if (key === 'chem') {
     const C = D.chem;
     return `<section class="hero"><span class="tag">${esc(D.nav.friends)}</span><h1>${esc(C.h1)}</h1><p>${esc(C.intro)}</p><ol class="prose">${C.steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol></section>
-<section id="chem" class="card"><p>${esc(D.common.loading)}</p></section>${disc}<p class="muted"><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a></p>`;
+<section id="chem" class="card"><p>${esc(D.common.loading)}</p></section>${disc}<p class="muted"><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a> · <a href="/${l}/play/commute/">${esc(D.commute.link)}</a></p>`;
   }
   if (key === 'about' || key === 'privacy') {
     const P = D[key];

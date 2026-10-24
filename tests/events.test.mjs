@@ -38,6 +38,10 @@ test('stats before any collection: games observed=false, byGame null (not 0), ex
   assert.equal(s.body.games.byGame, null);
   assert.equal(s.body.games.availableSince, null);
   assert.equal(s.body.games.unobserved.reason, 'collection not started');
+  const f = s.body.funnel;
+  assert.equal(f.rush.shareClick.observed, false); assert.equal(f.rush.shareResult.observed, false);
+  assert.equal(f.challenge.challengeLand.observed, false); assert.equal(f.games.observed, false);
+  assert.ok(!/ip|agent|referrer/i.test(JSON.stringify(Object.keys(f))));
   assert.equal((await stats('', 'wrong-token')).status, 401);
   assert.equal((await stats('?start=nope')).status, 400);
   assert.equal((await stats('?start=2026-10-24T00:00:00Z&end=2026-10-23T00:00:00Z')).status, 400);
