@@ -11,12 +11,12 @@
 ✔ T4 no overlay covers any 3×3/4×4 cell centre (elementFromPoint), vercel-live elements count reported — {"covers":[],"live":0}
 ✔ B1 game1 first record: best —, diff —, first label — {"score":0,"best":"—","diff":"—","newBest":false,"first":true,"stored":"{\"score\":0,\"found\":0}"}
 ✔ B2 game2 same score (0 vs 0): diff 0, not new best, best unchanged — {"score":0,"best":"0 (0)","diff":"0","newBest":false,"first":false,"stored":"{\"score\":0,\"found\":0}"}
-✔ B3 game3 higher: diff +score, new best label, stored — {"score":5183,"best":"0 (0)","diff":"+5183","newBest":true,"first":false,"stored":"{\"score\":5183,\"found\":100}"}
-✔ B4 game4 lower: diff −score, no new best, best stays — {"score":0,"best":"5183 (100)","diff":"-5183","newBest":false,"first":false,"stored":"{\"score\":5183,\"found\":100}"}
-✔ B5 mid-game [처음부터] → ready, best unchanged — {"before":"{\"score\":5183,\"found\":100}","after":["{\"score\":5183,\"found\":100}","ready"]}
+✔ B3 game3 higher: diff +score, new best label, stored — {"score":5063,"best":"0 (0)","diff":"+5063","newBest":true,"first":false,"stored":"{\"score\":5063,\"found\":98}"}
+✔ B4 game4 lower: diff −score, no new best, best stays — {"score":0,"best":"5063 (98)","diff":"-5063","newBest":false,"first":false,"stored":"{\"score\":5063,\"found\":98}"}
+✔ B5 mid-game [처음부터] → ready, best unchanged — {"before":"{\"score\":5063,\"found\":98}","after":["{\"score\":5063,\"found\":98}","ready"]}
 ✔ B6 pageerror 0 over 5 games
-perf 4xCPU {"frames":461,"avgFps":22.959247335978638,"worstGap":85.89999997615814,"p99":84.79999995231628,"over50":198,"over100":0,"blocks":[1.8,1,0.2,0,0],"shows":35,"k":35}
-✔ P1 4×CPU measured (report only; headless rAF is not device fps) — avgFps 23.0, worst frame gap 85.9 ms, p99 84.8 ms, block gen ms 1.8/1/0.2/0/0
+perf 4xCPU {"frames":251,"avgFps":12.583491465830786,"worstGap":152.40000009536743,"p99":149.10000002384186,"over50":173,"over100":95,"blocks":[0.5,0.1,0.1,0,0.1],"shows":34,"k":35}
+✔ P1 4×CPU measured (report only; headless rAF is not device fps) — avgFps 12.6, worst frame gap 152.4 ms, p99 149.1 ms, block gen ms 0.5/0.1/0.1/0/0.1
 ✔ P2 pageerror 0 (perf)
 
 19/19 pass (preview)

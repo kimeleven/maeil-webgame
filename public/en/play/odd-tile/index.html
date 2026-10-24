@@ -331,7 +331,13 @@ let ac = null;
 // screen (suspended, no sound) and only resume() on the start gesture.
 const makeAC = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } };
 const unlock = () => { makeAC(); if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
-(window.requestIdleCallback || ((f) => setTimeout(f, 200)))(makeAC, { timeout: 1500 });
+// requestIdleCallback is unreliable in automation browsers (observed never firing within 4 s), so the pre-build runs
+// on a plain timer; idle callback is only an earlier attempt.
+// requestIdleCallback never fired in the automation browser (measured, 4 s), so a plain timer is the reliable path.
+(window.requestIdleCallback || (() => {}))(makeAC, { timeout: 1000 }); setTimeout(makeAC, 250);
+// A context built while the page is still hidden (prerender/background tab) is unusable for the first tap: resuming it
+// on the start gesture cost 100–480 ms and re-created the 171 ms loss. Rebuild it on the first visible moment.
+document.addEventListener('visibilitychange', () => { if (!document.hidden && ac && ac.state === 'suspended') { try { ac.close(); } catch {} ac = null; makeAC(); } });
 function tone(fr, d, type = 'sine', at = 0, vol = 0.12) { if (!ac || !set.sound) return; const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime + at; o.type = type; o.frequency.value = fr; g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + d); o.connect(g).connect(ac.destination); o.start(t); o.stop(t + d + 0.02); W8.osc++; }
 const sfx = (k) => { W8.snd.push(k); if (k === 'hit') tone(1320, 0.12); else if (k === 'bad') tone(150, 0.16, 'triangle', 0, 0.16); else if (k === 'combo') { tone(880, 0.09); tone(1175, 0.12, 'sine', 0.08); } };
 const buzz = (p) => { if (set.haptic && canVib) try { navigator.vibrate(p); W8.vibs.push(p); } catch {} };
@@ -492,6 +498,6 @@ on('b-png', () => {
 function paintSet() { document.querySelectorAll('[data-set]').forEach((b) => { const k = b.dataset.set, v = set[k]; b.setAttribute('aria-pressed', String(v)); b.classList.toggle('off', !v); if (b.dataset.icon) b.textContent = k === 'sound' ? (v ? '🔊' : '🔇') : v ? '📳' : '📴'; if (k === 'haptic' && !canVib) b.hidden = true; }); document.body.classList.toggle('rm', !set.motion); }
 document.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); const k = b.dataset.set; set[k] = !set[k]; save('ot-set', set); if (k === 'sound') unlock(); paintSet(); }));
 paintSet(); hud(0); $('seed').textContent = seed;
-window.__ot = { ready: true, E: { OT, createGame, makeDeck, glyphPair, VALID, ROWS, SHAPES, isValid, glyphFallback }, W: W8, get state() { return state; }, get game() { return game; }, set game(v) {}, seed, activeNow, activeOf, diffRatio, renderCheck, bitmap, get focus() { return focus; }, get shownK() { return shownK; }, held };
+window.__ot = { ready: true, get acState() { return ac ? ac.state : 'none'; }, // evidence hook (tests only read it) E: { OT, createGame, makeDeck, glyphPair, VALID, ROWS, SHAPES, isValid, glyphFallback }, W: W8, get state() { return state; }, get game() { return game; }, set game(v) {}, seed, activeNow, activeOf, diffRatio, renderCheck, bitmap, get focus() { return focus; }, get shownK() { return shownK; }, held };
 })()</script>
 </body></html>

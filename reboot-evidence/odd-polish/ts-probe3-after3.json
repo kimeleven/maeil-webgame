@@ -1,0 +1,381 @@
+[
+ {
+  "lt": [
+   [
+    49,
+    109
+   ]
+  ],
+  "ac": [
+   49,
+   110
+  ],
+  "pd": [
+   [
+    176,
+    202
+   ],
+   [
+    310,
+    341
+   ]
+  ],
+  "t0perf": 204,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 106,
+    "arr": 138,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "na",
+  "mode": "headless"
+ },
+ {
+  "lt": [],
+  "ac": [
+   40,
+   1
+  ],
+  "pd": [
+   [
+    58,
+    164
+   ],
+   [
+    305,
+    365
+   ]
+  ],
+  "t0perf": 164,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 140,
+    "arr": 201,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "na",
+  "mode": "headless"
+ },
+ {
+  "lt": [],
+  "ac": [
+   180,
+   2
+  ],
+  "pd": [
+   [
+    53,
+    181
+   ],
+   [
+    279,
+    391
+   ]
+  ],
+  "t0perf": 183,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 96,
+    "arr": 208,
+    "src": "touch",
+    "r": "late_drop"
+   }
+  ],
+  "log": [],
+  "late": [
+   {
+    "k": 1,
+    "t": 96,
+    "arr": 208,
+    "cell": 3,
+    "src": "touch",
+    "why": "arr>=t+W+G"
+   }
+  ],
+  "acState": "na",
+  "mode": "headless"
+ },
+ {
+  "lt": [],
+  "ac": [
+   36,
+   1
+  ],
+  "pd": [
+   [
+    50,
+    182
+   ],
+   [
+    290,
+    454
+   ]
+  ],
+  "t0perf": 184,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 106,
+    "arr": 270,
+    "src": "touch",
+    "r": "late_drop"
+   }
+  ],
+  "log": [],
+  "late": [
+   {
+    "k": 1,
+    "t": 106,
+    "arr": 270,
+    "cell": 3,
+    "src": "touch",
+    "why": "arr>=t+W+G"
+   }
+  ],
+  "acState": "na",
+  "mode": "headless"
+ },
+ {
+  "lt": [],
+  "ac": [
+   136,
+   2
+  ],
+  "pd": [
+   [
+    54,
+    136
+   ],
+   [
+    198,
+    273
+   ]
+  ],
+  "t0perf": 139,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 60,
+    "arr": 135,
+    "src": "touch",
+    "r": "late_drop"
+   }
+  ],
+  "log": [],
+  "late": [
+   {
+    "k": 1,
+    "t": 60,
+    "arr": 135,
+    "cell": 3,
+    "src": "touch",
+    "why": "arr>=t+W+G"
+   }
+  ],
+  "acState": "na",
+  "mode": "headless"
+ },
+ {
+  "lt": [
+   [
+    68,
+    148
+   ],
+   [
+    356,
+    72
+   ],
+   [
+    428,
+    50
+   ]
+  ],
+  "ac": [
+   68,
+   149
+  ],
+  "pd": [
+   [
+    236,
+    238
+   ],
+   [
+    262,
+    275
+   ]
+  ],
+  "t0perf": 239,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 23,
+    "arr": 36,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "na",
+  "mode": "headed"
+ },
+ {
+  "lt": [],
+  "ac": [
+   81,
+   1
+  ],
+  "pd": [
+   [
+    94,
+    95
+   ],
+   [
+    116,
+    127
+   ]
+  ],
+  "t0perf": 96,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 20,
+    "arr": 32,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "na",
+  "mode": "headed"
+ },
+ {
+  "lt": [],
+  "ac": [
+   65,
+   1
+  ],
+  "pd": [
+   [
+    81,
+    85
+   ],
+   [
+    101,
+    113
+   ]
+  ],
+  "t0perf": 86,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 15,
+    "arr": 27,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "na",
+  "mode": "headed"
+ },
+ {
+  "lt": [],
+  "ac": [
+   64,
+   1
+  ],
+  "pd": [
+   [
+    75,
+    85
+   ],
+   [
+    103,
+    116
+   ]
+  ],
+  "t0perf": 86,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 17,
+    "arr": 30,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "na",
+  "mode": "headed"
+ },
+ {
+  "lt": [],
+  "ac": [
+   51,
+   1
+  ],
+  "pd": [
+   [
+    62,
+    71
+   ],
+   [
+    87,
+    100
+   ]
+  ],
+  "t0perf": 73,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 15,
+    "arr": 27,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "na",
+  "mode": "headed"
+ }
+]

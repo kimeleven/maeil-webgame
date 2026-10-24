@@ -89,6 +89,7 @@ async function playGame(p, mode) {
 
 // ---- 4. 4×CPU: block generation time, frame gaps around generation, average fps over 20 s auto play ----
 { const p = await open({ width: 412, height: 915 }, true, '/ko/play/odd-tile/?seed=perf', 2.625, 4); await tapSel(p, '#b-start', true);
+  await p.waitForFunction(() => __ot.acState && __ot.acState !== 'none', null, { timeout: 8000 }).catch(() => {});
   const r = await p.evaluate(() => new Promise((res) => { const t0 = performance.now(); const tick = () => { const g = __ot.game; if (performance.now() - t0 > 20000 || __ot.state !== 'play') { const ft = __ot.W.ft, gaps = ft.slice(1).map((x, i) => x - ft[i]); const shows = __ot.W.ev.filter((e) => e.k === 'show').map((e) => e.at); const blocks = g.deck.blocks.map((x) => Math.round(x.ms * 100) / 100); const near = gaps.filter((g, i) => shows.some((s) => Math.abs(ft[i + 1] - t0 - 0) < 0)); return res({ frames: ft.length, avgFps: (1000 * (ft.length - 1)) / (ft[ft.length - 1] - ft[0]), worstGap: Math.max(...gaps), p99: gaps.slice().sort((a, b) => a - b)[Math.floor(gaps.length * 0.99)], over50: gaps.filter((g) => g > 50).length, over100: gaps.filter((g) => g > 100).length, blocks, shows: shows.length, k: g.S.k }); }
     if (!g.S.over && __ot.activeNow() >= g.S.start + 250 && !g.S.inbox.length && __ot.shownK === g.S.k) document.querySelectorAll('#grid .cell')[g.S.grid.ans].dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerType: 'touch' })); setTimeout(tick, 40); }; tick(); }));
   out.perf4x = r; console.log('perf 4xCPU', JSON.stringify(r));

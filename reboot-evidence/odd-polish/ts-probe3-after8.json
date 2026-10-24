@@ -1,0 +1,397 @@
+[
+ {
+  "lt": [
+   [
+    63,
+    117
+   ]
+  ],
+  "ac": [
+   63,
+   118
+  ],
+  "pd": [
+   [
+    197,
+    201
+   ],
+   [
+    242,
+    356
+   ]
+  ],
+  "t0perf": 202,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 40,
+    "arr": 155,
+    "src": "touch",
+    "r": "late_drop"
+   }
+  ],
+  "log": [],
+  "late": [
+   {
+    "k": 1,
+    "t": 40,
+    "arr": 155,
+    "cell": 3,
+    "src": "touch",
+    "why": "arr>=t+W+G"
+   }
+  ],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   44,
+   2
+  ],
+  "pd": [
+   [
+    59,
+    189
+   ],
+   [
+    251,
+    462
+   ]
+  ],
+  "t0perf": 191,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 60,
+    "arr": 271,
+    "src": "touch",
+    "r": "late_drop"
+   }
+  ],
+  "log": [],
+  "late": [
+   {
+    "k": 1,
+    "t": 60,
+    "arr": 271,
+    "cell": 3,
+    "src": "touch",
+    "why": "arr>=t+W+G"
+   }
+  ],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   40,
+   2
+  ],
+  "pd": [
+   [
+    54,
+    132
+   ],
+   [
+    204,
+    280
+   ]
+  ],
+  "t0perf": 133,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 71,
+    "arr": 147,
+    "src": "touch",
+    "r": "late_drop"
+   }
+  ],
+  "log": [],
+  "late": [
+   {
+    "k": 1,
+    "t": 71,
+    "arr": 147,
+    "cell": 3,
+    "src": "touch",
+    "why": "arr>=t+W+G"
+   }
+  ],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   43,
+   2
+  ],
+  "pd": [
+   [
+    62,
+    62
+   ],
+   [
+    72,
+    181
+   ]
+  ],
+  "t0perf": 64,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 8,
+    "arr": 118,
+    "src": "touch",
+    "r": "late_drop"
+   }
+  ],
+  "log": [],
+  "late": [
+   {
+    "k": 1,
+    "t": 8,
+    "arr": 118,
+    "cell": 3,
+    "src": "touch",
+    "why": "arr>=t+W+G"
+   }
+  ],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   46,
+   4
+  ],
+  "pd": [
+   [
+    72,
+    185
+   ],
+   [
+    250,
+    327
+   ]
+  ],
+  "t0perf": 186,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 63,
+    "arr": 141,
+    "src": "touch",
+    "r": "late_drop"
+   }
+  ],
+  "log": [],
+  "late": [
+   {
+    "k": 1,
+    "t": 63,
+    "arr": 141,
+    "cell": 3,
+    "src": "touch",
+    "why": "arr>=t+W+G"
+   }
+  ],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "suspended"
+ },
+ {
+  "lt": [
+   [
+    70,
+    482
+   ]
+  ],
+  "ac": [
+   71,
+   482
+  ],
+  "pd": [
+   [
+    610,
+    626
+   ],
+   [
+    647,
+    655
+   ]
+  ],
+  "t0perf": 628,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 20,
+    "arr": 27,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "running"
+ },
+ {
+  "lt": [],
+  "ac": [
+   70,
+   3
+  ],
+  "pd": [
+   [
+    91,
+    93
+   ],
+   [
+    123,
+    134
+   ]
+  ],
+  "t0perf": 94,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 29,
+    "arr": 41,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   59,
+   1
+  ],
+  "pd": [
+   [
+    73,
+    76
+   ],
+   [
+    94,
+    106
+   ]
+  ],
+  "t0perf": 76,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 17,
+    "arr": 30,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   70,
+   1
+  ],
+  "pd": [
+   [
+    99,
+    100
+   ],
+   [
+    114,
+    127
+   ]
+  ],
+  "t0perf": 100,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 14,
+    "arr": 27,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "running"
+ },
+ {
+  "lt": [],
+  "ac": [
+   65,
+   1
+  ],
+  "pd": [
+   [
+    77,
+    87
+   ],
+   [
+    104,
+    115
+   ]
+  ],
+  "t0perf": 88,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 16,
+    "arr": 27,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "suspended"
+ }
+]

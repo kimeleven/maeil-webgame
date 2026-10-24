@@ -1,7 +1,7 @@
 {
- "base": "https://maeil-webgame-pfs42uqtv-sanghunkims-projects.vercel.app",
+ "base": "https://maeil-webgame-1mk5tpl9f-sanghunkims-projects.vercel.app",
  "tag": "preview",
- "at": "2026-10-24T04:56:00.733Z",
+ "at": "2026-10-24T05:27:10.010Z",
  "skipToolbarHeader": true,
  "tut-360": [
   {
@@ -225,25 +225,25 @@
     "stored": "{\"score\":0,\"found\":0}"
    },
    {
-    "score": 5183,
+    "score": 5063,
     "best": "0 (0)",
-    "diff": "+5183",
+    "diff": "+5063",
     "newBest": true,
     "first": false,
-    "stored": "{\"score\":5183,\"found\":100}"
+    "stored": "{\"score\":5063,\"found\":98}"
    },
    {
     "score": 0,
-    "best": "5183 (100)",
-    "diff": "-5183",
+    "best": "5063 (98)",
+    "diff": "-5063",
     "newBest": false,
     "first": false,
-    "stored": "{\"score\":5183,\"found\":100}"
+    "stored": "{\"score\":5063,\"found\":98}"
    }
   ],
-  "before": "{\"score\":5183,\"found\":100}",
+  "before": "{\"score\":5063,\"found\":98}",
   "after": [
-   "{\"score\":5183,\"found\":100}",
+   "{\"score\":5063,\"found\":98}",
    "ready"
   ]
  },
@@ -257,40 +257,40 @@
  },
  "B3 game3 higher: diff +score, new best label, stored": {
   "pass": true,
-  "detail": "{\"score\":5183,\"best\":\"0 (0)\",\"diff\":\"+5183\",\"newBest\":true,\"first\":false,\"stored\":\"{\\\"score\\\":5183,\\\"found\\\":100}\"}"
+  "detail": "{\"score\":5063,\"best\":\"0 (0)\",\"diff\":\"+5063\",\"newBest\":true,\"first\":false,\"stored\":\"{\\\"score\\\":5063,\\\"found\\\":98}\"}"
  },
  "B4 game4 lower: diff −score, no new best, best stays": {
   "pass": true,
-  "detail": "{\"score\":0,\"best\":\"5183 (100)\",\"diff\":\"-5183\",\"newBest\":false,\"first\":false,\"stored\":\"{\\\"score\\\":5183,\\\"found\\\":100}\"}"
+  "detail": "{\"score\":0,\"best\":\"5063 (98)\",\"diff\":\"-5063\",\"newBest\":false,\"first\":false,\"stored\":\"{\\\"score\\\":5063,\\\"found\\\":98}\"}"
  },
  "B5 mid-game [처음부터] → ready, best unchanged": {
   "pass": true,
-  "detail": "{\"before\":\"{\\\"score\\\":5183,\\\"found\\\":100}\",\"after\":[\"{\\\"score\\\":5183,\\\"found\\\":100}\",\"ready\"]}"
+  "detail": "{\"before\":\"{\\\"score\\\":5063,\\\"found\\\":98}\",\"after\":[\"{\\\"score\\\":5063,\\\"found\\\":98}\",\"ready\"]}"
  },
  "B6 pageerror 0 over 5 games": {
   "pass": true,
   "detail": ""
  },
  "perf4x": {
-  "frames": 461,
-  "avgFps": 22.959247335978638,
-  "worstGap": 85.89999997615814,
-  "p99": 84.79999995231628,
-  "over50": 198,
-  "over100": 0,
+  "frames": 251,
+  "avgFps": 12.583491465830786,
+  "worstGap": 152.40000009536743,
+  "p99": 149.10000002384186,
+  "over50": 173,
+  "over100": 95,
   "blocks": [
-   1.8,
-   1,
-   0.2,
+   0.5,
+   0.1,
+   0.1,
    0,
-   0
+   0.1
   ],
-  "shows": 35,
+  "shows": 34,
   "k": 35
  },
  "P1 4×CPU measured (report only; headless rAF is not device fps)": {
   "pass": true,
-  "detail": "avgFps 23.0, worst frame gap 85.9 ms, p99 84.8 ms, block gen ms 1.8/1/0.2/0/0"
+  "detail": "avgFps 12.6, worst frame gap 152.4 ms, p99 149.1 ms, block gen ms 0.5/0.1/0.1/0/0.1"
  },
  "P2 pageerror 0 (perf)": {
   "pass": true,

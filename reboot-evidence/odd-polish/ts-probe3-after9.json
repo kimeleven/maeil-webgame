@@ -1,0 +1,366 @@
+[
+ {
+  "lt": [
+   [
+    71,
+    143
+   ]
+  ],
+  "ac": [
+   71,
+   143
+  ],
+  "pd": [
+   [
+    232,
+    233
+   ],
+   [
+    262,
+    316
+   ]
+  ],
+  "t0perf": 234,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 28,
+    "arr": 82,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   44,
+   2
+  ],
+  "pd": [
+   [
+    59,
+    98
+   ],
+   [
+    116,
+    148
+   ]
+  ],
+  "t0perf": 99,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 17,
+    "arr": 49,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   47,
+   1
+  ],
+  "pd": [
+   [
+    82,
+    179
+   ],
+   [
+    327,
+    391
+   ]
+  ],
+  "t0perf": 180,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 147,
+    "arr": 211,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "running"
+ },
+ {
+  "lt": [],
+  "ac": [
+   44,
+   2
+  ],
+  "pd": [
+   [
+    61,
+    179
+   ],
+   [
+    285,
+    297
+   ]
+  ],
+  "t0perf": 181,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 104,
+    "arr": 116,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   76,
+   1
+  ],
+  "pd": [
+   [
+    128,
+    132
+   ],
+   [
+    276,
+    316
+   ]
+  ],
+  "t0perf": 133,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 143,
+    "arr": 183,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headless",
+  "pre": "running"
+ },
+ {
+  "lt": [
+   [
+    82,
+    135
+   ],
+   [
+    318,
+    120
+   ]
+  ],
+  "ac": [
+   82,
+   136
+  ],
+  "pd": [
+   [
+    242,
+    244
+   ],
+   [
+    248,
+    259
+   ]
+  ],
+  "t0perf": 245,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 3,
+    "arr": 15,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "running"
+ },
+ {
+  "lt": [],
+  "ac": [
+   68,
+   1
+  ],
+  "pd": [
+   [
+    96,
+    107
+   ],
+   [
+    123,
+    136
+   ]
+  ],
+  "t0perf": 108,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 15,
+    "arr": 27,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   70,
+   1
+  ],
+  "pd": [
+   [
+    83,
+    86
+   ],
+   [
+    102,
+    113
+   ]
+  ],
+  "t0perf": 86,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 16,
+    "arr": 27,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   80,
+   2
+  ],
+  "pd": [
+   [
+    101,
+    102
+   ],
+   [
+    117,
+    129
+   ]
+  ],
+  "t0perf": 102,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 15,
+    "arr": 26,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "suspended"
+ },
+ {
+  "lt": [],
+  "ac": [
+   67,
+   2
+  ],
+  "pd": [
+   [
+    84,
+    85
+   ],
+   [
+    101,
+    112
+   ]
+  ],
+  "t0perf": 86,
+  "ins": [
+   {
+    "k": "in",
+    "i": 3,
+    "t": 14,
+    "arr": 26,
+    "src": "touch",
+    "r": "queued"
+   }
+  ],
+  "log": [
+   "hit"
+  ],
+  "late": [],
+  "acState": "running",
+  "mode": "headed",
+  "pre": "suspended"
+ }
+]
