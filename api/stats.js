@@ -19,7 +19,8 @@ const n = (v) => Number(v || 0);
 // share_click, share_done by method). Rush/quiz/challenge share_click·share_result·challenge_land·play_start(challenge)
 // are now also sent to game_events (1024-21); before collection starts (or with no events) they stay unobserved, never 0.
 export function funnelOf(games, fs) {
-  const unobserved = (what) => ({ observed: false, reason: `${what} is client-side (Vercel Analytics) only; not stored server-side` });
+  const live = !!fs?.availableSince;
+  const unobserved = (what) => ({ observed: false, collectionLive: live, reason: live ? `${what}: no events stored yet in window (server-side collection live since ${String(fs.availableSince).slice(0, 10)})` : `${what}: server-side collection not started or unavailable` });
   const out = {
     rush: { shareClick: unobserved('rush share_click'), shareResult: unobserved('rush share_result (shared|copied|failed|cancel)') },
     challenge: { challengeLand: unobserved('challenge_land'), playStartFromChallenge: unobserved('play_start(challenge)') },
