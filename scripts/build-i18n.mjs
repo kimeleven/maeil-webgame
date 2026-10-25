@@ -139,7 +139,7 @@ function pageBody(l, key) {
 
 function meta(l, key) {
   const D = dict[l], S = D.seo;
-  if (key.startsWith('type-')) { const T = D.types[key.slice(5)]; return { title: `${T.name} — ${T.one} | ${D.brand}`, desc: T.desc.split(/(?<=[.!?。！？])\s*/).slice(0, 2).join(' ').trim() }; }
+  if (key.startsWith('type-')) { const T = D.types[key.slice(5)]; const full = `${T.name} — ${T.one} | ${D.brand}`, short = `${T.name} | ${D.brand}`; return { title: full.length <= 60 ? full : short.length <= 60 ? short : T.name, desc: T.desc.split(/(?<=[.!?。！？])\s*/).slice(0, 2).join(' ').trim() }; }
   if (key === 'quickbreak') return { title: D.quickbreak.title, desc: D.quickbreak.desc };
   if (key === 'friendplay') return { title: D.friendplay.title, desc: D.friendplay.desc };
   if (key === 'commute') return { title: D.commute.title, desc: D.commute.desc };
