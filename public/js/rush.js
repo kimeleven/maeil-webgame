@@ -100,7 +100,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
       return `${location.origin}/${lang}/c/${run.seed}-1${id ? `?vs=${id}` : ''}`;
     };
     const buttons = [
-      btn(D.cta.save, '', async () => saveCanvas(await rushCard(D, rec), `gate-rush-${rec.stage}.png`)),
+      btn(D.cta.save, 'ghost', async () => saveCanvas(await rushCard(D, rec), `gate-rush-${rec.stage}.png`)),
       btn(D.cta.share, 'ghost', async () => {
         track('share_click', { from: 'rush' }); gv('share_click');
         if (busy) return; busy = true;
@@ -114,7 +114,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
         } finally { busy = false; }
       }),
     ];
-    if (!rec.assist) buttons.push(btn(g.challenge, 'ghost', async () => {
+    if (!rec.assist) buttons.push(btn(g.challenge, '', async () => {
       if (busy) return; busy = true;
       try {
         const url = await shareUrl();
