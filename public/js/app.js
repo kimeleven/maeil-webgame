@@ -48,6 +48,7 @@ async function main() {
   } else if (page === 'lobby') {
     const s = (() => { try { return JSON.parse(localStorage.getItem('gate-rush-v3')); } catch { return null; } })();
     const a = document.querySelector('[data-daily]'); if (a && s && s.bestStage) a.textContent = `${D.game.best} ${s.bestStage} →`;
+    import('./weekly.js').then(async (m) => { const c = await m.weeklyCard(lang); const anchor = a && a.closest('section'); if (c && anchor) anchor.before(c); }).catch(() => {});
   }
 }
 main();

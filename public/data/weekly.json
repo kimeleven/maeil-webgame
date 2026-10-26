@@ -1,0 +1,4 @@
+{
+  "_doc": "이번 주 신작 슬롯. items 가 비면 홈·결과화면 변화 0. path 의 {lang} 은 언어 코드로 치환, 링크가 200 이어야만 노출. since 는 KST 시작일(YYYY-MM-DD).",
+  "items": []
+}

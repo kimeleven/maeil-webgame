@@ -66,8 +66,11 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     if (capture && buttons.length) setTimeout(() => buttons.at(-1).click(), 600);
   }
   function screenReady() {
-    const tgt = challenge ? `<p class="tag">${fmt(g.target, challenge)}</p>` : '';
-    show(`${challenge ? `<h2>${g.challengeTitle}</h2>` : ''}${tgt}<h2>${fmt(g.readyTitle, { stage: run.stage })}</h2><p>${fmt(g.readyDesc, { boss: G.boss(run) })}</p><p class="muted">${g.zones[G.zoneOf(run.stage) - 1]} · ${g.seedLabel} ${run.seed}</p>`,
+    const inv = !!(challenge || landing) && run.stage === 1; // 도전장 수신: 목표를 크게, 부가 문구는 접어 출격 버튼을 첫 화면에 둔다
+    const tgt = challenge ? (inv ? `<p class="tag" style="font-size:18px;padding:8px 16px">${fmt(g.target, challenge)}</p>` : `<p class="tag">${fmt(g.target, challenge)}</p>`) : '';
+    const desc = inv ? '' : `<p>${fmt(g.readyDesc, { boss: G.boss(run) })}</p>`;
+    const zone = `<p class="muted">${g.zones[G.zoneOf(run.stage) - 1]} · ${g.seedLabel} ${run.seed}</p>`;
+    show(`${challenge ? `<h2>${g.challengeTitle}</h2>` : ''}${tgt}${inv && challenge ? '' : `<h2>${fmt(g.readyTitle, { stage: run.stage })}</h2>`}${desc}${zone}`,
       [btn(g.start, '', start)]);
     if (challenge || landing) modal.querySelector('.btn')?.focus({ preventScroll: true });
   }
@@ -136,6 +139,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     buttons.push(btn(g.newRun, 'ghost', () => { run = G.createRun({ seed: run.seed }); run.assist = assist; persist(); screenReady(); }));
     show(`<span class="tag">${rec.assist ? 'ASSIST' : 'GAME OVER'}</span><h2>${g.lostTitle}</h2><p style="font-size:30px;font-weight:800;margin:6px 0">${g.sector} ${rec.stage}</p><p>${fmt(g.lostDesc, { stage: rec.cleared, score: rec.score.toLocaleString() })}</p>${beat ? `<p class="tag">${g.beat}</p>` : ''}<p class="muted">${g.best}: ${save.bestStage} · ${save.best.toLocaleString()}</p><p class="muted" data-share-hint>${g.shareHint}</p>`, buttons);
     modal.append(status);
+    import('./weekly.js').then(async (m) => { const c = await m.weeklyCard(lang); if (c && !ov.hidden && modal.querySelector('[data-share-hint]')) { c.style.marginTop = '12px'; modal.append(c); } }).catch(() => {});
   }
   function start() { if (run.stage === 1) { track('play_start', { mode: challenge ? 'challenge' : 'daily' }); gv('play_start', { from: challenge ? 'c' : 'direct' }); } G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
 
