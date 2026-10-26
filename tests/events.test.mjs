@@ -199,3 +199,9 @@ test('1024-21 rush/quiz funnel: contract + aggregate in /api/stats', async () =>
   assert.ok(/표본부족/.test(f.rush.sample));
   assert.ok(!/ip|agent|referrer/i.test(JSON.stringify(f)));
 });
+
+test('1026-21 funnel baseline: qa=1 challenge_land/play_start/share_result are dropped, never stored', () => {
+  const f = (name, extra = {}) => ({ id: id(), name, g: 'rush', lang: 'ko', from: name === 'play_start' ? 'c' : 'direct', ...(name === 'share_result' ? { via: 'copied', k: 'challenge' } : {}), ...extra });
+  const v = validateBatch({ v: 1, events: [f('challenge_land', { qa: '1' }), f('play_start', { qa: '1' }), f('share_result', { qa: '1' }), f('challenge_land')] });
+  assert.equal(v.qa, 3); assert.equal(v.rows.length, 1); assert.equal(v.rows[0].name, 'challenge_land');
+});

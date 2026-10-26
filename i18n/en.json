@@ -153,7 +153,7 @@
   },
   "start": "Launch",
   "resume": "Keep running",
-  "shareHint": "Send it to a friend and they can take on the same run. Sharing is always optional.", "newRun": "New run",
+  "shareHint": "Send a friend your score as a challenge — they play the same run. Sharing is always optional.", "newRun": "New run",
   "restart": "Start over",
   "slow": "Slow (0.8×)",
   "assistNote": "Slow mode records get an ASSIST badge and can't create challenge links.",
