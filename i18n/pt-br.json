@@ -153,7 +153,7 @@
   },
   "start": "Partiu!",
   "resume": "Continuar correndo",
-  "shareHint": "Envie a um amigo e ele pode encarar a mesma partida. Compartilhar é opcional.", "newRun": "Nova expedição",
+  "shareHint": "Envie sua pontuação como desafio a um amigo, que joga a mesma partida. Compartilhar é opcional.", "newRun": "Nova expedição",
   "restart": "Recomeçar do zero",
   "slow": "Devagar (0.8×)",
   "assistNote": "Recordes no modo devagar ganham o selo ASSIST e não geram link de desafio.",
