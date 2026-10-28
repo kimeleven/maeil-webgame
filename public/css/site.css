@@ -107,3 +107,7 @@ html.halloween .cat.hl{box-shadow:0 30px 60px -30px rgba(234,88,12,.8)}
 html.halloween .hw-banner{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:8px 0 12px;padding:12px 16px;border-radius:16px;border:1px solid rgba(251,146,60,.35);background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(234,88,12,.18));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);animation:up .5s var(--ease) both}
 html.halloween .hw-banner b{color:#fff;font-size:15px}
 html.halloween .hw-banner span{color:var(--fg2);font-size:13px}
+
+/* 1028-21: 긴 es/pt-br 문구 390px 가로 넘침 방지 */
+.btn,button.btn{max-width:100%;white-space:normal;text-align:center;overflow-wrap:anywhere}
+.card,.row>*{min-width:0;overflow-wrap:anywhere}

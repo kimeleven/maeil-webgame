@@ -31,8 +31,8 @@
    "desc": "Jogue Gate Rush em 30 segundos, descubra seu personagem em 10 perguntas e veja a química com os amigos. Grátis, sem cadastro."
   },
   "game": {
-   "title": "Gate Rush — Runner de 30 s no navegador | Arcade Diário",
-   "desc": "Escolha portões para crescer seu esquadrão, desvie de drones e lasers e vença o chefe. Jogo grátis que acelera a cada setor. Desafie amigos na mesma partida."
+   "title": "Gate Rush — jogo de navegador grátis | Arcade Diário",
+   "desc": "Escolha portões para crescer seu esquadrão, desvie de drones e lasers e vença o chefe. Jogo grátis, mais rápido a cada setor. Desafie amigos."
   },
   "quiz": {
    "title": "Teste de personalidade grátis: 10 perguntas | Arcade Diário",
@@ -62,7 +62,7 @@
    "play": {
     "t": "Gate Rush",
     "d": "Escolha portões pra crescer seu esquadrão, desvie dos drones e passe pelo chefe. Cada setor fica mais rápido.",
-    "cta": "Jogar agora"
+    "aria": "Gate Rush – jogo de navegador grátis, jogar agora", "cta": "Jogar agora"
    },
    "me": {
     "t": "Seu personagem de jogo",

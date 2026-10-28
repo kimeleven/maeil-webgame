@@ -31,8 +31,8 @@
    "desc": "Play Gate Rush in 30 seconds, find your play character in 10 questions, and check your chemistry with friends. Free, no sign-up."
   },
   "game": {
-   "title": "Gate Rush — 30-Second Crowd Runner Game | Daily Arcade",
-   "desc": "Pick gates to grow your squad, dodge drones and lasers, and beat the boss. Free browser game that speeds up every sector. Challenge friends on the same run."
+   "title": "Gate Rush — Free Browser Runner Game | Daily Arcade",
+   "desc": "Pick gates to grow your squad, dodge drones and lasers, and beat the boss. Free browser game, faster every sector. Challenge friends on the same run."
   },
   "quiz": {
    "title": "Free Personality Character Quiz, 10 Questions | Daily Arcade",
@@ -62,7 +62,7 @@
    "play": {
     "t": "Gate Rush",
     "d": "Pick gates to grow your squad, dodge drones and beat the boss. It gets faster every sector.",
-    "cta": "Play now"
+    "aria": "Gate Rush – free browser game, play now", "cta": "Play now"
    },
    "me": {
     "t": "Your Play Character",
