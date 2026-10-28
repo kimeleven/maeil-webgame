@@ -85,7 +85,7 @@ function pageBody(l, key) {
     const c = D.lobby.cards;
     return `${hwBanner(D)}<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}</p></section>
 <nav class="grid3" aria-label="${esc(D.brand)}">
-<a class="card cat hl" href="/${l}/play/gate-rush/"><span class="tag">${esc(D.nav.play)}</span><img src="/img/gate-rush.svg" width="150" height="150" alt=""><h3>${esc(c.play.t)}</h3><p>${esc(c.play.d)}</p><span class="btn go">${esc(c.play.cta)}</span></a>
+<a class="card cat hl" href="/${l}/play/gate-rush/" aria-label="${esc(c.play.aria)}"><span class="tag">${esc(D.nav.play)}</span><img src="/img/gate-rush.svg" width="150" height="150" alt=""><h3>${esc(c.play.t)}</h3><p>${esc(c.play.d)}</p><span class="btn go">${esc(c.play.cta)}</span></a>
 <a class="card cat" href="/${l}/me/play-character/"><span class="tag">${esc(D.nav.me)}</span>${charImg('SPH', 150)}<h3>${esc(c.me.t)}</h3><p>${esc(c.me.d)}</p><span class="btn ghost go">${esc(c.me.cta)}</span></a>
 <a class="card cat" href="/${l}/friends/chemistry/"><span class="tag">${esc(D.nav.friends)}</span><span class="pair">${charImg('SIH', 72)}${charImg('CPT', 72)}</span><h3>${esc(c.friends.t)}</h3><p>${esc(c.friends.d)}</p><span class="btn ghost go">${esc(c.friends.cta)}</span></a>
 </nav>
