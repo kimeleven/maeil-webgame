@@ -95,6 +95,7 @@ function pageBody(l, key) {
   }
   if (key === 'game') {
     return `${hwBanner(D)}<div class="layout-game"><section class="intro"><span class="tag">${esc(D.nav.play)} · 30s</span><h1>${esc(g.name)} — ${esc(g.h1)}</h1><p>${esc(g.intro)}</p>
+<p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a></p>
 <h2>${esc(g.controlsTitle)}</h2><ul class="prose">${g.controls.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
 <h2>${esc(g.tipsTitle)}</h2><ol class="prose">${g.tips.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
 <h2>${esc(g.patternsTitle)}</h2><ul class="prose">${Object.values(g.patterns).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
