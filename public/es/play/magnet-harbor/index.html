@@ -300,7 +300,8 @@ const POLICIES = {
   // QA traffic: ?qa=1 once sets localStorage 'pt-qa'=1 -> every event carries qa='1' (filter it out; ?qa=0 clears).
   if (q.get('qa') === '1') save('pt-qa', 1); else if (q.get('qa') === '0') { try { localStorage.removeItem('pt-qa'); } catch {} }
   const qa = (() => { try { return localStorage.getItem('pt-qa') === '1'; } catch { return false; } })();
-  const from = q.get('from') === 'c' ? 'c' : 'direct';
+  // inflow source (t_05b366b3): only allowlisted ?from= values, else 'unknown'; 'c' = challenge link (kept).
+  const from = (() => { const v = q.get('from'); return ['c', 'reddit-webgames', 'itch', 'direct'].includes(v) ? v : 'unknown'; })();
   const ev = (name, data = {}) => {
     const d = { g: 'magnet', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });

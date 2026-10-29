@@ -205,3 +205,22 @@ test('1026-21 funnel baseline: qa=1 challenge_land/play_start/share_result are d
   const v = validateBatch({ v: 1, events: [f('challenge_land', { qa: '1' }), f('play_start', { qa: '1' }), f('share_result', { qa: '1' }), f('challenge_land')] });
   assert.equal(v.qa, 3); assert.equal(v.rows.length, 1); assert.equal(v.rows[0].name, 'challenge_land');
 });
+
+// t_05b366b3: magnet inflow source — ?from= allowlist on play_start, aggregated per source, no IP/URL stored.
+test('magnet from: reddit-webgames counted, missing/outside → unknown, qa dropped, no IP in response', async () => {
+  __resetEventsLimiter();
+  const t0 = new Date().toISOString();
+  const m = (extra) => { const e = { ...ev('play_start'), g: 'magnet', lang: 'en', ...extra }; if (e.from === undefined) delete e.from; return e; };
+  const r = await post({ v: 1, events: [m({ from: 'reddit-webgames' }), m({ from: undefined }), m({ from: 'evil.example/?x=1' }), m({ from: '' }), m({ from: 'itch' }), m({ from: 'reddit-webgames', qa: '1' })] });
+  assert.equal(r.status, 202); assert.equal(r.body.stored, 5); assert.equal(r.body.qa, 1);
+  const srcs = (await srv.sql`SELECT src FROM game_events WHERE g = 'magnet' AND received_at >= ${t0} ORDER BY src`).map((x) => x.src);
+  assert.deepEqual(srcs, ['itch', 'reddit-webgames', 'unknown', 'unknown', 'unknown']);
+  const s = await stats('?start=' + t0);
+  const mg = s.body.games.byGame.magnet;
+  assert.deepEqual(mg.playStartByFrom, { 'reddit-webgames': 1, itch: 1, direct: 0, unknown: 3, c: 0 });
+  assert.equal(mg.plays, 5);
+  assert.ok(!('playStartByFrom' in s.body.games.byGame.orbit));
+  assert.ok(!/127\.0\.0\.1|::1|x-forwarded|evil\.example/.test(JSON.stringify(s.body)));
+  // non-magnet games keep strict from validation
+  assert.equal((await post({ v: 1, events: [ev('play_start', { from: 'reddit-webgames' })] })).status, 400);
+});

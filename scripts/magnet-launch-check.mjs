@@ -49,7 +49,7 @@ ok('events: start, end, share try/success, again', JSON.stringify(names) === JSO
 ok('restart = play_again 1 + play_start 1 (t_287677ef)', names.filter((x) => x === 'play_again').length === 1 && names.filter((x) => x === 'play_start').length === 2, names.join(','));
 ok('events tagged g=magnet from=c qa=1, no seed/score', L.every((e) => e.g === 'magnet' && e.from === 'c' && e.qa === '1' && !('seed' in e) && !('score' in e)));
 await p.goto(`${U}/ko/play/magnet-harbor/?qa=0`); await p.waitForFunction(() => window.__mh && window.__mh.ready); await p.click('#b-start');
-ok('qa=0 clears flag', await p.evaluate(() => window.__trackLog.every((e) => !e.qa && e.from === 'direct')));
+ok('qa=0 clears flag', await p.evaluate(() => window.__trackLog.every((e) => !e.qa && e.from === 'unknown')));
 ok('no page errors', errs.length === 0, errs.join(' | '));
 await b.close(); if (srv) srv.close();
 mkdirSync(`${ROOT}reboot-evidence/magnet`, { recursive: true });
