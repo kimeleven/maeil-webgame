@@ -9,7 +9,7 @@ const SITE = 'https://www.playtoday.cloud';
 // 1029-09: internal links to sibling games (crawl path), labels reused from the site dictionaries
 function navLinks(l) {
   const S = JSON.parse(readFileSync(`${ROOT}i18n/${l}.json`, 'utf8'));
-  return `<nav class="more" aria-label="${esc(S.game.name)}"><a href="/${l}/play/gate-rush/">${esc(S.game.name)}</a><a href="/${l}/play/quick-break/">${esc(S.quickbreak.link)}</a></nav>`;
+  return `<nav class="more" aria-label="${esc(S.game.name)}"><a href="/${l}/play/gate-rush/">${esc(S.game.name)}</a><a href="/${l}/play/quick-break/">${esc(S.quickbreak.link)}</a><a href="/${l}/me/play-character/">${esc(S.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(S.nav.friends)}</a></nav>`;
 }
 // public head (t_45f1a325): indexable, canonical + hreflang, OG image per language (public/og/magnet-harbor-{lang}.png)
 function head(l, D) {
@@ -93,6 +93,7 @@ export function buildMagnet() {
 </main>${navLinks(l)}<div class="toast" id="toast" role="status"></div>
 <script id="mt" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
+<script type="module" src="/js/track.js"></script>
 <script>(()=>{${core}
 ${ui}})()</script>
 </body></html>`;
