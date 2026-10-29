@@ -6,6 +6,11 @@ const ROOT = new URL('..', import.meta.url).pathname;
 export const MAGNET_LANGS = ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br'];
 const HTML_LANG = { ko: 'ko', en: 'en', ja: 'ja', 'zh-hans': 'zh-Hans', es: 'es', 'pt-br': 'pt-BR' };
 const SITE = 'https://www.playtoday.cloud';
+// 1029-09: internal links to sibling games (crawl path), labels reused from the site dictionaries
+function navLinks(l) {
+  const S = JSON.parse(readFileSync(`${ROOT}i18n/${l}.json`, 'utf8'));
+  return `<nav class="more" aria-label="${esc(S.game.name)}"><a href="/${l}/play/gate-rush/">${esc(S.game.name)}</a><a href="/${l}/play/quick-break/">${esc(S.quickbreak.link)}</a></nav>`;
+}
 // public head (t_45f1a325): indexable, canonical + hreflang, OG image per language (public/og/magnet-harbor-{lang}.png)
 function head(l, D) {
   const u = (x) => `${SITE}/${x}/play/magnet-harbor/`;
@@ -14,7 +19,7 @@ function head(l, D) {
 }
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-const CSS = `:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
+const CSS = `.more{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;padding:10px 12px 22px;max-width:100vw;box-sizing:border-box;font-size:13px}.more a{color:#9aa3b8}:root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--muted:rgba(214,219,232,.72);--cyan:#22d3ee;--gold:#facc15;--glass:rgba(10,11,18,.72);color-scheme:dark}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(1200px 700px at 50% -10%,rgba(79,70,229,.22),transparent),var(--bg);color:var(--fg);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;overscroll-behavior:contain}
 body{display:flex;flex-direction:column;align-items:center;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 .top{width:100%;max-width:1080px;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;gap:6px}
@@ -61,7 +66,7 @@ export function buildMagnet() {
     const langs = MAGNET_LANGS.map((x) => `<a href="/${x}/play/magnet-harbor/" hreflang="${HTML_LANG[x]}"${x === l ? ' aria-current="true"' : ''}>${x}</a>`).join('');
     const tg = (k) => `<button class="tg" type="button" data-ui data-set="${k}" aria-pressed="true">${esc(D[k])}</button>`;
     const html = `<!doctype html><html lang="${HTML_LANG[l]}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
-<title>${esc(D.name)} | playtoday</title><meta name="description" content="${esc(D.desc)}">${head(l, D)}<link rel="icon" href="data:,">
+<title>${esc(D.seoTitle)}</title><meta name="description" content="${esc(D.seoDesc)}">${head(l, D)}<link rel="icon" href="data:,">
 <style>${CSS}</style></head>
 <body data-page="magnet-harbor" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.back)}</a><div class="tr"><button class="ic" type="button" data-ui data-set="sound" data-icon="1" aria-label="${esc(D.sound)}" aria-pressed="true">🔊</button><button class="ic" type="button" data-ui data-set="haptic" data-icon="1" aria-label="${esc(D.haptic)}" aria-pressed="true">📳</button><details class="langs" data-ui><summary aria-label="Language">${l} ▾</summary><nav>${langs}</nav></details></div></header>
@@ -85,7 +90,7 @@ export function buildMagnet() {
 </div></div>
 </div>
 <div class="bar"><span class="hint">${esc(D.hint)}</span><button class="ic" id="b-pause" type="button" data-ui aria-label="${esc(D.pause)}">⏸</button></div>
-</main><div class="toast" id="toast" role="status"></div>
+</main>${navLinks(l)}<div class="toast" id="toast" role="status"></div>
 <script id="mt" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
 <script>(()=>{${core}

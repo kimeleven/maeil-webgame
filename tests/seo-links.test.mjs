@@ -42,3 +42,17 @@ test('meta: title ≤60 (CJK ≤40), desc ≤160, no empty, no duplicates, no MB
   }
   assert.match(read('ko', '').match(/<title>([^<]*)/)[1], /웹게임/);
 });
+
+test('1029-09: all 4 games interlinked in 6 langs; magnet-harbor title/desc unique, <=60, canonical/hreflang intact', () => {
+  const titles = new Set();
+  for (const l of LANGS) {
+    const g = hrefs(read(l, 'play/gate-rush/')), m = hrefs(read(l, 'play/magnet-harbor/'));
+    for (const t of ['commute', 'quick-break', 'magnet-harbor']) assert.ok(g.includes(`/${l}/play/${t}/`), `${l} gate-rush → ${t}`);
+    for (const t of ['gate-rush', 'quick-break']) assert.ok(m.includes(`/${l}/play/${t}/`), `${l} magnet → ${t}`);
+    const h = read(l, 'play/magnet-harbor/'), title = h.match(/<title>([^<]*)<\/title>/)[1];
+    assert.ok(title.length <= 60 && !/\| playtoday$/.test(title), `${l} title ${title}`);
+    assert.ok(!titles.has(title)); titles.add(title);
+    assert.ok(/<meta name="description" content="[^"]{20,160}"/.test(h));
+    assert.ok(h.includes(`rel="canonical" href="https://www.playtoday.cloud/${l}/play/magnet-harbor/"`) && h.includes('hreflang="x-default"'));
+  }
+});
