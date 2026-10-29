@@ -67,7 +67,7 @@ function shell(l, page, suf, main, opts = {}) {
 <body data-page="${page}" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.brand)}</a>${langMenu(l, suf, opts.dyn)}</header>
 <main class="wrap">${main}</main>
-<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
+<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
 <script type="module" src="/js/track.js"></script>
