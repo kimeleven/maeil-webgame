@@ -258,8 +258,8 @@
     "b": "Quietinho(a), sozinho(a)"
    }
   ],
-  "shareText": "Eu sou \"{name}\"! Qual personagem é você? Só 10 perguntas → {url}",
-  "shareHint": "Se você enviar, seu amigo também descobre o personagem dele em 10 perguntas. É totalmente opcional.",
+  "shareText": "Eu sou \"{name}\"! E você? 10 perguntas e comparamos o resultado → {url}",
+  "shareHint": "Se você enviar, seu amigo descobre o personagem dele em 10 perguntas e vocês comparam os resultados. É totalmente opcional.",
   "cardCta": "Qual personagem é você?",
   "rTitle": "Meu personagem de jogo: {name}",
   "typeIntro": "Se deu esse personagem",
@@ -311,7 +311,8 @@
   "save": "Salvar card",
   "share": "Compartilhar",
   "chem": "Ver a química com um amigo",
-  "retry": "Jogar de novo"
+  "retry": "Jogar de novo",
+  "tryToo": "Experimente também"
  },
  "chem": {
   "title": "Química com amigos",

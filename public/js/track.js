@@ -1,6 +1,6 @@
 // Anonymous funnel events (Vercel Web Analytics custom events). No cookies, no ids, no result content or seeds.
 // Only whitelisted, bucketed props are ever passed. Safe no-op if analytics is not enabled.
-export const EVENTS = ['play_start', 'play_end', 'share_click', 'challenge_copy', 'challenge_land', 'quiz_start', 'quiz_done', 'invite_land', 'chem_done', 'result_land', 'share_result', 'internal_link'];
+export const EVENTS = ['play_start', 'play_end', 'share_click', 'challenge_copy', 'challenge_land', 'quiz_start', 'quiz_done', 'invite_land', 'chem_done', 'result_land', 'share_result', 'share_cta_click', 'internal_link'];
 const w = typeof window !== 'undefined' ? window : null;
 const local = !w || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
 
