@@ -258,8 +258,8 @@
     "b": "Somewhere quiet by myself"
    }
   ],
-  "shareText": "I'm \"{name}\"! Which character are you? Just 10 questions → {url}",
-  "shareHint": "If you send it, your friend can find their own character in 10 questions too. Totally optional.",
+  "shareText": "I'm \"{name}\"! What will you get? 10 questions, then compare results → {url}",
+  "shareHint": "If you send it, your friend can find their own character in 10 questions and you can compare results. Totally optional.",
   "cardCta": "Which character are you?",
   "rTitle": "My play character: {name}",
   "typeIntro": "If you got this character",
@@ -311,7 +311,8 @@
   "save": "Save card",
   "share": "Share",
   "chem": "Check chemistry with a friend",
-  "retry": "Try again"
+  "retry": "Try again",
+  "tryToo": "Try it too"
  },
  "chem": {
   "title": "Friend Chemistry",

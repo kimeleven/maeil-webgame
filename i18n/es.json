@@ -258,8 +258,8 @@
     "b": "Tranquilo(a), a solas"
    }
   ],
-  "shareText": "¡Soy \"{name}\"! ¿Qué personaje eres tú? Solo 10 preguntas → {url}",
-  "shareHint": "Si lo envías, tu amigo también descubre su personaje en 10 preguntas. Es totalmente opcional.",
+  "shareText": "¡Soy \"{name}\"! ¿Y tú? 10 preguntas y comparamos resultados → {url}",
+  "shareHint": "Si lo envías, tu amigo descubre su personaje en 10 preguntas y podéis comparar resultados. Es totalmente opcional.",
   "cardCta": "¿Qué personaje eres tú?",
   "rTitle": "Mi personaje de juego: {name}",
   "typeIntro": "Si te salió este personaje",
@@ -311,7 +311,8 @@
   "save": "Guardar tarjeta",
   "share": "Compartir",
   "chem": "Ver química con un amigo",
-  "retry": "Repetir"
+  "retry": "Repetir",
+  "tryToo": "Pruébalo tú también"
  },
  "chem": {
   "title": "Química con amigos",
