@@ -5,7 +5,7 @@
 (function () {
   if (window.gev) return;
   // share_fail is diagnostic only (not in the v1 allowlist): ignored here, never sent.
-  var NAMES = ['play_start', 'play_again', 'play_end', 'share_click', 'share_done', 'challenge_land', 'share_result'];
+  var NAMES = ['play_start', 'play_again', 'play_end', 'share_click', 'share_done', 'challenge_land', 'share_result', 'share_cta_click'];
   var KEYS = ['g', 'from', 'end', 'via', 'k'];
   var MAX_Q = 60, BATCH = 20, WAIT = 3000;
   var q = [], timer = 0, sent = (window.__gevSent = window.__gevSent || []);
