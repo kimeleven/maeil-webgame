@@ -224,3 +224,20 @@ test('magnet from: reddit-webgames counted, missing/outside → unknown, qa drop
   // non-magnet games keep strict from validation
   assert.equal((await post({ v: 1, events: [ev('play_start', { from: 'reddit-webgames' })] })).status, 400);
 });
+
+// 1031-09 t_9055a715: share_cta_click (quiz result page CTA) accepted server-side, nothing else.
+test('share_cta_click: quiz+from r accepted, others rejected', () => {
+  const ok = (e) => validateBatch({ v: 1, events: [{ id: id(), lang: 'ko', ...e }] });
+  assert.equal(ok({ name: 'share_cta_click', g: 'quiz', from: 'r' }).rows.length, 1);
+  for (const bad of [{ g: 'quiz' }, { g: 'quiz', from: 'direct' }, { g: 'rush', from: 'r' }, { g: 'magnet', from: 'r' }, { g: 'quiz', from: 'r', via: 'shared' }, { g: 'quiz', from: 'r', end: 'time' }])
+    assert.ok(ok({ name: 'share_cta_click', ...bad }).error, JSON.stringify(bad));
+  assert.ok(ok({ name: 'share_click', g: 'quiz', from: 'r', via: 'link' }).error);
+});
+test('share_cta_click: POST 202 stored, funnel.quiz.shareCtaClick by lang', async () => {
+  const before = await rows();
+  const r = await post({ v: 1, events: [{ id: id(), name: 'share_cta_click', g: 'quiz', lang: 'ja', from: 'r' }] });
+  assert.equal(r.status, 202); assert.equal(await rows(), before + 1);
+  const s = await stats();
+  assert.ok(s.body.funnel.quiz.shareCtaClick >= 1);
+  assert.ok(s.body.funnel.quiz.shareCtaClickByLang.ja >= 1);
+});
