@@ -37,12 +37,14 @@ async function main() {
       track('result_land', { kind: s.kind === 'quiz' ? 'quiz' : 'rush' });
       if (s.kind === 'quiz') {
         const T = D.types[s.payload.code];
-        el.innerHTML = `<div class="result"><img class="char" src="/img/chars/${s.payload.code}.svg" width="240" height="240" alt="${esc(T.name)}"><div><span class="tag">${esc(D.quiz.title)}</span><h1>${esc(T.name)}</h1><p><b>${esc(T.one)}</b></p><p>${esc(T.desc)}</p><div class="row"><a class="btn" data-try-too href="/${lang}/me/play-character/">${esc(D.cta.tryToo)}</a><a class=\"sublink\" href=\"/${lang}/friends/chemistry/\">${esc(D.cta.chem)}</a></div></div></div><p class=\"disc">${esc(D.quiz.disclaimer)}</p>`;
+        el.innerHTML = `<div class="result"><img class="char" src="/img/chars/${s.payload.code}.svg" width="240" height="240" alt="${esc(T.name)}"><div><span class="tag">${esc(D.quiz.title)}</span><h1>${esc(T.name)}</h1><p><b>${esc(T.one)}</b></p><p>${esc(T.desc)}</p><div class="row"><a class="btn" data-try-too href="/${lang}/me/play-character/">${esc(D.cta.tryToo)}</a><button type="button" class="btn ghost" data-reshare>${esc(D.cta.share)}</button><a class=\"sublink\" href=\"/${lang}/friends/chemistry/\">${esc(D.cta.chem)}</a></div></div></div><p class=\"disc">${esc(D.quiz.disclaimer)}</p>`;
         document.title = `${T.name} | ${D.brand}`;
+        const rs = el.querySelector('[data-reshare]'); if (rs) rs.addEventListener('click', async () => { track('share_click', { from: 'r' }); try { if (navigator.share) await navigator.share({ url: location.href }); else await navigator.clipboard.writeText(location.href); } catch (e) {} });
         const tt = el.querySelector('[data-try-too]'); if (tt) tt.addEventListener('click', () => { track('share_cta_click', { from: 'r' }); try { window.gev && window.gev('share_cta_click', { g: 'quiz', from: 'r' }); } catch (e) {} });
       } else {
         const p = s.payload;
-        el.innerHTML = `<span class="tag">${esc(D.game.name)}${p.assist ? ' · ASSIST' : ''}</span><h1>${esc(D.game.sector)} ${p.stage}</h1><p>${esc(fmt(D.game.lostDesc, { stage: Math.max(0, p.stage - 1), score: Number(p.score).toLocaleString() }))}</p><div class="row"><a class="btn" href="/${lang}/c/${esc(p.seed)}-1${p.assist ? '' : `?vs=${esc(s.id)}`}">${esc(D.game.challenge)}</a><a class="btn ghost" href="/${lang}/play/gate-rush/">${esc(D.game.start)}</a></div>`;
+        el.innerHTML = `<span class="tag">${esc(D.game.name)}${p.assist ? ' · ASSIST' : ''}</span><h1>${esc(D.game.sector)} ${p.stage}</h1><p>${esc(fmt(D.game.lostDesc, { stage: Math.max(0, p.stage - 1), score: Number(p.score).toLocaleString() }))}</p><div class="row"><a class="btn" data-rush-cta href="/${lang}/c/${esc(p.seed)}-1${p.assist ? '' : `?vs=${esc(s.id)}`}">${esc(D.game.challenge)}</a><a class="btn ghost" href="/${lang}/play/gate-rush/">${esc(D.game.start)}</a></div>`;
+        const rc = el.querySelector('[data-rush-cta]'); if (rc) rc.addEventListener('click', () => { track('share_cta_click', { from: 'r', kind: 'rush' }); try { window.gev && window.gev('share_cta_click', { g: 'rush', from: 'r' }); } catch (e) {} });
         document.title = `${D.game.name} ${D.game.sector} ${p.stage} | ${D.brand}`;
       }
     } catch { el.innerHTML = `<h2>${esc(D.common.notFound)}</h2><a class="btn" href="/${lang}/">${esc(D.nav.home)}</a>`; }
