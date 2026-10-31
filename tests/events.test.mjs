@@ -229,8 +229,9 @@ test('magnet from: reddit-webgames counted, missing/outside → unknown, qa drop
 test('share_cta_click: quiz+from r accepted, others rejected', () => {
   const ok = (e) => validateBatch({ v: 1, events: [{ id: id(), lang: 'ko', ...e }] });
   assert.equal(ok({ name: 'share_cta_click', g: 'quiz', from: 'r' }).rows.length, 1);
-  for (const bad of [{ g: 'quiz' }, { g: 'quiz', from: 'direct' }, { g: 'rush', from: 'r' }, { g: 'magnet', from: 'r' }, { g: 'quiz', from: 'r', via: 'shared' }, { g: 'quiz', from: 'r', end: 'time' }])
+  for (const bad of [{ g: 'quiz' }, { g: 'quiz', from: 'direct' }, { g: 'rush' }, { g: 'rush', from: 'direct' }, { g: 'magnet', from: 'r' }, { g: 'quiz', from: 'r', via: 'shared' }, { g: 'quiz', from: 'r', end: 'time' }])
     assert.ok(ok({ name: 'share_cta_click', ...bad }).error, JSON.stringify(bad));
+  assert.equal(ok({ name: 'share_cta_click', g: 'rush', from: 'r' }).rows.length, 1);
   assert.ok(ok({ name: 'share_click', g: 'quiz', from: 'r', via: 'link' }).error);
 });
 test('share_cta_click: POST 202 stored, funnel.quiz.shareCtaClick by lang', async () => {
