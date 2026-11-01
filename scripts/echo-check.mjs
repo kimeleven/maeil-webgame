@@ -81,6 +81,10 @@ for (const [vp, touch, tag] of [[{ width: 412, height: 915 }, true, '412'], [{ w
   await p.keyboard.press('Enter'); await sleep(300);
   const ag = await p.evaluate(() => ({ armed: __echo.armed, res: document.getElementById('res').hidden, ready: document.getElementById('ready').hidden, t: __echo.g.t, starts: __echo.starts.length }));
   ok(`A5 ${tag} Enter = again, starts at once`, ag.armed && ag.res && ag.ready && ag.t > 0 && ag.starts === 2, JSON.stringify(ag));
+  // 2nd run after Enter must also end with the result sheet (t_66339e54)
+  await p.evaluate(() => { __echo.g.t = 89.95; });
+  const r2 = await p.waitForFunction(() => !document.getElementById('res').hidden && __echo.result, null, { timeout: 5000 }).then(() => true, () => false);
+  ok(`A5b ${tag} 2nd run after Enter again shows result`, r2, `res shown ${r2}`);
   const api = site(p.reqs).filter((u) => /\/api\//.test(u) || !u.startsWith(U)); const docs = [...new Set(site(p.reqs).filter((u) => u.startsWith(U)))];
   ok(`A6d ${tag} no API / external requests (only the page itself)`, api.length === 0 && docs.length === 1, `${docs.length} same-origin: ${docs.join(' ')}; other ${api.join(' ')}`);
   const ovf = await p.evaluate(() => document.documentElement.scrollWidth - innerWidth);

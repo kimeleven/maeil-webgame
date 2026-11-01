@@ -233,7 +233,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
   let g, last = 0, running = false, armed = false, hidden = false, firstOk = false, lastLit = -1, finished = false;
   const W = window.__echo = { seed, sfx: 0, vib: 0, frames: 0, ready: false, starts: [], get g() { return g; }, get armed() { return armed; }, get hidden() { return hidden; } };
   function start(go) {
-    g = createGame(seed); streak = 0; lastScore = 0; lastSec = 99; running = true; finished = false; lastLit = -1; res.hidden = true;
+    g = createGame(seed); streak = 0; lastScore = 0; lastSec = 99; running = true; finished = false; W.result = null; lastLit = -1; res.hidden = true;
     armed = !!go; ready.hidden = armed; if (armed) arm(); W.ready = true;
   }
   function arm() { armed = true; ready.hidden = true; last = performance.now(); W.armedAt = last; W.starts.push(last); }
