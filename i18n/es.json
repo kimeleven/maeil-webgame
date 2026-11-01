@@ -57,7 +57,7 @@
  },
  "lobby": {
   "h1": "30 segundos hoy, ¡a jugar juntos!",
-  "sub": "Un juego, un test de personaje y química con amigos. Solo eso.",
+  "sub": "Un juego, un test de personaje y química con amigos. Solo eso. Hayas terminado los exámenes o no, tómate 30 segundos de descanso.",
   "cards": {
    "play": {
     "t": "Gate Rush",
@@ -179,7 +179,7 @@
   "challenge": "Jugar esta misma partida",
   "ambush": "¡Emboscada!",
   "close": "¡Por poco!",
-  "challengeShareText": "Gate Rush: sector {stage}, {score} pts. Supérame en la misma partida → {url}", "shareText": "Superé el sector {stage} en Gate Rush. Misma partida, ¿me ganas? → {url}",
+  "challengeShareText": "Gate Rush: sector {stage}, {score} pts. 30 segundos, misma partida. Supérame → {url}", "shareText": "Superé el sector {stage} en Gate Rush. Misma partida, ¿me ganas? → {url}",
   "cardCta": "Misma partida, ¿me ganas?",
   "rTitle": "Récord de Gate Rush: sector {stage}"
  },

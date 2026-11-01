@@ -13,7 +13,7 @@
  },
  "lobby": {
   "h1": "오늘 30초, 같이 놀자",
-  "sub": "게임 한 판, 캐릭터 테스트, 친구 케미. 딱 세 가지만 있어요.",
+  "sub": "게임 한 판, 캐릭터 테스트, 친구 케미. 딱 세 가지만 있어요. 수능 끝난 사람도, 아직인 사람도 30초 쉬어 가기.",
   "cards": {
    "play": { "t": "게이트 러시", "d": "게이트를 골라 군단을 키우고 드론을 피해 보스를 넘어요. 구역마다 빨라져요.", "aria": "게이트 러시(Gate Rush) 무료 웹게임 바로 플레이", "cta": "바로 플레이" },
    "me": { "t": "나의 놀이 캐릭터", "d": "10문항이면 8가지 캐릭터 중 나를 닮은 캐릭터가 나와요.", "cta": "테스트 시작" },
@@ -57,7 +57,7 @@
   "lostTitle": "원정 종료", "lostDesc": "{stage}구역까지 · {score}점", "paused": "잠시 멈춤", "pausedDesc": "돌아오면 이어서 달릴 수 있어요.",
   "challengeTitle": "도전장이 왔어요", "target": "목표: {stage}구역 · {score}점", "beat": "도전 성공! 상대 기록을 넘었어요", "seedLabel": "코스", "challenge": "이 판 그대로 도전하기",
   "ambush": "습격!", "close": "간발!",
-  "challengeShareText": "게이트 러시 {stage}구역 {score}점! 같은 판에서 나를 이겨 봐 → {url}", "shareText": "게이트 러시 {stage}구역 돌파! 같은 판에서 나를 이겨 봐 → {url}",
+  "challengeShareText": "게이트 러시 {stage}구역 {score}점! 30초면 끝나, 같은 판에서 나를 이겨 봐 → {url}", "shareText": "게이트 러시 {stage}구역 돌파! 같은 판에서 나를 이겨 봐 → {url}",
   "cardCta": "같은 판에서 나를 이겨 봐", "rTitle": "게이트 러시 {stage}구역 기록"
  },
  "quiz": {
