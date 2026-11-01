@@ -80,7 +80,7 @@ test('static: rewrites for r/c/i shells, sitemap, robots', async () => {
   const rb = await (await fetch(U + '/robots.txt')).text();
   for (const d of ['/api/', '/*/r/', '/*/i/', '/*/c/']) assert.ok(rb.includes('Disallow: ' + d));
   const sm = await (await fetch(U + '/sitemap.xml')).text();
-  assert.equal((sm.match(/<url>/g) || []).length, 115); assert.equal((sm.match(/play\/magnet-harbor\/<\/loc>/g) || []).length, 6); assert.equal((sm.match(/play\/echo-courier\/<\/loc>/g) || []).length, 6);
+  assert.equal((sm.match(/<url>/g) || []).length, 121); assert.equal((sm.match(/play\/magnet-harbor\/<\/loc>/g) || []).length, 6); assert.equal((sm.match(/play\/echo-courier\/<\/loc>/g) || []).length, 6); assert.equal((sm.match(/play\/orbit-switch\/<\/loc>/g) || []).length, 6);
 });
 
 test('stats: token required, aggregates only', async () => {
