@@ -160,6 +160,7 @@
     const best = isBest ? rec : prev;
     $('#r-done').textContent = rec.done; $('#r-long').textContent = `${rec.longest} ${T.cells}`; $('#r-score').textContent = rec.score;
     $('#r-best').textContent = `${T.done} ${best.done} · ${T.longest} ${best.longest} · ${best.score}`;
+    { const df = $('#r-diff'); if (prev) { const n = rec.score - prev.score; df.textContent = n > 0 ? T.beat.replace('{n}', n) : n < 0 ? T.gap.replace('{n}', -n) : ''; df.hidden = !n; } else df.hidden = true; }
     $('#r-new').hidden = !(isBest && prev); $('#r-first').hidden = !!prev;
     $('#r-path').innerHTML = mini(rec.path);
     res.hidden = false; W.result = { rec, best, prev };
@@ -169,7 +170,7 @@
   const shareUrl = () => { const u = new URL(location.href); u.search = ''; u.searchParams.set('seed', seed); return u.toString(); };
   $('#b-again').addEventListener('click', () => { unlock(); W.result = null; start(true); });
   $('#b-share').addEventListener('click', async () => {
-    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{url}', shareUrl());
+    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{score}', lastRec ? lastRec.score : 0).replace('{url}', shareUrl());
     if (navigator.share) { try { await navigator.share({ text }); return; } catch {} }
     try { await navigator.clipboard.writeText(text); say(T.copied); } catch { say(text); }
   });

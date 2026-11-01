@@ -59,13 +59,13 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 <div class="sheet" id="res" hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">配送结束！</h2><div class="new" id="r-new" hidden>新纪录！</div><div class="new" id="r-first" hidden>首次记录</div>
 <div class="card"><div id="r-path"></div><div class="nums"><span>送达</span><b class="big" id="r-done"></b><span>最长</span><b id="r-long"></b><span>得分</span><b id="r-score"></b></div></div>
-<div class="cmp">我的最佳: <span id="r-best"></span></div>
+<div class="cmp">我的最佳: <span id="r-best"></span></div><div class="cmp" id="r-diff" hidden></div>
 <button class="btn main" id="b-again" type="button">再来一次</button>
 <div class="row"><button class="btn" id="b-share" type="button">分享</button><button class="btn" id="b-link" type="button">复制挑战链接</button><button class="btn" id="b-png" type="button">保存图片</button></div>
 <div class="tgs"><button class="tg" type="button" data-set="sound" aria-pressed="true">声音</button><button class="tg" type="button" data-set="haptic" aria-pressed="true">振动</button><button class="tg" type="button" data-set="motion" aria-pressed="true">动态效果</button></div><div class="seed">seed <span id="seed"></span></div>
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
-<script id="et" type="application/json">{"name":"残影快递","title":"残影快递（预览）","desc":"记住一闪而过的配送路线，按同样顺序点回去，90秒内尽量多送。","preview":"预览","back":"每日网游","time":"剩余","done":"送达","longest":"最长","score":"得分","cells":"格","goal":"记住发光格子的顺序，再按同样顺序点击 · 90秒","howMobile":"残影消失后，按同样顺序点格子","howDesktop":"残影消失后，按同样顺序点击或按数字1~9","goMobile":"点击开始","goDesktop":"点击 · Space · Enter 开始","watch":"看清楚","yourTurn":"照着点","failAt":"第{n}格走错了","over":"配送结束！","now":"本次","best":"我的最佳","first":"首次记录","newBest":"新纪录！","again":"再来一次","share":"分享","link":"复制挑战链接","png":"保存图片","copied":"已复制","sound":"声音","haptic":"振动","motion":"动态效果","shareText":"残影快递送达{done}单，最长{longest}格！用同样的路线挑战我 → {url}","lastFail":"最后失误"}</script>
+<script id="et" type="application/json">{"name":"残影快递","title":"残影快递（预览）","desc":"记住一闪而过的配送路线，按同样顺序点回去，90秒内尽量多送。","preview":"预览","back":"每日网游","time":"剩余","done":"送达","longest":"最长","score":"得分","cells":"格","goal":"记住发光格子的顺序，再按同样顺序点击 · 90秒","howMobile":"残影消失后，按同样顺序点格子","howDesktop":"残影消失后，按同样顺序点击或按数字1~9","goMobile":"点击开始","goDesktop":"点击 · Space · Enter 开始","watch":"看清楚","yourTurn":"照着点","failAt":"第{n}格走错了","over":"配送结束！","now":"本次","best":"我的最佳","first":"首次记录","newBest":"新纪录！","again":"再来一次","share":"分享","link":"复制挑战链接","png":"保存图片","copied":"已复制","sound":"声音","haptic":"振动","motion":"动态效果","shareText":"残影快递送达{done}单，最长{longest}格，{score}分！用同样的路线挑战我 → {url}","lastFail":"最后失误","gap":"距最佳还差{n}分","beat":"比最佳多{n}分"}</script>
 <script>(()=>{// Echo Courier core (prototype, t_0e812a29). Pure logic, no DOM: runs in node (tests/sim) and is
 // inlined into the preview page by scripts/build-echo.mjs.
 // GDD: workspace/maeil-arcade-local/games/echo-courier/GDD.md (times are [추정] initial values).
@@ -339,6 +339,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     const best = isBest ? rec : prev;
     $('#r-done').textContent = rec.done; $('#r-long').textContent = `${rec.longest} ${T.cells}`; $('#r-score').textContent = rec.score;
     $('#r-best').textContent = `${T.done} ${best.done} · ${T.longest} ${best.longest} · ${best.score}`;
+    { const df = $('#r-diff'); if (prev) { const n = rec.score - prev.score; df.textContent = n > 0 ? T.beat.replace('{n}', n) : n < 0 ? T.gap.replace('{n}', -n) : ''; df.hidden = !n; } else df.hidden = true; }
     $('#r-new').hidden = !(isBest && prev); $('#r-first').hidden = !!prev;
     $('#r-path').innerHTML = mini(rec.path);
     res.hidden = false; W.result = { rec, best, prev };
@@ -348,7 +349,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
   const shareUrl = () => { const u = new URL(location.href); u.search = ''; u.searchParams.set('seed', seed); return u.toString(); };
   $('#b-again').addEventListener('click', () => { unlock(); W.result = null; start(true); });
   $('#b-share').addEventListener('click', async () => {
-    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{url}', shareUrl());
+    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{score}', lastRec ? lastRec.score : 0).replace('{url}', shareUrl());
     if (navigator.share) { try { await navigator.share({ text }); return; } catch {} }
     try { await navigator.clipboard.writeText(text); say(T.copied); } catch { say(text); }
   });

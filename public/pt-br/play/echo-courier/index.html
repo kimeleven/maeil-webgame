@@ -59,13 +59,13 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 <div class="sheet" id="res" hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">Fim das entregas!</h2><div class="new" id="r-new" hidden>Novo recorde!</div><div class="new" id="r-first" hidden>Primeiro recorde</div>
 <div class="card"><div id="r-path"></div><div class="nums"><span>Entregas</span><b class="big" id="r-done"></b><span>Maior</span><b id="r-long"></b><span>Pontos</span><b id="r-score"></b></div></div>
-<div class="cmp">Meu recorde: <span id="r-best"></span></div>
+<div class="cmp">Meu recorde: <span id="r-best"></span></div><div class="cmp" id="r-diff" hidden></div>
 <button class="btn main" id="b-again" type="button">Jogar de novo</button>
 <div class="row"><button class="btn" id="b-share" type="button">Compartilhar</button><button class="btn" id="b-link" type="button">Copiar link de desafio</button><button class="btn" id="b-png" type="button">Salvar imagem</button></div>
 <div class="tgs"><button class="tg" type="button" data-set="sound" aria-pressed="true">Som</button><button class="tg" type="button" data-set="haptic" aria-pressed="true">Vibração</button><button class="tg" type="button" data-set="motion" aria-pressed="true">Efeitos de movimento</button></div><div class="seed">seed <span id="seed"></span></div>
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
-<script id="et" type="application/json">{"name":"Entregador Eco","title":"Entregador Eco (prévia)","desc":"Memorize a rota que brilha por um instante, toque na mesma ordem e entregue por 90 segundos.","preview":"Prévia","back":"Jogo do Dia","time":"Restam","done":"Entregas","longest":"Maior","score":"Pontos","cells":"casas","goal":"Memorize as casas que brilham e toque na mesma ordem · 90 s","howMobile":"Quando o eco sumir, toque nas casas na mesma ordem","howDesktop":"Quando o eco sumir, clique ou aperte 1–9 na mesma ordem","goMobile":"Toque para começar","goDesktop":"Clique · Espaço · Enter para começar","watch":"Observe","yourTurn":"Sua vez","failAt":"Errou na casa {n}","over":"Fim das entregas!","now":"Desta vez","best":"Meu recorde","first":"Primeiro recorde","newBest":"Novo recorde!","again":"Jogar de novo","share":"Compartilhar","link":"Copiar link de desafio","png":"Salvar imagem","copied":"Copiado","sound":"Som","haptic":"Vibração","motion":"Efeitos de movimento","shareText":"Entregador Eco: {done} entregas, maior rota {longest} casas! Tente as mesmas rotas → {url}","lastFail":"Último erro"}</script>
+<script id="et" type="application/json">{"name":"Entregador Eco","title":"Entregador Eco (prévia)","desc":"Memorize a rota que brilha por um instante, toque na mesma ordem e entregue por 90 segundos.","preview":"Prévia","back":"Jogo do Dia","time":"Restam","done":"Entregas","longest":"Maior","score":"Pontos","cells":"casas","goal":"Memorize as casas que brilham e toque na mesma ordem · 90 s","howMobile":"Quando o eco sumir, toque nas casas na mesma ordem","howDesktop":"Quando o eco sumir, clique ou aperte 1–9 na mesma ordem","goMobile":"Toque para começar","goDesktop":"Clique · Espaço · Enter para começar","watch":"Observe","yourTurn":"Sua vez","failAt":"Errou na casa {n}","over":"Fim das entregas!","now":"Desta vez","best":"Meu recorde","first":"Primeiro recorde","newBest":"Novo recorde!","again":"Jogar de novo","share":"Compartilhar","link":"Copiar link de desafio","png":"Salvar imagem","copied":"Copiado","sound":"Som","haptic":"Vibração","motion":"Efeitos de movimento","shareText":"Entregador Eco: {done} entregas, maior rota {longest} casas, {score} pts! Tente as mesmas rotas → {url}","lastFail":"Último erro","gap":"Faltam {n} pts pro recorde","beat":"+{n} pts acima do recorde"}</script>
 <script>(()=>{// Echo Courier core (prototype, t_0e812a29). Pure logic, no DOM: runs in node (tests/sim) and is
 // inlined into the preview page by scripts/build-echo.mjs.
 // GDD: workspace/maeil-arcade-local/games/echo-courier/GDD.md (times are [추정] initial values).
@@ -339,6 +339,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     const best = isBest ? rec : prev;
     $('#r-done').textContent = rec.done; $('#r-long').textContent = `${rec.longest} ${T.cells}`; $('#r-score').textContent = rec.score;
     $('#r-best').textContent = `${T.done} ${best.done} · ${T.longest} ${best.longest} · ${best.score}`;
+    { const df = $('#r-diff'); if (prev) { const n = rec.score - prev.score; df.textContent = n > 0 ? T.beat.replace('{n}', n) : n < 0 ? T.gap.replace('{n}', -n) : ''; df.hidden = !n; } else df.hidden = true; }
     $('#r-new').hidden = !(isBest && prev); $('#r-first').hidden = !!prev;
     $('#r-path').innerHTML = mini(rec.path);
     res.hidden = false; W.result = { rec, best, prev };
@@ -348,7 +349,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
   const shareUrl = () => { const u = new URL(location.href); u.search = ''; u.searchParams.set('seed', seed); return u.toString(); };
   $('#b-again').addEventListener('click', () => { unlock(); W.result = null; start(true); });
   $('#b-share').addEventListener('click', async () => {
-    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{url}', shareUrl());
+    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{score}', lastRec ? lastRec.score : 0).replace('{url}', shareUrl());
     if (navigator.share) { try { await navigator.share({ text }); return; } catch {} }
     try { await navigator.clipboard.writeText(text); say(T.copied); } catch { say(text); }
   });

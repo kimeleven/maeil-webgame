@@ -59,13 +59,13 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 <div class="sheet" id="res" hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">配達終了!</h2><div class="new" id="r-new" hidden>自己ベスト!</div><div class="new" id="r-first" hidden>初記録</div>
 <div class="card"><div id="r-path"></div><div class="nums"><span>配達</span><b class="big" id="r-done"></b><span>最長</span><b id="r-long"></b><span>スコア</span><b id="r-score"></b></div></div>
-<div class="cmp">自己ベスト: <span id="r-best"></span></div>
+<div class="cmp">自己ベスト: <span id="r-best"></span></div><div class="cmp" id="r-diff" hidden></div>
 <button class="btn main" id="b-again" type="button">もう一回</button>
 <div class="row"><button class="btn" id="b-share" type="button">シェア</button><button class="btn" id="b-link" type="button">挑戦リンクをコピー</button><button class="btn" id="b-png" type="button">画像を保存</button></div>
 <div class="tgs"><button class="tg" type="button" data-set="sound" aria-pressed="true">音</button><button class="tg" type="button" data-set="haptic" aria-pressed="true">振動</button><button class="tg" type="button" data-set="motion" aria-pressed="true">動きの効果</button></div><div class="seed">seed <span id="seed"></span></div>
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
-<script id="et" type="application/json">{"name":"残像デリバリー","title":"残像デリバリー (プレビュー)","desc":"一瞬光る配達ルートを覚えて同じ順にタップ、90秒間配達しよう。","preview":"プレビュー","back":"毎日ウェブゲーム","time":"残り","done":"配達","longest":"最長","score":"スコア","cells":"マス","goal":"光るマスの順番を覚えて同じ順に押そう · 90秒","howMobile":"残像が消えたら同じ順にマスをタップ","howDesktop":"残像が消えたら同じ順にクリックか数字1〜9","goMobile":"タップでスタート","goDesktop":"クリック・Space・Enterでスタート","watch":"よく見て","yourTurn":"同じ順に押して","failAt":"{n}マス目で外れました","over":"配達終了!","now":"今回","best":"自己ベスト","first":"初記録","newBest":"自己ベスト!","again":"もう一回","share":"シェア","link":"挑戦リンクをコピー","png":"画像を保存","copied":"コピーしました","sound":"音","haptic":"振動","motion":"動きの効果","shareText":"残像デリバリー {done}件、最長{longest}マス!同じルートで挑戦 → {url}","lastFail":"最後のミス"}</script>
+<script id="et" type="application/json">{"name":"残像デリバリー","title":"残像デリバリー (プレビュー)","desc":"一瞬光る配達ルートを覚えて同じ順にタップ、90秒間配達しよう。","preview":"プレビュー","back":"毎日ウェブゲーム","time":"残り","done":"配達","longest":"最長","score":"スコア","cells":"マス","goal":"光るマスの順番を覚えて同じ順に押そう · 90秒","howMobile":"残像が消えたら同じ順にマスをタップ","howDesktop":"残像が消えたら同じ順にクリックか数字1〜9","goMobile":"タップでスタート","goDesktop":"クリック・Space・Enterでスタート","watch":"よく見て","yourTurn":"同じ順に押して","failAt":"{n}マス目で外れました","over":"配達終了!","now":"今回","best":"自己ベスト","first":"初記録","newBest":"自己ベスト!","again":"もう一回","share":"シェア","link":"挑戦リンクをコピー","png":"画像を保存","copied":"コピーしました","sound":"音","haptic":"振動","motion":"動きの効果","shareText":"残像デリバリー {done}件、最長{longest}マス、{score}点!同じルートで挑戦 → {url}","lastFail":"最後のミス","gap":"ベストまであと{n}点","beat":"ベストより+{n}点"}</script>
 <script>(()=>{// Echo Courier core (prototype, t_0e812a29). Pure logic, no DOM: runs in node (tests/sim) and is
 // inlined into the preview page by scripts/build-echo.mjs.
 // GDD: workspace/maeil-arcade-local/games/echo-courier/GDD.md (times are [추정] initial values).
@@ -339,6 +339,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     const best = isBest ? rec : prev;
     $('#r-done').textContent = rec.done; $('#r-long').textContent = `${rec.longest} ${T.cells}`; $('#r-score').textContent = rec.score;
     $('#r-best').textContent = `${T.done} ${best.done} · ${T.longest} ${best.longest} · ${best.score}`;
+    { const df = $('#r-diff'); if (prev) { const n = rec.score - prev.score; df.textContent = n > 0 ? T.beat.replace('{n}', n) : n < 0 ? T.gap.replace('{n}', -n) : ''; df.hidden = !n; } else df.hidden = true; }
     $('#r-new').hidden = !(isBest && prev); $('#r-first').hidden = !!prev;
     $('#r-path').innerHTML = mini(rec.path);
     res.hidden = false; W.result = { rec, best, prev };
@@ -348,7 +349,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
   const shareUrl = () => { const u = new URL(location.href); u.search = ''; u.searchParams.set('seed', seed); return u.toString(); };
   $('#b-again').addEventListener('click', () => { unlock(); W.result = null; start(true); });
   $('#b-share').addEventListener('click', async () => {
-    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{url}', shareUrl());
+    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{score}', lastRec ? lastRec.score : 0).replace('{url}', shareUrl());
     if (navigator.share) { try { await navigator.share({ text }); return; } catch {} }
     try { await navigator.clipboard.writeText(text); say(T.copied); } catch { say(text); }
   });

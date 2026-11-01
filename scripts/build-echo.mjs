@@ -83,7 +83,7 @@ export function buildEcho() {
 <div class="sheet" id="res" hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">${esc(D.over)}</h2><div class="new" id="r-new" hidden>${esc(D.newBest)}</div><div class="new" id="r-first" hidden>${esc(D.first)}</div>
 <div class="card"><div id="r-path"></div><div class="nums"><span>${esc(D.done)}</span><b class="big" id="r-done"></b><span>${esc(D.longest)}</span><b id="r-long"></b><span>${esc(D.score)}</span><b id="r-score"></b></div></div>
-<div class="cmp">${esc(D.best)}: <span id="r-best"></span></div>
+<div class="cmp">${esc(D.best)}: <span id="r-best"></span></div><div class="cmp" id="r-diff" hidden></div>
 <button class="btn main" id="b-again" type="button">${esc(D.again)}</button>
 <div class="row"><button class="btn" id="b-share" type="button">${esc(D.share)}</button><button class="btn" id="b-link" type="button">${esc(D.link)}</button><button class="btn" id="b-png" type="button">${esc(D.png)}</button></div>
 <div class="tgs">${tg('sound')}${tg('haptic')}${tg('motion')}</div><div class="seed">seed <span id="seed"></span></div>

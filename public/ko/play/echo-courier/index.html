@@ -59,13 +59,13 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 <div class="sheet" id="res" hidden><div class="panel" role="dialog" aria-labelledby="r-title">
 <h2 id="r-title">배달 끝!</h2><div class="new" id="r-new" hidden>최고 기록!</div><div class="new" id="r-first" hidden>첫 기록</div>
 <div class="card"><div id="r-path"></div><div class="nums"><span>배달</span><b class="big" id="r-done"></b><span>최장</span><b id="r-long"></b><span>점수</span><b id="r-score"></b></div></div>
-<div class="cmp">내 최고: <span id="r-best"></span></div>
+<div class="cmp">내 최고: <span id="r-best"></span></div><div class="cmp" id="r-diff" hidden></div>
 <button class="btn main" id="b-again" type="button">다시 하기</button>
 <div class="row"><button class="btn" id="b-share" type="button">공유</button><button class="btn" id="b-link" type="button">도전 링크 복사</button><button class="btn" id="b-png" type="button">이미지 저장</button></div>
 <div class="tgs"><button class="tg" type="button" data-set="sound" aria-pressed="true">소리</button><button class="tg" type="button" data-set="haptic" aria-pressed="true">진동</button><button class="tg" type="button" data-set="motion" aria-pressed="true">움직임 효과</button></div><div class="seed">seed <span id="seed"></span></div>
 </div></div>
 </main><div class="toast" id="toast" role="status"></div>
-<script id="et" type="application/json">{"name":"잔상 배달","title":"잔상 배달 (프리뷰)","desc":"잠깐 빛난 배달 경로를 기억했다가 같은 순서로 눌러 90초 동안 배달하기.","preview":"프리뷰","back":"매일웹겜","time":"남은","done":"배달","longest":"최장","score":"점수","cells":"칸","goal":"빛나는 칸 순서를 기억했다가 똑같이 눌러 배달하기 · 90초","howMobile":"잔상이 꺼지면 같은 순서로 칸을 탭","howDesktop":"잔상이 꺼지면 같은 순서로 클릭 또는 숫자 1~9","goMobile":"탭해서 시작","goDesktop":"클릭 · Space · Enter로 시작","watch":"잘 보세요","yourTurn":"따라 누르세요","failAt":"{n}번째 칸에서 갈렸어요","over":"배달 끝!","now":"이번","best":"내 최고","first":"첫 기록","newBest":"최고 기록!","again":"다시 하기","share":"공유","link":"도전 링크 복사","png":"이미지 저장","copied":"복사했어요","sound":"소리","haptic":"진동","motion":"움직임 효과","shareText":"잔상 배달 {done}건, 최장 {longest}칸! 같은 경로로 도전해 봐 → {url}","lastFail":"마지막 실패"}</script>
+<script id="et" type="application/json">{"name":"잔상 배달","title":"잔상 배달 (프리뷰)","desc":"잠깐 빛난 배달 경로를 기억했다가 같은 순서로 눌러 90초 동안 배달하기.","preview":"프리뷰","back":"매일웹겜","time":"남은","done":"배달","longest":"최장","score":"점수","cells":"칸","goal":"빛나는 칸 순서를 기억했다가 똑같이 눌러 배달하기 · 90초","howMobile":"잔상이 꺼지면 같은 순서로 칸을 탭","howDesktop":"잔상이 꺼지면 같은 순서로 클릭 또는 숫자 1~9","goMobile":"탭해서 시작","goDesktop":"클릭 · Space · Enter로 시작","watch":"잘 보세요","yourTurn":"따라 누르세요","failAt":"{n}번째 칸에서 갈렸어요","over":"배달 끝!","now":"이번","best":"내 최고","first":"첫 기록","newBest":"최고 기록!","again":"다시 하기","share":"공유","link":"도전 링크 복사","png":"이미지 저장","copied":"복사했어요","sound":"소리","haptic":"진동","motion":"움직임 효과","shareText":"잔상 배달 {done}건, 최장 {longest}칸, {score}점! 같은 경로로 도전해 봐 → {url}","lastFail":"마지막 실패","gap":"최고까지 {n}점","beat":"최고보다 +{n}점"}</script>
 <script>(()=>{// Echo Courier core (prototype, t_0e812a29). Pure logic, no DOM: runs in node (tests/sim) and is
 // inlined into the preview page by scripts/build-echo.mjs.
 // GDD: workspace/maeil-arcade-local/games/echo-courier/GDD.md (times are [추정] initial values).
@@ -339,6 +339,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     const best = isBest ? rec : prev;
     $('#r-done').textContent = rec.done; $('#r-long').textContent = `${rec.longest} ${T.cells}`; $('#r-score').textContent = rec.score;
     $('#r-best').textContent = `${T.done} ${best.done} · ${T.longest} ${best.longest} · ${best.score}`;
+    { const df = $('#r-diff'); if (prev) { const n = rec.score - prev.score; df.textContent = n > 0 ? T.beat.replace('{n}', n) : n < 0 ? T.gap.replace('{n}', -n) : ''; df.hidden = !n; } else df.hidden = true; }
     $('#r-new').hidden = !(isBest && prev); $('#r-first').hidden = !!prev;
     $('#r-path').innerHTML = mini(rec.path);
     res.hidden = false; W.result = { rec, best, prev };
@@ -348,7 +349,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
   const shareUrl = () => { const u = new URL(location.href); u.search = ''; u.searchParams.set('seed', seed); return u.toString(); };
   $('#b-again').addEventListener('click', () => { unlock(); W.result = null; start(true); });
   $('#b-share').addEventListener('click', async () => {
-    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{url}', shareUrl());
+    const text = T.shareText.replace('{done}', lastRec ? lastRec.done : 0).replace('{longest}', lastRec ? lastRec.longest : 0).replace('{score}', lastRec ? lastRec.score : 0).replace('{url}', shareUrl());
     if (navigator.share) { try { await navigator.share({ text }); return; } catch {} }
     try { await navigator.clipboard.writeText(text); say(T.copied); } catch { say(text); }
   });
