@@ -1,4 +1,5 @@
 // Echo Courier browser evidence (t_0e812a29): A2 A3 A5 A6b A6d A7 A8 A9 A10 A11 + ready sheet.
+import { createServer as _cs } from 'node:net'; const require_net = () => ({ createServer: _cs });
 // node scripts/echo-check.mjs [baseUrl]   (default: local dev server on :5193)
 // HEADED Chromium (headless rAF is throttled on this Mac). Automated runs only — not real-device / real-player checks.
 import { chromium } from 'playwright';
@@ -7,12 +8,12 @@ import { gzipSync } from 'node:zlib';
 const ROOT = new URL('..', import.meta.url).pathname;
 const EV = `${ROOT}reboot-evidence/echo/`; mkdirSync(EV, { recursive: true });
 let U = process.argv[2];
-if (!U) { const { startServer } = await import('./dev.mjs'); await startServer(5193); U = 'http://localhost:5193'; }
+if (!U) { const { startServer } = await import('./dev.mjs'); const P = await new Promise((r) => { const s = require_net().createServer().listen(0, () => { const p = s.address().port; s.close(() => r(p)); }); }); await startServer(P); U = 'http://localhost:' + P; }
 const out = { base: U, at: new Date().toISOString() }; const fails = [];
 const ok = (name, cond, detail = '') => { (cond ? console.log : console.error)(`${cond ? '✔' : '✘'} ${name}${detail ? ' — ' + detail : ''}`); if (!cond) fails.push(name); out[name] = { pass: !!cond, detail }; };
 const PATH = '/ko/play/echo-courier/';
 const I18N = JSON.parse(readFileSync(`${ROOT}i18n/echo-courier.json`, 'utf8'));
-const b = await chromium.launch({ headless: false, args: ['--window-position=0,0'] });
+const b = await chromium.launch({ headless: false, executablePath: process.env.PW_CHROME || undefined, args: ['--window-position=0,0'] });
 // Vercel preview toolbar (vercel.live, /.well-known/vercel) is injected by the preview host, not site code
 const site = (reqs) => reqs.filter((u) => !/vercel\.live|\/\.well-known\/vercel/.test(u));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

@@ -38,6 +38,12 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 .row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 110px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
 .seed{color:var(--muted);font-size:12px;text-align:center}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+.rip{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0}
+.pop{position:absolute;z-index:2;pointer-events:none;font:900 26px/1 system-ui,sans-serif;text-shadow:0 0 14px rgba(250,204,21,.7),0 2px 0 rgba(0,0,0,.5);white-space:nowrap;opacity:0}
+.hud b{display:inline-block}.hud div.low b{color:var(--red)}
+#board{touch-action:none;-webkit-touch-callout:none}.cell{overflow:hidden;-webkit-touch-callout:none}
+.cell:active{background:rgba(34,211,238,.22)}
+@media (max-width:440px){.stage{padding:0 10px 10px}.wrap{width:96%}.hud{gap:6px}#board{gap:8px;padding:8px}}
 @media (prefers-reduced-motion:reduce){.toast,.cell{transition:none}.shake,.draw{animation:none;stroke-dashoffset:0}}</style></head>
 <body data-page="echo-courier" data-lang="es">
 <header class="top"><a class="logo" href="/es/"><i></i>Juego del Día</a><span class="tag">Vista previa</span><div class="tr"><button class="ic" type="button" data-set="sound" data-icon="1" aria-label="Sonido" aria-pressed="true">🔊</button><details class="langs"><summary aria-label="Language">es ▾</summary><nav><a href="/ko/play/echo-courier/" hreflang="ko">ko</a><a href="/en/play/echo-courier/" hreflang="en">en</a><a href="/ja/play/echo-courier/" hreflang="ja">ja</a><a href="/zh-hans/play/echo-courier/" hreflang="zh-Hans">zh-hans</a><a href="/es/play/echo-courier/" hreflang="es" aria-current="true">es</a><a href="/pt-br/play/echo-courier/" hreflang="pt-BR">pt-br</a></nav></details></div></header>
@@ -187,13 +193,25 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
   const seed = (q.get('seed') || today()).slice(0, 64);
 
   // ---- audio: 9-note pentatonic, WebAudio synth, created only on the first user input ----
-  let ac = null;
-  const unlock = () => { if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try { ac = new A(); } catch {} } if (ac && ac.state === 'suspended' && set.sound) ac.resume(); };
+  // t_9bc83403 polish: master compressor bus, soft attack (no clicks), noise "tick" transient for hit feel
+  let ac = null, bus = null, noiseBuf = null;
+  const unlock = () => {
+    if (!ac && set.sound) { const A = window.AudioContext || window.webkitAudioContext; if (A) try {
+      ac = new A(); const cmp = ac.createDynamicsCompressor(); cmp.threshold.value = -14; cmp.ratio.value = 4; bus = ac.createGain(); bus.gain.value = 0.9; bus.connect(cmp).connect(ac.destination);
+      noiseBuf = ac.createBuffer(1, (ac.sampleRate * 0.05) | 0, ac.sampleRate); const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length) ** 3;
+    } catch {} }
+    if (ac && ac.state === 'suspended' && set.sound) ac.resume();
+  };
   const PENTA = [261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25, 783.99];
-  const tone = (f, d, type = 'triangle', v = 0.13, at = 0) => {
+  const tone = (f, d, type = 'triangle', v = 0.13, at = 0, slide = 0) => {
     if (!ac || !set.sound) return; const t = ac.currentTime + at, o = ac.createOscillator(), gn = ac.createGain();
-    o.type = type; o.frequency.setValueAtTime(f, t); gn.gain.setValueAtTime(v, t); gn.gain.exponentialRampToValueAtTime(0.0001, t + d);
-    o.connect(gn).connect(ac.destination); o.start(t); o.stop(t + d + 0.02); W.sfx++;
+    o.type = type; o.frequency.setValueAtTime(f, t); if (slide) o.frequency.exponentialRampToValueAtTime(f * slide, t + d);
+    gn.gain.setValueAtTime(0.0001, t); gn.gain.exponentialRampToValueAtTime(v, t + 0.006); gn.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(gn).connect(bus); o.start(t); o.stop(t + d + 0.02); W.sfx++;
+  };
+  const tick = (v = 0.18, hp = 2400, at = 0) => {
+    if (!ac || !set.sound || !noiseBuf) return; const t = ac.currentTime + at, s = ac.createBufferSource(), f = ac.createBiquadFilter(), gn = ac.createGain();
+    s.buffer = noiseBuf; f.type = 'highpass'; f.frequency.value = hp; gn.gain.value = v; s.connect(f).connect(gn).connect(bus); s.start(t); W.sfx++;
   };
   const noteOf = (cell) => PENTA[[6, 7, 8, 3, 4, 5, 0, 1, 2][cell]]; // low notes bottom-left like a numpad scale
   const buzz = (ms) => { if (set.haptic && navigator.vibrate) try { navigator.vibrate(ms); W.vib++; } catch {} };
@@ -215,7 +233,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
   let g, last = 0, running = false, armed = false, hidden = false, firstOk = false, lastLit = -1, finished = false;
   const W = window.__echo = { seed, sfx: 0, vib: 0, frames: 0, ready: false, starts: [], get g() { return g; }, get armed() { return armed; }, get hidden() { return hidden; } };
   function start(go) {
-    g = createGame(seed); running = true; finished = false; lastLit = -1; res.hidden = true;
+    g = createGame(seed); streak = 0; lastScore = 0; lastSec = 99; running = true; finished = false; lastLit = -1; res.hidden = true;
     armed = !!go; ready.hidden = armed; if (armed) arm(); W.ready = true;
   }
   function arm() { armed = true; ready.hidden = true; last = performance.now(); W.armedAt = last; W.starts.push(last); }
@@ -228,6 +246,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     flush();
   }
   board.addEventListener('pointerdown', (e) => { const c = e.target.closest('.cell'); if (!c || e.button > 0) return; e.preventDefault(); press(+c.dataset.cell); });
+  board.addEventListener('contextmenu', (e) => e.preventDefault()); // long-press menu on mobile
   ready.addEventListener('pointerdown', (e) => { if (e.button > 0) return; e.preventDefault(); unlock(); if (running && !armed) arm(); });
   document.addEventListener('keydown', (e) => {
     if (e.repeat) return;
@@ -240,21 +259,50 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     else { hidden = false; last = performance.now(); if (ac && set.sound) ac.resume(); if (g && armed && !g.over) { replay(g); lastLit = -1; flush(); } }
   });
 
-  let failUntil = 0, okUntil = 0;
+  // ---- hit feel (t_9bc83403): Web Animations so draw()'s className reset never cancels them ----
+  const anim = (el, kf, o) => { if (reduced() || !el.animate) return; try { el.animate(kf, o); W.fx++; } catch {} };
+  const punch = (c, s = 0.9) => anim(cells[c], [{ transform: `scale(${s})` }, { transform: 'scale(1.06)', offset: 0.55 }, { transform: 'scale(1)' }], { duration: 170, easing: 'cubic-bezier(.2,.9,.3,1.4)' });
+  const ripple = (c, col) => {
+    if (reduced()) return; const el = cells[c], r = document.createElement('b'); r.className = 'rip'; r.style.background = col; el.appendChild(r);
+    anim(r, [{ transform: 'scale(.2)', opacity: 0.75 }, { transform: 'scale(1.5)', opacity: 0 }], { duration: 360, easing: 'ease-out' }); setTimeout(() => r.remove(), 380);
+  };
+  const pop = (c, txt, col) => {
+    if (reduced()) return; const el = document.createElement('div'), [x, y] = cxy(c); el.className = 'pop'; el.textContent = txt; el.style.color = col; el.style.left = x / 3 + '%'; el.style.top = y / 3 + '%'; wrap.appendChild(el);
+    anim(el, [{ transform: 'translate(-50%,-30%) scale(.6)', opacity: 0 }, { transform: 'translate(-50%,-90%) scale(1.15)', opacity: 1, offset: 0.3 }, { transform: 'translate(-50%,-160%) scale(1)', opacity: 0 }], { duration: 700, easing: 'ease-out' }); setTimeout(() => el.remove(), 720);
+  };
+  const bump = (el) => anim(el, [{ transform: 'scale(1.35)', color: '#facc15' }, { transform: 'scale(1)' }], { duration: 260, easing: 'ease-out' });
+  const wrap = board.parentElement;
+  let streak = 0, lastScore = 0;
+  W.fx = 0;
   function flush() {
     for (const ev of g.events.splice(0)) {
-      if (ev.e === 'cell') { tone(noteOf(ev.cell), 0.18); buzz(10); }
-      else if (ev.e === 'fail') { tone(196, 0.22, 'square', 0.1); tone(147, 0.3, 'square', 0.1, 0.16); buzz(60); }
-      else if (ev.e === 'ok') { g.path.forEach((c, i) => tone(noteOf(c), 0.12, 'sine', 0.1, 0.12 + i * 0.05)); if (!firstOk) { firstOk = true; follow.hidden = true; } }
-      else if (ev.e === 'round' || ev.e === 'replay') lastLit = -1;
-      else if (ev.e === 'over') finished = true;
+      if (ev.e === 'cell') { tone(noteOf(ev.cell), 0.2, 'triangle', 0.15); tick(0.12, 3000); buzz(12); punch(ev.cell); ripple(ev.cell, 'rgba(34,211,238,.55)'); }
+      else if (ev.e === 'fail') {
+        streak = 0; tick(0.3, 400); tone(220, 0.28, 'sawtooth', 0.09, 0, 0.5); tone(110, 0.35, 'square', 0.07, 0.05, 0.7); buzz([40, 30, 60]);
+        if (ev.cell >= 0) { punch(ev.cell, 0.82); ripple(ev.cell, 'rgba(255,77,94,.6)'); }
+        anim(wrap, [{ transform: 'translateX(0)' }, { transform: 'translateX(-8px) rotate(-.6deg)' }, { transform: 'translateX(7px) rotate(.5deg)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(0)' }], { duration: 300 });
+      }
+      else if (ev.e === 'ok') {
+        streak++; const up = 1 + Math.min(streak - 1, 6) * 0.06; // rising pitch per consecutive delivery
+        g.path.forEach((c, i) => tone(noteOf(c) * up, 0.14, 'sine', 0.1, 0.1 + i * 0.045));
+        const end = 0.12 + g.path.length * 0.045; tone(1046.5 * up, 0.35, 'triangle', 0.12, end); tone(1318.5 * up, 0.4, 'sine', 0.08, end + 0.06); buzz([15, 40, 25]);
+        const gain = g.score - lastScore; pop(g.path[g.path.length - 1], `+${gain}${streak > 1 ? ' ×' + streak : ''}`, '#facc15'); bump(hud.score); bump(hud.done);
+        anim(wrap, [{ transform: 'scale(1)' }, { transform: 'scale(1.03)' }, { transform: 'scale(1)' }], { duration: 260, easing: 'ease-out' });
+        if (!firstOk) { firstOk = true; follow.hidden = true; }
+      }
+      else if (ev.e === 'round') { lastLit = -1; tone(523.25, 0.08, 'sine', 0.05); }
+      else if (ev.e === 'replay') lastLit = -1;
+      else if (ev.e === 'over') { finished = true; [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, 0.3, 'triangle', 0.1, i * 0.09)); }
     }
+    lastScore = g.score;
   }
+  let lastSec = 99;
+  const countdown = () => { const s = Math.ceil(EC.DUR - g.t); if (s !== lastSec && s <= 5 && s > 0 && armed && !g.over) { tick(0.16, 1200); tone(880, 0.06, 'square', 0.04); bump(hud.time); } lastSec = s; hud.time.parentElement.classList.toggle('low', s <= 10 && armed); };
   function frame(now) {
     requestAnimationFrame(frame);
     if (!running) return;
     W.frames++;
-    if (armed && !hidden && !g.over) { step(g, (now - last) / 1000); flush(); }
+    if (armed && !hidden && !g.over) { step(g, (now - last) / 1000); flush(); countdown(); }
     last = now;
     const li = litIndex(g); if (li !== lastLit && li >= 0) tone(noteOf(g.path[li]), 0.2, 'sine', 0.11); lastLit = li;
     draw(li);
@@ -294,7 +342,7 @@ function simulate(seed, policy = 'perfect', perCell = 0.6, dt = 1 / 120) {
     $('#r-new').hidden = !(isBest && prev); $('#r-first').hidden = !!prev;
     $('#r-path').innerHTML = mini(rec.path);
     res.hidden = false; W.result = { rec, best, prev };
-    setTimeout(() => $('#b-again').focus({ preventScroll: true }), 30);
+    $('#b-again').focus({ preventScroll: true }); setTimeout(() => $('#b-again').focus({ preventScroll: true }), 30);
   }
   const mini = (p) => `<svg viewBox="0 0 300 300" width="120" height="120" aria-hidden="true">${[...Array(9)].map((_, c) => `<rect x="${(c % 3) * 100 + 8}" y="${((c / 3) | 0) * 100 + 8}" width="84" height="84" rx="16" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.12)"/>`).join('')}${p.length ? `<polyline points="${p.map((c) => cxy(c).join(',')).join(' ')}" fill="none" stroke="#facc15" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>` : ''}</svg>`;
   const shareUrl = () => { const u = new URL(location.href); u.search = ''; u.searchParams.set('seed', seed); return u.toString(); };

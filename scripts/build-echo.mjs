@@ -47,6 +47,12 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 .row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1 1 110px}.tgs{display:flex;gap:6px;flex-wrap:wrap}.tgs .tg{flex:1 1 80px}
 .seed{color:var(--muted);font-size:12px;text-align:center}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--glass);border:1px solid var(--edge);border-radius:12px;padding:10px 14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}.toast.show{opacity:1}
+.rip{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0}
+.pop{position:absolute;z-index:2;pointer-events:none;font:900 26px/1 system-ui,sans-serif;text-shadow:0 0 14px rgba(250,204,21,.7),0 2px 0 rgba(0,0,0,.5);white-space:nowrap;opacity:0}
+.hud b{display:inline-block}.hud div.low b{color:var(--red)}
+#board{touch-action:none;-webkit-touch-callout:none}.cell{overflow:hidden;-webkit-touch-callout:none}
+.cell:active{background:rgba(34,211,238,.22)}
+@media (max-width:440px){.stage{padding:0 10px 10px}.wrap{width:96%}.hud{gap:6px}#board{gap:8px;padding:8px}}
 @media (prefers-reduced-motion:reduce){.toast,.cell{transition:none}.shake,.draw{animation:none;stroke-dashoffset:0}}`;
 
 export function buildEcho() {
