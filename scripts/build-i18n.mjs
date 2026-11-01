@@ -75,7 +75,7 @@ function shell(l, page, suf, main, opts = {}) {
 </body></html>`;
 }
 
-const hwBanner = (D) => `<aside class="hw-banner" aria-label="Halloween"><b>${esc(D.halloween.banner)}</b><span>${esc(D.halloween.sub)}</span></aside>`;
+const hwBanner = (D) => `<aside class="hw-banner" aria-label="Notice"><b>${esc(D.halloween.banner)}</b><span>${esc(D.halloween.sub)}</span></aside>`;
 const charImg = (c, size = 96, alt = '') => `<img src="/img/chars/${c}.svg" width="${size}" height="${size}" alt="${esc(alt)}" loading="lazy">`;
 
 function pageBody(l, key) {
@@ -195,10 +195,10 @@ export function build() {
     }
     const D = dict[l];
     for (const [key, suf] of SHELLS) {
-      const title = key === 'i' ? D.seo.chem.title : key === 'c' ? `${D.game.challengeTitle} | ${D.brand}` : D.brand;
+      const title = key === 'i' ? D.seo.chem.title : key === 'c' || key === 'r' ? `${D.game.challengeTitle} | ${D.brand}` : D.brand;
       const desc = key === 'i' ? D.seo.chem.desc : key === 'c' ? D.seo.game.desc : D.seo.lobby.desc;
       const main = key === 'c' ? `<section class="gamecol" id="game"></section>` : key === 'i' ? `<section id="chem" class="card"><p>${esc(D.common.loading)}</p></section><p class="disc" data-disclaimer>${esc(D.quiz.disclaimer)}</p>` : `<section id="share" class="card"><p>${esc(D.common.loading)}</p></section>`;
-      write(`${l}/${suf}index.html`, shell(l, key, suf, main, { title, desc, noindex: true, dyn: true, og: key === 'c' ? `/og/challenge-${l}.png` : `/og/site-${l}.png` }));
+      write(`${l}/${suf}index.html`, shell(l, key, suf, main, { title, desc, noindex: true, dyn: true, og: key === 'c' || key === 'r' ? `/og/challenge-${l}.png` : `/og/site-${l}.png` }));
     }
   }
   // root: language picker, English body, x-default
