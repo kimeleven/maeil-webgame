@@ -1,6 +1,6 @@
 {
-  "base": "https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app",
-  "at": "2026-10-23T00:28:00.837Z",
+  "base": "https://maeil-webgame-ckpnf2y1p-sanghunkims-projects.vercel.app",
+  "at": "2026-11-01T08:43:54.161Z",
   "READY 412 clock frozen before start (t=0, HUD 90)": {
     "pass": true,
     "detail": "{\"t\":0,\"phase\":\"show\",\"r\":1,\"L\":3,\"idx\":0,\"done\":0,\"over\":false,\"hud\":\"90\",\"path\":[3,4,2],\"armed\":false}"
@@ -10,7 +10,7 @@
     "detail": "잔상이 꺼지면 같은 순서로 칸을 탭 / 탭해서 시작 / true"
   },
   "RUN_412": {
-    "wall": 90.019,
+    "wall": 90.012,
     "gameT": 90,
     "rec": {
       "done": 14,
@@ -34,25 +34,25 @@
     },
     "rounds": 16,
     "a3": {
-      "tShow": 43,
-      "tNext": 1238,
+      "tShow": 45,
+      "tNext": 1246,
       "status": "2번째 칸에서 갈렸어요",
       "nextL": 4,
       "nextR": 3,
       "wrongCell": 0
     },
     "a8": {
-      "before": 1.613,
-      "after": 11.653,
+      "before": 1.611,
+      "after": 11.679,
       "phase": "input",
       "fails": 0
     },
-    "sfx": 388,
-    "vib": 125
+    "sfx": 569,
+    "vib": 139
   },
   "A5 412 run ends at 90 s real time (±0.5 incl. 0.25 s lead + start/result detection)": {
     "pass": true,
-    "detail": "wall 90.02 s, game t 90"
+    "detail": "wall 90.01 s, game t 90"
   },
   "A1 412 lengths 3..12, +1 on success": {
     "pass": true,
@@ -64,23 +64,23 @@
   },
   "A8 412 10 s idle in input → no fail": {
     "pass": true,
-    "detail": "{\"before\":1.613,\"after\":11.653,\"phase\":\"input\",\"fails\":0}"
+    "detail": "{\"before\":1.611,\"after\":11.679,\"phase\":\"input\",\"fails\":0}"
   },
   "A3 412 wrong cell + answer ≤1 s, next path (r+1, same length) ≤1.5 s": {
     "pass": true,
-    "detail": "{\"tShow\":43,\"tNext\":1238,\"status\":\"2번째 칸에서 갈렸어요\",\"nextL\":4,\"nextR\":3,\"wrongCell\":0}"
+    "detail": "{\"tShow\":45,\"tNext\":1246,\"status\":\"2번째 칸에서 갈렸어요\",\"nextL\":4,\"nextR\":3,\"wrongCell\":0}"
   },
   "A5 412 result shows deliveries/longest, focus on again": {
     "pass": true,
-    "detail": "focus "
+    "detail": "focus b-again"
   },
   "A5 412 Enter = again, starts at once": {
     "pass": true,
-    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.2912000000238477,\"starts\":2}"
+    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.29049999996423137,\"starts\":2}"
   },
   "A6d 412 no API / external requests (only the page itself)": {
     "pass": true,
-    "detail": "1 same-origin: https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=check; other "
+    "detail": "1 same-origin: https://maeil-webgame-ckpnf2y1p-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=check; other "
   },
   "A10 412 no horizontal overflow": {
     "pass": true,
@@ -95,7 +95,7 @@
     "detail": "잔상이 꺼지면 같은 순서로 클릭 또는 숫자 1~9 / 클릭 · Space · Enter로 시작 / true"
   },
   "RUN_1440": {
-    "wall": 90.073,
+    "wall": 90.042,
     "gameT": 90,
     "rec": {
       "done": 15,
@@ -120,17 +120,17 @@
     "rounds": 16,
     "a3": null,
     "a8": {
-      "before": 1.606,
-      "after": 11.741,
+      "before": 1.614,
+      "after": 11.766,
       "phase": "input",
       "fails": 0
     },
-    "sfx": 424,
-    "vib": 142
+    "sfx": 618,
+    "vib": 153
   },
   "A5 1440 run ends at 90 s real time (±0.5 incl. 0.25 s lead + start/result detection)": {
     "pass": true,
-    "detail": "wall 90.07 s, game t 90"
+    "detail": "wall 90.04 s, game t 90"
   },
   "A1 1440 lengths 3..12, +1 on success": {
     "pass": true,
@@ -142,7 +142,7 @@
   },
   "A8 1440 10 s idle in input → no fail": {
     "pass": true,
-    "detail": "{\"before\":1.606,\"after\":11.741,\"phase\":\"input\",\"fails\":0}"
+    "detail": "{\"before\":1.614,\"after\":11.766,\"phase\":\"input\",\"fails\":0}"
   },
   "A5 1440 result shows deliveries/longest, focus on again": {
     "pass": true,
@@ -150,11 +150,11 @@
   },
   "A5 1440 Enter = again, starts at once": {
     "pass": true,
-    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.2955000000238361,\"starts\":2}"
+    "detail": "{\"armed\":true,\"res\":true,\"ready\":true,\"t\":0.3024999999880821,\"starts\":2}"
   },
   "A6d 1440 no API / external requests (only the page itself)": {
     "pass": true,
-    "detail": "1 same-origin: https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=check; other "
+    "detail": "1 same-origin: https://maeil-webgame-ckpnf2y1p-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=check; other "
   },
   "A10 1440 no horizontal overflow": {
     "pass": true,
@@ -166,11 +166,11 @@
   },
   "A5 hidden tab 10 s (simulated visibilitychange) → remaining time same, echo replays from start": {
     "pass": true,
-    "detail": "hidden=true,true, t 3.105→3.16, phase show, idx 1→0"
+    "detail": "hidden=true,true, t 3.128→3.181, phase show, idx 1→0"
   },
   "HIDDEN": {
     "before": {
-      "t": 3.105,
+      "t": 3.128,
       "phase": "input",
       "r": 1,
       "L": 3,
@@ -186,7 +186,7 @@
       "armed": true
     },
     "after": {
-      "t": 3.16,
+      "t": 3.181,
       "phase": "show",
       "r": 1,
       "L": 3,
@@ -216,28 +216,28 @@
   },
   "A7 result PNG 1080×1350 saved locally (deliveries, longest path line, date)": {
     "pass": true,
-    "detail": "1080×1350, 753628 B, rec {\"done\":4,\"longest\":6,\"score\":2144,\"path\":[4,3,1,2,5,7],\"rounds\":5} — 그림 내용은 result-card.png 육안 확인"
+    "detail": "1080×1350, 752752 B, rec {\"done\":4,\"longest\":6,\"score\":2144,\"path\":[4,3,1,2,5,7],\"rounds\":5} — 그림 내용은 result-card.png 육안 확인"
   },
   "A7 PNG made with no network": {
     "pass": true,
-    "detail": "https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=png-card https://maeil-webgame-q8silo9cs-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=png-card"
+    "detail": "https://maeil-webgame-ckpnf2y1p-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=png-card https://maeil-webgame-ckpnf2y1p-sanghunkims-projects.vercel.app/ko/play/echo-courier/?seed=png-card"
   },
   "A10 first interaction ≤2 s (4× CPU, Fast 3G 562.5 ms)": {
     "pass": true,
-    "detail": "889 ms, HTML gzip 11.0 KB (1 request)"
+    "detail": "922 ms, HTML gzip 12.5 KB (1 request)"
   },
   "A10 avg fps ≥50 under 4× CPU": {
     "pass": true,
-    "detail": "72.0 fps"
+    "detail": "60.2 fps"
   },
   "A10 game JS+HTML gzip ≤50 KB": {
     "pass": true,
-    "detail": "11289 B"
+    "detail": "12846 B"
   },
   "PERF": {
-    "tReady": 889,
-    "fps": 72,
-    "gz": 11289
+    "tReady": 922,
+    "fps": 60.2,
+    "gz": 12846
   },
   "A11 ko 360: no overflow (ready+result)": {
     "pass": true,
