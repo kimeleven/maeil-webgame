@@ -3,7 +3,7 @@
   "framework": null,
   "buildCommand": "node scripts/build-i18n.mjs",
   "outputDirectory": "public",
-  "regions": ["sin1"],
+  "regions": ["icn1"],
   "functions": {
     "api/*.js": {
       "includeFiles": "{public/data/games.json,public/js/logic.js}"
