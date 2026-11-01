@@ -57,7 +57,7 @@
  },
  "lobby": {
   "h1": "今天30秒，一起玩吧",
-  "sub": "一局游戏、一个角色测试、一次朋友默契。就这三样。",
+  "sub": "一局游戏、一个角色测试、一次朋友默契。就这三样。高考完的人，还没考的人，都来歇30秒。",
   "cards": {
    "play": {
     "t": "门阵冲刺",
@@ -179,7 +179,7 @@
   "challenge": "用同一关卡挑战",
   "ambush": "突袭！",
   "close": "好险！",
-  "challengeShareText": "门阵冲刺第{stage}区，{score}分！同一关，来超过我 → {url}", "shareText": "我在门阵冲刺突破了第{stage}区！同一关，来挑战我 → {url}",
+  "challengeShareText": "门阵冲刺第{stage}区，{score}分！30秒就好，同一关，来超过我 → {url}", "shareText": "我在门阵冲刺突破了第{stage}区！同一关，来挑战我 → {url}",
   "cardCta": "同一关，来挑战我",
   "rTitle": "门阵冲刺 第{stage}区纪录"
  },

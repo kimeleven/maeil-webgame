@@ -57,7 +57,7 @@
  },
  "lobby": {
   "h1": "30 seconds today, let's play",
-  "sub": "One game, one character quiz, one friend chemistry check. That's all there is.",
+  "sub": "One game, one character quiz, one friend chemistry check. That's all there is. Whether exams are done or not, take a 30-second break.",
   "cards": {
    "play": {
     "t": "Gate Rush",
@@ -179,7 +179,7 @@
   "challenge": "Play this exact run",
   "ambush": "AMBUSH!",
   "close": "CLOSE!",
-  "challengeShareText": "Gate Rush: sector {stage}, {score} pts. Beat me on the same run → {url}", "shareText": "I cleared sector {stage} in Gate Rush. Same run, can you beat me? → {url}",
+  "challengeShareText": "Gate Rush: sector {stage}, {score} pts. 30 seconds, same run. Beat me → {url}", "shareText": "I cleared sector {stage} in Gate Rush. Same run, can you beat me? → {url}",
   "cardCta": "Beat me on the same run",
   "rTitle": "Gate Rush: sector {stage} record"
  },
