@@ -71,9 +71,10 @@ function shell(l, page, suf, main, opts = {}) {
 <body data-page="${page}" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.brand)}</a>${langMenu(l, suf, opts.dyn)}</header>
 <main class="wrap">${main}</main>
-<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
+<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
+<script type="module" src="/js/season.js"></script>
 <script type="module" src="/js/track.js"></script>
 <script type="module" src="/js/app.js"></script>
 </body></html>`;
@@ -87,7 +88,7 @@ function pageBody(l, key) {
   const disc = `<p class="disc" data-disclaimer>${esc(q.disclaimer)}</p>`;
   if (key === 'lobby') {
     const c = D.lobby.cards;
-    return `${hwBanner(D)}<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}</p></section>
+    return `${hwBanner(D)}<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}<span data-from="0" data-until="1794495600000" hidden> ${esc(D.lobby.subSeason)}</span><span data-from="1794495600000" data-until="1796050800000" hidden> ${esc(D.lobby.subSeason2)}</span></p></section>
 <nav class="grid3" aria-label="${esc(D.brand)}">
 <a class="card cat hl" href="/${l}/play/gate-rush/" aria-label="${esc(c.play.aria)}"><span class="tag">${esc(D.nav.play)}</span><img src="/img/gate-rush.svg" width="150" height="150" alt=""><h3>${esc(c.play.t)}</h3><p>${esc(c.play.d)}</p><span class="btn go">${esc(c.play.cta)}</span></a>
 <a class="card cat" href="/${l}/me/play-character/"><span class="tag">${esc(D.nav.me)}</span>${charImg('SPH', 150)}<h3>${esc(c.me.t)}</h3><p>${esc(c.me.d)}</p><span class="btn ghost go">${esc(c.me.cta)}</span></a>
@@ -156,7 +157,12 @@ function meta(l, key) {
 
 function jsonld(l, key, m) {
   const D = dict[l];
-  if (key === 'lobby') return { '@context': 'https://schema.org', '@type': 'WebSite', name: D.brand, url: url(l, ''), inLanguage: D.htmlLang };
+  if (key === 'lobby') {
+    const c = D.lobby.cards, items = [[c.play.t, 'play/gate-rush/'], [c.me.t, 'me/play-character/'], [c.friends.t, 'friends/chemistry/']];
+    return { '@context': 'https://schema.org', '@graph': [
+      { '@type': 'WebSite', name: D.brand, url: url(l, ''), inLanguage: D.htmlLang },
+      { '@type': 'ItemList', name: D.brand, itemListElement: items.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, url: url(l, p) })) }] };
+  }
   if (key === 'game') return { '@context': 'https://schema.org', '@graph': [{ '@type': 'VideoGame', name: D.game.name, description: m.desc, genre: 'Arcade', gamePlatform: 'Web browser', inLanguage: D.htmlLang, url: url(l, 'play/gate-rush/'), offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' } }, { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: D.brand, item: url(l, '') }, { '@type': 'ListItem', position: 2, name: D.nav.play, item: url(l, 'play/gate-rush/') }] }] };
   const self = url(l, PAGES.find((p) => p[0] === key)[1]);
   const page = { '@type': 'WebPage', name: m.title, description: m.desc, inLanguage: D.htmlLang, url: self };

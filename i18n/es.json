@@ -57,7 +57,9 @@
  },
  "lobby": {
   "h1": "30 segundos hoy, ¡a jugar juntos!",
-  "sub": "Un juego, un test de personaje y química con amigos. Solo eso. Hayas terminado los exámenes o no, tómate 30 segundos de descanso.",
+  "sub": "Un juego, un test de personaje y química con amigos. Solo eso.",
+  "subSeason": "Hayas terminado los exámenes o no, tómate 30 segundos de descanso.",
+  "subSeason2": "Noviembre ya refresca: una partida de 30 segundos, sin instalar.",
   "cards": {
    "play": {
     "t": "Gate Rush",

@@ -57,7 +57,9 @@
  },
  "lobby": {
   "h1": "30 seconds today, let's play",
-  "sub": "One game, one character quiz, one friend chemistry check. That's all there is. Whether exams are done or not, take a 30-second break.",
+  "sub": "One game, one character quiz, one friend chemistry check. That's all there is.",
+  "subSeason": "Whether exams are done or not, take a 30-second break.",
+  "subSeason2": "Chilly November — one 30-second run, no install.",
   "cards": {
    "play": {
     "t": "Gate Rush",
