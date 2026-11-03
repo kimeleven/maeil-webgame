@@ -178,7 +178,7 @@
   "target": "目标：第{stage}区 · {score}分",
   "beat": "挑战成功！你超过了对方的纪录",
   "seedLabel": "路线",
-  "challenge": "用同一关卡挑战",
+  "challenge": "用同一关卡挑战", "challengeSub": "30秒 · 无需安装注册",
   "ambush": "突袭！",
   "close": "好险！",
   "challengeShareText": "门阵冲刺第{stage}区，{score}分！30秒就好，同一关，来超过我 → {url}", "shareText": "我在门阵冲刺突破了第{stage}区！同一关，来挑战我 → {url}",

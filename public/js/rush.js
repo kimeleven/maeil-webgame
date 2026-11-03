@@ -72,7 +72,8 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     const zone = `<p class="muted">${g.zones[G.zoneOf(run.stage) - 1]} · ${g.seedLabel} ${run.seed}</p>`;
     const rest = `${inv ? `<p>${fmt(g.readyDesc, { boss: G.boss(run) })}</p>` : ''}${zone}`; // inv: 문구 삭제 없이 버튼 아래로
     show(`${challenge ? `<h2>${g.challengeTitle}</h2>` : ''}${tgt}${inv && challenge ? '' : `<h2>${fmt(g.readyTitle, { stage: run.stage })}</h2>`}${inv ? '' : desc + zone}`,
-      [btn(g.start, '', start)]);
+      [btn(inv && challenge ? g.challenge : g.start, '', start)]);
+    if (inv && challenge) modal.querySelector('.stack')?.insertAdjacentHTML('afterend', `<p class="muted challenge-sub">${g.challengeSub}</p>`);
     if (inv) modal.insertAdjacentHTML('beforeend', rest);
     if (challenge || landing) modal.querySelector('.btn')?.focus({ preventScroll: true });
   }

@@ -178,7 +178,7 @@
   "target": "Meta: setor {stage} · {score} pontos",
   "beat": "Desafio vencido! Você bateu o recorde",
   "seedLabel": "Percurso",
-  "challenge": "Jogar esta mesma partida",
+  "challenge": "Jogar esta mesma partida", "challengeSub": "30 segundos · sem instalar nem cadastrar",
   "ambush": "Emboscada!",
   "close": "Por um triz!",
   "challengeShareText": "Gate Rush: setor {stage}, {score} pts. 30 segundos, mesma partida. Me vença → {url}", "shareText": "Passei do setor {stage} no Gate Rush. Mesma partida, consegue me vencer? → {url}",

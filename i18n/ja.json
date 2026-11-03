@@ -178,7 +178,7 @@
   "target": "目標：{stage}区域 · {score}点",
   "beat": "挑戦成功！相手の記録を超えたよ",
   "seedLabel": "コース",
-  "challenge": "同じ条件で挑戦",
+  "challenge": "同じ条件で挑戦", "challengeSub": "30秒・インストール不要・登録なし",
   "ambush": "襲撃！",
   "close": "ギリギリ！",
   "challengeShareText": "ゲートラッシュ{stage}区域、{score}点！30秒で終わる、同じ条件で私に勝ってみて → {url}", "shareText": "ゲートラッシュで{stage}区域突破！同じ条件で勝負しよう → {url}",
