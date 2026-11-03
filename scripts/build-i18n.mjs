@@ -43,7 +43,7 @@ const fmt = (s, v) => String(s).replace(/\{(\w+)\}/g, (_, k) => (k in v ? v[k] :
 const PAGES = [
   ['lobby', ''], ['game', 'play/gate-rush/'], ['quiz', 'me/play-character/'],
   ...CODES.map((c) => [`type-${c}`, `me/play-character/types/${c.toLowerCase()}/`]),
-  ['chem', 'friends/chemistry/'], ['quickbreak', 'play/quick-break/'], ['friendplay', 'friends/things-to-do/'], ['commute', 'play/commute/'], ['about', 'about/'], ['privacy', 'privacy/'],
+  ['chem', 'friends/chemistry/'], ['quickbreak', 'play/quick-break/'], ['friendplay', 'friends/things-to-do/'], ['commute', 'play/commute/'], ['winter', 'play/winter-break/'], ['about', 'about/'], ['privacy', 'privacy/'],
 ];
 const SHELLS = [['r', 'r/'], ['c', 'c/'], ['i', 'i/']];
 const url = (l, suf) => `${SITE}/${l}/${suf}`;
@@ -71,7 +71,7 @@ function shell(l, page, suf, main, opts = {}) {
 <body data-page="${page}" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.brand)}</a>${langMenu(l, suf, opts.dyn)}</header>
 <main class="wrap">${main}</main>
-<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
+<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
 <script type="module" src="/js/season.js"></script>
@@ -82,6 +82,8 @@ function shell(l, page, suf, main, opts = {}) {
 
 const hwBanner = (D) => `<aside class="hw-banner" aria-label="Notice"><b>${esc(D.halloween.banner)}</b><span>${esc(D.halloween.sub)}</span></aside>`;
 const charImg = (c, size = 96, alt = '') => `<img src="/img/chars/${c}.svg" width="${size}" height="${size}" alt="${esc(alt)}" loading="lazy">`;
+
+const faqHtml = (D) => `<div class="prose" data-faq><h2>FAQ</h2><h3>${esc(D.faq.q1)}</h3><p>${esc(D.faq.a1)}</p><h3>${esc(D.faq.q2)}</h3><p>${esc(D.faq.a2)}</p></div>`;
 
 function pageBody(l, key) {
   const D = dict[l], g = D.game, q = D.quiz;
@@ -98,7 +100,7 @@ function pageBody(l, key) {
 <a class="card row" href="/${l}/play/magnet-harbor/" data-game="magnet-harbor" style="margin-top:14px;justify-content:space-between;text-decoration:none;color:inherit"><img src="/img/magnet-harbor.svg" width="64" height="64" alt=""><div style="flex:1;min-width:0"><h3>${esc(MT[l].name)}</h3><p class="muted" style="margin:0">${esc(MT[l].desc)}</p></div><span class="btn ghost">${esc(MT[l].start)} →</span></a>
 <a class="card row" href="/${l}/play/echo-courier/" data-game="echo-courier" style="margin-top:14px;justify-content:space-between;text-decoration:none;color:inherit"><div style="flex:1;min-width:0"><h3>${esc(ET[l].name)}</h3><p class="muted" style="margin:0">${esc(ET[l].desc)}</p></div><span class="btn ghost">${esc(MT[l].start)} →</span></a>
 <a class="card row" href="/${l}/play/orbit-switch/" data-game="orbit-switch" style="margin-top:14px;justify-content:space-between;text-decoration:none;color:inherit"><div style="flex:1;min-width:0"><h3>${esc(OT[l].name)}</h3><p class="muted" style="margin:0">${esc(OT[l].desc)}</p></div><span class="btn ghost">${esc(MT[l].start)} →</span></a>
-<p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a> · <a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a> · <a href="/${l}/play/commute/">${esc(D.commute.link)}</a></p>`;
+<p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a> · <a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a> · <a href="/${l}/play/commute/">${esc(D.commute.link)}</a> · <a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a></p>`;
   }
   if (key === 'game') {
     return `${hwBanner(D)}<div class="layout-game"><section class="intro"><span class="tag">${esc(D.nav.play)} · 30s</span><h1>${esc(g.name)} — ${esc(g.h1)}</h1><p>${esc(g.intro)}</p>
@@ -123,15 +125,19 @@ function pageBody(l, key) {
   }
   if (key === 'quickbreak') {
     const Q = D.quickbreak;
-    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(Q.h1)}</h1><p>${esc(Q.p1)}</p><p>${esc(Q.p2)}</p><div class="row"><a class="btn" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a></div><p class="muted"><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a> · <a href="/${l}/play/commute/">${esc(D.commute.link)}</a></p></section>`;
+    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(Q.h1)}</h1><p>${esc(Q.p1)}</p><p>${esc(Q.p2)}</p><div class="row"><a class="btn" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a></div><p class="muted"><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a> · <a href="/${l}/play/commute/">${esc(D.commute.link)}</a> · <a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a></p>${faqHtml(D)}</section>`;
   }
   if (key === 'friendplay') {
     const F = D.friendplay;
-    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(F.h1)}</h1><p>${esc(F.p1)}</p><p>${esc(F.p2)}</p><div class="row"><a class="btn" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a></div><p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a> · <a href="/${l}/play/commute/">${esc(D.commute.link)}</a></p></section>`;
+    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(F.h1)}</h1><p>${esc(F.p1)}</p><p>${esc(F.p2)}</p><div class="row"><a class="btn" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a></div><p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a> · <a href="/${l}/play/commute/">${esc(D.commute.link)}</a> · <a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a></p></section>`;
   }
   if (key === 'commute') {
     const M = D.commute;
-    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(M.h1)}</h1><p>${esc(M.p1)}</p><p>${esc(M.p2)}</p><div class="row"><a class="btn" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a></div><p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a> · <a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a></p></section>`;
+    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(M.h1)}</h1><p>${esc(M.p1)}</p><p>${esc(M.p2)}</p><div class="row"><a class="btn" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a></div><p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a> · <a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a> · <a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a></p></section>`;
+  }
+  if (key === 'winter') {
+    const W = D.winter;
+    return `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(W.h1)}</h1><p>${esc(W.p1)}</p><p>${esc(W.p2)}</p><div class="row"><a class="btn" href="/${l}/play/gate-rush/">${esc(D.lobby.cards.play.cta)}</a><a class="btn ghost" href="/${l}/me/play-character/">${esc(D.lobby.cards.me.cta)}</a><a class="btn ghost" href="/${l}/friends/chemistry/">${esc(D.cta.chem)}</a></div><p class="muted"><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a> · <a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a> · <a href="/${l}/play/commute/">${esc(D.commute.link)}</a></p>${faqHtml(D)}</section>`;
   }
   if (key === 'chem') {
     const C = D.chem;
@@ -149,6 +155,7 @@ function meta(l, key) {
   const D = dict[l], S = D.seo;
   if (key.startsWith('type-')) { const T = D.types[key.slice(5)]; const full = `${T.name} — ${T.one} | ${D.brand}`, short = `${T.name} | ${D.brand}`; return { title: full.length <= 60 ? full : short.length <= 60 ? short : T.name, desc: T.desc.split(/(?<=[.!?。！？])\s*/).slice(0, 2).join(' ').trim() }; }
   if (key === 'quickbreak') return { title: D.quickbreak.title, desc: D.quickbreak.desc };
+  if (key === 'winter') return { title: D.winter.title, desc: D.winter.desc };
   if (key === 'friendplay') return { title: D.friendplay.title, desc: D.friendplay.desc };
   if (key === 'commute') return { title: D.commute.title, desc: D.commute.desc };
   const k = { lobby: 'lobby', game: 'game', quiz: 'quiz', chem: 'chem', quickbreak: 'quickbreak', about: 'about', privacy: 'privacy' }[key];
@@ -158,7 +165,7 @@ function meta(l, key) {
 function jsonld(l, key, m) {
   const D = dict[l];
   if (key === 'lobby') {
-    const c = D.lobby.cards, items = [[c.play.t, 'play/gate-rush/'], [c.me.t, 'me/play-character/'], [c.friends.t, 'friends/chemistry/']];
+    const c = D.lobby.cards, items = [[c.play.t, 'play/gate-rush/'], [c.me.t, 'me/play-character/'], [c.friends.t, 'friends/chemistry/'], [D.quickbreak.link, 'play/quick-break/'], [D.commute.link, 'play/commute/'], [D.friendplay.link, 'friends/things-to-do/'], [D.winter.link, 'play/winter-break/']];
     return { '@context': 'https://schema.org', '@graph': [
       { '@type': 'WebSite', name: D.brand, url: url(l, ''), inLanguage: D.htmlLang },
       { '@type': 'ItemList', name: D.brand, itemListElement: items.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, url: url(l, p) })) }] };
@@ -172,10 +179,12 @@ function jsonld(l, key, m) {
   else if (key.startsWith('type-')) crumbs.push([D.nav.me, quizUrl], [D.types[key.slice(5)].name, self]);
   else if (key === 'chem') crumbs.push([D.nav.friends, self]);
   else if (key === 'quickbreak') crumbs.push([D.nav.play, gameUrl], [D.quickbreak.h1, self]);
+  else if (key === 'winter') crumbs.push([D.nav.play, gameUrl], [D.winter.h1, self]);
   else if (key === 'commute') crumbs.push([D.nav.play, gameUrl], [D.commute.h1, self]);
   else if (key === 'friendplay') crumbs.push([D.nav.friends, url(l, 'friends/chemistry/')], [D.friendplay.h1, self]);
   else crumbs.push([D.nav[key], self]); // about, privacy
   const graph = [page, { '@type': 'BreadcrumbList', itemListElement: crumbs.map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item })) }];
+  if (key === 'quickbreak' || key === 'winter') graph.push({ '@type': 'FAQPage', mainEntity: [[D.faq.q1, D.faq.a1], [D.faq.q2, D.faq.a2]].map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
   // quiz: ItemList of the 8 types shown on the page (names + links only, no ratings/reviews)
   if (key === 'quiz') graph.push({ '@type': 'ItemList', name: D.quiz.charsTitle, itemListElement: CODES.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: D.types[c].name, url: url(l, `me/play-character/types/${c.toLowerCase()}/`) })) });
   return { '@context': 'https://schema.org', '@graph': graph };

@@ -24,7 +24,7 @@ test('6 languages have sub/subSeason/subSeason2 and built home carries both span
     assert.ok(!/Halloween|할로윈/i.test(D.subSeason + D.subSeason2));
     const ld = JSON.parse(html.match(/application\/ld\+json">(.*?)<\/script>/)[1]);
     const list = ld['@graph'].find((x) => x['@type'] === 'ItemList');
-    assert.equal(list.itemListElement.length, 3);
+    assert.equal(list.itemListElement.length, 7);
     assert.ok(html.includes(`/${l}/friends/things-to-do/`));
   }
 });

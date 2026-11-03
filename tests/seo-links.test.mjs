@@ -5,7 +5,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { build } from '../scripts/build-i18n.mjs';
 
 const LANGS = ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br'];
-const LANDS = ['play/commute/', 'play/quick-break/', 'friends/things-to-do/'];
+const LANDS = ['play/commute/', 'play/quick-break/', 'friends/things-to-do/', 'play/winter-break/'];
 const read = (l, suf) => readFileSync(new URL(`../public/${l}/${suf}index.html`, import.meta.url), 'utf8');
 const hrefs = (h) => [...h.matchAll(/<a [^>]*href="([^"]+)"/g)].map((m) => m[1]);
 build();
