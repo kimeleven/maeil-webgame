@@ -74,7 +74,7 @@ export function buildEcho() {
     const tg = (k) => `<button class="tg" type="button" data-set="${k}" aria-pressed="true">${esc(D[k])}</button>`;
     const cells = NUMPAD.map((n, c) => `<button class="cell" type="button" data-cell="${c}" aria-label="${n}"><small>${n}</small><i></i></button>`).join('');
     const html = `<!doctype html><html lang="${HTML_LANG[l]}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
-<title>${esc(D.name)} · playtoday</title><meta name="description" content="${esc(D.desc)}">${head(l, D)}<link rel="icon" href="data:,">
+<title>${esc(D.seoTitle || `${D.name} · playtoday`)}</title><meta name="description" content="${esc(D.seoDesc || D.desc)}">${head(l, D)}<link rel="icon" href="data:,">
 <style>${CSS}</style></head>
 <body data-page="echo-courier" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.back)}</a><div class="tr"><button class="ic" type="button" data-set="sound" data-icon="1" aria-label="${esc(D.sound)}" aria-pressed="true">🔊</button><details class="langs"><summary aria-label="Language">${l} ▾</summary><nav>${langs}</nav></details></div></header>

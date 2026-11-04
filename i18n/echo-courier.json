@@ -34,7 +34,9 @@
     "shareText": "잔상 배달 {done}건, 최장 {longest}칸, {score}점! 같은 경로로 도전해 봐 → {url}",
     "lastFail": "마지막 실패",
     "gap": "최고까지 {n}점",
-    "beat": "최고보다 +{n}점"
+    "beat": "최고보다 +{n}점",
+    "seoTitle": "잔상 배달 — 무료 웹게임, 설치 없이 90초 | 매일웹겜",
+    "seoDesc": "잔상으로 남은 경로를 기억해 배달하는 무료 웹게임. 설치 없이 90초, 바로 한 판."
   },
   "en": {
     "name": "Echo Courier",
@@ -71,7 +73,9 @@
     "shareText": "Echo Courier: {done} deliveries, longest {longest} cells, {score} pts! Try the same routes → {url}",
     "lastFail": "Last miss",
     "gap": "{n} pts to your best",
-    "beat": "+{n} pts over your best"
+    "beat": "+{n} pts over your best",
+    "seoTitle": "Echo Courier — Free Browser Memory Game | Play Today",
+    "seoDesc": "Memorize the echo trail and deliver in 90 seconds. A free browser memory game, no install."
   },
   "ja": {
     "name": "残像デリバリー",
@@ -108,7 +112,9 @@
     "shareText": "残像デリバリー {done}件、最長{longest}マス、{score}点!同じルートで挑戦 → {url}",
     "lastFail": "最後のミス",
     "gap": "ベストまであと{n}点",
-    "beat": "ベストより+{n}点"
+    "beat": "ベストより+{n}点",
+    "seoTitle": "残像デリバリー — 無料ブラウザゲーム 90秒 | Play Today",
+    "seoDesc": "残像の軌跡を覚えて90秒で届ける無料ブラウザ記憶ゲーム。インストール不要。"
   },
   "zh-hans": {
     "name": "残影快递",
@@ -145,7 +151,9 @@
     "shareText": "残影快递送达{done}单，最长{longest}格，{score}分！用同样的路线挑战我 → {url}",
     "lastFail": "最后失误",
     "gap": "距最佳还差{n}分",
-    "beat": "比最佳多{n}分"
+    "beat": "比最佳多{n}分",
+    "seoTitle": "残影快递 — 免费网页小游戏 90秒 | 每日小游戏",
+    "seoDesc": "记住残影轨迹并在90秒内送达的免费网页记忆小游戏，无需安装。"
   },
   "es": {
     "name": "Mensajero Eco",
@@ -182,7 +190,9 @@
     "shareText": "Mensajero Eco: {done} entregas, máx. {longest} casillas, {score} pts. Prueba las mismas rutas → {url}",
     "lastFail": "Último fallo",
     "gap": "A {n} pts de tu récord",
-    "beat": "+{n} pts sobre tu récord"
+    "beat": "+{n} pts sobre tu récord",
+    "seoTitle": "Mensajero Eco — juego gratis, 90 s | Juego del día",
+    "seoDesc": "Memoriza el rastro del eco y entrega en 90 segundos. Juego de navegador gratis, sin instalar."
   },
   "pt-br": {
     "name": "Entregador Eco",
@@ -219,6 +229,8 @@
     "shareText": "Entregador Eco: {done} entregas, maior rota {longest} casas, {score} pts! Tente as mesmas rotas → {url}",
     "lastFail": "Último erro",
     "gap": "Faltam {n} pts pro recorde",
-    "beat": "+{n} pts acima do recorde"
+    "beat": "+{n} pts acima do recorde",
+    "seoTitle": "Entregador Eco — jogo grátis, 90 s | Jogo do dia",
+    "seoDesc": "Memorize o rastro do eco e entregue em 90 segundos. Jogo de navegador grátis, sem instalar."
   }
 }

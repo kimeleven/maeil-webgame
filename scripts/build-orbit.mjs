@@ -52,7 +52,7 @@ export function buildOrbit() {
     const langs = ORBIT_LANGS.map((x) => `<a href="/${x}/play/orbit-switch/" hreflang="${HTML_LANG[x]}"${x === l ? ' aria-current="true"' : ''}>${x}</a>`).join('');
     const tg = (k) => `<button class="tg" type="button" data-set="${k}" aria-pressed="true">${esc(D[k])}</button>`;
     const html = `<!doctype html><html lang="${HTML_LANG[l]}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
-<title>${esc(D.name)} · playtoday</title><meta name="description" content="${esc(D.desc)}">${head(l, D)}<meta name="referrer" content="no-referrer"><link rel="icon" href="data:,">
+<title>${esc(D.seoTitle || `${D.name} · playtoday`)}</title><meta name="description" content="${esc(D.seoDesc || D.desc)}">${head(l, D)}<meta name="referrer" content="no-referrer"><link rel="icon" href="data:,">
 <style>${CSS}</style></head>
 <body data-page="orbit-switch" data-lang="${l}">
 <header class="top" data-ui><a class="logo" href="/${l}/"><i></i>${esc(D.back)}</a><details class="langs"><summary aria-label="Language">${l} ▾</summary><nav>${langs}</nav></details></header>
