@@ -409,7 +409,7 @@
    "Qué no guardamos: nombre, contacto, fecha de nacimiento, email, cuenta, tus respuestas originales ni tu IP real. (Para evitar abusos, contamos la IP como hash durante solo 1 hora.)",
    "Tiempo de conservación: los resultados compartidos 90 días; las invitaciones dejan de ser públicas a los 7 días. Quien las crea y quienes participan pueden borrarlas cuando quieran.",
    "Los enlaces compartidos y las imágenes de vista previa no incluyen apodos ni respuestas. Las páginas de invitación y resultado no aparecen en buscadores.",
-   "Compartir siempre es opcional. Puedes ver todos tus resultados sin compartir. No usamos cookies de seguimiento publicitario.", "Contamos visitas y clics en botones de forma anónima y sin cookies. No se envían nombres, resultados ni identificadores personales."
+   "Compartir siempre es opcional. Puedes ver todos tus resultados sin compartir. No usamos cookies de seguimiento publicitario.", "Contamos visitas y clics en botones de forma anónima y sin cookies. No se envían nombres, resultados ni identificadores personales.", "Comentarios: solo cuando los envías con 'Comentarios' guardamos tu mensaje, una captura (solo si la activas), la URL de la página, navegador/SO y un hash de IP para evitar abusos. Sin nombre ni email. Capturas y mensajes se borran 90 días después de atenderlos."
   ]
  },
  "halloween": {"banner": "🍂 Noviembre: 30 segundos al día", "sub": "Una partida, un test de personaje, una química con amigos. Sin instalar ni registrarte.", "frame": "HAPPY HALLOWEEN"},

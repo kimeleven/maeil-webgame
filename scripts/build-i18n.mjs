@@ -1,6 +1,6 @@
 // Static i18n site builder (REBOOT-SPEC §2, §7). node scripts/build-i18n.mjs
 // i18n/{lang}.json + templates below → public/{lang}/…/index.html, sitemap.xml, robots.txt.
-import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync, readdirSync } from 'node:fs';
 import { CODES, COLORS, bestBuddy } from '../public/js/logic.js';
 import { HEAD_SNIPPET } from '../public/js/theme.js';
 import { buildMagnet, MAGNET_LANGS } from './build-magnet.mjs'; // magnet-harbor public game (t_1c491685, launch t_45f1a325)
@@ -202,6 +202,27 @@ function write(rel, html) {
   writeFileSync(p, html);
 }
 
+// 의견남기기 위젯(t_3a1c9b31): 모든 언어 페이지 </body> 앞에 공개 모드 위젯을 붙인다. 수집은 nara-web 공개 API.
+// site = maeil-<게임 slug>(play/<slug>/), 그 밖의 페이지는 maeil-site. 캡처는 사용자가 켤 때만(public="1").
+export const FEEDBACK_ENDPOINT = 'https://nara.salusai.kr/api/feedback/public';
+const FB_LABEL = { ko: '의견남기기', en: 'Feedback', ja: 'ご意見', 'zh-hans': '意见反馈', es: 'Comentarios', 'pt-br': 'Feedback' };
+export function feedbackTag(rel) {
+  const m = rel.match(/^([a-z-]+)\/play\/([a-z0-9-]+)\//);
+  const l = rel.split('/')[0];
+  const site = 'maeil-' + (m ? m[2] : 'site');
+  return `<feedback-widget public="1" site="${site}" endpoint="${FEEDBACK_ENDPOINT}" label="${FB_LABEL[l] || 'Feedback'}"></feedback-widget><script src="/js/feedback-widget.js" defer></script>\n`;
+}
+function injectFeedback() {
+  const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(`${d}/${e.name}`) : e.name.endsWith('.html') ? [`${d}/${e.name}`] : []));
+  const files = ['index.html', ...LANGS.flatMap((l) => walk(`${ROOT}public/${l}`).map((p) => p.slice(`${ROOT}public/`.length)))];
+  for (const rel of files) {
+    const p = `${ROOT}public/${rel}`;
+    const h = readFileSync(p, 'utf8');
+    if (h.includes('<feedback-widget') || !h.includes('</body>')) continue;
+    writeFileSync(p, h.replace('</body>', feedbackTag(rel) + '</body>'));
+  }
+}
+
 export function build() {
   const errs = checkI18n();
   if (errs.length) { console.error('i18n check FAILED:\n' + errs.join('\n')); process.exit(1); }
@@ -247,6 +268,7 @@ export function build() {
   buildMagnet();
   buildEcho();
   buildOrbit();
+  injectFeedback();
   console.log(`built ${n} index pages + ${LANGS.length * SHELLS.length} noindex shells + / ; sitemap ${urls.length} urls`);
   return { pages: n, sitemap: urls.length };
 }
