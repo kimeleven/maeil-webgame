@@ -22,6 +22,7 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 .logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px var(--accent2)}
 .tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:#facc15}
 .langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--accent2)}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .stage{position:relative;width:100%;max-width:min(100vw,calc((100dvh - 64px)*9/16));aspect-ratio:9/16;max-height:calc(100dvh - 64px);display:flex;flex-direction:column;padding:0 16px 12px}
 .hud{display:flex;justify-content:space-between;gap:8px;padding:8px 4px;font-variant-numeric:tabular-nums}.hud div{display:flex;flex-direction:column;align-items:center;flex:1;background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:6px 4px;backdrop-filter:blur(18px)}
 .hud span{font-size:11px;color:var(--muted)}.hud b{font-size:20px}
@@ -57,6 +58,7 @@ export function buildOrbit() {
 <body data-page="orbit-switch" data-lang="${l}">
 <header class="top" data-ui><a class="logo" href="/${l}/"><i></i>${esc(D.back)}</a><details class="langs"><summary aria-label="Language">${l} ▾</summary><nav>${langs}</nav></details></header>
 <main class="stage" id="stage">
+<h1 class="sr-only">${esc((D.seoTitle || D.name).split(' | ')[0])}</h1><p class="sr-only">${esc(D.seoDesc || D.desc)}</p>
 <div class="hud" aria-live="off"><div><span>${esc(D.time)}</span><b id="h-time">90</b></div><div><span>${esc(D.streak)}</span><b id="h-streak">0</b></div><div><span>${esc(D.mult)}</span><b id="h-mult">×1</b></div><div><span>◆</span><b id="h-shield">◆</b></div></div>
 <canvas id="oc" role="img" aria-label="${esc(D.name)}"></canvas>
 <div class="bar"><span class="hint" id="hint">${esc(D.startDesktop)}</span><button class="ic" type="button" data-ui data-set="sound" aria-label="${esc(D.sound)}" aria-pressed="true">🔊</button></div>

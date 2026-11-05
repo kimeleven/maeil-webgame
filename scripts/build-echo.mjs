@@ -23,6 +23,7 @@ body{display:flex;flex-direction:column;align-items:center;touch-action:manipula
 .logo{white-space:nowrap;color:var(--fg);text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:8px;min-height:44px}.logo i{width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
 .tag{white-space:nowrap;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:rgba(250,204,21,.18);color:var(--gold)}.tr{display:flex;gap:6px;align-items:center}
 .langs{position:relative}.langs summary{list-style:none;cursor:pointer;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:0 10px;border-radius:12px;border:1px solid var(--edge);color:var(--muted)}.langs summary::-webkit-details-marker{display:none}.langs nav{position:absolute;right:0;top:48px;z-index:5;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--edge);border-radius:14px;padding:6px;backdrop-filter:blur(24px)}.langs a{color:var(--fg);text-decoration:none;min-height:44px;min-width:96px;display:flex;align-items:center;padding:0 12px;border-radius:10px}.langs a[aria-current]{font-weight:800;color:var(--cyan)}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .stage{position:relative;width:100%;max-width:min(100vw,calc((100dvh - 64px)*9/16),540px);min-height:min(calc(100dvh - 64px),960px);display:flex;flex-direction:column;padding:0 16px 12px}
 .hud{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px 0;font-variant-numeric:tabular-nums}.hud div{display:flex;flex-direction:column;align-items:center;min-width:0;background:var(--panel);border:1px solid var(--edge);border-radius:14px;padding:6px 4px;backdrop-filter:blur(18px)}
 .hud span{font-size:11px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hud b{font-size:20px}
@@ -79,6 +80,7 @@ export function buildEcho() {
 <body data-page="echo-courier" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.back)}</a><div class="tr"><button class="ic" type="button" data-set="sound" data-icon="1" aria-label="${esc(D.sound)}" aria-pressed="true">🔊</button><details class="langs"><summary aria-label="Language">${l} ▾</summary><nav>${langs}</nav></details></div></header>
 <main class="stage" id="stage">
+<h1 class="sr-only">${esc((D.seoTitle || D.name).split(' | ')[0])}</h1><p class="sr-only">${esc(D.seoDesc || D.desc)}</p>
 <div class="hud"><div><span>${esc(D.time)}</span><b id="h-time">90</b></div><div><span>${esc(D.done)}</span><b id="h-done">0</b></div><div><span>${esc(D.cells)}</span><b id="h-len">3</b></div><div><span>${esc(D.score)}</span><b id="h-score">0</b></div></div>
 <div class="status" id="status" aria-live="polite"></div>
 <div class="wrap"><div id="board" role="group" aria-label="${esc(D.name)}">${cells}</div><svg id="lines" viewBox="0 0 300 300" preserveAspectRatio="none" aria-hidden="true"></svg></div>
