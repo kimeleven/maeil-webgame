@@ -71,7 +71,7 @@ function shell(l, page, suf, main, opts = {}) {
 <body data-page="${page}" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.brand)}</a>${langMenu(l, suf, opts.dyn)}</header>
 <main class="wrap">${main}</main>
-<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
+<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a>${l === 'ko' ? '<a href="/ko/webgame/">웹겜 모아보기</a>' : ''}<a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
 <script type="module" src="/js/season.js"></script>
@@ -223,6 +223,21 @@ function injectFeedback() {
   }
 }
 
+// 1106-21: ko 전용 얇은 '웹겜' 랜딩 (hreflang 없음, 타 언어 불변). 홈 H1/desc는 건드리지 않는다.
+const WEBGAME = { title: '웹겜 — 설치 없이 30초, 브라우저 무료 게임 4종', desc: '설치·가입 없이 바로 하는 웹겜. 30초 게이트러시 등 4종 무료.', h1: '설치 없이 바로 하는 웹겜 4종' };
+function buildWebgame() {
+  const D = dict.ko, suf = 'webgame/', self = url('ko', suf);
+  const cards = [[D.game.name, 'play/gate-rush/', '30초 안에 문을 골라 달리는 무료 웹겜'], [MT.ko.name, 'play/magnet-harbor/', MT.ko.seoDesc], [OT.ko.name, 'play/orbit-switch/', OT.ko.seoDesc], [ET.ko.name, 'play/echo-courier/', ET.ko.seoDesc]];
+  const main = `<section class="hero"><h1>${esc(WEBGAME.h1)}</h1><p>${esc(WEBGAME.desc)}</p></section>
+<section class="cards">${cards.map(([n, p, d]) => `<a class="card" href="/ko/${p}"><b>${esc(n)}</b><br><span class="muted">${esc(d)}</span></a>`).join('')}</section>
+<p><a href="/ko/">${esc(D.brand)} 홈으로</a></p>`;
+  const jsonld = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: WEBGAME.title, description: WEBGAME.desc, inLanguage: D.htmlLang, url: self }, { '@type': 'ItemList', name: WEBGAME.h1, itemListElement: cards.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, url: url('ko', p) })) }] };
+  let html = shell('ko', 'webgame', suf, main, { title: WEBGAME.title, desc: WEBGAME.desc, og: '/og/site-ko.png', jsonld });
+  html = html.replace(/<link rel="alternate"[^>]*>/g, '').replace(/<details class="lang">.*?<\/details>/s, '');
+  write(`ko/${suf}index.html`, html);
+  return self;
+}
+
 export function build() {
   const errs = checkI18n();
   if (errs.length) { console.error('i18n check FAILED:\n' + errs.join('\n')); process.exit(1); }
@@ -257,12 +272,14 @@ export function build() {
 <footer><a href="/en/about/">About</a><a href="/en/privacy/">Privacy</a><span>playtoday.cloud</span></footer>
 <script>(function(){var m={ko:'ko',en:'en',ja:'ja',zh:'zh-hans',es:'es',pt:'pt-br'},t=${JSON.stringify(Object.fromEntries(LANGS.map((x) => [x, dict[x].common.viewIn])))};var n=(navigator.language||'').toLowerCase(),k=m[n.slice(0,2)];if(n.indexOf('zh')===0&&/tw|hk|hant/.test(n))k=null;if(k&&k!=='en'){var b=document.getElementById('suggest');b.innerHTML='<a class="card btn ghost" style="display:flex;margin:8px 0" href="/'+k+'/">'+t[k]+' →</a>';b.className='banner show'}})()</script>
 </body></html>`);
+  const webgameUrl = buildWebgame();
   // sitemap + robots
   const urls = [`  <url><loc>${SITE}/</loc>${LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, '')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/></url>`];
   for (const l of LANGS) for (const [, suf] of PAGES) urls.push(`  <url><loc>${url(l, suf)}</loc>${LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, suf)}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/></url>`);
   for (const l of MAGNET_LANGS) urls.push(`  <url><loc>${url(l, 'play/magnet-harbor/')}</loc>${MAGNET_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/magnet-harbor/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/magnet-harbor/')}"/></url>`);
   for (const l of ECHO_LANGS) urls.push(`  <url><loc>${url(l, 'play/echo-courier/')}</loc>${ECHO_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/echo-courier/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/echo-courier/')}"/></url>`);
   for (const l of ORBIT_LANGS) urls.push(`  <url><loc>${url(l, 'play/orbit-switch/')}</loc>${ORBIT_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/orbit-switch/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/orbit-switch/')}"/></url>`);
+  urls.push(`  <url><loc>${webgameUrl}</loc></url>`);
   writeFileSync(`${ROOT}public/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);
   writeFileSync(`${ROOT}public/robots.txt`, `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /*/r/\nDisallow: /*/i/\nDisallow: /*/c/\n\nSitemap: ${SITE}/sitemap.xml\n`);
   buildMagnet();
