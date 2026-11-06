@@ -229,7 +229,7 @@ function buildWebgame() {
   const D = dict.ko, suf = 'webgame/', self = url('ko', suf);
   const cards = [[D.game.name, 'play/gate-rush/', '30초 안에 문을 골라 달리는 무료 웹겜'], [MT.ko.name, 'play/magnet-harbor/', MT.ko.seoDesc], [OT.ko.name, 'play/orbit-switch/', OT.ko.seoDesc], [ET.ko.name, 'play/echo-courier/', ET.ko.seoDesc]];
   const main = `<section class="hero"><h1>${esc(WEBGAME.h1)}</h1><p>${esc(WEBGAME.desc)}</p></section>
-<section class="cards">${cards.map(([n, p, d]) => `<a class="card" href="/ko/${p}"><b>${esc(n)}</b><br><span class="muted">${esc(d)}</span></a>`).join('')}</section>
+<section class="cards" style="display:grid;grid-template-columns:1fr;gap:12px">${cards.map(([n, p, d]) => `<a class="card" style="display:block" href="/ko/${p}"><b>${esc(n)}</b><br><span class="muted">${esc(d)}</span></a>`).join('')}</section>
 <p><a href="/ko/">${esc(D.brand)} 홈으로</a></p>`;
   const jsonld = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: WEBGAME.title, description: WEBGAME.desc, inLanguage: D.htmlLang, url: self }, { '@type': 'ItemList', name: WEBGAME.h1, itemListElement: cards.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, url: url('ko', p) })) }] };
   let html = shell('ko', 'webgame', suf, main, { title: WEBGAME.title, desc: WEBGAME.desc, og: '/og/site-ko.png', jsonld });
