@@ -224,14 +224,33 @@ function injectFeedback() {
 }
 
 // 1106-21: ko 전용 얇은 '웹겜' 랜딩 (hreflang 없음, 타 언어 불변). 홈 H1/desc는 건드리지 않는다.
+// 1107-09: /ko/webgame/ 본문 보강(게임별 설명·키워드 단락·FAQ·내부 링크). title/desc/H1/카드 불변.
+const WEBGAME_FAQ = [
+  ['웹겜은 무료인가요?', '네, 매일웹겜의 웹겜 4종은 모두 무료예요. 결제나 구독 없이 바로 즐길 수 있어요.'],
+  ['가입이 필요한가요?', '아니요. 설치도 가입도 없이 브라우저에서 바로 시작해요. 기록을 공유할 때만 별명(선택)이 쓰여요.'],
+  ['모바일에서도 할 수 있나요?', '네. 스마트폰과 PC 브라우저에서 같은 주소로 열려요. 모바일은 화면을 탭하거나 드래그하고, PC는 키보드를 써요.'],
+  ['한 판은 얼마나 걸리나요?', '게이트 러시는 한 판이 약 30초이고, 자석 항구·궤도 스위치·잔상 배달은 한 판이 약 90초예요.'],
+];
+const WEBGAME_BODY = `<section><h2>웹겜, 이렇게 골라요</h2>
+<p><b>게이트 러시</b> — 30초 동안 좌우 게이트 중 하나를 골라 군단을 키우고, 드론과 레이저를 피해 구역 끝의 보스를 넘는 러너예요. 키보드 ← → 또는 모바일 드래그로 움직이고, 구역을 깰수록 빨라져서 짧게 여러 번 하기 좋아요.</p>
+<p><b>자석 항구</b> — 자석 크레인으로 흔들리는 화물을 배에 쌓아 90초 동안 최대한 많이 보내는 게임이에요. 타이밍과 균형이 중요해서 차분하게 집중하고 싶을 때 잘 맞아요.</p>
+<p><b>궤도 스위치</b> — 화면을 탭할 때마다 궤도가 바뀌어 장애물을 피하는 90초 웹게임이에요. 조작은 탭 하나뿐이라 처음 해도 금방 익숙해지고, 점점 빨라지는 속도가 난이도를 만들어요.</p>
+<p><b>잔상 배달</b> — 잔상으로 남은 이전 경로를 기억해서 같은 길로 배달하는 90초 게임이에요. 기억력과 순발력을 같이 쓰는 편이라 가볍게 머리를 쓰고 싶을 때 좋아요.</p></section>
+<section><h2>설치 없이 바로 하는 웹겜이란?</h2>
+<p>웹겜(웹게임)은 앱을 내려받지 않고 브라우저에서 바로 실행하는 무료 브라우저 게임이에요. 매일웹겜의 짧은 게임은 링크를 열면 곧바로 시작되고, 가입이나 설치가 없어요. 스마트폰과 PC 모두 같은 주소로 즐길 수 있어서 이동 중이나 쉬는 시간에 한 판 하기 좋아요.</p>
+<p>한 판이 30초에서 90초라서 부담 없는 짧은 게임을 찾는 분께 맞아요. 마음에 들면 같은 판 도전 링크로 친구에게 기록을 겨뤄 보자고 보낼 수도 있어요. 공유는 언제나 선택이에요.</p></section>
+<section><h2>자주 묻는 질문</h2>
+${WEBGAME_FAQ.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
+<p>30초 게임 다음엔 나 알아보기: <a href="/ko/me/">나의 놀이 캐릭터 테스트</a> · <a href="/ko/friends/">친구 케미 보기</a></p>`;
 const WEBGAME = { title: '웹겜 — 설치 없이 30초, 브라우저 무료 게임 4종', desc: '설치·가입 없이 바로 하는 웹겜. 30초 게이트러시 등 4종 무료.', h1: '설치 없이 바로 하는 웹겜 4종' };
 function buildWebgame() {
   const D = dict.ko, suf = 'webgame/', self = url('ko', suf);
   const cards = [[D.game.name, 'play/gate-rush/', '30초 안에 문을 골라 달리는 무료 웹겜'], [MT.ko.name, 'play/magnet-harbor/', MT.ko.seoDesc], [OT.ko.name, 'play/orbit-switch/', OT.ko.seoDesc], [ET.ko.name, 'play/echo-courier/', ET.ko.seoDesc]];
   const main = `<section class="hero"><h1>${esc(WEBGAME.h1)}</h1><p>${esc(WEBGAME.desc)}</p></section>
 <section class="cards" style="display:grid;grid-template-columns:1fr;gap:12px">${cards.map(([n, p, d]) => `<a class="card" style="display:block" href="/ko/${p}"><b>${esc(n)}</b><br><span class="muted">${esc(d)}</span></a>`).join('')}</section>
+${WEBGAME_BODY}
 <p><a href="/ko/">${esc(D.brand)} 홈으로</a></p>`;
-  const jsonld = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: WEBGAME.title, description: WEBGAME.desc, inLanguage: D.htmlLang, url: self }, { '@type': 'ItemList', name: WEBGAME.h1, itemListElement: cards.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, url: url('ko', p) })) }] };
+  const jsonld = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: WEBGAME.title, description: WEBGAME.desc, inLanguage: D.htmlLang, url: self }, { '@type': 'FAQPage', mainEntity: WEBGAME_FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }, { '@type': 'ItemList', name: WEBGAME.h1, itemListElement: cards.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, url: url('ko', p) })) }] };
   let html = shell('ko', 'webgame', suf, main, { title: WEBGAME.title, desc: WEBGAME.desc, og: '/og/site-ko.png', jsonld });
   html = html.replace(/<link rel="alternate"[^>]*>/g, '').replace(/<details class="lang">.*?<\/details>/s, '');
   write(`ko/${suf}index.html`, html);
