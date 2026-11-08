@@ -5,7 +5,10 @@ set -euo pipefail
 REPO=$(cd "$(dirname "$0")/../.." && pwd)
 git -C "$REPO" fetch -q origin main
 SHA=$(git -C "$REPO" rev-parse --short origin/main)
-CUR=$(ssh -i $HOME/.ssh/id_ed25519_mintech -o ConnectTimeout=10 ubuntu@193.123.228.142 'basename $(readlink -f /srv/maeil/current)')
+ST=$(ssh -i $HOME/.ssh/id_ed25519_mintech -o ConnectTimeout=10 ubuntu@193.123.228.142 'test -f /srv/maeil/HOLD && echo "HOLD $(cat /srv/maeil/HOLD)" || basename $(readlink -f /srv/maeil/current)')
+# 롤백 뒤 HOLD가 있으면 같은 커밋을 다시 올리지 않는다 (해제: deploy.sh --release-hold)
+case "$ST" in HOLD*) exit 0;; esac
+CUR=$ST
 case "$CUR" in *-"$SHA") exit 0;; esac
 echo "$(date '+%F %T') main $SHA != OCI $CUR → deploy"
 bash "$REPO/deploy/oci/deploy.sh" origin/main
