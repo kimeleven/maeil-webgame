@@ -1,4 +1,4 @@
-// 12시간 사이클 앞단 헬스체크: 6언어 홈·/ko/webgame/·sitemap(loc 128)·/api/stats 가 200인지 본다.
+// 12시간 사이클 앞단 헬스체크: 6언어 홈·/ko/webgame/·sitemap(loc 128)·/api/stats(토큰 없이 401=정상) 본다.
 // 사용: node scripts/maeil/healthcheck.mjs [baseUrl]   (실패 시 종료코드 1)
 const LANGS = ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br'];
 export const EXPECT_LOC = 128;
@@ -9,7 +9,7 @@ export function buildChecks(base) {
     ...LANGS.map((l) => ({ name: `home-${l}`, url: `${b}/${l}/` })),
     { name: 'ko-webgame', url: `${b}/ko/webgame/` },
     { name: 'sitemap', url: `${b}/sitemap.xml`, loc: true },
-    { name: 'stats', url: `${b}/api/stats` },
+    { name: 'stats', url: `${b}/api/stats`, ok: 401 }, // 토큰 필수 API: 토큰 없이 401이 정상(살아 있고 잠김)
   ];
 }
 export async function run(base, fetchFn = fetch) {
@@ -18,7 +18,7 @@ export async function run(base, fetchFn = fetch) {
     let status = 0, ok = false, note = '';
     try {
       const r = await fetchFn(c.url, { redirect: 'follow' });
-      status = r.status; ok = status === 200;
+      status = r.status; ok = status === (c.ok || 200);
       if (ok && c.loc) { const n = countLoc(await r.text()); note = `loc=${n}`; ok = n === EXPECT_LOC; }
     } catch (e) { note = String(e.message || e); }
     out.push({ name: c.name, status, ok, note });
