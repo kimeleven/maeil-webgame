@@ -1,0 +1,22 @@
+[Unit]
+Description=maeil-webgame /api (t_a6a9cd42)
+After=network-online.target pgbouncer.service
+
+[Service]
+User=web
+EnvironmentFile=/etc/maeil/env
+Environment=NODE_ENV=production
+# api/events.js 는 VERCEL_ENV=production 일 때만 운영 DB에 이벤트를 쓴다 (Vercel과 동일 동작 유지)
+Environment=VERCEL_ENV=production
+WorkingDirectory=/srv/maeil/current
+ExecStart=/usr/bin/node /srv/maeil/current/scripts/oci-serve.mjs 3102
+Restart=always
+RestartSec=3
+MemoryMax=256M
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
