@@ -3,6 +3,9 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync, readdirSync } from 'node:fs';
 import { CODES, COLORS, bestBuddy } from '../public/js/logic.js';
 import { HEAD_SNIPPET } from '../public/js/theme.js';
+// 검색엔진 인증 메타 슬롯 (t_a3c54872): env 값이 있을 때만 출력. NAVER_SITE_VERIFICATION / GOOGLE_SITE_VERIFICATION (Vercel env, 영숫자 토큰만)
+const vtok = (v) => (/^[A-Za-z0-9_-]{8,128}$/.test(v || '') ? v : '');
+const VERIFY = (vtok(process.env.NAVER_SITE_VERIFICATION) ? `<meta name="naver-site-verification" content="${vtok(process.env.NAVER_SITE_VERIFICATION)}">` : '') + (vtok(process.env.GOOGLE_SITE_VERIFICATION) ? `<meta name="google-site-verification" content="${vtok(process.env.GOOGLE_SITE_VERIFICATION)}">` : '');
 import { buildMagnet, MAGNET_LANGS } from './build-magnet.mjs'; // magnet-harbor public game (t_1c491685, launch t_45f1a325)
 import { buildOrbit, ORBIT_LANGS } from './build-orbit.mjs'; // orbit-switch public game (t_06bfa4bc, launch t_5537bd3e)
 const OT = JSON.parse(readFileSync(new URL('../i18n/orbit-switch.json', import.meta.url), 'utf8'));
@@ -57,7 +60,7 @@ function langMenu(l, suf, dyn) {
 function head({ l, title, desc, suf, og, noindex, jsonld, extra = '' }) {
   const D = dict[l];
   const alt = noindex ? '' : LANGS.map((x) => `<link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, suf)}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/">`;
-  return `<!doctype html><html lang="${D.htmlLang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">${HEAD_SNIPPET}
+  return `<!doctype html><html lang="${D.htmlLang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">${VERIFY}${HEAD_SNIPPET}
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}">
 ${noindex ? '<meta name="robots" content="noindex,follow"><meta name="referrer" content="no-referrer">' : `<link rel="canonical" href="${url(l, suf)}">${alt}`}
 <meta property="og:type" content="website"><meta property="og:site_name" content="${esc(D.brand)}"><meta property="og:title" content="${esc(title)}" data-og-title><meta property="og:description" content="${esc(desc)}"><meta property="og:image" content="${SITE}${og}" data-og-image><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="${url(l, suf)}"><meta property="og:locale" content="${D.ogLocale}">
@@ -280,7 +283,7 @@ export function build() {
   // root: language picker, English body, x-default
   const en = dict.en;
   const alt = LANGS.map((x) => `<link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, '')}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/">`;
-  writeFileSync(`${ROOT}public/index.html`, `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07080c"><title>${esc(en.seo.root.title)}</title><meta name="description" content="${esc(en.seo.root.desc)}"><link rel="canonical" href="${SITE}/">${alt}
+  writeFileSync(`${ROOT}public/index.html`, `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07080c">${VERIFY}<title>${esc(en.seo.root.title)}</title><meta name="description" content="${esc(en.seo.root.desc)}"><link rel="canonical" href="${SITE}/">${alt}
 <meta property="og:type" content="website"><meta property="og:title" content="${esc(en.seo.root.title)}"><meta property="og:description" content="${esc(en.seo.root.desc)}"><meta property="og:image" content="${SITE}/og/site-en.png"><meta property="og:url" content="${SITE}/"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/css/site.css">
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Daily Arcade', url: SITE + '/' })}</script></head>
 <body data-page="root" data-lang="en"><header class="top"><a class="logo" href="/"><i></i>Daily Arcade · 매일웹겜</a></header>
