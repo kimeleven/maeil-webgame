@@ -7,6 +7,7 @@ import { HEAD_SNIPPET } from '../public/js/theme.js';
 const vtok = (v) => (/^[A-Za-z0-9_-]{8,128}$/.test(v || '') ? v : '');
 const VERIFY = (vtok(process.env.NAVER_SITE_VERIFICATION) ? `<meta name="naver-site-verification" content="${vtok(process.env.NAVER_SITE_VERIFICATION)}">` : '') + (vtok(process.env.GOOGLE_SITE_VERIFICATION) ? `<meta name="google-site-verification" content="${vtok(process.env.GOOGLE_SITE_VERIFICATION)}">` : '');
 import { buildMagnet, MAGNET_LANGS } from './build-magnet.mjs'; // magnet-harbor public game (t_1c491685, launch t_45f1a325)
+import { buildPuzzle, PUZZLE_HOME, PUZZLE_FOOTER_LINKS } from './build-puzzle.mjs'; // 오늘의 퍼즐 ko (t_2d0c7a9f)
 import { buildOrbit, ORBIT_LANGS } from './build-orbit.mjs'; // orbit-switch public game (t_06bfa4bc, launch t_5537bd3e)
 const OT = JSON.parse(readFileSync(new URL('../i18n/orbit-switch.json', import.meta.url), 'utf8'));
 const MT = JSON.parse(readFileSync(new URL('../i18n/magnet-harbor.json', import.meta.url), 'utf8'));
@@ -74,7 +75,7 @@ function shell(l, page, suf, main, opts = {}) {
 <body data-page="${page}" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.brand)}</a>${langMenu(l, suf, opts.dyn)}</header>
 <main class="wrap">${main}</main>
-<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a>${l === 'ko' ? '<a href="/ko/webgame/">웹겜 모아보기</a>' : ''}<a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
+<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a>${l === 'ko' ? PUZZLE_FOOTER_LINKS + '<a href="/ko/webgame/">웹겜 모아보기</a>' : ''}<a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
 <script type="module" src="/js/season.js"></script>
@@ -94,7 +95,7 @@ function pageBody(l, key) {
   if (key === 'lobby') {
     const c = D.lobby.cards;
     return `${hwBanner(D)}<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}<span data-from="0" data-until="1794495600000" hidden> ${esc(D.lobby.subSeason)}</span><span data-from="1794495600000" data-until="1796050800000" hidden> ${esc(D.lobby.subSeason2)}</span></p></section>
-<nav class="grid3" aria-label="${esc(D.brand)}">
+${l === 'ko' ? PUZZLE_HOME : ''}<nav class="grid3" aria-label="${esc(D.brand)}">
 <a class="card cat hl" href="/${l}/play/gate-rush/" aria-label="${esc(c.play.aria)}"><span class="tag">${esc(D.nav.play)}</span><img src="/img/gate-rush.svg" width="150" height="150" alt=""><h3>${esc(c.play.t)}</h3><p>${esc(c.play.d)}</p><span class="btn go">${esc(c.play.cta)}</span></a>
 <a class="card cat" href="/${l}/me/play-character/"><span class="tag">${esc(D.nav.me)}</span>${charImg('SPH', 150)}<h3>${esc(c.me.t)}</h3><p>${esc(c.me.d)}</p><span class="btn ghost go">${esc(c.me.cta)}</span></a>
 <a class="card cat" href="/${l}/friends/chemistry/"><span class="tag">${esc(D.nav.friends)}</span><span class="pair">${charImg('SIH', 72)}${charImg('CPT', 72)}</span><h3>${esc(c.friends.t)}</h3><p>${esc(c.friends.d)}</p><span class="btn ghost go">${esc(c.friends.cta)}</span></a>
@@ -302,6 +303,7 @@ export function build() {
   for (const l of ECHO_LANGS) urls.push(`  <url><loc>${url(l, 'play/echo-courier/')}</loc>${ECHO_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/echo-courier/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/echo-courier/')}"/></url>`);
   for (const l of ORBIT_LANGS) urls.push(`  <url><loc>${url(l, 'play/orbit-switch/')}</loc>${ORBIT_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/orbit-switch/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/orbit-switch/')}"/></url>`);
   urls.push(`  <url><loc>${webgameUrl}</loc></url>`);
+  for (const u of buildPuzzle()) urls.push(`  <url><loc>${u}</loc></url>`);
   writeFileSync(`${ROOT}public/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);
   writeFileSync(`${ROOT}public/robots.txt`, `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /*/r/\nDisallow: /*/i/\nDisallow: /*/c/\n\nSitemap: ${SITE}/sitemap.xml\n`);
   buildMagnet();
