@@ -1,10 +1,11 @@
 // 오늘의 퍼즐 (t_2d0c7a9f): ko 전용 /ko/스도쿠/, /ko/스도쿠/오늘/, /ko/지뢰찾기/, /ko/지뢰찾기/오늘/ 와 홈 카드.
 import { writeFileSync, mkdirSync } from 'node:fs';
+import { T2, GAMES2, CSS2 } from './puzzle-texts2.mjs'; // 2차: 단어묶음·어제 정답·2048·솔리테어·노노그램 (t_49b0ed25)
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const SITE = 'https://www.playtoday.cloud';
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-export const PUZZLE_PATHS = ['스도쿠/', '스도쿠/오늘/', '지뢰찾기/', '지뢰찾기/오늘/'];
+export const PUZZLE_PATHS = ['스도쿠/', '스도쿠/오늘/', '지뢰찾기/', '지뢰찾기/오늘/', '단어묶음/', '단어묶음/오늘/', '단어묶음/어제/', '2048/', '솔리테어/', '노노그램/'];
 const enc = (suf) => `/ko/${suf.split('/').map(encodeURIComponent).join('/')}`;
 const href = (suf) => enc(suf);
 const abs = (suf) => SITE + enc(suf);
@@ -56,6 +57,7 @@ const T = {
     faq: [['판을 다시 시작할 수 있나요?', '네. 다시 시작 버튼을 누르면 같은 날의 같은 판으로 새로 시작해요.'], ['실패하면 연속 기록이 사라지나요?', '실패는 기록을 줄이지 않아요. 하루 동안 한 번이라도 클리어하면 연속 기록이 이어져요.'], ['모바일 화면에서 고급은 너무 작지 않나요?', '고급은 가로로 넓어서 모바일에서는 화면이 좁아요. 모바일에서는 초급이나 중급을 권해요.']],
   },
 };
+Object.assign(T, T2);
 const FAQ_LD = (faq) => ({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
 export const textLen = (t) => [t.lead, ...t.sections.flatMap(([h, ps]) => [h, ...ps]), ...t.faq.flat()].join('').length;
 
@@ -81,11 +83,13 @@ a{color:var(--cyan)}.top{max-width:720px;margin:0 auto;padding:8px 14px;display:
 .ms-c{width:var(--cs);height:var(--cs);border:0;padding:0;background:linear-gradient(#3a3f55,#2a2e40);color:var(--fg);font:800 calc(var(--cs)*.55)/1 inherit;cursor:pointer}.ms-c.o{background:#12141e;cursor:default}.ms-c.mine{background:#3b1d1d}.ms-c.hit{background:#b91c1c}.ms-c.f{font-size:calc(var(--cs)*.5)}
 .n1{color:#60a5fa}.n2{color:#4ade80}.n3{color:#f87171}.n4{color:#a78bfa}.n5{color:#fb923c}.n6{color:#2dd4bf}.n7{color:#e5e7eb}.n8{color:#9ca3af}
 .hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:480px){.hubgrid{grid-template-columns:1fr}}
+${CSS2}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}`;
 
-const NAV = `<nav class="more" aria-label="오늘의 퍼즐"><a href="${href('스도쿠/오늘/')}">오늘의 스도쿠</a><a href="${href('지뢰찾기/오늘/')}">오늘의 지뢰찾기</a><a href="${href('스도쿠/')}">스도쿠 규칙·요령</a><a href="${href('지뢰찾기/')}">지뢰찾기 규칙·요령</a><a href="/ko/webgame/">웹겜 모아보기</a><a href="/ko/">홈</a></nav>`;
+const NAV = `<nav class="more" aria-label="오늘의 퍼즐"><a href="${href('스도쿠/오늘/')}">오늘의 스도쿠</a><a href="${href('지뢰찾기/오늘/')}">오늘의 지뢰찾기</a><a href="${href('단어묶음/오늘/')}">오늘의 단어 묶음</a><a href="${href('2048/')}">2048</a><a href="${href('솔리테어/')}">솔리테어</a><a href="${href('노노그램/')}">노노그램</a><a href="${href('스도쿠/')}">스도쿠 규칙·요령</a><a href="${href('지뢰찾기/')}">지뢰찾기 규칙·요령</a><a href="/ko/webgame/">웹겜 모아보기</a><a href="/ko/">홈</a></nav>`;
 
 const GAMES = {
+  ...GAMES2,
   'sd-play': `<div class="card" id="sd-app"><div class="seg" role="group" aria-label="난이도"><button class="btn sd-lv" data-lv="easy" aria-pressed="false">쉬움</button><button class="btn sd-lv" data-lv="normal" aria-pressed="true">보통</button><button class="btn sd-lv" data-lv="hard" aria-pressed="false">어려움</button></div>
 <div class="stat"><div><span>시간</span><b id="sd-time">0:00</b></div><div><span>힌트</span><b id="sd-hints">0</b></div><div><span>연속</span><b><span id="sd-streak" style="display:inline;font-size:inherit;color:inherit">0</span>일</b></div></div>
 <p class="muted" style="margin:0;text-align:center;font-size:13px"><span id="sd-date"></span> · <span id="sd-last"></span></p>
@@ -105,22 +109,26 @@ const GAMES = {
 };
 
 const SEEALSO = {
+  'wg-hub': `<div class="cta"><a class="btn pri" href="${href('단어묶음/오늘/')}">오늘의 단어 묶음 풀기</a><a class="btn" href="${href('단어묶음/어제/')}">어제 정답</a></div>`,
+  'wg-play': `<p class="muted">규칙은 <a href="${href('단어묶음/')}">단어 묶음 안내</a>, 지난 판은 <a href="${href('단어묶음/어제/')}">어제 정답</a>에서 볼 수 있어요.</p>`,
+  'wg-yest': `<div class="cta"><a class="btn pri" href="${href('단어묶음/오늘/')}">오늘의 단어 묶음 풀기</a></div>`,
+  g2048: '', sol: '', nono: '',
   'sd-hub': `<div class="cta"><a class="btn pri" href="${href('스도쿠/오늘/')}">오늘의 스도쿠 풀기</a><a class="btn" href="${href('지뢰찾기/오늘/')}">오늘의 지뢰찾기</a></div>`,
   'ms-hub': `<div class="cta"><a class="btn pri" href="${href('지뢰찾기/오늘/')}">오늘의 지뢰찾기 하기</a><a class="btn" href="${href('스도쿠/오늘/')}">오늘의 스도쿠</a></div>`,
   'sd-play': `<p class="muted">규칙이 헷갈리면 <a href="${href('스도쿠/')}">스도쿠 규칙과 풀이 요령</a>을 읽어 보세요.</p>`,
   'ms-play': `<p class="muted">규칙이 헷갈리면 <a href="${href('지뢰찾기/')}">지뢰찾기 규칙과 풀이 요령</a>을 읽어 보세요.</p>`,
 };
-const PAGE_OF = { '스도쿠/': 'sd-hub', '스도쿠/오늘/': 'sd-play', '지뢰찾기/': 'ms-hub', '지뢰찾기/오늘/': 'ms-play' };
-const NAME = { 'sd-hub': '스도쿠', 'sd-play': '오늘의 스도쿠', 'ms-hub': '지뢰찾기', 'ms-play': '오늘의 지뢰찾기' };
-const OTHER_HUB = { 스도쿠: ['지뢰찾기/', '지뢰찾기'], 지뢰찾기: ['스도쿠/', '스도쿠'] };
+const PAGE_OF = { '단어묶음/': 'wg-hub', '단어묶음/오늘/': 'wg-play', '단어묶음/어제/': 'wg-yest', '2048/': 'g2048', '솔리테어/': 'sol', '노노그램/': 'nono', '스도쿠/': 'sd-hub', '스도쿠/오늘/': 'sd-play', '지뢰찾기/': 'ms-hub', '지뢰찾기/오늘/': 'ms-play' };
+const NAME = { 'wg-hub': '단어 묶음', 'wg-play': '오늘의 단어 묶음', 'wg-yest': '단어 묶음 어제 정답', g2048: '오늘의 2048', sol: '오늘의 솔리테어', nono: '오늘의 노노그램', 'sd-hub': '스도쿠', 'sd-play': '오늘의 스도쿠', 'ms-hub': '지뢰찾기', 'ms-play': '오늘의 지뢰찾기' };
+const OTHER_HUB = { 단어묶음: ['스도쿠/', '스도쿠'], '2048': ['단어묶음/', '단어 묶음'], 솔리테어: ['2048/', '2048'], 노노그램: ['솔리테어/', '솔리테어'], 스도쿠: ['지뢰찾기/', '지뢰찾기'], 지뢰찾기: ['스도쿠/', '스도쿠'] };
 
 function page(suf) {
-  const key = PAGE_OF[suf], t = T[key], play = key.endsWith('play'), group = suf.split('/')[0];
+  const key = PAGE_OF[suf], t = T[key], play = key.endsWith('play') || key.endsWith('yest') || ['g2048', 'sol', 'nono'].includes(key), single = ['g2048', 'sol', 'nono'].includes(key), group = suf.split('/')[0];
   const sec = t.sections.map(([h, ps]) => `<h2>${esc(h)}</h2>${ps.map((p) => `<p>${esc(p)}</p>`).join('')}`).join('');
   const faq = `<section class="faq"><h2>자주 묻는 질문</h2>${t.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('')}</section>`;
   const ld = { '@context': 'https://schema.org', '@graph': [
     { '@type': 'Game', name: NAME[key], description: t.desc, numberOfPlayers: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 1 }, gamePlatform: ['Web Browser'], inLanguage: 'ko', url: abs(suf), offers: { '@type': 'Offer', price: 0, priceCurrency: 'KRW' } },
-    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: '매일웹겜', item: SITE + '/ko/' }, ...(play ? [{ '@type': 'ListItem', position: 2, name: group, item: abs(group + '/') }, { '@type': 'ListItem', position: 3, name: NAME[key], item: abs(suf) }] : [{ '@type': 'ListItem', position: 2, name: group, item: abs(suf) }])] },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: '매일웹겜', item: SITE + '/ko/' }, ...(play && !single ? [{ '@type': 'ListItem', position: 2, name: group, item: abs(group + '/') }, { '@type': 'ListItem', position: 3, name: NAME[key], item: abs(suf) }] : [{ '@type': 'ListItem', position: 2, name: group, item: abs(suf) }])] },
     FAQ_LD(t.faq)] };
   const [oh, on] = OTHER_HUB[group];
   const body = play ? `<h1>${esc(t.h1)}</h1><p class="muted">${esc(t.lead)}</p>${GAMES[key]}${SEEALSO[key]}${sec}${faq}` : `<h1>${esc(t.h1)}</h1><p>${esc(t.lead)}</p>${SEEALSO[key]}${sec}${faq}`;
@@ -143,9 +151,10 @@ export const PUZZLE_HOME = `<section class="pz-home" aria-label="오늘의 퍼�
 <div class="hubgrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
 <a class="card" data-pz="sudoku" href="${href('스도쿠/오늘/')}" style="text-decoration:none;color:inherit"><b style="font-size:18px">🔢 오늘의 스도쿠</b><p class="muted" style="margin:4px 0">쉬움·보통·어려움, 해는 단 하나</p><p style="margin:0;font-size:13px"><span data-pz-last>오늘 기록 없음</span> · 🔥 <span data-pz-streak>0</span>일</p></a>
 <a class="card" data-pz="minesweeper" href="${href('지뢰찾기/오늘/')}" style="text-decoration:none;color:inherit"><b style="font-size:18px">💣 오늘의 지뢰찾기</b><p class="muted" style="margin:4px 0">첫 클릭은 항상 안전</p><p style="margin:0;font-size:13px"><span data-pz-last>오늘 기록 없음</span> · 🔥 <span data-pz-streak>0</span>일</p></a>
-<div class="card" data-pz="wordgroup" aria-disabled="true" style="opacity:.8"><b style="font-size:18px">🧩 오늘의 단어 묶음</b><p class="muted" style="margin:4px 0">16개 단어를 4묶음으로</p><p style="margin:0;font-size:13px">🔥 곧 공개</p></div></div>
+<a class="card" data-pz="wordgroup" href="${href('단어묶음/오늘/')}" style="text-decoration:none;color:inherit"><b style="font-size:18px">🧩 오늘의 단어 묶음</b><p class="muted" style="margin:4px 0">16개 단어를 4묶음으로</p><p style="margin:0;font-size:13px"><span data-pz-last>오늘 기록 없음</span> · 🔥 <span data-pz-streak>0</span>일</p></a></div>
+<p class="muted" style="margin:10px 0 0;font-size:14px">더 많은 퍼즐: <a href="${href('2048/')}">2048</a> · <a href="${href('솔리테어/')}">솔리테어</a> · <a href="${href('노노그램/')}">노노그램</a> · <a href="${href('단어묶음/어제/')}">단어 묶음 어제 정답</a></p></div>
 <p class="muted" style="margin:8px 0 14px;font-size:14px"><a href="${href('스도쿠/')}">스도쿠 규칙·요령</a> · <a href="${href('지뢰찾기/')}">지뢰찾기 규칙·요령</a></p>
 <script type="module" src="/js/puzzle-home.js"></script></section>`;
-export const PUZZLE_FOOTER_LINKS = `<a href="${href('스도쿠/오늘/')}">오늘의 스도쿠</a><a href="${href('지뢰찾기/오늘/')}">오늘의 지뢰찾기</a>`;
+export const PUZZLE_FOOTER_LINKS = `<a href="${href('스도쿠/오늘/')}">오늘의 스도쿠</a><a href="${href('지뢰찾기/오늘/')}">오늘의 지뢰찾기</a><a href="${href('단어묶음/오늘/')}">오늘의 단어 묶음</a><a href="${href('2048/')}">2048</a><a href="${href('솔리테어/')}">솔리테어</a><a href="${href('노노그램/')}">노노그램</a>`;
 
 if (import.meta.url === `file://${process.argv[1]}`) console.log(buildPuzzle().join('\n'));

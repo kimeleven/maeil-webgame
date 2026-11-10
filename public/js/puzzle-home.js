@@ -2,10 +2,10 @@
 import { kstDate, streakShown, fmtTime } from '/js/puzzle-core.js';
 try {
   const o = JSON.parse(localStorage.getItem('pz.v1')) || {}, today = kstDate();
-  for (const k of ['sudoku', 'minesweeper']) {
+  for (const k of ['sudoku', 'minesweeper', 'wordgroup']) {
     const el = document.querySelector(`[data-pz="${k}"]`); if (!el) continue;
     const rec = o[k], l = rec?.last;
     el.querySelector('[data-pz-streak]').textContent = streakShown(rec, today);
-    if (l && l.date === today && (k === 'sudoku' || l.win)) el.querySelector('[data-pz-last]').textContent = `⏱ ${fmtTime(l.time)}`;
+    if (l && l.date === today && (k === 'sudoku' || l.win)) el.querySelector('[data-pz-last]').textContent = k === 'wordgroup' ? `오답 ${l.mistakes}` : `⏱ ${fmtTime(l.time)}`;
   }
 } catch {}

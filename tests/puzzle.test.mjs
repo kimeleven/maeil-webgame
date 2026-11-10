@@ -63,10 +63,11 @@ test('share text', () => {
 // ---- 빌드 결과: 한국어 URL·sitemap·본문 1,000자·홈 카드 ----
 import { readFileSync, existsSync } from 'node:fs';
 import { build } from '../scripts/build-i18n.mjs';
-test('build: 퍼즐 페이지 4개, 본문 1000자↑, sitemap·홈 카드·내부 링크', () => {
+import { PUZZLE_PATHS } from '../scripts/build-puzzle.mjs';
+test('build: 퍼즐 페이지 10개(1차 4 + 2차 6), 본문 1000자↑, sitemap·홈 카드·내부 링크', () => {
   build();
   const rd = (s) => readFileSync(new URL(`../public/ko/${s}index.html`, import.meta.url), 'utf8');
-  for (const s of ['스도쿠/', '스도쿠/오늘/', '지뢰찾기/', '지뢰찾기/오늘/']) {
+  for (const s of PUZZLE_PATHS) {
     const h = rd(s);
     const body = h.match(/<main[\s\S]*<\/main>/)[0].replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, '');
     assert.ok(body.replace(/\s/g, '').length >= 1000, `${s} 본문 ${body.length}자`);
@@ -74,7 +75,7 @@ test('build: 퍼즐 페이지 4개, 본문 1000자↑, sitemap·홈 카드·내�
     assert.ok(/<title>[^<]{5,60}<\/title>/.test(h) && /FAQPage/.test(h) && /"@type":"Game"/.test(h), s + ' meta/jsonld');
   }
   const sm = readFileSync(new URL('../public/sitemap.xml', import.meta.url), 'utf8');
-  for (const s of ['스도쿠/', '스도쿠/오늘/', '지뢰찾기/', '지뢰찾기/오늘/']) assert.ok(sm.includes(`<loc>https://www.playtoday.cloud/ko/${s.split('/').map(encodeURIComponent).join('/')}</loc>`), 'sitemap ' + s);
+  for (const s of PUZZLE_PATHS) assert.ok(sm.includes(`<loc>https://www.playtoday.cloud/ko/${s.split('/').map(encodeURIComponent).join('/')}</loc>`), 'sitemap ' + s);
   const home = rd('');
   assert.ok(home.includes('오늘의 퍼즐 3종') && home.indexOf('오늘의 퍼즐 3종') < home.indexOf('data-game="magnet-harbor"'), '홈: 퍼즐 카드가 기존 게임보다 위');
   for (const l of ['en', 'ja']) assert.ok(!readFileSync(new URL(`../public/${l}/index.html`, import.meta.url), 'utf8').includes('오늘의 퍼즐'));
