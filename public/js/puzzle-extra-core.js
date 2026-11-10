@@ -99,12 +99,79 @@ export const SUITS = ['♠', '♥', '♦', '♣'];
 export const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 export const cardSuit = (c) => Math.floor(c / 13), cardRank = (c) => c % 13;
 export const isRed = (c) => cardSuit(c) === 1 || cardSuit(c) === 2;
-export function solDeal(date) {
-  const r = rng(dailySeed('solitaire', date)), d = [...Array(52).keys()];
+// 풀리지 않는 판 방지 (t_9242a69d): 날짜 시드로 만든 판을 DFS 풀이기로 검증해 풀이가 확인된 판만 쓴다.
+// 못 풀면 같은 날짜에 salt를 올려 다음 판을 시도한다 (결정적이라 같은 날 모두 같은 판).
+export function solRaw(date, salt = 0) {
+  const r = rng(dailySeed('solitaire', date, salt ? 's' + salt : '')), d = [...Array(52).keys()];
   for (let i = 51; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; }
   const tab = []; let p = 0;
   for (let c = 0; c < 7; c++) { const col = []; for (let k = 0; k <= c; k++) col.push({ c: d[p++], up: k === c }); tab.push(col); }
   return { tab, stock: d.slice(p), waste: [], found: [[], [], [], []], moves: 0 };
+}
+// 풀이기: 1장 뽑기·무제한 재순환 클론다이크. 노드 한도 안에 승리 경로를 찾으면 true.
+export function solSolvable(s, budget = 60000, trace = null) {
+  const col = s.tab.map((c) => c.map((x) => x.c)), dn = s.tab.map((c) => c.filter((x) => !x.up).length);
+  const cyc = s.stock.slice().reverse().concat(s.waste), fnd = s.found.map((p) => p.length);
+  // 서 있는 상태 → [col, dn, fnd, cyc, pos] ; 상태는 문자열 키로 방문 처리
+  const seen = new Set(); let nodes = 0;
+  const rk = (c) => c % 13, su = (c) => Math.floor(c / 13), red = (c) => su(c) === 1 || su(c) === 2;
+  const key = (cl, d, f, cy, pos) => cl.map((c, i) => d[i] + ':' + c.join(',')).join('|') + '/' + f.join(',') + '/' + pos + '/' + cy.join(',');
+  const safe = (c, f) => { const r = rk(c); if (r <= 1) return true; const o = red(c) ? [0, 3] : [1, 2]; return f[o[0]] >= r && f[o[1]] >= r; };
+  function dfs(cl, d, f, cy, pos) {
+    if (f[0] + f[1] + f[2] + f[3] === 52) return true;
+    if (++nodes > budget) return false;
+    const k = key(cl, d, f, cy, pos); if (seen.has(k)) return false; seen.add(k);
+    // 1) 안전한 기초 올리기는 강제 (분기 없음)
+    for (let i = 0; i < 7; i++) {
+      if (!cl[i].length || d[i] >= cl[i].length) continue;
+      const c = cl[i][cl[i].length - 1];
+      if (f[su(c)] === rk(c) && safe(c, f)) {
+        const cl2 = cl.map((x) => x.slice()), d2 = d.slice(), f2 = f.slice(); cl2[i].pop();
+        if (cl2[i].length && d2[i] >= cl2[i].length) d2[i] = cl2[i].length - 1;
+        f2[su(c)]++; if (dfs(cl2, d2, f2, cy, pos)) { trace?.push({ t: 'f', i, c }); return true; } return false;
+      }
+    }
+    if (pos >= 0) { const c = cy[pos]; if (f[su(c)] === rk(c) && safe(c, f)) { const cy2 = cy.slice(); cy2.splice(pos, 1); const f2 = f.slice(); f2[su(c)]++; if (dfs(cl, d, f2, cy2, pos - 1)) { trace?.push({ t: 'wf', c }); return true; } return false; } }
+    const moves = [];
+    // 2) 열 → 열 (뒤집을 카드가 생기는 이동 우선)
+    for (let i = 0; i < 7; i++) {
+      for (let a = d[i]; a < cl[i].length; a++) {
+        const c = cl[i][a];
+        for (let j = 0; j < 7; j++) {
+          if (j === i) continue;
+          const t = cl[j][cl[j].length - 1], ok = t === undefined ? rk(c) === 12 : (cl[j].length > d[j] && red(t) !== red(c) && rk(t) === rk(c) + 1);
+          if (!ok) continue;
+          if (t === undefined && a === 0) continue; // 빈 열 → 빈 열 무의미
+          moves.push({ t: 'c', i, a, j, pri: a === d[i] && d[i] > 0 ? 0 : a === 0 && t !== undefined ? 1 : 3 });
+        }
+      }
+      if (cl[i].length > d[i]) { const c = cl[i][cl[i].length - 1]; if (f[su(c)] === rk(c)) moves.push({ t: 'f', i, pri: 2 }); }
+    }
+    // 3) 뽑은 카드 → 열/기초
+    if (pos >= 0) {
+      const c = cy[pos];
+      if (f[su(c)] === rk(c)) moves.push({ t: 'wf', pri: 1 });
+      for (let j = 0; j < 7; j++) { const t = cl[j][cl[j].length - 1]; if (t === undefined ? rk(c) === 12 : (cl[j].length > d[j] && red(t) !== red(c) && rk(t) === rk(c) + 1)) moves.push({ t: 'wc', j, pri: 2 }); }
+    }
+    if (cy.length > 0) moves.push({ t: 'd', pri: 5 });
+    moves.sort((x, y) => x.pri - y.pri);
+    for (const m of moves) {
+      const cl2 = cl.map((x) => x.slice()), d2 = d.slice(), f2 = f.slice(); let cy2 = cy, pos2 = pos;
+      if (m.t === 'c') { const mv = cl2[m.i].splice(m.a); cl2[m.j].push(...mv); if (d2[m.i] > cl2[m.i].length - 1 && cl2[m.i].length) d2[m.i] = Math.min(d2[m.i], cl2[m.i].length - 1); else if (!cl2[m.i].length) d2[m.i] = 0; if (m.a === d[m.i] && d[m.i] > 0) d2[m.i] = d[m.i] - 1; }
+      else if (m.t === 'f') { const c = cl2[m.i].pop(); f2[su(c)]++; if (cl2[m.i].length && d2[m.i] >= cl2[m.i].length) d2[m.i] = cl2[m.i].length - 1; else if (!cl2[m.i].length) d2[m.i] = 0; }
+      else if (m.t === 'wf') { const c = cy[pos]; cy2 = cy.slice(); cy2.splice(pos, 1); pos2 = pos - 1; f2[su(c)]++; }
+      else if (m.t === 'wc') { const c = cy[pos]; cy2 = cy.slice(); cy2.splice(pos, 1); pos2 = pos - 1; cl2[m.j].push(c); }
+      else { pos2 = pos + 1 >= cy.length ? 0 : pos + 1; }
+      if (dfs(cl2, d2, f2, cy2, pos2)) { trace?.push({ ...m, c: m.t === 'c' ? cl[m.i][m.a] : m.t === 'f' ? cl[m.i][cl[m.i].length - 1] : cy[pos] }); return true; }
+      if (nodes > budget) return false;
+    }
+    return false;
+  }
+  const ok = dfs(col, dn, fnd, cyc, -1); if (ok && trace) trace.reverse(); return ok;
+}
+export function solDeal(date) {
+  for (let salt = 0; salt < 40; salt++) { const s = solRaw(date, salt); if (solSolvable(s)) return s; }
+  return solRaw(date, 0); // 사실상 도달 불가 (40판 연속 미해결)
 }
 export function solDraw(s) {
   const n = structuredClone(s);

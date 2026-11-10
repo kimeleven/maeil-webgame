@@ -21,3 +21,4 @@ export function timer(el) {
     start() { if (ts) return; ts = Date.now(); clearInterval(id); id = setInterval(draw, 500); },
     stop() { if (ts) { elapsed = now(); ts = 0; } clearInterval(id); draw(); } };
 }
+

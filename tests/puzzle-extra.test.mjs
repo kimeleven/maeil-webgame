@@ -114,3 +114,16 @@ test('solitaire: deal 28 tableau + 24 stock, draw/recycle, rule-checked moves, w
     const cnt = g.tab.flat().length + g.stock.length + g.waste.length + g.found.flat().length; assert.equal(cnt, 52);
   }
 });
+
+test('solitaire: 매일 판은 풀이기로 검증된 풀 수 있는 판 (t_9242a69d)', async () => {
+  const { solRaw, solSolvable } = await import('../public/js/puzzle-extra-core.js');
+  for (const d of ['2026-11-11', '2026-11-12', '2026-12-25', '2027-03-01', '2027-07-07']) {
+    const s = solDeal(d);
+    assert.ok(solSolvable(s), d);
+    assert.deepEqual(s, solDeal(d));
+  }
+  // salt 0이 못 풀면 다음 판으로 넘어간다: 못 푼다고 확인된 판은 매일 판으로 안 쓰임
+  let skipped = 0;
+  for (let i = 0; i < 30; i++) { const d = new Date(Date.UTC(2026, 10, 11 + i)).toISOString().slice(0, 10); if (!solSolvable(solRaw(d, 0))) { skipped++; assert.notDeepEqual(solDeal(d), solRaw(d, 0)); } }
+  assert.ok(skipped > 0);
+});

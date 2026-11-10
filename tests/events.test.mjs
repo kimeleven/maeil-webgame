@@ -242,3 +242,9 @@ test('share_cta_click: POST 202 stored, funnel.quiz.shareCtaClick by lang', asyn
   assert.ok(s.body.funnel.quiz.shareCtaClick >= 1);
   assert.ok(s.body.funnel.quiz.shareCtaClickByLang.ja >= 1);
 });
+
+test('t_9242a69d puzzle events: g=puzzle play_start/share_click accepted, others rejected', () => {
+  const ev = (name, extra = {}) => ({ id: 'abcdefghijklmnop' + name.length, name, g: 'puzzle', lang: 'ko', from: 'direct', ...extra });
+  assert.equal(validateBatch({ v: 1, events: [ev('play_start'), ev('share_click')] }).rows?.length, 2);
+  assert.ok(validateBatch({ v: 1, events: [ev('play_end', { end: 'time' })] }).error);
+});

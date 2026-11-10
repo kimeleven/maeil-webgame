@@ -135,9 +135,9 @@ function page(suf) {
   const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080c">
 <title>${esc(t.title)}</title><meta name="description" content="${esc(t.desc)}"><link rel="canonical" href="${abs(suf)}">
 <meta property="og:type" content="website"><meta property="og:site_name" content="매일웹겜"><meta property="og:title" content="${esc(t.title)}"><meta property="og:description" content="${esc(t.desc)}"><meta property="og:image" content="${SITE}/og/site-ko.png"><meta property="og:url" content="${abs(suf)}"><meta property="og:locale" content="ko_KR"><meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/favicon.svg"><style>${CSS}</style><script type="application/ld+json">${JSON.stringify(ld)}</script></head>
+<link rel="icon" href="/favicon.svg"><script src="/js/gev.js"></script><style>${CSS}</style><script type="application/ld+json">${JSON.stringify(ld)}</script></head>
 <body data-page="${key}" data-lang="ko"><header class="top"><a class="logo" href="/ko/"><i></i>매일웹겜</a><a href="${href(oh)}" class="muted">${on} →</a></header>
-<main class="wrap">${body}${NAV}</main><footer>© 매일웹겜 · playtoday.cloud · <a href="/ko/about/">소개</a> · <a href="/ko/privacy/">개인정보</a></footer></body></html>`;
+<main class="wrap">${body}${NAV}</main><footer>© 매일웹겜 · playtoday.cloud · <a href="/ko/about/">소개</a> · <a href="/ko/privacy/">개인정보</a></footer><script src="/js/puzzle-ev.js"></script></body></html>`;
   const dir = `${ROOT}public/ko/${suf}`;
   mkdirSync(dir, { recursive: true });
   writeFileSync(`${dir}index.html`, html);
