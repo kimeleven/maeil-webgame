@@ -1,0 +1,13 @@
+import { startServer } from '/Users/shkim/AIAgents/workspace/maeil-reboot/scripts/dev.mjs';
+import { chromium } from 'playwright';
+const { server, url } = await startServer(0);
+const b = await chromium.launch(); const p = await b.newPage();
+const errs = []; p.on('pageerror', (e) => errs.push(e.message)); p.on('console', (m) => m.type() === 'error' && errs.push(m.text()));
+await p.goto(`${url}/calc/interest/`); await p.selectOption('select[name=t]', 'none'); await p.waitForTimeout(100);
+const u = p.url(); await p.goto(u); await p.waitForTimeout(150);
+console.log('D1 url', u.replace(url, ''), '→ 복원 t =', await p.inputValue('select[name=t]'), '|', await p.textContent('#calc-main'));
+await p.goto(`${url}/calc/unit/?c=temp&f=${'F'}&x=212`); console.log('unit 회귀:', await p.textContent('#calc-main'));
+await p.goto(`${url}/calc/date/?m=add&s=2026-11-11&n=99999999&u=year`); await p.waitForTimeout(150);
+console.log('D2 main =', await p.textContent('#calc-main'), '| bad =', await p.evaluate(() => document.querySelector('#calc-result').classList.contains('bad')));
+console.log('errors', JSON.stringify(errs));
+await b.close(); server.close();

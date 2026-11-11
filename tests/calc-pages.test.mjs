@@ -32,3 +32,8 @@ test('home ko has 오늘 계산기 6 cards + /calc link; sitemap has /calc and 1
   const sm = readFileSync(`${ROOT}public/sitemap.xml`, 'utf8');
   for (const s of ['', ...SLUGS]) assert.ok(sm.includes(`<loc>https://www.playtoday.cloud/calc/${s ? s + '/' : ''}</loc>`), s);
 });
+
+test('t_54d54a22 D1: f/t 건너뛰기는 단위 폼(c 있음)에서만', () => {
+  const ui = readFileSync(`${ROOT}public/js/calc-ui.js`, 'utf8');
+  assert.match(ui, /form\.elements\.c && \(el\.name === 'f' \|\| el\.name === 't'\)/);
+});

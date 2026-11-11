@@ -57,7 +57,9 @@ export function dateDiff(a, b, inclusive) {
 }
 export function dateAdd(base, n, unit) {
   n = num(n); if (parseDate(base) == null || !Number.isInteger(n)) return null;
-  const out = unit === 'month' ? addMonths(base, n) : unit === 'year' ? addMonths(base, n * 12) : addDays(base, unit === 'week' ? n * 7 : n);
+  let out; // 범위 밖(서기 1~9999년 밖)이면 toISOString 이 던지거나 +YYYYYY 형식 → null (t_54d54a22 D2)
+  try { out = unit === 'month' ? addMonths(base, n) : unit === 'year' ? addMonths(base, n * 12) : addDays(base, unit === 'week' ? n * 7 : n); } catch (e) { return null; }
+  if (parseDate(out) == null) return null;
   return { date: out, wd: weekday(out) };
 }
 

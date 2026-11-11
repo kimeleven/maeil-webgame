@@ -109,3 +109,10 @@ test('compute: every slug renders default values and today preview is KST', () =
   assert.equal(p.date, '오늘은 2026-11-11 (수)'); assert.equal(p.age, '올해 남은 날 50일'); assert.equal(p.dday, '크리스마스 D-44');
   assert.equal(kstToday(Date.parse('2026-11-11T15:30:00Z')), '2026-11-12');
 });
+
+test('t_54d54a22 D2: 날짜 더하기 범위 밖은 null(오류 없이)', () => {
+  assert.equal(dateAdd('2026-11-11', 99999999, 'year'), null);
+  assert.equal(dateAdd('2026-11-11', 99999999, 'day'), null);
+  assert.equal(compute('date', { m: 'add', s: '2026-11-11', n: '99999999', u: 'year' }, '2026-11-11'), null);
+  assert.equal(dateAdd('2026-11-11', 1, 'year').date, '2027-11-11');
+});

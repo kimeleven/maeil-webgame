@@ -19,7 +19,7 @@ if (form && slug) {
   // 쿼리 → 입력칸. 날짜 칸이 비면 오늘(KST).
   for (const el of form.elements) {
     if (!el.name) continue;
-    if (el.name === 'f' || el.name === 't') continue;
+    if (form.elements.c && (el.name === 'f' || el.name === 't')) continue; // 단위 폼만 fillUnits 가 채운다 (이자 폼 과세 t 는 일반 복원, t_54d54a22 D1)
     const q = qs.get(el.name);
     if (el.type === 'checkbox') { if (q != null) el.checked = q === '1'; }
     else if (q != null && q !== '') el.value = q;
