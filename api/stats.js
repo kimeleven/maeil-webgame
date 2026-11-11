@@ -30,7 +30,7 @@ export function funnelOf(games, fs) {
   };
   if (fs?.observed) {
     const { rush, quiz, challenge } = fs;
-    out.rush = { observed: true, ...rush }; out.quiz = { observed: true, ...quiz }; out.challenge = { observed: true, ...challenge };
+    out.rush = { observed: true, ...rush }; out.quiz = { observed: true, ...quiz }; out.challenge = { observed: true, ...challenge }; if (fs.puzzle) out.puzzle = { observed: true, ...fs.puzzle }; if (fs.calc) out.calc = { observed: true, ...fs.calc };
     out.since = { availableSince: fs.availableSince, window: fs.window, unobserved: fs.unobserved };
   }
   if (games?.observed && games.byGame) {

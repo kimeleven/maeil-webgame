@@ -248,3 +248,16 @@ test('t_9242a69d puzzle events: g=puzzle play_start/share_click accepted, others
   assert.equal(validateBatch({ v: 1, events: [ev('play_start'), ev('share_click')] }).rows?.length, 2);
   assert.ok(validateBatch({ v: 1, events: [ev('play_end', { end: 'time' })] }).error);
 });
+
+// t_61344aaa: 오늘 계산기 calc_use(k=slug, via=mode) · share_click(via=share|copy) 수용, 그 밖은 거절, /api/stats funnel.calc 집계.
+test('t_61344aaa calc events: validate + POST 202 + funnel.calc', async () => {
+  const ok = (e) => validateBatch({ v: 1, events: [{ id: id(), lang: 'ko', g: 'calc', ...e }] });
+  assert.equal(ok({ name: 'calc_use', k: 'percent', via: 'of' }).rows.length, 1);
+  assert.equal(ok({ name: 'share_click', k: 'vat', via: 'copy' }).rows.length, 1);
+  for (const bad of [{ name: 'calc_use', k: 'nope', via: 'of' }, { name: 'calc_use', k: 'percent' }, { name: 'calc_use', k: 'percent', via: '200' }, { name: 'share_click', k: 'vat', via: 'png' }, { name: 'play_start', k: 'vat' }, { name: 'calc_use', g: 'quiz', k: 'percent', via: 'of' }])
+    assert.ok(ok(bad).error, JSON.stringify(bad));
+  const r = await post({ v: 1, events: [{ id: id(), name: 'calc_use', g: 'calc', lang: 'ko', k: 'dday', via: 'anniv' }, { id: id(), name: 'share_click', g: 'calc', lang: 'ko', k: 'dday', via: 'share' }] });
+  assert.equal(r.status, 202);
+  const s = await stats();
+  assert.ok(s.body.funnel.calc.calcUse >= 1); assert.ok(s.body.funnel.calc.bySlug.dday.shareClick >= 1); assert.ok(s.body.funnel.calc.shareByMethod.share >= 1);
+});
