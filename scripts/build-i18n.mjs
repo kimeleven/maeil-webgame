@@ -246,8 +246,9 @@ const WEBGAME_BODY = `<section><h2>웹겜, 이렇게 골라요</h2>
 <p>한 판이 30초에서 90초라서 부담 없는 짧은 게임을 찾는 분께 맞아요. 마음에 들면 같은 판 도전 링크로 친구에게 기록을 겨뤄 보자고 보낼 수도 있어요. 공유는 언제나 선택이고, 공유하지 않아도 모든 게임을 끝까지 즐길 수 있어요. 처음이라면 가장 짧은 게이트 러시 한 판으로 가볍게 시작해 보세요. 게임을 마친 뒤에는 10문항 캐릭터 테스트와 친구 케미도 이어서 해 볼 수 있어요.</p></section>
 <section><h2>자주 묻는 질문</h2>
 ${WEBGAME_FAQ.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
+<p>게임 말고 숫자 계산이 필요하면: <a href="/calc/">오늘 계산기 10종</a> · <a href="/calc/percent/">퍼센트 계산기</a> · <a href="/calc/wage/">시급 계산기</a> · <a href="/calc/age/">만 나이 계산기</a></p>
 <p>30초 게임 다음엔 나 알아보기: <a href="/ko/me/play-character/">나의 놀이 캐릭터 테스트</a> · <a href="/ko/friends/chemistry/">친구 케미 보기</a></p>`;
-const WEBGAME = { title: '웹겜 — 설치 없이 30초, 브라우저 무료 게임 4종', desc: '설치·가입 없이 바로 하는 웹겜. 30초 게이트러시 등 4종 무료.', h1: '설치 없이 바로 하는 웹겜 4종' };
+const WEBGAME = { title: '웹겜 모음 — 설치·로그인 없이 5분 안에 끝나는 무료 웹게임 4종', desc: '설치·로그인 없이 바로 하는 무료 웹겜 모음. 게이트 러시·자석 항구·궤도 스위치·잔상 배달 4종, 한 판 30~90초, 모바일·PC 모두 가능.', h1: '설치 없이 바로 하는 웹겜 4종' };
 function buildWebgame() {
   const D = dict.ko, suf = 'webgame/', self = url('ko', suf);
   const cards = [[D.game.name, 'play/gate-rush/', '30초 안에 문을 골라 달리는 무료 웹겜'], [MT.ko.name, 'play/magnet-harbor/', MT.ko.seoDesc], [OT.ko.name, 'play/orbit-switch/', OT.ko.seoDesc], [ET.ko.name, 'play/echo-courier/', ET.ko.seoDesc]];
