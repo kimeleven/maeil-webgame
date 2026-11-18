@@ -40,7 +40,7 @@ test('meta: title ≤60 (CJK ≤40), desc ≤160, no empty, no duplicates, no MB
       assert.ok(dec(h.match(/property="og:title" content="([^"]*)"/)[1]) === title, `${l}/${suf} og sync`);
     }
   }
-  assert.match(read('ko', '').match(/<title>([^<]*)/)[1], /웹게임/);
+  assert.match(read('ko', '').match(/<title>([^<]*)/)[1], /웹겜|웹게임/); // 1119-08: 클릭 유도형 title
 });
 
 test('1029-09: all 4 games interlinked in 6 langs; magnet-harbor title/desc unique, <=60, canonical/hreflang intact', () => {
@@ -55,4 +55,16 @@ test('1029-09: all 4 games interlinked in 6 langs; magnet-harbor title/desc uniq
     assert.ok(/<meta name="description" content="[^"]{20,160}"/.test(h));
     assert.ok(h.includes(`rel="canonical" href="https://www.playtoday.cloud/${l}/play/magnet-harbor/"`) && h.includes('hreflang="x-default"'));
   }
+});
+
+test('1119-08: /en·/ja /webgame/ landings with hreflang, ko 5분게임, lobby title lengths', () => {
+  for (const l of ['en', 'ja']) {
+    const h = read(l, 'webgame/');
+    assert.ok(h.includes(`rel="canonical" href="https://www.playtoday.cloud/${l}/webgame/"`) && h.includes('hreflang="en"') && h.includes('hreflang="ja"'), `${l} webgame hreflang`);
+    assert.ok(hrefs(read(l, '')).includes(`/${l}/webgame/`), `${l} home → webgame`);
+    assert.ok(!/ratingValue|aggregateRating/.test(h), `${l} no fake rating`);
+  }
+  assert.ok(read('ko', '').includes('5분게임') && read('ko', 'webgame/').includes('5분게임'));
+  const lim = { ko: 30, en: 60, ja: 40, 'zh-hans': 40, es: 60, 'pt-br': 60 };
+  for (const l of LANGS) assert.ok(read(l, '').match(/<title>([^<]*)/)[1].length <= lim[l], `${l} lobby title length`);
 });

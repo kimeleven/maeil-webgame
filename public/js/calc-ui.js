@@ -58,13 +58,24 @@ if (form && slug) {
   run(false);
 
   const flash = (b, t) => { const o = b.dataset.label || (b.dataset.label = b.textContent); b.textContent = t; setTimeout(() => { b.textContent = o; }, 1600); };
-  const shareText = () => (last ? `${document.querySelector('h1').textContent}: ${last.main} (${last.formula})` : document.title);
+  // 1119-08: 공유 문구·알림을 페이지 언어로 (계산기는 현재 ko만 있고, lang 속성이 늘면 그대로 따라간다). 게임 유입 한 줄 포함.
+  const TX = {
+    ko: ['복사됨 ✓', '링크 복사됨 ✓', '오늘 30초 웹겜도 한 판 →'],
+    en: ['Copied ✓', 'Link copied ✓', 'Also try a 30-second web game today →'],
+    ja: ['コピーしました ✓', 'リンクをコピーしました ✓', '今日は30秒ゲームも一息 →'],
+    'zh-hans': ['已复制 ✓', '链接已复制 ✓', '今天也来一局30秒网页游戏 →'],
+    es: ['Copiado ✓', 'Enlace copiado ✓', 'Hoy también un juego web de 30 s →'],
+    'pt-br': ['Copiado ✓', 'Link copiado ✓', 'Hoje também um jogo web de 30 s →'],
+  };
+  const L = (document.documentElement.lang || 'ko').toLowerCase(), LK = TX[L] ? L : TX[L.split('-')[0]] ? L.split('-')[0] : 'ko', T = TX[LK];
+  const gameUrl = `https://www.playtoday.cloud/${LK}/play/gate-rush/`;
+  const shareText = () => (last ? `${document.querySelector('h1').textContent}: ${last.main} (${last.formula})` : document.title) + `\n${T[2]} ${gameUrl}`;
   async function copy(t) { try { await navigator.clipboard.writeText(t); return true; } catch { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} ta.remove(); return ok; } }
-  $('#calc-copy')?.addEventListener('click', async (e) => { if (await copy(shareText())) flash(e.currentTarget, '복사됨 ✓'); gv('share_click', { via: 'copy' }); });
+  $('#calc-copy')?.addEventListener('click', async (e) => { if (await copy(shareText())) flash(e.currentTarget, T[0]); gv('share_click', { via: 'copy' }); });
   $('#calc-share')?.addEventListener('click', async (e) => {
     const btn = e.currentTarget, url = location.href;
     if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) { gv('share_click', { via: 'share' }); try { await navigator.share({ title: document.title, text: shareText(), url }); } catch {} return; }
     gv('share_click', { via: 'copy' });
-    if (await copy(url)) flash(btn, '링크 복사됨 ✓');
+    if (await copy(url)) flash(btn, T[1]);
   });
 }
