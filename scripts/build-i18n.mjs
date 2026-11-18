@@ -76,7 +76,7 @@ function shell(l, page, suf, main, opts = {}) {
 <body data-page="${page}" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.brand)}</a>${langMenu(l, suf, opts.dyn)}</header>
 <main class="wrap">${main}</main>
-<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a>${l === 'ko' ? PUZZLE_FOOTER_LINKS + CALC_FOOTER_LINKS + '<a href="/ko/webgame/">웹겜 모아보기</a>' : ''}<a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
+<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a>${l === 'ko' ? PUZZLE_FOOTER_LINKS + CALC_FOOTER_LINKS + '<a href="/ko/webgame/">웹겜 모아보기</a>' : WEBGAME_X[l] ? `<a href="/${l}/webgame/">${esc(WEBGAME_X[l].link)}</a>` : ''}<a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
 <script type="module" src="/js/season.js"></script>
@@ -96,7 +96,7 @@ function pageBody(l, key) {
   if (key === 'lobby') {
     const c = D.lobby.cards;
     return `${hwBanner(D)}<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}<span data-from="0" data-until="1794495600000" hidden> ${esc(D.lobby.subSeason)}</span><span data-from="1794495600000" data-until="1796050800000" hidden> ${esc(D.lobby.subSeason2)}</span></p></section>
-${l === 'ko' ? PUZZLE_HOME + CALC_HOME : ''}<nav class="grid3" aria-label="${esc(D.brand)}">
+${l === 'ko' ? PUZZLE_HOME + CALC_HOME + '<section><h2>심심할 때 5분게임, 30초면 시작</h2><p class="muted">5분게임 찾는 중이라면 게이트 러시 한 판부터. <a href="/ko/webgame/">웹겜 모아보기</a></p></section>' : ''}<nav class="grid3" aria-label="${esc(D.brand)}">
 <a class="card cat hl" href="/${l}/play/gate-rush/" aria-label="${esc(c.play.aria)}"><span class="tag">${esc(D.nav.play)}</span><img src="/img/gate-rush.svg" width="150" height="150" alt=""><h3>${esc(c.play.t)}</h3><p>${esc(c.play.d)}</p><span class="btn go">${esc(c.play.cta)}</span></a>
 <a class="card cat" href="/${l}/me/play-character/"><span class="tag">${esc(D.nav.me)}</span>${charImg('SPH', 150)}<h3>${esc(c.me.t)}</h3><p>${esc(c.me.d)}</p><span class="btn ghost go">${esc(c.me.cta)}</span></a>
 <a class="card cat" href="/${l}/friends/chemistry/"><span class="tag">${esc(D.nav.friends)}</span><span class="pair">${charImg('SIH', 72)}${charImg('CPT', 72)}</span><h3>${esc(c.friends.t)}</h3><p>${esc(c.friends.d)}</p><span class="btn ghost go">${esc(c.friends.cta)}</span></a>
@@ -236,7 +236,7 @@ const WEBGAME_FAQ = [
   ['모바일에서도 할 수 있나요?', '네. 스마트폰과 PC 브라우저에서 같은 주소로 열려요. 모바일은 화면을 탭하거나 드래그하고, PC는 키보드를 써요.'],
   ['한 판은 얼마나 걸리나요?', '게이트 러시는 한 판이 약 30초이고, 자석 항구·궤도 스위치·잔상 배달은 한 판이 약 90초예요.'],
 ];
-const WEBGAME_BODY = `<section><h2>웹겜, 이렇게 골라요</h2>
+const WEBGAME_BODY = `<section><h2>5분게임으로 웹겜, 이렇게 골라요</h2>
 <p><b>게이트 러시</b> — 30초 동안 좌우 게이트 중 하나를 골라 군단을 키우고, 드론과 레이저를 피해 구역 끝의 보스를 넘는 러너예요. 키보드 ← → 또는 모바일 드래그로 움직이고, 구역을 깰수록 빨라져서 짧게 여러 번 하기 좋아요.</p>
 <p><b>자석 항구</b> — 자석 크레인으로 흔들리는 화물을 배에 쌓아 90초 동안 최대한 많이 보내는 게임이에요. 타이밍과 균형이 중요해서 차분하게 집중하고 싶을 때 잘 맞아요.</p>
 <p><b>궤도 스위치</b> — 화면을 탭할 때마다 궤도가 바뀌어 장애물을 피하는 90초 웹게임이에요. 조작은 탭 하나뿐이라 처음 해도 금방 익숙해지고, 점점 빨라지는 속도가 난이도를 만들어요.</p>
@@ -248,7 +248,7 @@ const WEBGAME_BODY = `<section><h2>웹겜, 이렇게 골라요</h2>
 ${WEBGAME_FAQ.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
 <p>게임 말고 숫자 계산이 필요하면: <a href="/calc/">오늘 계산기 10종</a> · <a href="/calc/percent/">퍼센트 계산기</a> · <a href="/calc/wage/">시급 계산기</a> · <a href="/calc/age/">만 나이 계산기</a></p>
 <p>30초 게임 다음엔 나 알아보기: <a href="/ko/me/play-character/">나의 놀이 캐릭터 테스트</a> · <a href="/ko/friends/chemistry/">친구 케미 보기</a></p>`;
-const WEBGAME = { title: '웹겜 모음 — 설치·로그인 없이 5분 안에 끝나는 무료 웹게임 4종', desc: '설치·로그인 없이 바로 하는 무료 웹겜 모음. 게이트 러시·자석 항구·궤도 스위치·잔상 배달 4종, 한 판 30~90초, 모바일·PC 모두 가능.', h1: '설치 없이 바로 하는 웹겜 4종' };
+const WEBGAME = { title: '웹겜 모음 — 설치·로그인 없이 5분 안에 끝나는 무료 웹게임 4종', desc: '5분게임 찾는다면 여기. 설치·로그인 없이 바로 하는 무료 웹겜 4종, 한 판 30~90초, 모바일·PC 모두 가능.', h1: '설치 없이 바로 하는 웹겜 4종' };
 function buildWebgame() {
   const D = dict.ko, suf = 'webgame/', self = url('ko', suf);
   const cards = [[D.game.name, 'play/gate-rush/', '30초 안에 문을 골라 달리는 무료 웹겜'], [MT.ko.name, 'play/magnet-harbor/', MT.ko.seoDesc], [OT.ko.name, 'play/orbit-switch/', OT.ko.seoDesc], [ET.ko.name, 'play/echo-courier/', ET.ko.seoDesc]];
@@ -260,6 +260,39 @@ ${WEBGAME_BODY}
   let html = shell('ko', 'webgame', suf, main, { title: WEBGAME.title, desc: WEBGAME.desc, og: '/og/site-ko.png', jsonld });
   html = html.replace(/<link rel="alternate"[^>]*>/g, '').replace(/<details class="lang">.*?<\/details>/s, '');
   write(`ko/${suf}index.html`, html);
+  return self;
+}
+
+
+// 1119-08: /en/webgame/·/ja/webgame/ (hreflang en↔ja 상호). 다른 언어는 후속.
+const WEBGAME_X = {
+  en: { link: 'All web games', title: 'Free Web Games — No Install, No Login, 30-Second Rounds', h1: 'Free web games you can play right now', desc: 'Looking for a quick browser game? Four free web games, 30–90 seconds a round, on phone or PC. No install, no sign-up.',
+    cards: [['gate-rush', 'Pick a gate, grow your squad and beat the boss in a 30-second runner.'], ['magnet-harbor', 'Stack swinging cargo with a magnet crane and ship boats in 90 seconds.'], ['orbit-switch', 'Tap to switch orbits and dodge obstacles for 90 seconds.'], ['echo-courier', 'Remember your echo trail and deliver along the same route for 90 seconds.']],
+    h2a: 'How to pick a web game', pa: 'Gate Rush takes about 30 seconds a round. Magnet Harbor, Orbit Switch and Echo Courier take about 90 seconds. Controls are a drag or a tap, so you can start in seconds.',
+    h2b: 'What is a no-install web game?', pb: 'A web game runs in your browser: open the link and play. There is nothing to download and no account to create, on phone or desktop. Sharing a challenge link with a friend is always optional.',
+    faq: [['Are these web games free?', 'Yes. All four are free, with no purchase or subscription.'], ['Do I need to sign up?', 'No. Open the page and press start. A nickname is only used if you choose to share a score.'], ['Can I play on my phone?', 'Yes. The same address works on phone and desktop browsers.'], ['How long is one round?', 'Gate Rush is about 30 seconds; the other three are about 90 seconds.']], faqH: 'FAQ', home: 'Back to Daily Arcade' },
+  ja: { link: 'ブラウザゲーム一覧', title: '無料ブラウザゲーム集 — インストール・ログイン不要の30秒ゲーム', h1: '今すぐ遊べる無料ブラウザゲーム', desc: '暇つぶしに30秒ゲームを。無料ブラウザゲーム4種、1回30〜90秒、スマホでもPCでも。インストール・登録なし。',
+    cards: [['gate-rush', 'ゲートを選んで軍団を育て、30秒でボスを突破するランゲーム。'], ['magnet-harbor', '磁石クレーンで揺れる荷物を積み、90秒で船を出港させる。'], ['orbit-switch', 'タップで軌道を切り替えて障害物を避ける90秒ゲーム。'], ['echo-courier', '残像の軌道を覚えて同じ道で届ける90秒ゲーム。']],
+    h2a: 'ブラウザゲームの選び方', pa: 'ゲートラッシュは1回約30秒、マグネットハーバー・オービットスイッチ・残像デリバリーは約90秒です。操作はドラッグかタップだけなので、すぐ始められます。',
+    h2b: 'インストール不要のブラウザゲームとは', pb: 'ブラウザゲームはアプリを入れずに、リンクを開くだけで遊べるゲームです。登録も不要で、スマホでもPCでも同じアドレスで遊べます。挑戦リンクの共有は任意です。',
+    faq: [['無料で遊べますか？', 'はい。4種すべて無料で、課金や購読はありません。'], ['登録は必要ですか？', 'いいえ。ページを開いてスタートを押すだけです。ニックネームはスコアを共有する時だけ使います。'], ['スマホでも遊べますか？', 'はい。スマホでもPCでも同じアドレスで開けます。'], ['1回はどのくらいですか？', 'ゲートラッシュは約30秒、ほかの3種は約90秒です。']], faqH: 'よくある質問', home: 'まいにちアーケードのホームへ' },
+};
+const WEBGAME_ALT = ['en', 'ja'].map((x) => `<link rel="alternate" hreflang="${x}" href="${SITE}/${x}/webgame/">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/en/webgame/">`;
+function buildWebgameX(l) {
+  const X = WEBGAME_X[l], D = dict[l], suf = 'webgame/', self = url(l, suf);
+  const names = { 'gate-rush': D.game.name, 'magnet-harbor': MT[l].name, 'orbit-switch': OT[l].name, 'echo-courier': ET[l].name };
+  const cards = X.cards.map(([k, d]) => [names[k], `play/${k}/`, d]);
+  const main = `<section class="hero"><h1>${esc(X.h1)}</h1><p>${esc(X.desc)}</p></section>
+<section class="cards" style="display:grid;grid-template-columns:1fr;gap:12px">${cards.map(([n, p, d]) => `<a class="card" style="display:block" href="/${l}/${p}"><b>${esc(n)}</b><br><span class="muted">${esc(d)}</span></a>`).join('')}</section>
+<section><h2>${esc(X.h2a)}</h2><p>${esc(X.pa)}</p></section>
+<section><h2>${esc(X.h2b)}</h2><p>${esc(X.pb)}</p></section>
+<section><h2>${esc(X.faqH)}</h2>${X.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
+<p><a href="/${l}/">${esc(X.home)}</a></p>`;
+  const jsonld = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: X.title, description: X.desc, inLanguage: D.htmlLang, url: self }, { '@type': 'FAQPage', mainEntity: X.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }, { '@type': 'ItemList', name: X.h1, itemListElement: cards.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, url: url(l, p) })) }] };
+  let html = shell(l, 'webgame', suf, main, { title: X.title, desc: X.desc, og: `/og/site-${l}.png`, jsonld });
+  html = html.replace(/<link rel="alternate"[^>]*>/g, '').replace(/<details class="lang">.*?<\/details>/s, '');
+  html = html.replace('</head>', WEBGAME_ALT + '</head>');
+  write(`${l}/${suf}index.html`, html);
   return self;
 }
 
@@ -298,6 +331,7 @@ export function build() {
 <script>(function(){var m={ko:'ko',en:'en',ja:'ja',zh:'zh-hans',es:'es',pt:'pt-br'},t=${JSON.stringify(Object.fromEntries(LANGS.map((x) => [x, dict[x].common.viewIn])))};var n=(navigator.language||'').toLowerCase(),k=m[n.slice(0,2)];if(n.indexOf('zh')===0&&/tw|hk|hant/.test(n))k=null;if(k&&k!=='en'){var b=document.getElementById('suggest');b.innerHTML='<a class="card btn ghost" style="display:flex;margin:8px 0" href="/'+k+'/">'+t[k]+' →</a>';b.className='banner show'}})()</script>
 </body></html>`);
   const webgameUrl = buildWebgame();
+  const webgameX = Object.keys(WEBGAME_X).map((l) => buildWebgameX(l));
   // sitemap + robots
   const urls = [`  <url><loc>${SITE}/</loc>${LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, '')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/></url>`];
   for (const l of LANGS) for (const [, suf] of PAGES) urls.push(`  <url><loc>${url(l, suf)}</loc>${LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, suf)}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/></url>`);
@@ -305,6 +339,7 @@ export function build() {
   for (const l of ECHO_LANGS) urls.push(`  <url><loc>${url(l, 'play/echo-courier/')}</loc>${ECHO_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/echo-courier/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/echo-courier/')}"/></url>`);
   for (const l of ORBIT_LANGS) urls.push(`  <url><loc>${url(l, 'play/orbit-switch/')}</loc>${ORBIT_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/orbit-switch/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/orbit-switch/')}"/></url>`);
   urls.push(`  <url><loc>${webgameUrl}</loc></url>`);
+  for (const u of webgameX) urls.push(`  <url><loc>${u}</loc>${WEBGAME_ALT.replace(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g, '<xhtml:link rel="alternate" hreflang="$1" href="$2"/>')}</url>`);
   for (const u of buildPuzzle()) urls.push(`  <url><loc>${u}</loc></url>`);
   for (const u of buildCalc()) urls.push(`  <url><loc>${u}</loc><lastmod>${CALC_LASTMOD}</lastmod></url>`);
   writeFileSync(`${ROOT}public/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);
