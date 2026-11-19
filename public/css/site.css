@@ -62,8 +62,8 @@ code.sel{display:block;user-select:all;-webkit-user-select:all;padding:12px;bord
 .pair{display:flex;justify-content:center;gap:10px;align-items:flex-end}
 .pair img{width:min(40vw,180px)}
 .pair img:first-child{animation:walkL 1s var(--ease) both}.pair img:last-child{animation:walkR 1s var(--ease) both}
-@keyframes walkL{from{transform:translateX(-60px);opacity:0}to{transform:none;opacity:1}}
-@keyframes walkR{from{transform:translateX(60px);opacity:0}to{transform:none;opacity:1}}
+@keyframes walkL{from{transform:translateX(-24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes walkR{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
 .members{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
 .members li{display:flex;gap:12px;align-items:center}
 .members img{width:52px;height:52px}
