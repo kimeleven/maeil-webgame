@@ -60,6 +60,7 @@
   "sub": "4 juegos, un test de personaje y química con amigos. Sin instalar.",
   "subSeason": "Hayas terminado los exámenes o no, tómate 30 segundos de descanso.",
   "subSeason2": "Noviembre ya refresca: una partida de 30 segundos, sin instalar.",
+  "subSeason3": "El último mes del año: una partida hoy.",
   "cards": {
    "play": {
     "t": "Gate Rush",
@@ -155,7 +156,7 @@
   },
   "start": "¡Adelante!",
   "resume": "Seguir corriendo",
-  "shareHint": "Envía tu puntuación como reto a un amigo y jugará la misma partida. Compartir es opcional.", "newRun": "Nueva expedición",
+  "shareHint": "Envía el enlace a un amigo y mira si te supera. Compartir es opcional.", "newRun": "Nueva expedición",
   "restart": "Empezar de cero",
   "slow": "Lento (0.8×)",
   "assistNote": "Los récords en modo lento llevan la insignia ASSIST y no generan enlaces de reto.",
@@ -261,7 +262,7 @@
    }
   ],
   "shareText": "¡Soy \"{name}\"! ¿Y tú? 10 preguntas y comparamos resultados → {url}",
-  "shareHint": "Si lo envías, tu amigo descubre su personaje en 10 preguntas y podéis comparar resultados. Es totalmente opcional.",
+  "shareHint": "Envía el enlace a un amigo para que lo pruebe. Es totalmente opcional.",
   "cardCta": "¿Qué personaje eres tú?",
   "rTitle": "Mi personaje de juego: {name}",
   "typeIntro": "Si te salió este personaje",

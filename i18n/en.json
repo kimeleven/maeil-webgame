@@ -60,6 +60,7 @@
   "sub": "Four games, one character quiz, one friend chemistry check. No install.",
   "subSeason": "Whether exams are done or not, take a 30-second break.",
   "subSeason2": "Chilly November — one 30-second run, no install.",
+  "subSeason3": "The last month of the year — one run today.",
   "cards": {
    "play": {
     "t": "Gate Rush",
@@ -155,7 +156,7 @@
   },
   "start": "Launch",
   "resume": "Keep running",
-  "shareHint": "Send a friend your score as a challenge — they play the same run. Sharing is always optional.", "newRun": "New run",
+  "shareHint": "Send a friend the link — see if they can beat you. Sharing is optional.", "newRun": "New run",
   "restart": "Start over",
   "slow": "Slow (0.8×)",
   "assistNote": "Slow mode records get an ASSIST badge and can't create challenge links.",
@@ -261,7 +262,7 @@
    }
   ],
   "shareText": "I'm \"{name}\"! What will you get? 10 questions, then compare results → {url}",
-  "shareHint": "If you send it, your friend can find their own character in 10 questions and you can compare results. Totally optional.",
+  "shareHint": "Send a friend the link — see if they can beat you. Totally optional.",
   "cardCta": "Which character are you?",
   "rTitle": "My play character: {name}",
   "typeIntro": "If you got this character",

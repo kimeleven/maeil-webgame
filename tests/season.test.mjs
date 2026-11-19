@@ -28,3 +28,16 @@ test('6 languages have sub/subSeason/subSeason2 and built home carries both span
     assert.ok(html.includes(`/${l}/friends/things-to-do/`));
   }
 });
+
+test('SEASON3 window: 12/01~12/31 KST, 6 languages carry subSeason3 in built home', async () => {
+  const { SEASON2_END: e2, SEASON3_END: e3, inWindow: w } = await import('../public/js/season.js');
+  assert.equal(e3, 1798729200000);
+  assert.equal(w(kst('2026-11-30T23:59:59'), e2, e3), false);
+  assert.equal(w(kst('2026-12-01T00:00:00'), e2, e3), true);
+  assert.equal(w(kst('2026-12-31T23:59:59'), e2, e3), true);
+  assert.equal(w(kst('2027-01-01T00:00:00'), e2, e3), false);
+  for (const l of ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br']) {
+    const D = JSON.parse(readFileSync(`i18n/${l}.json`, 'utf8')).lobby;
+    assert.ok(D.subSeason3 && readFileSync(`public/${l}/index.html`, 'utf8').includes(D.subSeason3), l);
+  }
+});
