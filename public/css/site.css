@@ -1,6 +1,6 @@
 :root{--bg:#07080c;--panel:rgba(255,255,255,.045);--edge:rgba(255,255,255,.09);--fg:#e8eaf0;--fg2:rgba(232,234,240,.88);--muted:rgba(214,219,232,.72);--fill:rgba(255,255,255,.06);--fill2:rgba(255,255,255,.09);--sep:rgba(255,255,255,.08);--accent:#6366f1;--accent2:#22d3ee;--link:#8b9cff;--danger:#ff5a5f;--ok:#4ade80;--warn:#facc15;--grad:linear-gradient(135deg,#4f46e5,#0891b2);--glass:rgba(10,11,18,.62);--ease:cubic-bezier(.22,1,.36,1);color-scheme:dark}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{overflow-x:clip;-webkit-text-size-adjust:100%}
 body{margin:0;color:var(--fg);font:16px/1.65 -apple-system,"SF Pro","Apple SD Gothic Neo","Pretendard Variable","Hiragino Sans","PingFang SC","Noto Sans JP","Noto Sans SC",system-ui,sans-serif;word-break:keep-all;overflow-wrap:anywhere;background:radial-gradient(900px 500px at 85% -10%,rgba(79,70,229,.38),transparent 70%),radial-gradient(700px 500px at -5% 45%,rgba(6,182,212,.2),transparent 70%),#07080c;background-attachment:fixed;min-height:100vh}
 a{color:var(--link)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
@@ -62,8 +62,8 @@ code.sel{display:block;user-select:all;-webkit-user-select:all;padding:12px;bord
 .pair{display:flex;justify-content:center;gap:10px;align-items:flex-end}
 .pair img{width:min(40vw,180px)}
 .pair img:first-child{animation:walkL 1s var(--ease) both}.pair img:last-child{animation:walkR 1s var(--ease) both}
-@keyframes walkL{from{transform:translateX(-60px);opacity:0}to{transform:none;opacity:1}}
-@keyframes walkR{from{transform:translateX(60px);opacity:0}to{transform:none;opacity:1}}
+@keyframes walkL{from{transform:translateX(-24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes walkR{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
 .members{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
 .members li{display:flex;gap:12px;align-items:center}
 .members img{width:52px;height:52px}

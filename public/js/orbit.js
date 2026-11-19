@@ -24,6 +24,7 @@
     const d = { g: 'orbit', from, ...data }; if (qa) d.qa = '1';
     (window.__trackLog = window.__trackLog || []).push({ name, ...d });
     try { if (window.va) window.va('event', { name, data: d }); } catch {}
+    try { if (window.gev) window.gev(name, d); } catch {} // own OCI collection (1119-09, same as magnet); share_fail dropped by gev
   };
   if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && !window.va) { window.va = function () { (window.vaq = window.vaq || []).push(arguments); }; const sc = document.createElement('script'); sc.defer = true; sc.src = '/_vercel/insights/script.js'; document.head.append(sc); }
   let runOpen = false; // true between play_start and play_end of one run (dedupe)

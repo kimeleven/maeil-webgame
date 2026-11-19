@@ -259,12 +259,13 @@ ${WEBGAME_BODY}
   const jsonld = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: WEBGAME.title, description: WEBGAME.desc, inLanguage: D.htmlLang, url: self }, { '@type': 'FAQPage', mainEntity: WEBGAME_FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }, { '@type': 'ItemList', name: WEBGAME.h1, itemListElement: cards.map(([name, p], i) => ({ '@type': 'ListItem', position: i + 1, name, url: url('ko', p) })) }] };
   let html = shell('ko', 'webgame', suf, main, { title: WEBGAME.title, desc: WEBGAME.desc, og: '/og/site-ko.png', jsonld });
   html = html.replace(/<link rel="alternate"[^>]*>/g, '').replace(/<details class="lang">.*?<\/details>/s, '');
+  html = html.replace('</head>', WEBGAME_ALT + '</head>');
   write(`ko/${suf}index.html`, html);
   return self;
 }
 
 
-// 1119-08: /en/webgame/·/ja/webgame/ (hreflang en↔ja 상호). 다른 언어는 후속.
+// 1119-08: /en·/ja /webgame/, 1119-09: zh-hans·es·pt-br 추가 — 6언어 hreflang 상호.
 const WEBGAME_X = {
   en: { link: 'All web games', title: 'Free Web Games — No Install, No Login, 30-Second Rounds', h1: 'Free web games you can play right now', desc: 'Looking for a quick browser game? Four free web games, 30–90 seconds a round, on phone or PC. No install, no sign-up.',
     cards: [['gate-rush', 'Pick a gate, grow your squad and beat the boss in a 30-second runner.'], ['magnet-harbor', 'Stack swinging cargo with a magnet crane and ship boats in 90 seconds.'], ['orbit-switch', 'Tap to switch orbits and dodge obstacles for 90 seconds.'], ['echo-courier', 'Remember your echo trail and deliver along the same route for 90 seconds.']],
@@ -276,8 +277,24 @@ const WEBGAME_X = {
     h2a: 'ブラウザゲームの選び方', pa: 'ゲートラッシュは1回約30秒、マグネットハーバー・オービットスイッチ・残像デリバリーは約90秒です。操作はドラッグかタップだけなので、すぐ始められます。',
     h2b: 'インストール不要のブラウザゲームとは', pb: 'ブラウザゲームはアプリを入れずに、リンクを開くだけで遊べるゲームです。登録も不要で、スマホでもPCでも同じアドレスで遊べます。挑戦リンクの共有は任意です。',
     faq: [['無料で遊べますか？', 'はい。4種すべて無料で、課金や購読はありません。'], ['登録は必要ですか？', 'いいえ。ページを開いてスタートを押すだけです。ニックネームはスコアを共有する時だけ使います。'], ['スマホでも遊べますか？', 'はい。スマホでもPCでも同じアドレスで開けます。'], ['1回はどのくらいですか？', 'ゲートラッシュは約30秒、ほかの3種は約90秒です。']], faqH: 'よくある質問', home: 'まいにちアーケードのホームへ' },
+  'zh-hans': { link: '网页游戏合集', title: '免费网页游戏合集 — 免安装、免登录的30秒小游戏', h1: '打开就能玩的免费网页游戏', desc: '想打发时间？4款免费网页游戏，每局30至90秒，手机电脑都能玩，无需安装、无需注册。',
+    cards: [['gate-rush', '选择闸门壮大队伍，30秒内击败终点Boss的跑酷游戏。'], ['magnet-harbor', '用磁力吊机堆叠摇晃的货物，90秒内让货船出港。'], ['orbit-switch', '点击切换轨道躲避障碍的90秒游戏。'], ['echo-courier', '记住残影轨迹，沿着同一路线送货的90秒游戏。']],
+    h2a: '如何挑选网页游戏', pa: '闸门冲刺每局约30秒，磁力港口、轨道切换和残影快递每局约90秒。操作只有拖动或点击，几秒就能上手。',
+    h2b: '什么是免安装的网页游戏？', pb: '网页游戏直接在浏览器中运行：打开链接就能玩，无需下载，也无需创建账号，手机和电脑都能用。把挑战链接分享给朋友完全是自愿的。',
+    faq: [['这些网页游戏免费吗？', '是的，4款全部免费，没有付费或订阅。'], ['需要注册吗？', '不需要。打开页面点击开始即可。只有在你选择分享成绩时才会用到昵称。'], ['可以在手机上玩吗？', '可以。手机和电脑浏览器使用同一个地址。'], ['一局要多久？', '闸门冲刺约30秒，其余三款约90秒。']], faqH: '常见问题', home: '返回每日街机' },
+  es: { link: 'Todos los juegos web', title: 'Juegos web gratis — sin instalar ni registrarte, partidas de 30 s', h1: 'Juegos web gratis para jugar ahora mismo', desc: '¿Buscas un juego rápido en el navegador? Cuatro juegos web gratis, de 30 a 90 segundos, en móvil o PC. Sin instalar ni registrarte.',
+    cards: [['gate-rush', 'Elige una puerta, haz crecer tu escuadrón y vence al jefe en 30 segundos.'], ['magnet-harbor', 'Apila carga que se balancea con una grúa magnética y zarpa en 90 segundos.'], ['orbit-switch', 'Toca para cambiar de órbita y esquiva obstáculos durante 90 segundos.'], ['echo-courier', 'Recuerda tu estela y entrega por la misma ruta durante 90 segundos.']],
+    h2a: 'Cómo elegir un juego web', pa: 'Gate Rush dura unos 30 segundos por partida. Magnet Harbor, Orbit Switch y Echo Courier duran unos 90 segundos. Solo arrastras o tocas, así que empiezas en segundos.',
+    h2b: '¿Qué es un juego web sin instalación?', pb: 'Un juego web se ejecuta en tu navegador: abres el enlace y juegas. No hay nada que descargar ni cuenta que crear, en móvil o en ordenador. Compartir un reto con un amigo es siempre opcional.',
+    faq: [['¿Estos juegos web son gratis?', 'Sí. Los cuatro son gratis, sin compras ni suscripciones.'], ['¿Necesito registrarme?', 'No. Abre la página y pulsa empezar. El apodo solo se usa si decides compartir tu puntuación.'], ['¿Puedo jugar en el móvil?', 'Sí. La misma dirección funciona en el navegador del móvil y del ordenador.'], ['¿Cuánto dura una partida?', 'Gate Rush dura unos 30 segundos; los otros tres, unos 90.']], faqH: 'Preguntas frecuentes', home: 'Volver a Arcade Diario' },
+  'pt-br': { link: 'Todos os jogos web', title: 'Jogos web grátis — sem instalar nem cadastro, rodadas de 30 s', h1: 'Jogos web grátis para jogar agora', desc: 'Quer um jogo rápido no navegador? Quatro jogos web grátis, de 30 a 90 segundos, no celular ou no PC. Sem instalar e sem cadastro.',
+    cards: [['gate-rush', 'Escolha um portão, aumente seu esquadrão e vença o chefe em 30 segundos.'], ['magnet-harbor', 'Empilhe cargas balançando com um guindaste magnético e parta em 90 segundos.'], ['orbit-switch', 'Toque para trocar de órbita e desviar de obstáculos por 90 segundos.'], ['echo-courier', 'Lembre o rastro do eco e entregue pelo mesmo caminho por 90 segundos.']],
+    h2a: 'Como escolher um jogo web', pa: 'Gate Rush leva cerca de 30 segundos por rodada. Magnet Harbor, Orbit Switch e Echo Courier levam cerca de 90 segundos. Você só arrasta ou toca, então começa em segundos.',
+    h2b: 'O que é um jogo web sem instalação?', pb: 'Um jogo web roda no navegador: abra o link e jogue. Não há nada para baixar nem conta para criar, no celular ou no computador. Compartilhar um desafio com um amigo é sempre opcional.',
+    faq: [['Esses jogos web são grátis?', 'Sim. Os quatro são grátis, sem compras nem assinatura.'], ['Preciso me cadastrar?', 'Não. Abra a página e toque em começar. O apelido só é usado se você escolher compartilhar a pontuação.'], ['Posso jogar no celular?', 'Sim. O mesmo endereço funciona no navegador do celular e do computador.'], ['Quanto dura uma rodada?', 'Gate Rush leva cerca de 30 segundos; os outros três, cerca de 90.']], faqH: 'Perguntas frequentes', home: 'Voltar ao Arcade Diário' },
 };
-const WEBGAME_ALT = ['en', 'ja'].map((x) => `<link rel="alternate" hreflang="${x}" href="${SITE}/${x}/webgame/">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/en/webgame/">`;
+const WEBGAME_ALT = LANGS
+  .map((x) => `<link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'webgame/')}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/en/webgame/">`;
 function buildWebgameX(l) {
   const X = WEBGAME_X[l], D = dict[l], suf = 'webgame/', self = url(l, suf);
   const names = { 'gate-rush': D.game.name, 'magnet-harbor': MT[l].name, 'orbit-switch': OT[l].name, 'echo-courier': ET[l].name };
@@ -338,7 +355,7 @@ export function build() {
   for (const l of MAGNET_LANGS) urls.push(`  <url><loc>${url(l, 'play/magnet-harbor/')}</loc>${MAGNET_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/magnet-harbor/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/magnet-harbor/')}"/></url>`);
   for (const l of ECHO_LANGS) urls.push(`  <url><loc>${url(l, 'play/echo-courier/')}</loc>${ECHO_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/echo-courier/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/echo-courier/')}"/></url>`);
   for (const l of ORBIT_LANGS) urls.push(`  <url><loc>${url(l, 'play/orbit-switch/')}</loc>${ORBIT_LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, 'play/orbit-switch/')}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', 'play/orbit-switch/')}"/></url>`);
-  urls.push(`  <url><loc>${webgameUrl}</loc></url>`);
+  urls.push(`  <url><loc>${webgameUrl}</loc>${WEBGAME_ALT.replace(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g, '<xhtml:link rel="alternate" hreflang="$1" href="$2"/>')}</url>`);
   for (const u of webgameX) urls.push(`  <url><loc>${u}</loc>${WEBGAME_ALT.replace(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g, '<xhtml:link rel="alternate" hreflang="$1" href="$2"/>')}</url>`);
   for (const u of buildPuzzle()) urls.push(`  <url><loc>${u}</loc></url>`);
   for (const u of buildCalc()) urls.push(`  <url><loc>${u}</loc><lastmod>${CALC_LASTMOD}</lastmod></url>`);
