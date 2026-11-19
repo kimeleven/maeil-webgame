@@ -95,7 +95,7 @@ function pageBody(l, key) {
   const disc = `<p class="disc" data-disclaimer>${esc(q.disclaimer)}</p>`;
   if (key === 'lobby') {
     const c = D.lobby.cards;
-    return `${hwBanner(D)}<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}<span data-from="0" data-until="1794495600000" hidden> ${esc(D.lobby.subSeason)}</span><span data-from="1794495600000" data-until="1796050800000" hidden> ${esc(D.lobby.subSeason2)}</span></p></section>
+    return `${hwBanner(D)}<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(D.lobby.h1)}</h1><p>${esc(D.lobby.sub)}<span data-from="0" data-until="1794495600000" hidden> ${esc(D.lobby.subSeason)}</span><span data-from="1794495600000" data-until="1796050800000" hidden> ${esc(D.lobby.subSeason2)}</span><span data-from="1796050800000" data-until="1798729200000" hidden> ${esc(D.lobby.subSeason3)}</span></p></section>
 ${l === 'ko' ? PUZZLE_HOME + CALC_HOME + '<section><h2>심심할 때 5분게임, 30초면 시작</h2><p class="muted">5분게임 찾는 중이라면 게이트 러시 한 판부터. <a href="/ko/webgame/">웹겜 모아보기</a></p></section>' : ''}<nav class="grid3" aria-label="${esc(D.brand)}">
 <a class="card cat hl" href="/${l}/play/gate-rush/" aria-label="${esc(c.play.aria)}"><span class="tag">${esc(D.nav.play)}</span><img src="/img/gate-rush.svg" width="150" height="150" alt=""><h3>${esc(c.play.t)}</h3><p>${esc(c.play.d)}</p><span class="btn go">${esc(c.play.cta)}</span></a>
 <a class="card cat" href="/${l}/me/play-character/"><span class="tag">${esc(D.nav.me)}</span>${charImg('SPH', 150)}<h3>${esc(c.me.t)}</h3><p>${esc(c.me.d)}</p><span class="btn ghost go">${esc(c.me.cta)}</span></a>

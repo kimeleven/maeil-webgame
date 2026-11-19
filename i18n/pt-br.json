@@ -60,6 +60,7 @@
   "sub": "4 jogos, um teste de personagem e química com amigos. Sem instalar.",
   "subSeason": "Tenha terminado as provas ou não, descanse 30 segundos.",
   "subSeason2": "Novembro esfriou: uma partida de 30 segundos, sem instalar.",
+  "subSeason3": "O último mês do ano: uma partida hoje.",
   "cards": {
    "play": {
     "t": "Gate Rush",
@@ -155,7 +156,7 @@
   },
   "start": "Partiu!",
   "resume": "Continuar correndo",
-  "shareHint": "Envie sua pontuação como desafio a um amigo, que joga a mesma partida. Compartilhar é opcional.", "newRun": "Nova expedição",
+  "shareHint": "Envie o link a um amigo e veja se ele te supera. Compartilhar é opcional.", "newRun": "Nova expedição",
   "restart": "Recomeçar do zero",
   "slow": "Devagar (0.8×)",
   "assistNote": "Recordes no modo devagar ganham o selo ASSIST e não geram link de desafio.",
@@ -261,7 +262,7 @@
    }
   ],
   "shareText": "Eu sou \"{name}\"! E você? 10 perguntas e comparamos o resultado → {url}",
-  "shareHint": "Se você enviar, seu amigo descobre o personagem dele em 10 perguntas e vocês comparam os resultados. É totalmente opcional.",
+  "shareHint": "Envie o link a um amigo para ele experimentar. É totalmente opcional.",
   "cardCta": "Qual personagem é você?",
   "rTitle": "Meu personagem de jogo: {name}",
   "typeIntro": "Se deu esse personagem",
