@@ -147,7 +147,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
     modal.append(status);
     import('./weekly.js').then(async (m) => { const c = await m.weeklyCard(lang); if (c && !ov.hidden && modal.querySelector('[data-share-hint]')) { c.style.marginTop = '12px'; modal.append(c); } }).catch(() => {});
   }
-  function start() { if (run.stage === 1) { track('play_start', { mode: challenge ? 'challenge' : 'daily' }); gv('play_start', { from: challenge ? 'c' : 'direct' }); } G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
+  function start() { if (run.stage === 1) { track('play_start', { mode: challenge ? 'challenge' : 'daily' }); gv('play_start', { from: challenge || landing ? 'c' : 'direct' }); } G.startStage(run); wasRunning = true; ov.hidden = true; fx = []; parts = []; box.focus({ preventScroll: true }); persist(); }
 
   // ---------- input ----------
   const keys = {};

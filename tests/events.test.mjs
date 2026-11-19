@@ -219,7 +219,8 @@ test('magnet from: reddit-webgames counted, missing/outside → unknown, qa drop
   const mg = s.body.games.byGame.magnet;
   assert.deepEqual(mg.playStartByFrom, { 'reddit-webgames': 1, itch: 1, direct: 0, unknown: 3, c: 0 });
   assert.equal(mg.plays, 5);
-  assert.ok(!('playStartByFrom' in s.body.games.byGame.orbit));
+  assert.ok('playStartByFrom' in s.body.games.byGame.orbit); // 1119-09: orbit exposes from too
+  assert.ok(!('playStartByFrom' in s.body.games.byGame.echo));
   assert.ok(!/127\.0\.0\.1|::1|x-forwarded|evil\.example/.test(JSON.stringify(s.body)));
   // non-magnet games keep strict from validation
   assert.equal((await post({ v: 1, events: [ev('play_start', { from: 'reddit-webgames' })] })).status, 400);

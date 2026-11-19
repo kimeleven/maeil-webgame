@@ -57,6 +57,20 @@ test('1029-09: all 4 games interlinked in 6 langs; magnet-harbor title/desc uniq
   }
 });
 
+test('1119-09: 6-lang /webgame/ 200 files, hreflang 6+x-default mutual, sitemap, home link', () => {
+  const sm = readFileSync(new URL('../public/sitemap.xml', import.meta.url), 'utf8');
+  for (const l of LANGS) {
+    const h = read(l, 'webgame/');
+    assert.ok(h.includes(`rel="canonical" href="https://www.playtoday.cloud/${l}/webgame/"`), `${l} canonical`);
+    assert.equal((h.match(/rel="alternate" hreflang="/g) || []).length, 7, `${l} hreflang count`);
+    for (const x of LANGS) assert.ok(h.includes(`href="https://www.playtoday.cloud/${x}/webgame/"`), `${l} → ${x}`);
+    assert.ok(h.includes('hreflang="x-default"'));
+    assert.ok(sm.includes(`<loc>https://www.playtoday.cloud/${l}/webgame/</loc>`), `${l} sitemap`);
+    assert.ok(hrefs(read(l, '')).includes(`/${l}/webgame/`), `${l} home → webgame`);
+    assert.ok(!/ratingValue|aggregateRating/.test(h));
+  }
+});
+
 test('1119-08: /en·/ja /webgame/ landings with hreflang, ko 5분게임, lobby title lengths', () => {
   for (const l of ['en', 'ja']) {
     const h = read(l, 'webgame/');
