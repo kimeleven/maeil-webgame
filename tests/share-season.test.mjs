@@ -16,3 +16,9 @@ test('6 languages carry challengeStart (game, distinct from challenge) and quiz.
   }
   assert.match(readFileSync('public/js/rush.js', 'utf8'), /g\.challengeStart/);
 });
+
+test('landing (/c/ without ?vs) also uses the challengeStart button and sub line [1120-21]', () => {
+  const s = readFileSync('public/js/rush.js', 'utf8');
+  assert.match(s, /btn\(inv \? \(g\.challengeStart/);
+  assert.match(s, /if \(inv\) modal\.querySelector\('\.stack'\)/);
+});
