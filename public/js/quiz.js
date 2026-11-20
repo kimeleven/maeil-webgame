@@ -3,6 +3,7 @@ import { scoreQuiz, bestBuddy, COLORS } from './logic.js';
 import { quizCard, saveCanvas, shareOrCopy } from './card.js';
 import { api } from './net.js';
 import { track } from './track.js';
+import { applySeason, SEASON2_END, SEASON3_END } from './season.js';
 // 1024-21: anonymous server-side funnel (gev.js, game_events); never throws
 const gv = (n, d) => { try { window.gev && window.gev(n, Object.assign({ g: 'quiz' }, d)); } catch (e) {} };
 
@@ -42,7 +43,8 @@ export function mountQuiz(el, D) {
 export function showResult(el, D, code, pct, retry) {
   try { localStorage.setItem('play-character', JSON.stringify({ code, pct, at: Date.now() })); } catch {}
   track('result_land', { from: 'quiz' });
-  el.innerHTML = resultHtml(D, code, pct) + `<p class="muted" data-share-hint style="margin:16px 0 6px">${esc(D.quiz.shareHint)}</p><div class="row" style="margin-top:6px"><button class="btn" data-share>${esc(D.cta.share)}</button><button class="btn ghost" data-save>${esc(D.cta.save)}</button><a class="btn ghost" href="/${D.lang}/friends/chemistry/">${esc(D.cta.chem)}</a><button class="btn ghost" data-retry>${esc(D.cta.retry)}</button></div><p class="status" role="status"></p>`;
+  el.innerHTML = resultHtml(D, code, pct) + `<p class="muted" data-share-hint style="margin:16px 0 6px">${esc(D.quiz.shareHint)}</p>${D.quiz.shareSeason ? `<p class="muted" data-season-share data-from="${SEASON2_END}" data-until="${SEASON3_END}" hidden style="margin:0 0 6px">${esc(D.quiz.shareSeason)}</p>` : ''}<div class="row" style="margin-top:6px"><button class="btn" data-share>${esc(D.cta.share)}</button><button class="btn ghost" data-save>${esc(D.cta.save)}</button><a class="btn ghost" href="/${D.lang}/friends/chemistry/">${esc(D.cta.chem)}</a><button class="btn ghost" data-retry>${esc(D.cta.retry)}</button></div><p class="status" role="status"></p>`;
+  applySeason(el);
   const st = el.querySelector('.status');
   el.querySelector('[data-save]').onclick = async () => saveCanvas(await quizCard(D, code, pct), `play-character-${code}.png`);
   el.querySelector('[data-share]').onclick = async () => {
