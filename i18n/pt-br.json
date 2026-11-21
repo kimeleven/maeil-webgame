@@ -261,7 +261,7 @@
     "b": "Quietinho(a), sozinho(a)"
    }
   ],
-  "shareText": "Eu sou \"{name}\"! E você? 10 perguntas e comparamos o resultado → {url}",
+  "shareText": "Sou '{name}'! E você, qual é? Só 1 minuto → {url}",
   "shareHint": "Envie o link a um amigo para ele experimentar. É totalmente opcional.",
   "shareSeason": "O último mês do ano: que tal comparar o resultado com um amigo?",
   "cardCta": "Qual personagem é você?",

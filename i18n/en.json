@@ -261,7 +261,7 @@
     "b": "Somewhere quiet by myself"
    }
   ],
-  "shareText": "I'm \"{name}\"! What will you get? 10 questions, then compare results → {url}",
+  "shareText": "I got '{name}'! Which character are you? One minute to find out → {url}",
   "shareHint": "Send a friend the link — see if they can beat you. Totally optional.",
   "shareSeason": "The last month of the year — compare results with a friend?",
   "cardCta": "Which character are you?",

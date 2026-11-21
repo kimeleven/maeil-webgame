@@ -54,3 +54,13 @@ test('applySeason boundary on built home: season3 span hidden 11/30 23:59:59 KST
     assert.deepEqual(run(kst('2026-12-01T00:00:00')), [true, true, false], `${l} after`);
   }
 });
+
+test('season boundary 11/30 23:59:59 vs 12/01 00:00:00 KST (6 langs carry subSeason3)', async () => {
+  const { SEASON2_END: e2, SEASON3_END: e3, inWindow: w } = await import('../public/js/season.js');
+  for (const l of ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br']) {
+    const D = JSON.parse(readFileSync(`i18n/${l}.json`, 'utf8')).lobby;
+    assert.ok(D.subSeason3 && D.subSeason3.length > 5, l);
+    assert.equal(w(kst('2026-11-30T23:59:59'), e2, e3), false, l);
+    assert.equal(w(kst('2026-12-01T00:00:00'), e2, e3), true, l);
+  }
+});
