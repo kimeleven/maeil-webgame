@@ -41,3 +41,16 @@ test('SEASON3 window: 12/01~12/31 KST, 6 languages carry subSeason3 in built hom
     assert.ok(D.subSeason3 && readFileSync(`public/${l}/index.html`, 'utf8').includes(D.subSeason3), l);
   }
 });
+
+// 1121-09: 6 langs x boundary (11/30 23:59:59 KST hidden, 12/01 00:00:00 KST shown) via applySeason on the built home spans.
+test('applySeason boundary on built home: season3 span hidden 11/30 23:59:59 KST, shown 12/01 00:00:00 KST, 6 langs', async () => {
+  const { applySeason } = await import('../public/js/season.js');
+  for (const l of ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br']) {
+    const html = readFileSync(`public/${l}/index.html`, 'utf8');
+    const spans = [...html.matchAll(/<span data-from="(\d+)" data-until="(\d+)" hidden>/g)].map((m) => ({ dataset: { from: m[1], until: m[2] }, hidden: true }));
+    assert.equal(spans.length, 3, l);
+    const run = (now) => { spans.forEach((s) => { s.hidden = true; }); applySeason({ querySelectorAll: () => ({ forEach: (f) => spans.forEach(f) }) }, now); return spans.map((s) => s.hidden); };
+    assert.deepEqual(run(kst('2026-11-30T23:59:59')), [true, false, true], `${l} before`);
+    assert.deepEqual(run(kst('2026-12-01T00:00:00')), [true, true, false], `${l} after`);
+  }
+});
