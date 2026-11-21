@@ -39,7 +39,7 @@ async function main() {
         const T = D.types[s.payload.code];
         el.innerHTML = `<div class="result"><img class="char" src="/img/chars/${s.payload.code}.svg" width="240" height="240" alt="${esc(T.name)}"><div><span class="tag">${esc(D.quiz.title)}</span><h1>${esc(T.name)}</h1><p><b>${esc(T.one)}</b></p><p>${esc(T.desc)}</p><div class="row"><a class="btn" data-try-too href="/${lang}/me/play-character/">${esc(D.cta.tryToo)}</a><button type="button" class="btn ghost" data-reshare>${esc(D.cta.share)}</button><a class=\"sublink\" href=\"/${lang}/friends/chemistry/\">${esc(D.cta.chem)}</a></div></div></div><p class=\"disc">${esc(D.quiz.disclaimer)}</p>`;
         document.title = `${T.name} | ${D.brand}`;
-        const rs = el.querySelector('[data-reshare]'); if (rs) rs.addEventListener('click', async () => { track('share_click', { from: 'r' }); try { if (navigator.share) await navigator.share({ url: location.href }); else await navigator.clipboard.writeText(location.href); } catch (e) {} });
+        const rs = el.querySelector('[data-reshare]'); if (rs) rs.addEventListener('click', async () => { track('share_click', { from: 'r' }); try { const txt = fmt(D.quiz.shareText, { name: T.name, url: location.href }); if (navigator.share) await navigator.share({ title: D.quiz.title, text: txt, url: location.href }); else await navigator.clipboard.writeText(txt); } catch (e) {} });
         const tt = el.querySelector('[data-try-too]'); if (tt) tt.addEventListener('click', () => { track('share_cta_click', { from: 'r' }); try { window.gev && window.gev('share_cta_click', { g: 'quiz', from: 'r' }); } catch (e) {} });
       } else {
         const p = s.payload;

@@ -261,7 +261,7 @@
     "b": "Tranquilo(a), a solas"
    }
   ],
-  "shareText": "¡Soy \"{name}\"! ¿Y tú? 10 preguntas y comparamos resultados → {url}",
+  "shareText": "¡Soy '{name}'! ¿Y tú cuál eres? Solo 1 minuto → {url}",
   "shareHint": "Envía el enlace a un amigo para que lo pruebe. Es totalmente opcional.",
   "shareSeason": "El último mes del año: ¿comparas resultados con un amigo?",
   "cardCta": "¿Qué personaje eres tú?",
