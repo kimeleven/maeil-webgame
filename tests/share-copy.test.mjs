@@ -20,6 +20,8 @@ test('game.challengeReshareText exists in 6 languages with {url}, no time-claim,
     const t = load(l).game.challengeReshareText;
     assert.ok(t && t.includes('{url}'), l);
     assert.ok(!TIME_CLAIM.test(t), l);
+    assert.ok(!/30\s*(초|秒|seconds?|segundos)/i.test(t), `${l}: unmeasured 30s claim`);
+    assert.ok(!/(email|phone|연락처|電話|电话|teléfono|telefone)/i.test(t), l);
   }
 });
 
