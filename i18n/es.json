@@ -179,7 +179,7 @@
   "target": "Meta: sector {stage} · {score} puntos",
   "beat": "¡Reto superado! Venciste su récord",
   "seedLabel": "Recorrido",
-  "challenge": "Jugar esta misma partida", "challengeSub": "30 segundos · sin instalar ni registrarte", "challengeStart": "Desafío recibido: empezar ya",
+  "challenge": "Jugar esta misma partida", "challengeSub": "30 segundos · sin instalar ni registrarte", "challengeStart": "Desafío recibido: empezar ya", "challengeReshareText": "¡Reto Gate Rush! 30 segundos, la misma partida, véncenos → {url}",
   "ambush": "¡Emboscada!",
   "close": "¡Por poco!",
   "challengeShareText": "Gate Rush: sector {stage}, {score} pts. 30 segundos, misma partida. Supérame → {url}", "shareText": "Superé el sector {stage} en Gate Rush. Misma partida, ¿me ganas? → {url}",
@@ -261,7 +261,7 @@
     "b": "Tranquilo(a), a solas"
    }
   ],
-  "shareText": "¡Soy '{name}'! ¿Y tú cuál eres? Solo 1 minuto → {url}",
+  "shareText": "¡Soy '{name}'! ¿Y tú cuál eres? 10 preguntas, compara tu resultado con el mío → {url}",
   "shareHint": "Envía el enlace a un amigo para que lo pruebe. Es totalmente opcional.",
   "shareSeason": "El último mes del año: ¿comparas resultados con un amigo?",
   "cardCta": "¿Qué personaje eres tú?",

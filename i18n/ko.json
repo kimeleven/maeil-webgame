@@ -58,7 +58,7 @@
   "readyTitle": "구역 {stage} 출격", "readyDesc": "30초 동안 게이트를 고르고 공격을 피하세요. 보스 방어 {boss}.",
   "clearTitle": "구역 {stage} 돌파!", "choose": "강화 하나를 고르세요", "nextInfo": "다음 구역 {stage} · 보스 방어 {boss}", "newPattern": "새 공격: {p}",
   "lostTitle": "원정 종료", "lostDesc": "{stage}구역까지 · {score}점", "paused": "잠시 멈춤", "pausedDesc": "돌아오면 이어서 달릴 수 있어요.",
-  "challengeTitle": "도전장이 왔어요", "target": "목표: {stage}구역 · {score}점", "beat": "도전 성공! 상대 기록을 넘었어요", "seedLabel": "코스", "challenge": "이 판 그대로 도전하기", "challengeSub": "30초 · 설치·가입 없음", "challengeStart": "도전 받았어요 — 바로 시작",
+  "challengeTitle": "도전장이 왔어요", "target": "목표: {stage}구역 · {score}점", "beat": "도전 성공! 상대 기록을 넘었어요", "seedLabel": "코스", "challenge": "이 판 그대로 도전하기", "challengeSub": "30초 · 설치·가입 없음", "challengeStart": "도전 받았어요 — 바로 시작", "challengeReshareText": "게이트 러시 도전장 도착! 30초면 끝나, 같은 판에서 붙어 보자 → {url}",
   "ambush": "습격!", "close": "간발!",
   "challengeShareText": "게이트 러시 {stage}구역 {score}점! 30초면 끝나, 같은 판에서 나를 이겨 봐 → {url}", "shareText": "게이트 러시 {stage}구역 돌파! 같은 판에서 나를 이겨 봐 → {url}",
   "cardCta": "같은 판에서 나를 이겨 봐", "rTitle": "게이트 러시 {stage}구역 기록"
@@ -82,7 +82,7 @@
    { "q": "영화를 보고 나서 먼저 떠오르는 건", "a": "인물의 감정", "b": "이야기의 허점" },
    { "q": "충전이 되는 순간은", "a": "사람들과 왁자지껄할 때", "b": "조용히 혼자 있을 때" }
   ],
-  "shareText": "나는 '{name}'! 너는 어떤 캐릭터일까? 1분이면 나와 → {url}",
+  "shareText": "나는 '{name}'! 너는 어떤 캐릭터일까? 10문항, 결과 같이 비교해 보자 → {url}",
   "shareHint": "친구도 해보게 링크 한 번 보내볼까요? 선택은 자유예요.",
   "shareSeason": "올해의 마지막 한 달, 친구와 결과 비교해 볼까요",
   "cardCta": "너는 어떤 캐릭터야?", "rTitle": "나의 놀이 캐릭터: {name}", "typeIntro": "이 캐릭터가 나왔다면", "takeQuiz": "나도 테스트하기"
