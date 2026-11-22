@@ -179,7 +179,7 @@
   "target": "Target: sector {stage} · {score} pts",
   "beat": "Challenge won! You beat their record",
   "seedLabel": "Course",
-  "challenge": "Play this exact run", "challengeSub": "30 seconds · no install, no sign-up", "challengeStart": "Challenge accepted — start now", "challengeReshareText": "Gate Rush challenge! 30 seconds, same run — beat me → {url}",
+  "challenge": "Play this exact run", "challengeSub": "30 seconds · no install, no sign-up", "challengeStart": "Challenge accepted — start now", "challengeReshareText": "Gate Rush challenge! Same run — beat me → {url}",
   "ambush": "AMBUSH!",
   "close": "CLOSE!",
   "challengeShareText": "Gate Rush: sector {stage}, {score} pts. 30 seconds, same run. Beat me → {url}", "shareText": "I cleared sector {stage} in Gate Rush. Same run, can you beat me? → {url}",
