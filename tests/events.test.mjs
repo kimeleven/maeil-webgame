@@ -262,3 +262,11 @@ test('t_61344aaa calc events: validate + POST 202 + funnel.calc', async () => {
   const s = await stats();
   assert.ok(s.body.funnel.calc.calcUse >= 1); assert.ok(s.body.funnel.calc.bySlug.dday.shareClick >= 1); assert.ok(s.body.funnel.calc.shareByMethod.share >= 1);
 });
+
+test('share_click from=r accepted only for quiz/rush (t_8ef0959e)', () => {
+  const ok = (g, from) => !validateBatch({ v: 1, events: [ev('share_click', { g, from })] }).error;
+  assert.equal(ok('rush', 'r'), true);
+  assert.equal(ok('quiz', 'r'), true);
+  assert.equal(ok('orbit', 'r'), false);
+  assert.equal(ok('rush', 'zzz'), false);
+});
