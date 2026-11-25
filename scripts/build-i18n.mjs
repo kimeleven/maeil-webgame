@@ -248,7 +248,7 @@ const WEBGAME_BODY = `<section><h2>5분게임으로 웹겜, 이렇게 골라요<
 ${WEBGAME_FAQ.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
 <p>게임 말고 숫자 계산이 필요하면: <a href="/calc/">오늘 계산기 10종</a> · <a href="/calc/percent/">퍼센트 계산기</a> · <a href="/calc/wage/">시급 계산기</a> · <a href="/calc/age/">만 나이 계산기</a></p>
 <p>30초 게임 다음엔 나 알아보기: <a href="/ko/me/play-character/">나의 놀이 캐릭터 테스트</a> · <a href="/ko/friends/chemistry/">친구 케미 보기</a></p>`;
-const WEBGAME = { title: '웹겜 모음 — 설치·로그인 없이 5분 안에 끝나는 무료 웹게임 4종', desc: '설치와 로그인 없이 5분 안에 끝나는 무료 웹게임 모음이에요. 게이트 러시·자석 항구·궤도 스위치·잔상 배달 4종을 한 판 30~90초로, 모바일과 PC에서 바로 해요.', h1: '설치 없이 바로 하는 웹겜 4종' };
+const WEBGAME = { title: '웹겜 추천 4종 — 가입 없이 바로 하는 무료 웹게임', desc: '웹겜 추천이 필요하면 가입 없이 바로. 5분게임으로 좋은 게이트 러시·자석 항구·궤도 스위치·잔상 배달 4종, 한 판 30~90초 무료예요.', h1: '설치 없이 바로 하는 웹겜 4종' };
 function buildWebgame() {
   const D = dict.ko, suf = 'webgame/', self = url('ko', suf);
   const cards = [[D.game.name, 'play/gate-rush/', '30초 안에 문을 골라 달리는 무료 웹겜'], [MT.ko.name, 'play/magnet-harbor/', MT.ko.seoDesc], [OT.ko.name, 'play/orbit-switch/', OT.ko.seoDesc], [ET.ko.name, 'play/echo-courier/', ET.ko.seoDesc]];
@@ -267,12 +267,12 @@ ${WEBGAME_BODY}
 
 // 1119-08: /en·/ja /webgame/, 1119-09: zh-hans·es·pt-br 추가 — 6언어 hreflang 상호.
 const WEBGAME_X = {
-  en: { link: 'All web games', title: 'Free Web Games — No Install, No Login, 30-Second Rounds', h1: 'Free web games you can play right now', desc: 'Looking for a quick browser game? Four free web games, 30–90 seconds a round, on phone or PC. No install, no sign-up.',
+  en: { link: 'All web games', title: 'Free Web Games: 30-Second Rounds, No Sign-Up', h1: 'Free web games you can play right now', desc: 'Free web games you can play now: Gate Rush, Magnet Harbor, Orbit Switch and Echo Courier. 30–90 seconds a round, no install, no sign-up.',
     cards: [['gate-rush', 'Pick a gate, grow your squad and beat the boss in a 30-second runner.'], ['magnet-harbor', 'Stack swinging cargo with a magnet crane and ship boats in 90 seconds.'], ['orbit-switch', 'Tap to switch orbits and dodge obstacles for 90 seconds.'], ['echo-courier', 'Remember your echo trail and deliver along the same route for 90 seconds.']],
     h2a: 'How to pick a web game', pa: 'Gate Rush takes about 30 seconds a round. Magnet Harbor, Orbit Switch and Echo Courier take about 90 seconds. Controls are a drag or a tap, so you can start in seconds.',
     h2b: 'What is a no-install web game?', pb: 'A web game runs in your browser: open the link and play. There is nothing to download and no account to create, on phone or desktop. Sharing a challenge link with a friend is always optional.',
     faq: [['Are these web games free?', 'Yes. All four are free, with no purchase or subscription.'], ['Do I need to sign up?', 'No. Open the page and press start. A nickname is only used if you choose to share a score.'], ['Can I play on my phone?', 'Yes. The same address works on phone and desktop browsers.'], ['How long is one round?', 'Gate Rush is about 30 seconds; the other three are about 90 seconds.']], faqH: 'FAQ', home: 'Back to Daily Arcade' },
-  ja: { link: 'ブラウザゲーム一覧', title: '無料ブラウザゲーム集 — インストール・ログイン不要の30秒ゲーム', h1: '今すぐ遊べる無料ブラウザゲーム', desc: '暇つぶしに30秒ゲームを。無料ブラウザゲーム4種、1回30〜90秒、スマホでもPCでも。インストール・登録なし。',
+  ja: { link: 'ブラウザゲーム一覧', title: '30秒ゲーム無料｜ブラウザゲーム4種 登録なしですぐ', h1: '今すぐ遊べる無料ブラウザゲーム', desc: '30秒ゲームで暇つぶし。ゲートラッシュ・マグネットハーバーなど無料ブラウザゲーム4種、1回30〜90秒、スマホもPCも「登録なし」。',
     cards: [['gate-rush', 'ゲートを選んで軍団を育て、30秒でボスを突破するランゲーム。'], ['magnet-harbor', '磁石クレーンで揺れる荷物を積み、90秒で船を出港させる。'], ['orbit-switch', 'タップで軌道を切り替えて障害物を避ける90秒ゲーム。'], ['echo-courier', '残像の軌道を覚えて同じ道で届ける90秒ゲーム。']],
     h2a: 'ブラウザゲームの選び方', pa: 'ゲートラッシュは1回約30秒、マグネットハーバー・オービットスイッチ・残像デリバリーは約90秒です。操作はドラッグかタップだけなので、すぐ始められます。',
     h2b: 'インストール不要のブラウザゲームとは', pb: 'ブラウザゲームはアプリを入れずに、リンクを開くだけで遊べるゲームです。登録も不要で、スマホでもPCでも同じアドレスで遊べます。挑戦リンクの共有は任意です。',
