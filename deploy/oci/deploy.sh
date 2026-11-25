@@ -13,6 +13,8 @@ IP=193.123.228.142
 H=ubuntu@$IP
 SSH="ssh -i $HOME/.ssh/id_ed25519_mintech -o ConnectTimeout=10"
 REPO=$(cd "$(dirname "$0")/../.." && pwd)
+# GSC 소유권 메타 공개 토큰(t_1b38ef45). build-i18n.mjs가 env로 읽는다. 값을 바꾸려면 환경변수로 덮어쓴다
+export GOOGLE_SITE_VERIFICATION="${GOOGLE_SITE_VERIFICATION:-FqID5kTq-5xAX97vpykWqxMUfqJ9XXEtesRDDQA_hZQ}"
 if [ -z "${CHECK_BASE:-}" ]; then
   if dig +short www.playtoday.cloud | grep -qx "$IP"; then CHECK_BASE=https://www.playtoday.cloud; else CHECK_BASE=http://maeil.193-123-228-142.sslip.io; fi
 fi
