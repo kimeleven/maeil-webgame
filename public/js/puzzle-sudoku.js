@@ -1,6 +1,7 @@
 // 오늘의 스도쿠 UI (t_2d0c7a9f). 날짜 시드 일일판, 메모·힌트·실행취소, 완료 시 기록·연속일·공유.
 import { generateSudoku, sudokuConflicts, kstDate, SUDOKU_LEVELS, streakAfterSolve, streakShown, fmtTime, shareSudoku } from '/js/puzzle-core.js';
 
+import { copyText } from '/js/puzzle-ui.js';
 const $ = (s, r = document) => r.querySelector(s);
 const qs = new URLSearchParams(location.search);
 const override = /^\d{4}-\d{2}-\d{2}$/.test(qs.get('date') || '') ? qs.get('date') : '';
@@ -111,11 +112,7 @@ $('#sd-hint').addEventListener('click', hint);
 $('#sd-undo').addEventListener('click', () => { const h = hist.pop(); if (!h || done) return; v = h.v; notes = h.notes; hints = h.hints; paint(); persist(); });
 $('#sd-reset').addEventListener('click', () => { clearCur(); newGame(level); });
 document.querySelectorAll('.sd-lv').forEach((b) => b.addEventListener('click', () => { persist(); newGame(b.dataset.lv); }));
-$('#sd-copy').addEventListener('click', async () => {
-  const t = $('#sd-share-text').value;
-  try { if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) await navigator.share({ text: t }); else await navigator.clipboard.writeText(t); $('#sd-copy').textContent = '복사됨 ✓'; }
-  catch { $('#sd-share-text').select(); try { document.execCommand('copy'); $('#sd-copy').textContent = '복사됨 ✓'; } catch {} }
-});
+$('#sd-copy').addEventListener('click', () => copyText($('#sd-copy'), $('#sd-share-text')));
 $('#sd-close').addEventListener('click', () => { $('#sd-done').hidden = true; });
 document.addEventListener('keydown', (e) => {
   if (e.target.closest('textarea,input')) return;

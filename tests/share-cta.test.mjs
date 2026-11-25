@@ -15,3 +15,6 @@ test('quiz shareText has {name}/{url}, fits 140 chars, tryToo exists in 6 langs'
     assert.ok(D.quiz.shareHint && D.cta.tryToo, l);
   }
 });
+test('cta.beatMe has {record} in 6 langs (t_757931e4)', () => {
+  for (const l of LANGS) { const D = JSON.parse(readFileSync(new URL(`../i18n/${l}.json`, import.meta.url), 'utf8')); assert.ok(D.cta.beatMe.includes('{record}'), l); }
+});

@@ -316,7 +316,8 @@
   "share": "Share",
   "chem": "Check chemistry with a friend",
   "retry": "Try again",
-  "tryToo": "Try it too"
+  "tryToo": "Try it too",
+  "beatMe": "My record: {record}. Can you beat it?"
  },
  "chem": {
   "title": "Friend Chemistry",

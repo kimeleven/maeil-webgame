@@ -316,7 +316,8 @@
   "share": "Compartilhar",
   "chem": "Ver a química com um amigo",
   "retry": "Jogar de novo",
-  "tryToo": "Experimente também"
+  "tryToo": "Experimente também",
+  "beatMe": "Meu recorde: {record}. Consegue superar?"
  },
  "chem": {
   "title": "Química com amigos",

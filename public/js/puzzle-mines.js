@@ -1,6 +1,7 @@
 // 오늘의 지뢰찾기 UI (t_2d0c7a9f). 첫 클릭 0 보장, 모바일 길게 누르기=깃발, 깃발 모드, 더블탭/숫자 탭=주변 열기.
 import { MINE_LEVELS, placeMines, countAdj, openCell, minesWon, neighbors, kstDate, streakAfterSolve, streakShown, fmtTime, shareMines } from '/js/puzzle-core.js';
 
+import { copyText } from '/js/puzzle-ui.js';
 const $ = (s, r = document) => r.querySelector(s);
 const qs = new URLSearchParams(location.search);
 const override = /^\d{4}-\d{2}-\d{2}$/.test(qs.get('date') || '') ? qs.get('date') : '';
@@ -116,11 +117,7 @@ $('#ms-q').addEventListener('click', () => { const on = $('#ms-q').getAttribute(
 $('#ms-reset').addEventListener('click', () => init(level));
 $('#ms-again').addEventListener('click', () => init(level));
 document.querySelectorAll('.ms-lv').forEach((b) => b.addEventListener('click', () => init(b.dataset.lv)));
-$('#ms-copy').addEventListener('click', async () => {
-  const t = $('#ms-share-text').value;
-  try { if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) await navigator.share({ text: t }); else await navigator.clipboard.writeText(t); $('#ms-copy').textContent = '복사됨 ✓'; }
-  catch { $('#ms-share-text').select(); try { document.execCommand('copy'); $('#ms-copy').textContent = '복사됨 ✓'; } catch {} }
-});
+$('#ms-copy').addEventListener('click', () => copyText($('#ms-copy'), $('#ms-share-text')));
 $('#ms-close').addEventListener('click', () => { $('#ms-done').hidden = true; });
 init(level);
 window.__pz = { get st() { return st; }, today };

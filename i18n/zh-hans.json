@@ -316,7 +316,8 @@
   "share": "分享",
   "chem": "和朋友测默契",
   "retry": "再来一次",
-  "tryToo": "我也试试"
+  "tryToo": "我也试试",
+  "beatMe": "我的记录:{record}。你能超过吗?"
  },
  "chem": {
   "title": "朋友默契",
