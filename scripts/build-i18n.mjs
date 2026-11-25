@@ -248,7 +248,7 @@ const WEBGAME_BODY = `<section><h2>5분게임으로 웹겜, 이렇게 골라요<
 ${WEBGAME_FAQ.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
 <p>게임 말고 숫자 계산이 필요하면: <a href="/calc/">오늘 계산기 10종</a> · <a href="/calc/percent/">퍼센트 계산기</a> · <a href="/calc/wage/">시급 계산기</a> · <a href="/calc/age/">만 나이 계산기</a></p>
 <p>30초 게임 다음엔 나 알아보기: <a href="/ko/me/play-character/">나의 놀이 캐릭터 테스트</a> · <a href="/ko/friends/chemistry/">친구 케미 보기</a></p>`;
-const WEBGAME = { title: '웹겜 모음 — 설치·로그인 없이 5분 안에 끝나는 무료 웹게임 4종', desc: '5분게임 찾는다면 여기. 설치·로그인 없이 바로 하는 무료 웹겜 4종, 한 판 30~90초, 모바일·PC 모두 가능.', h1: '설치 없이 바로 하는 웹겜 4종' };
+const WEBGAME = { title: '웹겜 모음 — 설치·로그인 없이 5분 안에 끝나는 무료 웹게임 4종', desc: '설치와 로그인 없이 5분 안에 끝나는 무료 웹게임 모음이에요. 게이트 러시·자석 항구·궤도 스위치·잔상 배달 4종을 한 판 30~90초로, 모바일과 PC에서 바로 해요.', h1: '설치 없이 바로 하는 웹겜 4종' };
 function buildWebgame() {
   const D = dict.ko, suf = 'webgame/', self = url('ko', suf);
   const cards = [[D.game.name, 'play/gate-rush/', '30초 안에 문을 골라 달리는 무료 웹겜'], [MT.ko.name, 'play/magnet-harbor/', MT.ko.seoDesc], [OT.ko.name, 'play/orbit-switch/', OT.ko.seoDesc], [ET.ko.name, 'play/echo-courier/', ET.ko.seoDesc]];
@@ -328,7 +328,8 @@ export function build() {
     const D = dict[l];
     for (const [key, suf] of SHELLS) {
       const title = key === 'i' ? D.seo.chem.title : key === 'c' || key === 'r' ? `${D.game.challengeTitle} | ${D.brand}` : D.brand;
-      const desc = key === 'i' ? D.seo.chem.desc : key === 'c' ? D.seo.game.desc : D.seo.lobby.desc;
+      const KO_SHELL = { c: "친구가 보낸 같은 판 도전장이에요. 게이트를 골라 군단을 키우고 드론과 레이저를 피해 보스까지 달려요. 구역마다 빨라지는 30초 무료 웹게임, 설치 없이 바로 시작해요.", r: "친구의 게이트 러시 결과를 보고 내 점수로 받아쳐 보세요. 30초 한 판이면 충분하고, 자석 항구·잔상 배달·궤도 스위치 같은 무료 웹게임도 설치 없이 이어서 즐겨요.", i: "링크를 보내고 친구가 10문항에 답하면 둘의 케미 조합과 각자의 역할이 열려요. 연락처 입력이나 가입 없이 무료로, 별명만 정하면 시작하는 친구 궁합 놀이예요." };
+      const desc = l === 'ko' ? KO_SHELL[key] : key === 'i' ? D.seo.chem.desc : key === 'c' ? D.seo.game.desc : D.seo.lobby.desc;
       const main = key === 'c' ? `<section class="gamecol" id="game"></section>` : key === 'i' ? `<section id="chem" class="card"><p>${esc(D.common.loading)}</p></section><p class="disc" data-disclaimer>${esc(D.quiz.disclaimer)}</p>` : `<section id="share" class="card"><p>${esc(D.common.loading)}</p></section>`;
       write(`${l}/${suf}index.html`, shell(l, key, suf, main, { title, desc, noindex: true, dyn: true, og: key === 'c' || key === 'r' ? `/og/challenge-${l}.png` : `/og/site-${l}.png` }));
     }

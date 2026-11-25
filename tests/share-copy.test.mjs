@@ -37,3 +37,9 @@ test('season copy keys exist in 6 languages (length 6+)', () => {
     assert.ok(D.quiz.shareSeason && D.quiz.shareSeason.length > 5, `${l}.quiz.shareSeason`);
   }
 });
+
+test('r page reshare records share_result from=r for quiz and rush (t_ff207dc5)', () => {
+  const js = readFileSync('public/js/app.js', 'utf8');
+  assert.ok((js.match(/window\.gev\('share_result', \{ g: '(quiz|rush)', from: 'r', via: rr \}/g) || []).length === 2);
+  assert.ok(js.includes("track('share_click', { from: 'r' })"));
+});

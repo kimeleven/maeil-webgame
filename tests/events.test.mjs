@@ -270,3 +270,14 @@ test('share_click from=r accepted only for quiz/rush (t_8ef0959e)', () => {
   assert.equal(ok('orbit', 'r'), false);
   assert.equal(ok('rush', 'zzz'), false);
 });
+
+test('share_result from=r accepted for quiz/rush only, stored with src=r (t_ff207dc5)', () => {
+  const ok = (g, from, via = 'shared') => !validateBatch({ v: 1, events: [ev('share_result', { g, from, via })] }).error;
+  assert.equal(ok('rush', 'r'), true);
+  assert.equal(ok('quiz', 'r', 'copied'), true);
+  assert.equal(ok('orbit', 'r'), false);
+  assert.equal(ok('rush', 'zzz'), false);
+  assert.equal(ok('rush', 'r', 'bogus'), false);
+  const b = validateBatch({ v: 1, events: [ev('share_result', { g: 'quiz', from: 'r', via: 'cancel' })] });
+  assert.equal(b.rows[0].src, 'r'); assert.equal(b.rows[0].method, 'cancel');
+});
