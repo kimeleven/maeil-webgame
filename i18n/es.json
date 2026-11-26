@@ -317,6 +317,7 @@
   "chem": "Ver química con un amigo",
   "retry": "Repetir",
   "tryToo": "Pruébalo tú también",
+  "tryRush": "Pruébalo en 30 s",
   "beatMe": "Mi récord: {record}. ¿Puedes superarlo?"
  },
  "chem": {

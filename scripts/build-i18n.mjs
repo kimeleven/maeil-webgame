@@ -15,6 +15,7 @@ const MT = JSON.parse(readFileSync(new URL('../i18n/magnet-harbor.json', import.
 const ET = JSON.parse(readFileSync(new URL('../i18n/echo-courier.json', import.meta.url), 'utf8'));
 import { buildEcho, ECHO_LANGS } from './build-echo.mjs'; // echo-courier public game (t_0e812a29, launch t_5aed60dd)
 
+const CX = JSON.parse(readFileSync(new URL('../i18n/christmas.json', import.meta.url), 'utf8')); // 크리스마스 D-day 랜딩 (t_342fb939)
 const ROOT = new URL('..', import.meta.url).pathname;
 export const SITE = 'https://www.playtoday.cloud';
 export const LANGS = ['ko', 'en', 'ja', 'zh-hans', 'es', 'pt-br'];
@@ -76,7 +77,7 @@ function shell(l, page, suf, main, opts = {}) {
 <body data-page="${page}" data-lang="${l}">
 <header class="top"><a class="logo" href="/${l}/"><i></i>${esc(D.brand)}</a>${langMenu(l, suf, opts.dyn)}</header>
 <main class="wrap">${main}</main>
-<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a>${l === 'ko' ? PUZZLE_FOOTER_LINKS + CALC_FOOTER_LINKS + '<a href="/ko/webgame/">웹겜 모아보기</a>' : WEBGAME_X[l] ? `<a href="/${l}/webgame/">${esc(WEBGAME_X[l].link)}</a>` : ''}<a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
+<footer><a href="/${l}/play/gate-rush/">${esc(D.nav.play)}</a><a href="/${l}/me/play-character/">${esc(D.nav.me)}</a><a href="/${l}/friends/chemistry/">${esc(D.nav.friends)}</a><a href="/${l}/play/commute/">${esc(D.commute.link)}</a><a href="/${l}/play/quick-break/">${esc(D.quickbreak.link)}</a><a href="/${l}/play/winter-break/">${esc(D.winter.link)}</a><a href="/${l}/friends/things-to-do/">${esc(D.friendplay.link)}</a><a href="/${l}/play/magnet-harbor/">${esc(MT[l].name)}</a><a href="/${l}/play/echo-courier/">${esc(ET[l].name)}</a><a href="/${l}/play/orbit-switch/">${esc(OT[l].name)}</a>${l === 'ko' ? PUZZLE_FOOTER_LINKS + CALC_FOOTER_LINKS + '<a href="/ko/webgame/">웹겜 모아보기</a>' : WEBGAME_X[l] ? `<a href="/${l}/webgame/">${esc(WEBGAME_X[l].link)}</a>` : ''}<a href="/${l}/christmas/">${esc(CX[l].link)}</a><a href="/${l}/about/">${esc(D.nav.about)}</a><a href="/${l}/privacy/">${esc(D.nav.privacy)}</a><span>© ${esc(D.brand)} · playtoday.cloud</span></footer>
 <script id="i18n" type="application/json">${JSON.stringify(D).replace(/</g, '\\u003c')}</script>
 <script src="/js/gev.js"></script>
 <script type="module" src="/js/season.js"></script>
@@ -313,6 +314,25 @@ function buildWebgameX(l) {
   return self;
 }
 
+// 크리스마스 D-day 시의성 랜딩 6언어 (t_342fb939). 숫자는 클라이언트가 오늘(KST) 기준으로 채우고, 서버 HTML 은 날짜 규칙·FAQ·JSON-LD 를 담는다.
+function buildChristmas() {
+  const suf = 'christmas/', out = [];
+  for (const l of LANGS) {
+    const X = CX[l], D = dict[l], self = url(l, suf);
+    const main = `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(X.h1)}</h1><p>${esc(X.lead)}</p>
+<div class="card" id="xmas-box" aria-live="polite" style="text-align:center"><p class="muted" id="xmas-today" style="margin:0"></p><div id="xmas-n" style="font-size:clamp(40px,14vw,72px);font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums">D-?</div><p id="xmas-sub" style="margin:0"></p></div>
+<div class="row" style="margin-top:14px"><a class="btn" href="/${l}/play/gate-rush/" data-xmas-cta>${esc(X.cta)}</a></div><p class="muted">${esc(X.ctaNote)}</p></section>
+<section><h2>${esc(X.h2a)}</h2><p>${esc(X.pa)}</p></section>
+<section><h2>FAQ</h2>${X.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
+<p>${l === 'ko' ? '<a href="/calc/dday/">' + esc(X.calcLink) + '</a> · ' : ''}<a href="/${l}/">${esc(X.home)}</a></p>
+<script type="module">import{xmasCountdown,kstToday}from"/js/calc-core.js";const T=${JSON.stringify(X.tpl).replace(/</g, '\\u003c')},f=(s,v)=>s.replace(/\\{(\\w+)\\}/g,(_,k)=>v[k]),t=kstToday(),c=xmasCountdown(t),q=(i)=>document.getElementById(i);q("xmas-today").textContent=f(T.today,{d:t});q("xmas-n").textContent=c.n===0?T.day:f(T.n,{n:c.n});q("xmas-sub").textContent=c.n===0?T.dayMsg:(c.next?T.next+" ":"")+f(T.unit,{n:c.n});</script>`;
+    const jsonld = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: X.title, description: X.desc, inLanguage: D.htmlLang, url: self }, { '@type': 'FAQPage', mainEntity: X.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] };
+    write(`${l}/${suf}index.html`, shell(l, 'christmas', suf, main, { title: X.title, desc: X.desc, og: `/og/site-${l}.png`, jsonld }));
+    out.push(`  <url><loc>${self}</loc>${LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, suf)}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', suf)}"/></url>`);
+  }
+  return out;
+}
+
 export function build() {
   const errs = checkI18n();
   if (errs.length) { console.error('i18n check FAILED:\n' + errs.join('\n')); process.exit(1); }
@@ -359,6 +379,7 @@ export function build() {
   urls.push(`  <url><loc>${webgameUrl}</loc>${WEBGAME_ALT.replace(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g, '<xhtml:link rel="alternate" hreflang="$1" href="$2"/>')}</url>`);
   for (const u of webgameX) urls.push(`  <url><loc>${u}</loc>${WEBGAME_ALT.replace(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g, '<xhtml:link rel="alternate" hreflang="$1" href="$2"/>')}</url>`);
   for (const u of buildPuzzle()) urls.push(`  <url><loc>${u}</loc></url>`);
+  for (const u of buildChristmas()) urls.push(u);
   for (const u of buildCalc()) urls.push(`  <url><loc>${u}</loc><lastmod>${CALC_LASTMOD}</lastmod></url>`);
   writeFileSync(`${ROOT}public/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`);
   writeFileSync(`${ROOT}public/robots.txt`, `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /*/r/\nDisallow: /*/i/\nDisallow: /*/c/\n\nSitemap: ${SITE}/sitemap.xml\n`);

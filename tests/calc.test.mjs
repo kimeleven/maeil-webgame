@@ -1,7 +1,7 @@
 // t_61344aaa: 오늘 계산기 10종 계산 규칙 시험 (GDD §4 계산 규칙 · §8 필수 시험값)
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { percent, dateDiff, dateAdd, addMonths, dday, anniversaries, pyToM2, m2ToPy, age, wage, monthHours, vat, discount, discountRate, convert, interest, compute, todayPreview, SLUGS, round, kstToday } from '../public/js/calc-core.js';
+import { percent, dateDiff, dateAdd, addMonths, dday, anniversaries, pyToM2, m2ToPy, age, wage, monthHours, vat, discount, discountRate, convert, interest, compute, todayPreview, SLUGS, round, kstToday, xmasCountdown } from '../public/js/calc-core.js';
 
 test('percent: 4 modes', () => {
   assert.equal(percent('of', 200, 15).value, 30); // 필수
@@ -115,4 +115,14 @@ test('t_54d54a22 D2: 날짜 더하기 범위 밖은 null(오류 없이)', () => 
   assert.equal(dateAdd('2026-11-11', 99999999, 'day'), null);
   assert.equal(compute('date', { m: 'add', s: '2026-11-11', n: '99999999', u: 'year' }, '2026-11-11'), null);
   assert.equal(dateAdd('2026-11-11', 1, 'year').date, '2027-11-11');
+});
+
+// t_342fb939: 크리스마스 카운트다운 — 당일 D-day, 지나면 내년
+test('xmasCountdown: 12/25 당일 n=0, 12/26 이후 내년, 100일 전 9/16', () => {
+  assert.equal(xmasCountdown('2026-12-25').n, 0);
+  assert.equal(xmasCountdown('2026-12-25').next, false);
+  assert.equal(xmasCountdown('2026-11-26').n, 29);
+  const a = xmasCountdown('2026-12-26'); assert.equal(a.next, true); assert.equal(a.n, 364); assert.equal(a.target, '2027-12-25');
+  assert.equal(xmasCountdown('2026-11-26').d100, '2026-09-16'); assert.equal(xmasCountdown('2026-11-26').d90, '2026-09-26');
+  assert.equal(xmasCountdown('bad'), null);
 });

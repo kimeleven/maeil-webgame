@@ -1,0 +1,188 @@
+{
+  "ko": {
+    "title": "크리스마스 디데이 - 오늘 D-며칠? | 매일웹겜",
+    "desc": "오늘 기준 크리스마스까지 D-며칠 남았는지 바로 보여 줘요. 크리스마스 100일 전(9월 16일)과 90일 전(9월 26일) 날짜도 한눈에 확인하고, 쉬는 틈에 30초 게임 한 판 해 보세요.",
+    "h1": "크리스마스 디데이",
+    "lead": "한국 시간 기준 오늘부터 12월 25일까지 남은 날이에요.",
+    "tpl": {
+      "n": "D-{n}",
+      "day": "D-day",
+      "unit": "{n}일 남았어요",
+      "dayMsg": "오늘이 크리스마스예요!",
+      "next": "올해 크리스마스는 지났어요. 다음 크리스마스까지예요.",
+      "today": "오늘은 {d}"
+    },
+    "h2a": "크리스마스 100일 전·90일 전은 언제?",
+    "pa": "크리스마스 100일 전은 9월 16일, 90일 전은 9월 26일이에요. 12월 25일에서 거꾸로 센 날짜라서 해마다 같아요. 연말 약속이나 선물 준비 일정을 잡을 때 기준으로 써 보세요.",
+    "faq": [
+      [
+        "크리스마스까지 며칠 남았는지는 어떻게 세나요?",
+        "한국 시간(KST) 오늘 날짜에서 12월 25일까지 날짜 차이를 세요. 오늘이 25일이면 D-day로 보이고, 26일부터는 내년 크리스마스까지 세요."
+      ],
+      [
+        "다른 날짜도 D-day로 세어 볼 수 있나요?",
+        "네. 오늘 계산기의 D-day 계산기에서 목표일을 바꾸면 시험·여행·기념일까지 남은 날도 바로 나와요."
+      ]
+    ],
+    "cta": "30초 한 판 해보기",
+    "ctaNote": "디데이를 기다리는 동안 가입 없이 30초면 끝나는 무료 게임이에요.",
+    "calcLink": "다른 날짜는 D-day 계산기에서 →",
+    "link": "크리스마스 디데이",
+    "home": "매일웹겜 홈"
+  },
+  "en": {
+    "title": "Days Until Christmas - Live Countdown | PlayToday",
+    "desc": "Days left until Christmas, updated daily. See the dates 100 days (Sep 16) and 90 days (Sep 26) before Dec 25, then play a free 30-second game while you wait.",
+    "h1": "Days Until Christmas",
+    "lead": "Days left from today to December 25.",
+    "tpl": {
+      "n": "{n} days",
+      "day": "Today!",
+      "unit": "{n} days to go",
+      "dayMsg": "It's Christmas today!",
+      "next": "This year's Christmas has passed. Counting to the next one.",
+      "today": "Today is {d}"
+    },
+    "h2a": "When is 100 days (or 90 days) before Christmas?",
+    "pa": "100 days before Christmas is September 16, and 90 days before is September 26. They are counted back from December 25, so the dates are the same every year. Use them to plan gifts and year-end meetups.",
+    "faq": [
+      [
+        "How is the countdown calculated?",
+        "It counts the difference in calendar days from today's date to December 25. On the 25th it shows Today!, and from the 26th it counts down to next year's Christmas."
+      ],
+      [
+        "Can I count down to other dates?",
+        "Yes. Use the date calculator on the Korean calculator hub and change the target date for exams, trips or anniversaries."
+      ]
+    ],
+    "cta": "Try a 30-second game",
+    "ctaNote": "Free, no sign-up. One round takes about 30 seconds.",
+    "calcLink": "",
+    "link": "Days until Christmas",
+    "home": "PlayToday home"
+  },
+  "ja": {
+    "title": "クリスマスまであと何日？カウントダウン | 毎日ウェブゲーム",
+    "desc": "今日からクリスマスまであと何日かをすぐ確認できます。クリスマスの100日前（9月16日）と90日前（9月26日）も一目でわかり、待ち時間に30秒の無料ゲームも楽しめます。",
+    "h1": "クリスマスまであと何日？",
+    "lead": "今日から12月25日までの日数です。",
+    "tpl": {
+      "n": "あと{n}日",
+      "day": "当日",
+      "unit": "クリスマスまであと{n}日",
+      "dayMsg": "今日はクリスマスです！",
+      "next": "今年のクリスマスは過ぎました。来年までの日数です。",
+      "today": "今日は{d}"
+    },
+    "h2a": "クリスマスの100日前・90日前はいつ？",
+    "pa": "クリスマスの100日前は9月16日、90日前は9月26日です。12月25日から数えるので毎年同じ日付です。プレゼントや年末の予定を立てる目安にしてください。",
+    "faq": [
+      [
+        "あと何日かはどう数えますか？",
+        "今日の日付から12月25日までの日数の差を数えます。25日は当日と表示し、26日からは来年のクリスマスまで数えます。"
+      ],
+      [
+        "ほかの日付でも数えられますか？",
+        "はい。日付を変えれば試験や旅行、記念日までの日数も計算できます。"
+      ]
+    ],
+    "cta": "30秒だけ挑戦",
+    "ctaNote": "登録なしで遊べる無料ゲームです。1回約30秒。",
+    "calcLink": "",
+    "link": "クリスマスまであと何日",
+    "home": "ホーム"
+  },
+  "zh-hans": {
+    "title": "距离圣诞节还有几天？倒计时 | 每日网页游戏",
+    "desc": "按今天的日期，马上看到距离圣诞节还有几天。圣诞节前100天（9月16日）和前90天（9月26日）也一目了然，等待的时候还可以免费玩一局30秒小游戏，无需注册。",
+    "h1": "距离圣诞节还有几天",
+    "lead": "从今天到12月25日剩余的天数。",
+    "tpl": {
+      "n": "还有{n}天",
+      "day": "就是今天",
+      "unit": "距离圣诞节还有{n}天",
+      "dayMsg": "今天就是圣诞节！",
+      "next": "今年的圣诞节已经过去，这是到下一个圣诞节的天数。",
+      "today": "今天是{d}"
+    },
+    "h2a": "圣诞节前100天、90天是哪一天？",
+    "pa": "圣诞节前100天是9月16日，前90天是9月26日。它们是从12月25日倒数的，所以每年日期都一样。可以用来安排礼物和年底聚会。",
+    "faq": [
+      [
+        "倒计时是怎么算的？",
+        "用今天的日期到12月25日的日历天数差计算。25日显示“就是今天”，26日起改为倒数到明年的圣诞节。"
+      ],
+      [
+        "可以倒数其他日期吗？",
+        "可以。改变目标日期，就能计算距离考试、旅行或纪念日的天数。"
+      ]
+    ],
+    "cta": "30秒挑战一下",
+    "ctaNote": "免费，无需注册，一局大约30秒。",
+    "calcLink": "",
+    "link": "距离圣诞节还有几天",
+    "home": "首页"
+  },
+  "es": {
+    "title": "Cuántos días faltan para Navidad | PlayToday",
+    "desc": "Cuántos días faltan para Navidad según la fecha de hoy. Mira las fechas a 100 días (16 sep) y 90 días (26 sep) antes del 25 de dic. y juega 30 segundos gratis.",
+    "h1": "Cuántos días faltan para Navidad",
+    "lead": "Días que quedan desde hoy hasta el 25 de diciembre.",
+    "tpl": {
+      "n": "{n} días",
+      "day": "¡Hoy!",
+      "unit": "Faltan {n} días",
+      "dayMsg": "¡Hoy es Navidad!",
+      "next": "La Navidad de este año ya pasó. Contamos hasta la próxima.",
+      "today": "Hoy es {d}"
+    },
+    "h2a": "¿Cuándo es 100 o 90 días antes de Navidad?",
+    "pa": "Cien días antes de Navidad es el 16 de septiembre y noventa días antes es el 26 de septiembre. Se cuentan hacia atrás desde el 25 de diciembre, así que la fecha es la misma cada año. Sirve para planear regalos y reuniones de fin de año.",
+    "faq": [
+      [
+        "¿Cómo se calcula la cuenta atrás?",
+        "Se cuenta la diferencia en días entre la fecha de hoy y el 25 de diciembre. El 25 muestra ¡Hoy! y desde el 26 se cuenta hasta la Navidad del año siguiente."
+      ],
+      [
+        "¿Puedo contar hacia otras fechas?",
+        "Sí. Cambia la fecha objetivo para ver los días que faltan para un examen, un viaje o un aniversario."
+      ]
+    ],
+    "cta": "Pruébalo en 30 s",
+    "ctaNote": "Gratis y sin registro. Una partida dura unos 30 segundos.",
+    "calcLink": "",
+    "link": "Días para Navidad",
+    "home": "Inicio"
+  },
+  "pt-br": {
+    "title": "Quantos dias faltam para o Natal | PlayToday",
+    "desc": "Veja quantos dias faltam para o Natal a partir de hoje. Confira as datas de 100 dias (16 set) e 90 dias (26 set) antes de 25 dez. e jogue 30 segundos grátis.",
+    "h1": "Quantos dias faltam para o Natal",
+    "lead": "Dias restantes de hoje até 25 de dezembro.",
+    "tpl": {
+      "n": "{n} dias",
+      "day": "Hoje!",
+      "unit": "Faltam {n} dias",
+      "dayMsg": "Hoje é Natal!",
+      "next": "O Natal deste ano já passou. Contando até o próximo.",
+      "today": "Hoje é {d}"
+    },
+    "h2a": "Quando são 100 ou 90 dias antes do Natal?",
+    "pa": "Cem dias antes do Natal é 16 de setembro e noventa dias antes é 26 de setembro. A contagem é feita de trás para frente a partir de 25 de dezembro, então a data é a mesma todo ano. Use para planejar presentes e encontros de fim de ano.",
+    "faq": [
+      [
+        "Como a contagem é calculada?",
+        "Contamos a diferença em dias entre a data de hoje e 25 de dezembro. No dia 25 aparece Hoje! e a partir do dia 26 a contagem vai até o Natal do ano seguinte."
+      ],
+      [
+        "Posso contar até outras datas?",
+        "Sim. Troque a data-alvo para ver quantos dias faltam para uma prova, uma viagem ou um aniversário."
+      ]
+    ],
+    "cta": "Tente em 30 s",
+    "ctaNote": "Grátis e sem cadastro. Uma partida leva cerca de 30 segundos.",
+    "calcLink": "",
+    "link": "Dias para o Natal",
+    "home": "Início"
+  }
+}
