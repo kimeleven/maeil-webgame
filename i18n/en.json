@@ -317,6 +317,7 @@
   "chem": "Check chemistry with a friend",
   "retry": "Try again",
   "tryToo": "Try it too",
+  "tryRush": "Try it in 30 sec",
   "beatMe": "My record: {record}. Can you beat it?"
  },
  "chem": {

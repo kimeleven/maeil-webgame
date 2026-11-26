@@ -82,3 +82,20 @@ test('1119-08: /en·/ja /webgame/ landings with hreflang, ko 5분게임, lobby t
   const lim = { ko: 30, en: 60, ja: 40, 'zh-hans': 40, es: 60, 'pt-br': 60 };
   for (const l of LANGS) assert.ok(read(l, '').match(/<title>([^<]*)/)[1].length <= lim[l], `${l} lobby title length`);
 });
+
+test('t_342fb939: christmas 6 langs: 200 files, sitemap 6 + hreflang, unique title/desc, footer link, CTA to gate-rush', () => {
+  const sm = readFileSync(new URL('../public/sitemap.xml', import.meta.url), 'utf8');
+  const seen = new Set();
+  for (const l of LANGS) {
+    const h = read(l, 'christmas/');
+    const title = h.match(/<title>([^<]*)<\/title>/)[1], desc = h.match(/<meta name="description" content="([^"]*)"/)[1];
+    assert.ok(title.length <= 60 && desc.length >= 60 && desc.length <= 160, `${l} len ${title.length}/${desc.length}`);
+    assert.ok(!seen.has(title) && !seen.has(desc)); seen.add(title); seen.add(desc);
+    assert.ok(h.includes(`rel="canonical" href="https://www.playtoday.cloud/${l}/christmas/"`));
+    assert.equal((h.match(/rel="alternate" hreflang=/g) || []).length, 7);
+    assert.ok(hrefs(h).includes(`/${l}/play/gate-rush/`));
+    assert.ok(hrefs(read(l, '')).includes(`/${l}/christmas/`), `${l} home footer link`);
+    assert.ok(sm.includes(`<loc>https://www.playtoday.cloud/${l}/christmas/</loc>`));
+    assert.doesNotMatch(h.slice(h.indexOf('<title>'), h.indexOf('<script id="i18n"')), /mbti/i);
+  }
+});

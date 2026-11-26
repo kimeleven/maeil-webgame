@@ -69,6 +69,13 @@ export function dday(base, target) {
   const n = daysBetween(base, target);
   return { n, label: n > 0 ? `D-${n}` : n === 0 ? 'D-day' : `D+${-n}` };
 }
+// 크리스마스 카운트다운 (t_342fb939): 오늘(KST) 기준 올해 12/25까지, 지났으면 내년 12/25. n=0 이면 당일.
+export function xmasCountdown(today = kstToday()) {
+  if (parseDate(today) == null) return null;
+  const y = +today.slice(0, 4); let target = `${y}-12-25`, n = daysBetween(today, target), next = false;
+  if (n < 0) { target = `${y + 1}-12-25`; n = daysBetween(today, target); next = true; }
+  return { n, target, next, d100: addDays(target, -100), d90: addDays(target, -90) };
+}
 // 기념일: 시작일을 1일로 센다 (사귄 날 = 1일 → 100일 = 시작일 + 99일)
 export const ANNIV = [100, 200, 300, 365, 500, 1000, 2000, 3000];
 export function anniversaries(start, today) {
