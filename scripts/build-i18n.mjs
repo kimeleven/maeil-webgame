@@ -248,7 +248,7 @@ const WEBGAME_BODY = `<section><h2>5분게임으로 웹겜, 이렇게 골라요<
 ${WEBGAME_FAQ.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
 <p>게임 말고 숫자 계산이 필요하면: <a href="/calc/">오늘 계산기 10종</a> · <a href="/calc/percent/">퍼센트 계산기</a> · <a href="/calc/wage/">시급 계산기</a> · <a href="/calc/age/">만 나이 계산기</a></p>
 <p>30초 게임 다음엔 나 알아보기: <a href="/ko/me/play-character/">나의 놀이 캐릭터 테스트</a> · <a href="/ko/friends/chemistry/">친구 케미 보기</a></p>`;
-const WEBGAME = { title: '웹겜 추천 4종 — 가입 없이 바로 하는 무료 웹게임', desc: '웹겜 추천이 필요하면 가입 없이 바로. 5분게임으로 좋은 게이트 러시·자석 항구·궤도 스위치·잔상 배달 4종, 한 판 30~90초 무료예요.', h1: '설치 없이 바로 하는 웹겜 4종' };
+const WEBGAME = { title: '웹겜 추천 4종 — 가입 없이 바로 하는 무료 웹게임', desc: '웹겜·5분게임 추천, 설치·가입 없이 바로 한 판. 게이트 러시·자석 항구·궤도 스위치·잔상 배달 4종, 한 판 30~90초 무료 웹게임이에요.', h1: '설치 없이 바로 하는 웹겜 4종' };
 function buildWebgame() {
   const D = dict.ko, suf = 'webgame/', self = url('ko', suf);
   const cards = [[D.game.name, 'play/gate-rush/', '30초 안에 문을 골라 달리는 무료 웹겜'], [MT.ko.name, 'play/magnet-harbor/', MT.ko.seoDesc], [OT.ko.name, 'play/orbit-switch/', OT.ko.seoDesc], [ET.ko.name, 'play/echo-courier/', ET.ko.seoDesc]];
@@ -277,17 +277,17 @@ const WEBGAME_X = {
     h2a: 'ブラウザゲームの選び方', pa: 'ゲートラッシュは1回約30秒、マグネットハーバー・オービットスイッチ・残像デリバリーは約90秒です。操作はドラッグかタップだけなので、すぐ始められます。',
     h2b: 'インストール不要のブラウザゲームとは', pb: 'ブラウザゲームはアプリを入れずに、リンクを開くだけで遊べるゲームです。登録も不要で、スマホでもPCでも同じアドレスで遊べます。挑戦リンクの共有は任意です。',
     faq: [['無料で遊べますか？', 'はい。4種すべて無料で、課金や購読はありません。'], ['登録は必要ですか？', 'いいえ。ページを開いてスタートを押すだけです。ニックネームはスコアを共有する時だけ使います。'], ['スマホでも遊べますか？', 'はい。スマホでもPCでも同じアドレスで開けます。'], ['1回はどのくらいですか？', 'ゲートラッシュは約30秒、ほかの3種は約90秒です。']], faqH: 'よくある質問', home: 'まいにちアーケードのホームへ' },
-  'zh-hans': { link: '网页游戏合集', title: '免费网页游戏合集 — 免安装、免登录的30秒小游戏', h1: '打开就能玩的免费网页游戏', desc: '想打发时间？4款免费网页游戏，每局30至90秒，手机电脑都能玩，无需安装、无需注册。',
+  'zh-hans': { link: '网页游戏合集', title: '网页游戏免费玩｜30秒一局，无需安装', h1: '打开就能玩的免费网页游戏', desc: '网页游戏免费玩：闸门冲刺、磁力港口、轨道切换、残影快递4款，每局30至90秒，手机电脑都能玩，无需安装、无需注册。',
     cards: [['gate-rush', '选择闸门壮大队伍，30秒内击败终点Boss的跑酷游戏。'], ['magnet-harbor', '用磁力吊机堆叠摇晃的货物，90秒内让货船出港。'], ['orbit-switch', '点击切换轨道躲避障碍的90秒游戏。'], ['echo-courier', '记住残影轨迹，沿着同一路线送货的90秒游戏。']],
     h2a: '如何挑选网页游戏', pa: '闸门冲刺每局约30秒，磁力港口、轨道切换和残影快递每局约90秒。操作只有拖动或点击，几秒就能上手。',
     h2b: '什么是免安装的网页游戏？', pb: '网页游戏直接在浏览器中运行：打开链接就能玩，无需下载，也无需创建账号，手机和电脑都能用。把挑战链接分享给朋友完全是自愿的。',
     faq: [['这些网页游戏免费吗？', '是的，4款全部免费，没有付费或订阅。'], ['需要注册吗？', '不需要。打开页面点击开始即可。只有在你选择分享成绩时才会用到昵称。'], ['可以在手机上玩吗？', '可以。手机和电脑浏览器使用同一个地址。'], ['一局要多久？', '闸门冲刺约30秒，其余三款约90秒。']], faqH: '常见问题', home: '返回每日街机' },
-  es: { link: 'Todos los juegos web', title: 'Juegos web gratis — sin instalar ni registrarte, partidas de 30 s', h1: 'Juegos web gratis para jugar ahora mismo', desc: '¿Buscas un juego rápido en el navegador? Cuatro juegos web gratis, de 30 a 90 segundos, en móvil o PC. Sin instalar ni registrarte.',
+  es: { link: 'Todos los juegos web', title: 'Juegos web gratis | 30 segundos por partida, sin instalar', h1: 'Juegos web gratis para jugar ahora mismo', desc: 'Juegos web gratis: Gate Rush, Magnet Harbor, Orbit Switch y Echo Courier. De 30 a 90 segundos por partida, en móvil o PC, sin registro y sin instalar.',
     cards: [['gate-rush', 'Elige una puerta, haz crecer tu escuadrón y vence al jefe en 30 segundos.'], ['magnet-harbor', 'Apila carga que se balancea con una grúa magnética y zarpa en 90 segundos.'], ['orbit-switch', 'Toca para cambiar de órbita y esquiva obstáculos durante 90 segundos.'], ['echo-courier', 'Recuerda tu estela y entrega por la misma ruta durante 90 segundos.']],
     h2a: 'Cómo elegir un juego web', pa: 'Gate Rush dura unos 30 segundos por partida. Magnet Harbor, Orbit Switch y Echo Courier duran unos 90 segundos. Solo arrastras o tocas, así que empiezas en segundos.',
     h2b: '¿Qué es un juego web sin instalación?', pb: 'Un juego web se ejecuta en tu navegador: abres el enlace y juegas. No hay nada que descargar ni cuenta que crear, en móvil o en ordenador. Compartir un reto con un amigo es siempre opcional.',
     faq: [['¿Estos juegos web son gratis?', 'Sí. Los cuatro son gratis, sin compras ni suscripciones.'], ['¿Necesito registrarme?', 'No. Abre la página y pulsa empezar. El apodo solo se usa si decides compartir tu puntuación.'], ['¿Puedo jugar en el móvil?', 'Sí. La misma dirección funciona en el navegador del móvil y del ordenador.'], ['¿Cuánto dura una partida?', 'Gate Rush dura unos 30 segundos; los otros tres, unos 90.']], faqH: 'Preguntas frecuentes', home: 'Volver a Arcade Diario' },
-  'pt-br': { link: 'Todos os jogos web', title: 'Jogos web grátis — sem instalar nem cadastro, rodadas de 30 s', h1: 'Jogos web grátis para jogar agora', desc: 'Quer um jogo rápido no navegador? Quatro jogos web grátis, de 30 a 90 segundos, no celular ou no PC. Sem instalar e sem cadastro.',
+  'pt-br': { link: 'Todos os jogos web', title: 'Jogos de navegador grátis | 30 s por partida, sem instalar', h1: 'Jogos web grátis para jogar agora', desc: 'Jogos de navegador grátis: Gate Rush, Magnet Harbor, Orbit Switch e Echo Courier. De 30 a 90 segundos por partida, no celular ou PC, sem cadastro.',
     cards: [['gate-rush', 'Escolha um portão, aumente seu esquadrão e vença o chefe em 30 segundos.'], ['magnet-harbor', 'Empilhe cargas balançando com um guindaste magnético e parta em 90 segundos.'], ['orbit-switch', 'Toque para trocar de órbita e desviar de obstáculos por 90 segundos.'], ['echo-courier', 'Lembre o rastro do eco e entregue pelo mesmo caminho por 90 segundos.']],
     h2a: 'Como escolher um jogo web', pa: 'Gate Rush leva cerca de 30 segundos por rodada. Magnet Harbor, Orbit Switch e Echo Courier levam cerca de 90 segundos. Você só arrasta ou toca, então começa em segundos.',
     h2b: 'O que é um jogo web sem instalação?', pb: 'Um jogo web roda no navegador: abra o link e jogue. Não há nada para baixar nem conta para criar, no celular ou no computador. Compartilhar um desafio com um amigo é sempre opcional.',
