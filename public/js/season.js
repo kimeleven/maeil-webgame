@@ -15,3 +15,10 @@ export function seasonShareSuffix(D, now = Date.now()) {
   return ' ' + s.replace('{n}', xmas - kstDay);
 }
 if (typeof document !== 'undefined') applySeason(document, Date.now());
+// /r/ 도착 화면 시즌 한 줄 (1127-21): 12/1~12/25(KST)에만 D-{n}, 밖은 ''.
+export function seasonArrivalLine(D, now = Date.now()) {
+  const s = D && D.r && D.r.season;
+  if (!s || !inWindow(now, SEASON2_END, XMAS_SHARE_UNTIL)) return '';
+  const kstDay = Math.floor((now + 9 * 3600e3) / 86400e3), xmas = Math.floor(Date.parse('2026-12-25T00:00:00Z') / 86400e3);
+  return s.replace('{n}', xmas - kstDay);
+}
