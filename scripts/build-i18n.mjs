@@ -8,6 +8,7 @@ const vtok = (v) => (/^[A-Za-z0-9_-]{8,128}$/.test(v || '') ? v : '');
 const VERIFY = (vtok(process.env.NAVER_SITE_VERIFICATION) ? `<meta name="naver-site-verification" content="${vtok(process.env.NAVER_SITE_VERIFICATION)}">` : '') + (vtok(process.env.GOOGLE_SITE_VERIFICATION) ? `<meta name="google-site-verification" content="${vtok(process.env.GOOGLE_SITE_VERIFICATION)}">` : '');
 import { buildMagnet, MAGNET_LANGS } from './build-magnet.mjs'; // magnet-harbor public game (t_1c491685, launch t_45f1a325)
 import { buildPuzzle, PUZZLE_HOME, PUZZLE_FOOTER_LINKS } from './build-puzzle.mjs'; // 오늘의 퍼즐 ko (t_2d0c7a9f)
+import { DAYCALC_PLUS, DAYCALC_BEFORE, addDays, fmtDate } from '../public/js/calc-core.js'; // 크리스마스 N일 후/전 블록 (1127-09)
 import { buildCalc, CALC_HOME, CALC_FOOTER_LINKS, CALC_LASTMOD } from './build-calc.mjs'; // 오늘 계산기 10종 (t_61344aaa)
 import { buildOrbit, ORBIT_LANGS } from './build-orbit.mjs'; // orbit-switch public game (t_06bfa4bc, launch t_5537bd3e)
 const OT = JSON.parse(readFileSync(new URL('../i18n/orbit-switch.json', import.meta.url), 'utf8'));
@@ -318,14 +319,17 @@ function buildWebgameX(l) {
 function buildChristmas() {
   const suf = 'christmas/', out = [];
   for (const l of LANGS) {
-    const X = CX[l], D = dict[l], self = url(l, suf);
+    const X = CX[l], D = dict[l], self = url(l, suf), DC = X.dayCalc;
     const main = `<section class="hero"><span class="tag">${esc(D.common.free)}</span><h1>${esc(X.h1)}</h1><p>${esc(X.lead)}</p>
 <div class="card" id="xmas-box" aria-live="polite" style="text-align:center"><p class="muted" id="xmas-today" style="margin:0"></p><div id="xmas-n" style="font-size:clamp(40px,14vw,72px);font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums">D-?</div><p id="xmas-sub" style="margin:0"></p></div>
 <div class="row" style="margin-top:14px"><a class="btn" href="/${l}/play/gate-rush/" data-xmas-cta>${esc(X.cta)}</a></div><p class="muted">${esc(X.ctaNote)}</p></section>
 <section><h2>${esc(X.h2a)}</h2><p>${esc(X.pa)}</p></section>
+<section id="daycalc"><h2>${esc(DC.h2)}</h2><p>${esc(DC.p)}</p>
+<h3>${esc(DC.hp)}</h3><ul>${DAYCALC_PLUS.map((n) => `<li>${esc(DC.plus.replace('{n}', n))}: <b data-plus="${n}"></b></li>`).join('')}</ul>
+<h3>${esc(DC.hb)}</h3><ul>${DAYCALC_BEFORE.map((n) => `<li>${esc(DC.before.replace('{n}', n))}: <b>${esc(fmtDate(addDays('2026-12-25', -n), DC, false))}</b></li>`).join('')}</ul></section>
 <section><h2>FAQ</h2>${X.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
 <p>${l === 'ko' ? '<a href="/calc/dday/">' + esc(X.calcLink) + '</a> · ' : ''}<a href="/${l}/">${esc(X.home)}</a></p>
-<script type="module">import{xmasCountdown,kstToday}from"/js/calc-core.js";const T=${JSON.stringify(X.tpl).replace(/</g, '\\u003c')},f=(s,v)=>s.replace(/\\{(\\w+)\\}/g,(_,k)=>v[k]),t=kstToday(),c=xmasCountdown(t),q=(i)=>document.getElementById(i);q("xmas-today").textContent=f(T.today,{d:t});q("xmas-n").textContent=c.n===0?T.day:f(T.n,{n:c.n});q("xmas-sub").textContent=c.n===0?T.dayMsg:(c.next?T.next+" ":"")+f(T.unit,{n:c.n});</script>`;
+<script type="module">import{xmasCountdown,kstToday,dayCalc,fmtDate}from"/js/calc-core.js";const DC=${JSON.stringify(DC).replace(/</g, '\\u003c')},T=${JSON.stringify(X.tpl).replace(/</g, '\\u003c')},f=(s,v)=>s.replace(/\\{(\\w+)\\}/g,(_,k)=>v[k]),t=kstToday(),c=xmasCountdown(t),q=(i)=>document.getElementById(i);q("xmas-today").textContent=f(T.today,{d:t});q("xmas-n").textContent=c.n===0?T.day:f(T.n,{n:c.n});q("xmas-sub").textContent=c.n===0?T.dayMsg:(c.next?T.next+" ":"")+f(T.unit,{n:c.n});dayCalc(t).plus.forEach(p=>{const e=document.querySelector('[data-plus="'+p.n+'"]');if(e)e.textContent=fmtDate(p.date,DC,true)});</script>`;
     const jsonld = { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: X.title, description: X.desc, inLanguage: D.htmlLang, url: self }, { '@type': 'FAQPage', mainEntity: X.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] };
     write(`${l}/${suf}index.html`, shell(l, 'christmas', suf, main, { title: X.title, desc: X.desc, og: `/og/site-${l}.png`, jsonld }));
     out.push(`  <url><loc>${self}</loc>${LANGS.map((x) => `<xhtml:link rel="alternate" hreflang="${dict[x].htmlLang}" href="${url(x, suf)}"/>`).join('')}<xhtml:link rel="alternate" hreflang="x-default" href="${url('en', suf)}"/></url>`);

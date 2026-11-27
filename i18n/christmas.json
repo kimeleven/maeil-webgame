@@ -28,7 +28,31 @@
     "ctaNote": "디데이를 기다리는 동안 가입 없이 30초면 끝나는 무료 게임이에요.",
     "calcLink": "다른 날짜는 D-day 계산기에서 →",
     "link": "크리스마스 디데이",
-    "home": "매일웹겜 홈"
+    "home": "매일웹겜 홈",
+    "dayCalc": {
+      "h2": "오늘로부터 90일 후는 언제? 크리스마스 며칠 전?",
+      "p": "한국 시간 기준 오늘에서 며칠 뒤인지, 그리고 크리스마스(12월 25일) 며칠 전이 몇 월 며칠인지 정리했어요.",
+      "hp": "오늘로부터 며칠 후",
+      "hb": "크리스마스 며칠 전",
+      "plus": "{n}일 후",
+      "before": "{n}일 전",
+      "months": [
+        "1월",
+        "2월",
+        "3월",
+        "4월",
+        "5월",
+        "6월",
+        "7월",
+        "8월",
+        "9월",
+        "10월",
+        "11월",
+        "12월"
+      ],
+      "fmt": "{m} {d}일",
+      "fmtY": "{y}년 {m} {d}일"
+    }
   },
   "en": {
     "title": "Days Until Christmas - Live Countdown | PlayToday",
@@ -59,7 +83,31 @@
     "ctaNote": "Free, no sign-up. One round takes about 30 seconds.",
     "calcLink": "",
     "link": "Days until Christmas",
-    "home": "PlayToday home"
+    "home": "PlayToday home",
+    "dayCalc": {
+      "h2": "What date is 90 days from today? Days before Christmas",
+      "p": "Dates counted from today (Korea time), plus the calendar date for each number of days before Christmas (December 25).",
+      "hp": "Days from today",
+      "hb": "Days before Christmas",
+      "plus": "{n} days from today",
+      "before": "{n} days before",
+      "months": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      "fmt": "{m} {d}",
+      "fmtY": "{m} {d}, {y}"
+    }
   },
   "ja": {
     "title": "クリスマスまであと何日？カウントダウン | 毎日ウェブゲーム",
@@ -90,7 +138,31 @@
     "ctaNote": "登録なしで遊べる無料ゲームです。1回約30秒。",
     "calcLink": "",
     "link": "クリスマスまであと何日",
-    "home": "ホーム"
+    "home": "ホーム",
+    "dayCalc": {
+      "h2": "今日から90日後はいつ？クリスマスの何日前？",
+      "p": "日本ではなく韓国時間の今日から数えた日付と、クリスマス(12月25日)の何日前が何月何日かをまとめました。",
+      "hp": "今日から何日後",
+      "hb": "クリスマスの何日前",
+      "plus": "{n}日後",
+      "before": "{n}日前",
+      "months": [
+        "1月",
+        "2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月"
+      ],
+      "fmt": "{m}{d}日",
+      "fmtY": "{y}年{m}{d}日"
+    }
   },
   "zh-hans": {
     "title": "距离圣诞节还有几天？倒计时 | 每日网页游戏",
@@ -121,7 +193,31 @@
     "ctaNote": "免费，无需注册，一局大约30秒。",
     "calcLink": "",
     "link": "距离圣诞节还有几天",
-    "home": "首页"
+    "home": "首页",
+    "dayCalc": {
+      "h2": "从今天起90天后是几号？距圣诞节还有几天？",
+      "p": "按韩国时间从今天算起的日期，以及圣诞节(12月25日)前若干天分别是几月几日。",
+      "hp": "从今天起几天后",
+      "hb": "圣诞节前几天",
+      "plus": "{n}天后",
+      "before": "{n}天前",
+      "months": [
+        "1月",
+        "2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月"
+      ],
+      "fmt": "{m}{d}日",
+      "fmtY": "{y}年{m}{d}日"
+    }
   },
   "es": {
     "title": "Cuántos días faltan para Navidad | PlayToday",
@@ -152,7 +248,31 @@
     "ctaNote": "Gratis y sin registro. Una partida dura unos 30 segundos.",
     "calcLink": "",
     "link": "Días para Navidad",
-    "home": "Inicio"
+    "home": "Inicio",
+    "dayCalc": {
+      "h2": "¿Qué fecha será dentro de 90 días? Días antes de Navidad",
+      "p": "Fechas contadas desde hoy (hora de Corea) y la fecha de calendario de cada cantidad de días antes de Navidad (25 de diciembre).",
+      "hp": "Días a partir de hoy",
+      "hb": "Días antes de Navidad",
+      "plus": "Dentro de {n} días",
+      "before": "{n} días antes",
+      "months": [
+        "ene",
+        "feb",
+        "mar",
+        "abr",
+        "may",
+        "jun",
+        "jul",
+        "ago",
+        "sep",
+        "oct",
+        "nov",
+        "dic"
+      ],
+      "fmt": "{d} de {m}",
+      "fmtY": "{d} de {m} de {y}"
+    }
   },
   "pt-br": {
     "title": "Quantos dias faltam para o Natal | PlayToday",
@@ -183,6 +303,30 @@
     "ctaNote": "Grátis e sem cadastro. Uma partida leva cerca de 30 segundos.",
     "calcLink": "",
     "link": "Dias para o Natal",
-    "home": "Início"
+    "home": "Início",
+    "dayCalc": {
+      "h2": "Que dia será daqui a 90 dias? Dias antes do Natal",
+      "p": "Datas contadas a partir de hoje (horário da Coreia) e a data de cada quantidade de dias antes do Natal (25 de dezembro).",
+      "hp": "Dias a partir de hoje",
+      "hb": "Dias antes do Natal",
+      "plus": "Daqui a {n} dias",
+      "before": "{n} dias antes",
+      "months": [
+        "jan",
+        "fev",
+        "mar",
+        "abr",
+        "mai",
+        "jun",
+        "jul",
+        "ago",
+        "set",
+        "out",
+        "nov",
+        "dez"
+      ],
+      "fmt": "{d} de {m}",
+      "fmtY": "{d} de {m} de {y}"
+    }
   }
 }
