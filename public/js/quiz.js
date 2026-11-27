@@ -3,7 +3,7 @@ import { scoreQuiz, bestBuddy, COLORS } from './logic.js';
 import { quizCard, saveCanvas, shareOrCopy } from './card.js';
 import { api } from './net.js';
 import { track } from './track.js';
-import { applySeason, SEASON2_END, SEASON3_END } from './season.js';
+import { seasonShareSuffix, applySeason, SEASON2_END, SEASON3_END } from './season.js';
 // 1024-21: anonymous server-side funnel (gev.js, game_events); never throws
 const gv = (n, d) => { try { window.gev && window.gev(n, Object.assign({ g: 'quiz' }, d)); } catch (e) {} };
 
@@ -51,7 +51,7 @@ export function showResult(el, D, code, pct, retry) {
     track('share_click', { from: 'quiz' }); gv('share_click');
     let url = `${location.origin}/${D.lang}/me/play-character/`;
     try { const r = await api('/api/share', { method: 'POST', body: { kind: 'quiz', lang: D.lang, payload: { code } } }); url = `${location.origin}/${D.lang}/r/${r.id}`; } catch {}
-    const r = await shareOrCopy({ title: D.quiz.title, text: fmt(D.quiz.shareText, { name: D.types[code].name, url }), canvas: await quizCard(D, code, pct), name: 'play-character.png' });
+    const r = await shareOrCopy({ title: D.quiz.title, text: fmt(D.quiz.shareText, { name: D.types[code].name, url }) + seasonShareSuffix(D), canvas: await quizCard(D, code, pct), name: 'play-character.png' });
     { const rr = r === 'shared' ? 'shared' : r === 'copied' ? 'copied' : r === 'failed' ? 'failed' : 'cancel'; track('share_result', { from: 'quiz', r: rr }); gv('share_result', { via: rr }); }
     st.textContent = r === 'copied' ? D.common.copied : r === 'failed' ? D.common.error : '';
   };

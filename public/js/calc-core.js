@@ -76,6 +76,17 @@ export function xmasCountdown(today = kstToday()) {
   if (n < 0) { target = `${y + 1}-12-25`; n = daysBetween(today, target); next = true; }
   return { n, target, next, d100: addDays(target, -100), d90: addDays(target, -90) };
 }
+// 'N일 후/전' 날짜 블록 (1127-09): 오늘+N일, 크리스마스 기준 N일 전. 12/25 이후엔 다음해 크리스마스 기준.
+export const DAYCALC_PLUS = [30, 60, 90, 100];
+export const DAYCALC_BEFORE = [50, 30, 14, 7];
+export function dayCalc(today = kstToday()) {
+  const x = xmasCountdown(today); if (!x) return null;
+  return { plus: DAYCALC_PLUS.map((n) => ({ n, date: addDays(today, n) })), before: DAYCALC_BEFORE.map((n) => ({ n, date: addDays(x.target, -n) })), target: x.target };
+}
+export function fmtDate(iso, X, withYear) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return (withYear ? X.fmtY : X.fmt).replace('{y}', y).replace('{m}', X.months[m - 1]).replace('{d}', d);
+}
 // 기념일: 시작일을 1일로 센다 (사귄 날 = 1일 → 100일 = 시작일 + 99일)
 export const ANNIV = [100, 200, 300, 365, 500, 1000, 2000, 3000];
 export function anniversaries(start, today) {

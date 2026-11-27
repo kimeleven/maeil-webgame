@@ -2,6 +2,7 @@
 import * as G from './rush-core.js';
 import { rushCard, saveCanvas, shareOrCopy, copyText } from './card.js';
 import { api } from './net.js';
+import { seasonShareSuffix } from './season.js';
 import { track, stageBucket } from './track.js';
 // 1024-21: anonymous server-side funnel (gev.js, game_events); never throws
 const gv = (n, d) => { try { window.gev && window.gev(n, Object.assign({ g: 'rush' }, d)); } catch (e) {} };
@@ -114,7 +115,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
         if (navigator.share) {
           try {
             track('challenge_copy', { method: 'native' });
-            await navigator.share({ title: g.challengeTitle, text: fmt(g.challengeShareText, { stage: rec.cleared, score: rec.score.toLocaleString(), url }) });
+            await navigator.share({ title: g.challengeTitle, text: fmt(g.challengeShareText, { stage: rec.cleared, score: rec.score.toLocaleString(), url }) + seasonShareSuffix(D) });
             track('share_result', { from: 'rush', r: 'shared', k: 'challenge' }); gv('share_result', { via: 'shared', k: 'challenge' });
             challengeBtn.textContent = D.common.copied; setTimeout(() => { challengeBtn.textContent = g.challenge; }, 2000);
             return;
@@ -135,7 +136,7 @@ export function mountRush(root, { D, lang, seed, challenge, capture, landing }) 
           const url = await shareUrl();
           // show the link right away: the native share sheet (desktop Chrome/macOS) can stay pending indefinitely
           showUrl(url);
-          const r = await shareOrCopy({ title: g.name, text: fmt(g.shareText, { stage: rec.cleared, url }), canvas: await rushCard(D, rec), name: 'gate-rush.png' });
+          const r = await shareOrCopy({ title: g.name, text: fmt(g.shareText, { stage: rec.cleared, url }) + seasonShareSuffix(D), canvas: await rushCard(D, rec), name: 'gate-rush.png' });
           { const rr = r === 'shared' ? 'shared' : r === 'copied' ? 'copied' : r === 'failed' ? 'failed' : 'cancel'; track('share_result', { from: 'rush', r: rr }); gv('share_result', { via: rr }); }
           showUrl(url, r === 'failed' ? D.common.error : r === 'copied' ? D.common.copied : '');
         } finally { busy = false; }
