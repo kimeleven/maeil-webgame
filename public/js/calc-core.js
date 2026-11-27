@@ -83,6 +83,12 @@ export function dayCalc(today = kstToday()) {
   const x = xmasCountdown(today); if (!x) return null;
   return { plus: DAYCALC_PLUS.map((n) => ({ n, date: addDays(today, n) })), before: DAYCALC_BEFORE.map((n) => ({ n, date: addDays(x.target, -n) })), target: x.target };
 }
+// 'N일 후' 입력형 (1127-21): N은 1~999 정수만. 오늘(KST)+N일 날짜와 크리스마스까지 D-n(없으면 null).
+export function customDays(today, n) {
+  const k = Number(n); if (!Number.isInteger(k) || k < 1 || k > 999 || parseDate(today) == null) return null;
+  const date = addDays(today, k), x = xmasCountdown(today);
+  return { n: k, date, wd: weekday(date), dday: x ? x.n : null };
+}
 export function fmtDate(iso, X, withYear) {
   const [y, m, d] = iso.split('-').map(Number);
   return (withYear ? X.fmtY : X.fmt).replace('{y}', y).replace('{m}', X.months[m - 1]).replace('{d}', d);

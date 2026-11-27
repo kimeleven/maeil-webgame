@@ -51,7 +51,14 @@
         "12월"
       ],
       "fmt": "{m} {d}일",
-      "fmtY": "{y}년 {m} {d}일"
+      "fmtY": "{y}년 {m} {d}일",
+      "custom": {
+        "label": "며칠 후?",
+        "go": "확인",
+        "result": "{n}일 후는 {date}",
+        "dd": "크리스마스까지 D-{n}",
+        "err": "1~999 사이 숫자를 넣어 주세요"
+      }
     }
   },
   "en": {
@@ -106,7 +113,14 @@
         "Dec"
       ],
       "fmt": "{m} {d}",
-      "fmtY": "{m} {d}, {y}"
+      "fmtY": "{m} {d}, {y}",
+      "custom": {
+        "label": "Days from today",
+        "go": "Show date",
+        "result": "{n} days from today: {date}",
+        "dd": "D-{n} to Christmas",
+        "err": "Enter a number from 1 to 999"
+      }
     }
   },
   "ja": {
@@ -161,7 +175,14 @@
         "12月"
       ],
       "fmt": "{m}{d}日",
-      "fmtY": "{y}年{m}{d}日"
+      "fmtY": "{y}年{m}{d}日",
+      "custom": {
+        "label": "何日後？",
+        "go": "表示",
+        "result": "{n}日後は {date}",
+        "dd": "クリスマスまであと{n}日",
+        "err": "1〜999の数字を入れてください"
+      }
     }
   },
   "zh-hans": {
@@ -216,7 +237,14 @@
         "12月"
       ],
       "fmt": "{m}{d}日",
-      "fmtY": "{y}年{m}{d}日"
+      "fmtY": "{y}年{m}{d}日",
+      "custom": {
+        "label": "多少天后？",
+        "go": "查看",
+        "result": "{n}天后是 {date}",
+        "dd": "距圣诞还有{n}天",
+        "err": "请输入1到999之间的数字"
+      }
     }
   },
   "es": {
@@ -271,7 +299,14 @@
         "dic"
       ],
       "fmt": "{d} de {m}",
-      "fmtY": "{d} de {m} de {y}"
+      "fmtY": "{d} de {m} de {y}",
+      "custom": {
+        "label": "¿Cuántos días?",
+        "go": "Ver fecha",
+        "result": "Dentro de {n} días: {date}",
+        "dd": "Faltan {n} días para Navidad",
+        "err": "Escribe un número del 1 al 999"
+      }
     }
   },
   "pt-br": {
@@ -326,7 +361,14 @@
         "dez"
       ],
       "fmt": "{d} de {m}",
-      "fmtY": "{d} de {m} de {y}"
+      "fmtY": "{d} de {m} de {y}",
+      "custom": {
+        "label": "Quantos dias?",
+        "go": "Ver data",
+        "result": "Daqui a {n} dias: {date}",
+        "dd": "Faltam {n} dias para o Natal",
+        "err": "Digite um número de 1 a 999"
+      }
     }
   }
 }
