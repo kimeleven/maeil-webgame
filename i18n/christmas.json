@@ -58,7 +58,9 @@
         "result": "{n}일 후는 {date}",
         "dd": "크리스마스까지 D-{n}",
         "err": "1~999 사이 숫자를 넣어 주세요"
-      }
+      },
+      "long": "오늘로부터 45일 후·120일 후·200일 후는 몇 월 며칠?",
+      "jump": "다른 날짜는 아래 입력칸에서 ↓"
     }
   },
   "en": {
@@ -120,7 +122,9 @@
         "result": "{n} days from today: {date}",
         "dd": "D-{n} to Christmas",
         "err": "Enter a number from 1 to 999"
-      }
+      },
+      "long": "What date is 45, 120 or 200 days from today?",
+      "jump": "Any other number: use the box below ↓"
     }
   },
   "ja": {
@@ -182,7 +186,9 @@
         "result": "{n}日後は {date}",
         "dd": "クリスマスまであと{n}日",
         "err": "1〜999の数字を入れてください"
-      }
+      },
+      "long": "今日から45日後・120日後・200日後は何月何日？",
+      "jump": "他の日数は下の入力欄で ↓"
     }
   },
   "zh-hans": {
@@ -244,7 +250,9 @@
         "result": "{n}天后是 {date}",
         "dd": "距圣诞还有{n}天",
         "err": "请输入1到999之间的数字"
-      }
+      },
+      "long": "从今天起45天后、120天后、200天后是几月几号？",
+      "jump": "其他天数请用下面的输入框 ↓"
     }
   },
   "es": {
@@ -306,7 +314,9 @@
         "result": "Dentro de {n} días: {date}",
         "dd": "Faltan {n} días para Navidad",
         "err": "Escribe un número del 1 al 999"
-      }
+      },
+      "long": "¿Qué fecha será dentro de 45, 120 o 200 días?",
+      "jump": "Otro número: usa el campo de abajo ↓"
     }
   },
   "pt-br": {
@@ -368,7 +378,9 @@
         "result": "Daqui a {n} dias: {date}",
         "dd": "Faltam {n} dias para o Natal",
         "err": "Digite um número de 1 a 999"
-      }
+      },
+      "long": "Que dia será daqui a 45, 120 ou 200 dias?",
+      "jump": "Outro número: use o campo abaixo ↓"
     }
   }
 }

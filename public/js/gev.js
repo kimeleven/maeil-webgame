@@ -6,7 +6,7 @@
   if (window.gev) return;
   // share_fail is diagnostic only (not in the v1 allowlist): ignored here, never sent.
   var NAMES = ['play_start', 'play_again', 'play_end', 'share_click', 'share_done', 'challenge_land', 'share_result', 'share_cta_click', 'calc_use'];
-  var KEYS = ['g', 'from', 'end', 'via', 'k'];
+  var KEYS = ['g', 'from', 'end', 'via', 'k', 'season'];
   var MAX_Q = 60, BATCH = 20, WAIT = 3000;
   var q = [], timer = 0, sent = (window.__gevSent = window.__gevSent || []);
   var bot = /bot|crawl|spider|slurp|headless|lighthouse|puppeteer|playwright|phantom|selenium|python|curl|wget/i;

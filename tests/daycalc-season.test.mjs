@@ -9,7 +9,7 @@ test('dayCalc: 오늘+N일 (윤년·연말 경계), 12/25 이후엔 다음해 �
   const a = dayCalc('2027-12-10'); // 연말 경계
   assert.equal(a.plus.find((p) => p.n === 90).date, '2028-03-09'); // 2028 윤년(2/29 포함)
   assert.equal(a.plus.find((p) => p.n === 30).date, '2028-01-09');
-  assert.equal(dayCalc('2028-02-28').plus[0].date, '2028-03-29');
+  assert.equal(dayCalc('2028-02-28').plus.find((p) => p.n === 30).date, '2028-03-29');
   assert.equal(dayCalc('2026-12-25').target, '2026-12-25');
   const b = dayCalc('2026-12-26');
   assert.equal(b.target, '2027-12-25');
@@ -64,4 +64,30 @@ test('r.season: 12/1~12/25 안·밖 분기, {n} 치환, 140자 이하, 6언어',
     assert.ok(b.includes('0') && !b.includes('{n}'), l);
     assert.ok(a.length <= 140 && (D.share.season.replace('{n}', '24').length <= 140), l);
   }
+});
+// ---- 1128-09 ----
+import { DAYCALC_PLUS } from '../public/js/calc-core.js';
+import { seasonFlag } from '../public/js/season.js';
+import { validateBatch } from '../lib/events.js';
+test('1128-09 dayCalc: 확장 N 표, 365일 후 윤년·연말 경계', () => {
+  assert.deepEqual(DAYCALC_PLUS, [14, 30, 45, 60, 90, 100, 120, 150, 180, 200, 365]);
+  assert.equal(dayCalc('2027-03-01').plus.find((p) => p.n === 365).date, '2028-02-29'); // 윤년일 포함
+  assert.equal(dayCalc('2027-12-31').plus.find((p) => p.n === 365).date, '2028-12-30'); // 2028 윤년: 366일 해
+  assert.equal(dayCalc('2026-11-28').plus.find((p) => p.n === 45).date, '2027-01-12');
+  const C = JSON.parse(readFileSync('i18n/christmas.json', 'utf8'));
+  for (const l of L) { assert.ok(C[l].dayCalc.long && C[l].dayCalc.jump, l); const h = readFileSync(`public/${l}/christmas/index.html`, 'utf8'); for (const n of DAYCALC_PLUS) assert.ok(h.includes(`id="d${n}"`), `${l} d${n}`); }
+});
+test('1128-09 /r/ 시즌 필드: 기간 안/밖, 검증', () => {
+  assert.equal(seasonFlag(kst('2026-11-30T23:59:59')), '0');
+  assert.equal(seasonFlag(kst('2026-12-01T00:00:00')), '1');
+  assert.equal(seasonFlag(kst('2026-12-25T23:59:59')), '1');
+  assert.equal(seasonFlag(kst('2026-12-26T00:00:00')), '0');
+  const ev = (extra, name = 'share_cta_click') => validateBatch({ v: 1, events: [{ id: 'abcdefghijklmnopqrstuv', name, g: 'rush', lang: 'ko', from: 'r', ...extra }] });
+  assert.equal(ev({ season: '1' }).rows[0].method, 's1');
+  assert.equal(ev({ season: '0' }).rows[0].method, 's0');
+  assert.ok(ev({ season: '2' }).error);
+  assert.ok(ev({ season: '1' }, 'share_click').error);
+});
+test('1128-09 r.season 문구 길이(CTA 한 줄)', () => {
+  for (const l of L) { const D = JSON.parse(readFileSync(`i18n/${l}.json`, 'utf8')); assert.ok(D.r.season.length <= 60, `${l} ${D.r.season.length}`); }
 });

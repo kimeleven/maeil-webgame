@@ -77,7 +77,7 @@ export function xmasCountdown(today = kstToday()) {
   return { n, target, next, d100: addDays(target, -100), d90: addDays(target, -90) };
 }
 // 'N일 후/전' 날짜 블록 (1127-09): 오늘+N일, 크리스마스 기준 N일 전. 12/25 이후엔 다음해 크리스마스 기준.
-export const DAYCALC_PLUS = [30, 60, 90, 100];
+export const DAYCALC_PLUS = [14, 30, 45, 60, 90, 100, 120, 150, 180, 200, 365]; // 1128-09: 인접 롱테일 N 확장
 export const DAYCALC_BEFORE = [50, 30, 14, 7];
 export function dayCalc(today = kstToday()) {
   const x = xmasCountdown(today); if (!x) return null;
