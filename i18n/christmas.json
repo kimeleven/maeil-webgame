@@ -61,6 +61,18 @@
       },
       "long": "오늘로부터 45일 후·120일 후·200일 후는 몇 월 며칠?",
       "jump": "다른 날짜는 아래 입력칸에서 ↓"
+    },
+    "near": {
+      "h2": "연말까지·새해까지 며칠 남았을까?",
+      "p": "한국 시간 기준 오늘부터 크리스마스 이브, 연말(12월 31일), 새해(1월 1일), 설날까지 남은 날이에요.",
+      "eve": "크리스마스 이브(12/24)까지",
+      "xmas": "크리스마스(12/25)까지",
+      "eoy": "연말(12/31)까지",
+      "ny": "새해(1/1)까지",
+      "seol": "설날까지",
+      "unit": "{n}일 남았어요",
+      "day": "오늘이에요",
+      "jump": "다른 날짜는 아래 N일 후 계산기 ↓"
     }
   },
   "en": {
@@ -125,6 +137,18 @@
       },
       "long": "What date is 45, 120 or 200 days from today?",
       "jump": "Any other number: use the box below ↓"
+    },
+    "near": {
+      "h2": "How many days until New Year and year-end?",
+      "p": "Days left from today (Korea time) until Christmas Eve, New Year’s Eve, New Year’s Day and Lunar New Year (Seollal).",
+      "eve": "Christmas Eve (Dec 24)",
+      "xmas": "Christmas (Dec 25)",
+      "eoy": "New Year’s Eve (Dec 31)",
+      "ny": "New Year’s Day (Jan 1)",
+      "seol": "Lunar New Year (Seollal)",
+      "unit": "{n} days left",
+      "day": "It’s today",
+      "jump": "Any other date: use the days-from-today box below ↓"
     }
   },
   "ja": {
@@ -189,6 +213,18 @@
       },
       "long": "今日から45日後・120日後・200日後は何月何日？",
       "jump": "他の日数は下の入力欄で ↓"
+    },
+    "near": {
+      "h2": "年末・お正月まであと何日？",
+      "p": "韓国時間の今日から、クリスマスイブ・大晦日・元日・旧正月（ソルラル）までの残り日数です。",
+      "eve": "クリスマスイブ（12/24）まで",
+      "xmas": "クリスマス（12/25）まで",
+      "eoy": "大晦日（12/31）まで",
+      "ny": "元日（1/1）まで",
+      "seol": "旧正月（ソルラル）まで",
+      "unit": "あと{n}日",
+      "day": "今日です",
+      "jump": "ほかの日付は下の「○日後」計算へ ↓"
     }
   },
   "zh-hans": {
@@ -253,6 +289,18 @@
       },
       "long": "从今天起45天后、120天后、200天后是几月几号？",
       "jump": "其他天数请用下面的输入框 ↓"
+    },
+    "near": {
+      "h2": "距离年底和新年还有几天？",
+      "p": "按韩国时间，从今天起到平安夜、除夕（12月31日）、元旦（1月1日）和春节（韩国设乐节）还剩几天。",
+      "eve": "距平安夜（12/24）",
+      "xmas": "距圣诞节（12/25）",
+      "eoy": "距年底（12/31）",
+      "ny": "距元旦（1/1）",
+      "seol": "距春节（设乐节）",
+      "unit": "还剩{n}天",
+      "day": "就是今天",
+      "jump": "其他日期请用下方“几天后”计算 ↓"
     }
   },
   "es": {
@@ -317,6 +365,18 @@
       },
       "long": "¿Qué fecha será dentro de 45, 120 o 200 días?",
       "jump": "Otro número: usa el campo de abajo ↓"
+    },
+    "near": {
+      "h2": "¿Cuántos días faltan para fin de año y Año Nuevo?",
+      "p": "Días que faltan desde hoy (hora de Corea) hasta Nochebuena, Nochevieja, Año Nuevo y el Año Nuevo lunar (Seollal).",
+      "eve": "Nochebuena (24/12)",
+      "xmas": "Navidad (25/12)",
+      "eoy": "Nochevieja (31/12)",
+      "ny": "Año Nuevo (1/1)",
+      "seol": "Año Nuevo lunar (Seollal)",
+      "unit": "faltan {n} días",
+      "day": "es hoy",
+      "jump": "Otra fecha: usa el cuadro de días desde hoy ↓"
     }
   },
   "pt-br": {
@@ -381,6 +441,18 @@
       },
       "long": "Que dia será daqui a 45, 120 ou 200 dias?",
       "jump": "Outro número: use o campo abaixo ↓"
+    },
+    "near": {
+      "h2": "Quantos dias faltam para o fim do ano e o Ano Novo?",
+      "p": "Dias que faltam a partir de hoje (hora da Coreia) até a véspera de Natal, a virada do ano, o Ano Novo e o Ano Novo lunar (Seollal).",
+      "eve": "Véspera de Natal (24/12)",
+      "xmas": "Natal (25/12)",
+      "eoy": "Réveillon (31/12)",
+      "ny": "Ano Novo (1/1)",
+      "seol": "Ano Novo lunar (Seollal)",
+      "unit": "faltam {n} dias",
+      "day": "é hoje",
+      "jump": "Outra data: use a caixa de dias a partir de hoje ↓"
     }
   }
 }
