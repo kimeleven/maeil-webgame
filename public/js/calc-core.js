@@ -89,6 +89,18 @@ export function customDays(today, n) {
   const date = addDays(today, k), x = xmasCountdown(today);
   return { n: k, date, wd: weekday(date), dday: x ? x.n : null };
 }
+// 1128-21: 인접 D-day (크리스마스 이브·연말·새해·설날). 지난 날짜는 다음 해(설날은 다음 설날)로 센다.
+export const NEAR_DAYS = [{ k: 'eve', md: '12-24' }, { k: 'xmas', md: '12-25' }, { k: 'eoy', md: '12-31' }, { k: 'ny', md: '01-01' }, { k: 'seol', list: ['2027-02-06', '2028-01-26', '2029-02-13'] }];
+export function nearDays(today = kstToday()) {
+  if (parseDate(today) == null) return null;
+  const y = +today.slice(0, 4);
+  return NEAR_DAYS.map((t) => {
+    let date;
+    if (t.list) date = t.list.find((d) => daysBetween(today, d) >= 0) || null;
+    else { date = `${y}-${t.md}`; if (daysBetween(today, date) < 0) date = `${y + 1}-${t.md}`; }
+    return { k: t.k, date, n: date ? daysBetween(today, date) : null };
+  });
+}
 export function fmtDate(iso, X, withYear) {
   const [y, m, d] = iso.split('-').map(Number);
   return (withYear ? X.fmtY : X.fmt).replace('{y}', y).replace('{m}', X.months[m - 1]).replace('{d}', d);
