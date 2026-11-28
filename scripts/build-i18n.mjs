@@ -8,7 +8,7 @@ const vtok = (v) => (/^[A-Za-z0-9_-]{8,128}$/.test(v || '') ? v : '');
 const VERIFY = (vtok(process.env.NAVER_SITE_VERIFICATION) ? `<meta name="naver-site-verification" content="${vtok(process.env.NAVER_SITE_VERIFICATION)}">` : '') + (vtok(process.env.GOOGLE_SITE_VERIFICATION) ? `<meta name="google-site-verification" content="${vtok(process.env.GOOGLE_SITE_VERIFICATION)}">` : '');
 import { buildMagnet, MAGNET_LANGS } from './build-magnet.mjs'; // magnet-harbor public game (t_1c491685, launch t_45f1a325)
 import { buildPuzzle, PUZZLE_HOME, PUZZLE_FOOTER_LINKS } from './build-puzzle.mjs'; // 오늘의 퍼즐 ko (t_2d0c7a9f)
-import { DAYCALC_PLUS, DAYCALC_BEFORE, addDays, fmtDate } from '../public/js/calc-core.js'; // 크리스마스 N일 후/전 블록 (1127-09)
+import { DAYCALC_PLUS, DAYCALC_BEFORE, addDays, fmtDate, kstToday } from '../public/js/calc-core.js'; // 크리스마스 N일 후/전 블록 (1127-09)
 import { buildCalc, CALC_HOME, CALC_FOOTER_LINKS, CALC_LASTMOD } from './build-calc.mjs'; // 오늘 계산기 10종 (t_61344aaa)
 import { buildOrbit, ORBIT_LANGS } from './build-orbit.mjs'; // orbit-switch public game (t_06bfa4bc, launch t_5537bd3e)
 const OT = JSON.parse(readFileSync(new URL('../i18n/orbit-switch.json', import.meta.url), 'utf8'));
@@ -325,7 +325,7 @@ function buildChristmas() {
 <div class="row" style="margin-top:14px"><a class="btn" href="/${l}/play/gate-rush/" data-xmas-cta>${esc(X.cta)}</a></div><p class="muted">${esc(X.ctaNote)}</p></section>
 <section><h2>${esc(X.h2a)}</h2><p>${esc(X.pa)}</p></section>
 <section id="daycalc"><h2>${esc(DC.h2)}</h2><p>${esc(DC.p)}</p>
-<h3>${esc(DC.hp)}</h3><ul>${DAYCALC_PLUS.map((n) => `<li>${esc(DC.plus.replace('{n}', n))}: <b data-plus="${n}"></b></li>`).join('')}</ul>
+<h3>${esc(DC.hp)}</h3><p class="muted">${esc(DC.long)}</p><ul>${DAYCALC_PLUS.map((n) => `<li id="d${n}"><a href="#d${n}">${esc(DC.plus.replace('{n}', n))}</a>: <b data-plus="${n}">${esc(fmtDate(addDays(kstToday(), n), DC, true))}</b></li>`).join('')}</ul><p><a href="#daycustom">${esc(DC.jump)}</a></p>
 <form id=\"daycustom\" style=\"display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0\"><label for=\"dc-n\">${esc(DC.custom.label)}</label><input id=\"dc-n\" type=\"number\" inputmode=\"numeric\" min=\"1\" max=\"999\" value=\"45\" style=\"width:90px\"><button class=\"btn\" type=\"submit\">${esc(DC.custom.go)}</button></form><p id=\"dc-out\" role=\"status\" aria-live=\"polite\"></p>
 <h3>${esc(DC.hb)}</h3><ul>${DAYCALC_BEFORE.map((n) => `<li>${esc(DC.before.replace('{n}', n))}: <b>${esc(fmtDate(addDays('2026-12-25', -n), DC, false))}</b></li>`).join('')}</ul></section>
 <section><h2>FAQ</h2>${X.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>

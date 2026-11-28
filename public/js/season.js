@@ -22,3 +22,6 @@ export function seasonArrivalLine(D, now = Date.now()) {
   const kstDay = Math.floor((now + 9 * 3600e3) / 86400e3), xmas = Math.floor(Date.parse('2026-12-25T00:00:00Z') / 86400e3);
   return s.replace('{n}', xmas - kstDay);
 }
+
+// 1128-09: /r/ CTA 클릭 이벤트의 시즌 구분 필드 ('1' = 12/1~12/25 KST 안, '0' = 밖). 개인정보 없음.
+export const seasonFlag = (now = Date.now()) => (inWindow(now, SEASON2_END, XMAS_SHARE_UNTIL) ? '1' : '0');
